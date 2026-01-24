@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=600">
+    <title>Welcome to Cookie Manager</title>
+    <link rel="stylesheet" href="../shared/zovo-brand.css">
+    <link rel="stylesheet" href="onboarding.css">
+</head>
+
+<body>
+    <div class="onboarding zovo-glow">
+        <!-- Progress -->
+        <div class="onboarding-progress">
+            <div class="onboarding-progress-bar" id="progressBar"></div>
+        </div>
+
+        <!-- Slides Container -->
+        <div class="onboarding-slides" id="slides">
+
+            <!-- Slide 1: Welcome -->
+            <div class="onboarding-slide active" data-slide="1">
+                <div class="onboarding-icon">
+                    <img src="../assets/icons/icon-128.png" alt="Cookie Manager">
+                </div>
+                <h1>Welcome to Cookie Manager</h1>
+                <p class="onboarding-subtitle">Part of the <span class="zovo-brand-text">Zovo</span> extension family
+                </p>
+                <p class="onboarding-description">
+                    Simple, clean cookie management for developers. View, edit, export, and protect cookies with a
+                    beautiful interface.
+                </p>
+                <div class="onboarding-trust">
+                    <span>✓ No tracking</span>
+                    <span>✓ No data collection</span>
+                    <span>✓ 100% local</span>
+                </div>
+            </div>
+
+            <!-- Slide 2: Key Feature - View & Edit -->
+            <div class="onboarding-slide" data-slide="2">
+                <div class="onboarding-feature-demo">
+                    <div class="demo-cookie-list">
+                        <div class="demo-cookie">
+                            <span class="demo-cookie-name">user_session</span>
+                            <span class="demo-badge secure">Secure</span>
+                            <span class="demo-badge httponly">HttpOnly</span>
+                        </div>
+                        <div class="demo-cookie">
+                            <span class="demo-cookie-name">auth_token</span>
+                            <span class="demo-badge jwt">JWT</span>
+                        </div>
+                        <div class="demo-cookie">
+                            <span class="demo-cookie-name">preferences</span>
+                            <span class="demo-badge session">Session</span>
+                        </div>
+                    </div>
+                </div>
+                <h2>See All Your Cookies</h2>
+                <p>View every cookie for the current site with security badges at a glance. Click any cookie to edit or
+                    delete it.</p>
+            </div>
+
+            <!-- Slide 3: JWT Decoding -->
+            <div class="onboarding-slide" data-slide="3">
+                <div class="onboarding-feature-demo">
+                    <div class="demo-jwt">
+                        <div class="demo-jwt-badge">🔐 JWT Detected</div>
+                        <pre class="demo-jwt-code">{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "exp": 1516242622
+}</pre>
+                        <div class="demo-jwt-expiry">⏱ Expires in 2h 30m</div>
+                    </div>
+                </div>
+                <h2>Decode JWT Tokens Instantly</h2>
+                <p>Automatically detect JWT tokens in cookies and decode them to see headers, payloads, and expiration
+                    times.</p>
+            </div>
+
+            <!-- Slide 4: Get Started -->
+            <div class="onboarding-slide" data-slide="4">
+                <div class="onboarding-icon success">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                        <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                </div>
+                <h2>You're all set!</h2>
+                <p>Click the Cookie Manager icon in your toolbar to get started.</p>
+
+                <div class="onboarding-cta-group">
+                    <button class="zovo-btn zovo-btn-primary zovo-btn-lg zovo-btn-block" id="startBtn">
+                        Start Using Cookie Manager
+                    </button>
+                    <a href="https://zovo.one?ref=cookie-manager&source=onboarding" target="_blank"
+                        class="zovo-btn zovo-btn-outline zovo-btn-lg zovo-btn-block">
+                        Join Zovo — Get All Extensions
+                    </a>
+                </div>
+
+                <p class="onboarding-footer-note">
+                    <a href="https://github.com/theluckystrike/cookie-manager" target="_blank">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                        </svg>
+                        Open Source on GitHub
+                    </a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="onboarding-nav">
+            <button class="zovo-btn zovo-btn-ghost" id="prevBtn" disabled>Back</button>
+            <div class="onboarding-dots" id="dots">
+                <span class="dot active" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+                <span class="dot" data-slide="3"></span>
+                <span class="dot" data-slide="4"></span>
+            </div>
+            <button class="zovo-btn zovo-btn-primary" id="nextBtn">Next</button>
+        </div>
+    </div>
+
+    <script src="onboarding.js"></script>
+</body>
+
+</html>

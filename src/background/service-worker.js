@@ -274,14 +274,51 @@ chrome.cookies.onChanged.addListener((changeInfo) => {
 // Installation & Startup
 // ============================================================================
 
-chrome.runtime.onInstalled.addListener((details) => {
+chrome.runtime.onInstalled.addListener(async (details) => {
     console.log('[ServiceWorker] Installed:', details.reason);
 
     setupContextMenu();
 
-    // Initialize default settings on first install
     if (details.reason === 'install') {
-        chrome.storage.local.set(STORAGE_DEFAULTS);
+        // Initialize default settings
+        await chrome.storage.local.set({
+            ...STORAGE_DEFAULTS,
+            installedAt: Date.now(),
+            installSource: 'chrome_web_store',
+            analytics: []
+        });
+
+        // Check if onboarding already shown
+        const { onboardingComplete } = await chrome.storage.local.get('onboardingComplete');
+
+        if (!onboardingComplete) {
+            // Open onboarding tab
+            chrome.tabs.create({
+                url: chrome.runtime.getURL('onboarding/onboarding.html')
+            });
+        }
+
+        // Track install event
+        await trackEvent('extension_installed');
+    }
+
+    if (details.reason === 'update') {
+        const previousVersion = details.previousVersion;
+        const currentVersion = chrome.runtime.getManifest().version;
+
+        console.log('[ServiceWorker] Updated from', previousVersion, 'to', currentVersion);
+
+        // Track update
+        await trackEvent('extension_updated', { previousVersion, currentVersion });
+
+        // Show changelog for major updates (optional)
+        const previousMajor = parseInt(previousVersion?.split('.')[0] || '0');
+        const currentMajor = parseInt(currentVersion.split('.')[0]);
+
+        if (currentMajor > previousMajor) {
+            // Could open a what's-new page here
+            console.log('[ServiceWorker] Major version update');
+        }
     }
 });
 
@@ -290,7 +327,33 @@ chrome.runtime.onStartup.addListener(() => {
     setupContextMenu();
 });
 
+// ============================================================================
+// Zovo Analytics (Local Only - No External Requests)
+// ============================================================================
+
+async function trackEvent(eventName, properties = {}) {
+    try {
+        const { analytics = [] } = await chrome.storage.local.get('analytics');
+
+        analytics.push({
+            event: eventName,
+            properties,
+            extension: 'cookie-manager',
+            timestamp: Date.now()
+        });
+
+        // Keep only last 100 events
+        if (analytics.length > 100) {
+            analytics.shift();
+        }
+
+        await chrome.storage.local.set({ analytics });
+    } catch (e) {
+        console.error('[ServiceWorker] Analytics error:', e);
+    }
+}
+
 // Initial setup
 setupContextMenu();
 
-console.log('[ServiceWorker] Cookie Manager initialized');
+console.log('[ServiceWorker] Cookie Manager initialized - Part of Zovo (https://zovo.one)');

@@ -1,0 +1,566 @@
+/* ==========================================================================
+   Zovo Brand System
+   Source: https://zovo.one/brand
+   ========================================================================== */
+
+/* Import brand fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    /* =========================
+     COLORS - ZOVO BRAND KIT
+     ========================= */
+
+    /* Primary */
+    --zovo-primary: #7C3AED;
+    --zovo-primary-hover: #6D28D9;
+    --zovo-primary-light: #EDE9FE;
+
+    /* Secondary */
+    --zovo-secondary: #0A0A0B;
+    --zovo-secondary-hover: #1a1a1b;
+
+    /* Backgrounds */
+    --zovo-bg-primary: #FAFAF9;
+    --zovo-bg-secondary: #F4F4F5;
+    --zovo-bg-tertiary: #E4E4E7;
+
+    /* Text */
+    --zovo-text-primary: #0A0A0B;
+    --zovo-text-secondary: #71717A;
+    --zovo-text-muted: #A1A1AA;
+    --zovo-text-inverse: #FAFAF9;
+
+    /* Borders */
+    --zovo-border: #E4E4E7;
+    --zovo-border-focus: var(--zovo-primary);
+
+    /* Functional */
+    --zovo-success: #10B981;
+    --zovo-warning: #F59E0B;
+    --zovo-error: #EF4444;
+    --zovo-info: #3B82F6;
+
+    /* =========================
+     TYPOGRAPHY
+     ========================= */
+    --zovo-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --zovo-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    --zovo-font-size-xs: 11px;
+    --zovo-font-size-sm: 12px;
+    --zovo-font-size-base: 13px;
+    --zovo-font-size-md: 14px;
+    --zovo-font-size-lg: 16px;
+    --zovo-font-size-xl: 18px;
+    --zovo-font-size-2xl: 24px;
+
+    --zovo-font-weight-normal: 400;
+    --zovo-font-weight-medium: 500;
+    --zovo-font-weight-semibold: 600;
+    --zovo-font-weight-bold: 700;
+
+    --zovo-line-height-tight: 1.25;
+    --zovo-line-height-normal: 1.5;
+    --zovo-line-height-relaxed: 1.75;
+
+    /* =========================
+     SPACING
+     ========================= */
+    --zovo-space-1: 4px;
+    --zovo-space-2: 8px;
+    --zovo-space-3: 12px;
+    --zovo-space-4: 16px;
+    --zovo-space-5: 20px;
+    --zovo-space-6: 24px;
+    --zovo-space-8: 32px;
+
+    /* =========================
+     RADIUS
+     ========================= */
+    --zovo-radius-sm: 4px;
+    --zovo-radius-md: 6px;
+    --zovo-radius-lg: 8px;
+    --zovo-radius-xl: 12px;
+    --zovo-radius-full: 9999px;
+
+    /* =========================
+     SHADOWS
+     ========================= */
+    --zovo-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --zovo-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --zovo-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --zovo-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+    /* =========================
+     TRANSITIONS
+     ========================= */
+    --zovo-transition-fast: 150ms ease;
+    --zovo-transition-base: 200ms ease;
+    --zovo-transition-slow: 300ms ease;
+    --zovo-transition-micro: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* =========================
+     POPUP DIMENSIONS
+     ========================= */
+    --zovo-popup-width: 400px;
+    --zovo-popup-min-height: 400px;
+    --zovo-popup-max-height: 600px;
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --zovo-bg-primary: #0A0A0B;
+        --zovo-bg-secondary: #18181B;
+        --zovo-bg-tertiary: #27272A;
+        --zovo-text-primary: #FAFAF9;
+        --zovo-text-secondary: #A1A1AA;
+        --zovo-text-muted: #71717A;
+        --zovo-border: #27272A;
+        --zovo-primary-light: rgba(124, 58, 237, 0.2);
+    }
+}
+
+/* =========================
+   BASE RESET
+   ========================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--zovo-font-family);
+    font-size: var(--zovo-font-size-base);
+    line-height: var(--zovo-line-height-normal);
+    color: var(--zovo-text-primary);
+    background: var(--zovo-bg-primary);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* =========================
+   POPUP CONTAINER
+   ========================= */
+.zovo-popup {
+    width: var(--zovo-popup-width);
+    min-height: var(--zovo-popup-min-height);
+    max-height: var(--zovo-popup-max-height);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+.zovo-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--zovo-space-3) var(--zovo-space-4);
+    border-bottom: 1px solid var(--zovo-border);
+    background: var(--zovo-bg-primary);
+}
+
+.zovo-header-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--zovo-space-2);
+}
+
+.zovo-header-logo {
+    width: 20px;
+    height: 20px;
+    background: var(--zovo-primary);
+    border-radius: var(--zovo-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: var(--zovo-font-weight-bold);
+    font-size: 12px;
+}
+
+.zovo-header-divider {
+    width: 1px;
+    height: 16px;
+    background: var(--zovo-border);
+    margin: 0 var(--zovo-space-1);
+}
+
+.zovo-header-title {
+    font-size: var(--zovo-font-size-md);
+    font-weight: var(--zovo-font-weight-semibold);
+}
+
+.zovo-header-badge {
+    font-size: var(--zovo-font-size-xs);
+    font-weight: var(--zovo-font-weight-medium);
+    padding: 2px 6px;
+    background: var(--zovo-primary-light);
+    color: var(--zovo-primary);
+    border-radius: var(--zovo-radius-full);
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+.zovo-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--zovo-space-2);
+    padding: var(--zovo-space-2) var(--zovo-space-4);
+    font-family: var(--zovo-font-family);
+    font-size: var(--zovo-font-size-sm);
+    font-weight: var(--zovo-font-weight-medium);
+    line-height: 1;
+    border: none;
+    border-radius: var(--zovo-radius-lg);
+    cursor: pointer;
+    transition: all var(--zovo-transition-micro);
+    text-decoration: none;
+}
+
+.zovo-btn:hover {
+    transform: translateY(-1px);
+}
+
+.zovo-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.zovo-btn-primary {
+    background: var(--zovo-primary);
+    color: var(--zovo-text-inverse);
+}
+
+.zovo-btn-primary:hover:not(:disabled) {
+    background: var(--zovo-primary-hover);
+    box-shadow: var(--zovo-shadow-md);
+}
+
+.zovo-btn-secondary {
+    background: var(--zovo-bg-tertiary);
+    color: var(--zovo-text-primary);
+}
+
+.zovo-btn-secondary:hover:not(:disabled) {
+    background: var(--zovo-border);
+}
+
+.zovo-btn-ghost {
+    background: transparent;
+    color: var(--zovo-text-secondary);
+}
+
+.zovo-btn-ghost:hover:not(:disabled) {
+    background: var(--zovo-bg-tertiary);
+    color: var(--zovo-text-primary);
+}
+
+.zovo-btn-outline {
+    background: transparent;
+    border: 1px solid var(--zovo-border);
+    color: var(--zovo-text-primary);
+}
+
+.zovo-btn-outline:hover:not(:disabled) {
+    border-color: var(--zovo-primary);
+    color: var(--zovo-primary);
+}
+
+.zovo-btn-sm {
+    padding: var(--zovo-space-1) var(--zovo-space-3);
+    font-size: var(--zovo-font-size-xs);
+}
+
+.zovo-btn-lg {
+    padding: var(--zovo-space-3) var(--zovo-space-6);
+    font-size: var(--zovo-font-size-md);
+}
+
+.zovo-btn-block {
+    width: 100%;
+}
+
+/* =========================
+   INPUTS
+   ========================= */
+.zovo-input {
+    width: 100%;
+    padding: var(--zovo-space-2) var(--zovo-space-3);
+    font-family: var(--zovo-font-family);
+    font-size: var(--zovo-font-size-base);
+    color: var(--zovo-text-primary);
+    background: var(--zovo-bg-primary);
+    border: 1px solid var(--zovo-border);
+    border-radius: var(--zovo-radius-lg);
+    transition: border-color var(--zovo-transition-fast);
+}
+
+.zovo-input:focus {
+    outline: none;
+    border-color: var(--zovo-border-focus);
+    box-shadow: 0 0 0 3px var(--zovo-primary-light);
+}
+
+.zovo-input::placeholder {
+    color: var(--zovo-text-muted);
+}
+
+/* =========================
+   CARDS
+   ========================= */
+.zovo-card {
+    background: var(--zovo-bg-primary);
+    border: 1px solid var(--zovo-border);
+    border-radius: var(--zovo-radius-lg);
+    padding: var(--zovo-space-4);
+    box-shadow: var(--zovo-shadow-sm);
+}
+
+.zovo-card-hover:hover {
+    border-color: var(--zovo-primary);
+    box-shadow: var(--zovo-shadow-md);
+    transform: translateY(-1px);
+}
+
+/* =========================
+   FOOTER / BRANDING
+   ========================= */
+.zovo-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--zovo-space-3);
+    border-top: 1px solid var(--zovo-border);
+    background: var(--zovo-bg-secondary);
+}
+
+.zovo-footer-link {
+    display: flex;
+    align-items: center;
+    gap: var(--zovo-space-1);
+    font-size: var(--zovo-font-size-xs);
+    color: var(--zovo-text-muted);
+    text-decoration: none;
+    transition: color var(--zovo-transition-fast);
+}
+
+.zovo-footer-link:hover {
+    color: var(--zovo-primary);
+}
+
+.zovo-footer-brand {
+    font-weight: var(--zovo-font-weight-semibold);
+    color: var(--zovo-text-secondary);
+}
+
+/* =========================
+   RETENTION PROMPT
+   ========================= */
+.zovo-retention-prompt {
+    position: relative;
+    margin: var(--zovo-space-3);
+    padding: var(--zovo-space-3);
+    background: linear-gradient(135deg, var(--zovo-primary-light), var(--zovo-bg-secondary));
+    border-radius: var(--zovo-radius-lg);
+    border: 1px solid var(--zovo-primary);
+}
+
+.zovo-retention-close {
+    position: absolute;
+    top: var(--zovo-space-2);
+    right: var(--zovo-space-2);
+    width: 20px;
+    height: 20px;
+    border: none;
+    background: transparent;
+    color: var(--zovo-text-muted);
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.zovo-retention-close:hover {
+    color: var(--zovo-text-primary);
+}
+
+.zovo-retention-title {
+    font-size: var(--zovo-font-size-sm);
+    font-weight: var(--zovo-font-weight-semibold);
+    margin-bottom: var(--zovo-space-1);
+}
+
+.zovo-retention-message {
+    font-size: var(--zovo-font-size-xs);
+    color: var(--zovo-text-secondary);
+    margin-bottom: var(--zovo-space-2);
+}
+
+/* =========================
+   MORE FROM ZOVO PANEL
+   ========================= */
+.zovo-more-panel {
+    background: var(--zovo-bg-primary);
+    border-top: 1px solid var(--zovo-border);
+    padding: var(--zovo-space-4);
+}
+
+.zovo-more-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--zovo-space-3);
+}
+
+.zovo-more-header h3 {
+    font-size: var(--zovo-font-size-md);
+    font-weight: var(--zovo-font-weight-semibold);
+}
+
+.zovo-more-membership {
+    background: linear-gradient(135deg, var(--zovo-primary), #9333EA);
+    border-radius: var(--zovo-radius-lg);
+    padding: var(--zovo-space-4);
+    color: white;
+    margin-bottom: var(--zovo-space-4);
+}
+
+.zovo-more-membership-badge {
+    display: inline-block;
+    font-size: var(--zovo-font-size-xs);
+    font-weight: var(--zovo-font-weight-bold);
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--zovo-radius-full);
+    margin-bottom: var(--zovo-space-2);
+}
+
+.zovo-more-membership h4 {
+    font-size: var(--zovo-font-size-lg);
+    font-weight: var(--zovo-font-weight-bold);
+    margin-bottom: var(--zovo-space-1);
+}
+
+.zovo-more-membership p {
+    font-size: var(--zovo-font-size-sm);
+    opacity: 0.9;
+    margin-bottom: var(--zovo-space-3);
+}
+
+.zovo-extension-card {
+    display: flex;
+    align-items: center;
+    gap: var(--zovo-space-3);
+    padding: var(--zovo-space-3);
+    border: 1px solid var(--zovo-border);
+    border-radius: var(--zovo-radius-lg);
+    margin-bottom: var(--zovo-space-2);
+    cursor: pointer;
+    transition: all var(--zovo-transition-micro);
+}
+
+.zovo-extension-card:hover {
+    border-color: var(--zovo-primary);
+    background: var(--zovo-bg-secondary);
+}
+
+.zovo-extension-card img {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--zovo-radius-md);
+}
+
+.zovo-extension-card-info h5 {
+    font-size: var(--zovo-font-size-sm);
+    font-weight: var(--zovo-font-weight-medium);
+    margin-bottom: 2px;
+}
+
+.zovo-extension-card-info p {
+    font-size: var(--zovo-font-size-xs);
+    color: var(--zovo-text-muted);
+}
+
+/* =========================
+   UTILITY CLASSES
+   ========================= */
+.zovo-text-center {
+    text-align: center;
+}
+
+.zovo-text-muted {
+    color: var(--zovo-text-muted);
+}
+
+.zovo-text-sm {
+    font-size: var(--zovo-font-size-sm);
+}
+
+.zovo-text-xs {
+    font-size: var(--zovo-font-size-xs);
+}
+
+.zovo-mt-2 {
+    margin-top: var(--zovo-space-2);
+}
+
+.zovo-mt-4 {
+    margin-top: var(--zovo-space-4);
+}
+
+.zovo-mb-2 {
+    margin-bottom: var(--zovo-space-2);
+}
+
+.zovo-mb-4 {
+    margin-bottom: var(--zovo-space-4);
+}
+
+.zovo-p-4 {
+    padding: var(--zovo-space-4);
+}
+
+.zovo-flex {
+    display: flex;
+}
+
+.zovo-flex-col {
+    flex-direction: column;
+}
+
+.zovo-items-center {
+    align-items: center;
+}
+
+.zovo-justify-between {
+    justify-content: space-between;
+}
+
+.zovo-justify-center {
+    justify-content: center;
+}
+
+.zovo-gap-2 {
+    gap: var(--zovo-space-2);
+}
+
+.zovo-gap-4 {
+    gap: var(--zovo-space-4);
+}
+
+/* =========================
+   ZOVO SOFT EDGE GLOW
+   ========================= */
+.zovo-glow {
+    background:
+        radial-gradient(ellipse 50% 80% at 0% 50%, rgba(124, 58, 237, 0.1), transparent),
+        radial-gradient(ellipse 50% 80% at 100% 50%, rgba(124, 58, 237, 0.1), transparent);
+}
