@@ -1,8 +1,10 @@
 # Cookie Manager
 
-Simple, clean cookie management for Chrome. Built by [Zovo](https://zovo.one).
+[![Chrome Web Store](https://img.shields.io/badge/Chrome-Extension-4285F4?logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore/detail/cookie-manager)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![GitHub](https://img.shields.io/github/stars/theluckystrike/cookie-manager?style=social)](https://github.com/theluckystrike/cookie-manager)
 
-![Cookie Manager Screenshot](assets/screenshots/hero.png)
+Simple, clean cookie management for Chrome. Built by [Zovo](https://zovo.one).
 
 ## Features
 
@@ -48,7 +50,7 @@ MIT License — see [LICENSE](LICENSE)
 
 ## Support
 
-- 🐛 [Report a bug](https://github.com/nicholasip/cookie-manager/issues/new?template=bug_report.md)
+- 🐛 [Report a bug](https://github.com/theluckystrike/cookie-manager/issues/new?template=bug_report.md)
 - 💡 [Request a feature](https://zovo.one/request)
 - 💬 [Join Zovo](https://zovo.one) for priority support
 
