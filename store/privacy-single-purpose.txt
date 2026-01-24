@@ -1,0 +1,27 @@
+# Cookie Manager - Single Purpose Description
+
+## Primary Purpose
+
+Cookie Manager is a browser cookie management tool designed specifically for web developers and technical users. Its single purpose is to provide a clean, efficient interface for viewing, editing, exporting, and managing HTTP cookies for any website.
+
+## Core Functionality
+
+The extension enables users to:
+
+1. **View cookies** - Display all cookies set by the current website in a searchable, organized list
+2. **Edit cookies** - Modify cookie properties including name, value, domain, path, expiration, and security flags
+3. **Create cookies** - Add new cookies with specified properties for testing and development
+4. **Delete cookies** - Remove individual cookies or clear all cookies for a domain
+5. **Export cookies** - Copy all cookies as formatted JSON for use in other tools
+
+## Target Users
+
+This extension is designed for:
+- Web developers debugging authentication and session management
+- QA engineers testing cookie-dependent functionality
+- Security researchers analyzing website behavior
+- Technical users who need direct cookie management
+
+## Privacy Commitment
+
+Cookie Manager operates entirely locally within the user's browser. It does not collect, transmit, or store any user data externally. All cookie data is accessed through Chrome's official cookies API and remains on the user's device.

@@ -1,0 +1,73 @@
+# Cookie Manager - Permission Justifications
+
+## cookies
+
+**Why needed:** This is the core permission required for the extension's primary functionality. Cookie Manager uses the Chrome cookies API to read, create, modify, and delete browser cookies.
+
+**How used:** 
+- `chrome.cookies.getAll()` retrieves cookies for the current domain to display in the popup
+- `chrome.cookies.set()` creates or updates cookies when users edit values
+- `chrome.cookies.remove()` deletes cookies when users click delete
+- `chrome.cookies.onChanged` listener logs cookie changes for debugging
+
+**Data handling:** Cookie data is only displayed locally in the extension popup. No cookie data is transmitted externally or stored beyond the current session.
+
+---
+
+## activeTab
+
+**Why needed:** Required to determine the current website's URL so the extension can show relevant cookies.
+
+**How used:** 
+- `chrome.tabs.query()` gets the active tab's URL when the popup opens
+- The URL's hostname is extracted to filter cookies by domain
+
+**Data handling:** Only the hostname is used. No page content, browsing history, or sensitive URL parameters are accessed or stored.
+
+---
+
+## storage
+
+**Why needed:** Required to persist user preferences across browser sessions.
+
+**How used:**
+- `chrome.storage.local.set()` saves user settings like read-only mode preference
+- `chrome.storage.local.get()` retrieves settings when the extension loads
+
+**Data handling:** Only simple preference flags (booleans, strings) are stored. No cookie data or personal information is saved to storage.
+
+---
+
+## host_permissions: <all_urls>
+
+**Why needed:** Required to access cookies for any website the user visits. Without this permission, the extension could only view cookies for specific predefined domains.
+
+**How used:**
+- Allows `chrome.cookies.getAll()` to retrieve cookies regardless of which website the user is viewing
+- Enables the extension to work universally across all web pages
+
+**Data handling:** This permission grants access capability only. No data is collected, transmitted, or stored from websites. The extension only activates when the user explicitly opens it.
+
+---
+
+## contextMenus
+
+**Why needed:** Provides convenient right-click access to clear cookies without opening the popup.
+
+**How used:**
+- Creates a "Clear cookies for this site" context menu item
+- Executes cookie clearing when the user selects the menu option
+
+**Data handling:** No data is collected. The menu action only clears cookies for the current domain.
+
+---
+
+## notifications
+
+**Why needed:** Provides user feedback when context menu actions are performed.
+
+**How used:**
+- Shows a notification confirming how many cookies were cleared
+- Only triggered by explicit user action (context menu click)
+
+**Data handling:** No user data is included in notifications. Only generic confirmation messages are displayed.

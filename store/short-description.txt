@@ -1,0 +1,1 @@
+Simple cookie manager for developers. View, edit, export, and protect cookies with a clean UI.

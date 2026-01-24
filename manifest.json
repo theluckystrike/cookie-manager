@@ -1,0 +1,35 @@
+{
+    "manifest_version": 3,
+    "name": "Cookie Manager",
+    "version": "1.0.0",
+    "description": "Simple, clean cookie management. View, edit, export, and protect cookies.",
+    "author": "Michael Ip",
+    "homepage_url": "https://zovo.one",
+    "icons": {
+        "16": "assets/icons/icon-16.png",
+        "48": "assets/icons/icon-48.png",
+        "128": "assets/icons/icon-128.png"
+    },
+    "action": {
+        "default_popup": "src/popup/index.html",
+        "default_icon": {
+            "16": "assets/icons/icon-16.png",
+            "48": "assets/icons/icon-48.png"
+        },
+        "default_title": "Cookie Manager"
+    },
+    "permissions": [
+        "cookies",
+        "activeTab",
+        "storage",
+        "contextMenus",
+        "notifications"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "background": {
+        "service_worker": "src/background/service-worker.js",
+        "type": "module"
+    }
+}

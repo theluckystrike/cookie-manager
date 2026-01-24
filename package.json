@@ -1,0 +1,26 @@
+{
+    "name": "cookie-manager",
+    "version": "1.0.0",
+    "description": "Simple, clean cookie management for Chrome",
+    "author": "Michael Ip",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nicholasip/cookie-manager"
+    },
+    "scripts": {
+        "lint": "eslint src/",
+        "test": "echo \"No tests configured\" && exit 0",
+        "package": "zip -r cookie-manager-v1.0.0.zip manifest.json src/ assets/ docs/ LICENSE README.md -x '*.DS_Store'"
+    },
+    "devDependencies": {
+        "eslint": "^8.57.0"
+    },
+    "keywords": [
+        "chrome-extension",
+        "cookies",
+        "cookie-manager",
+        "developer-tools",
+        "jwt"
+    ]
+}

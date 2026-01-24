@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Cookie Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: #FAFAF9;
+            color: #0A0A0B;
+            line-height: 1.7;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .logo {
+            width: 64px;
+            height: 64px;
+            background: #7C3AED;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .logo span {
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #71717A;
+            font-size: 14px;
+        }
+
+        .tldr {
+            background: #EDE9FE;
+            border-left: 4px solid #7C3AED;
+            padding: 20px 24px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 40px;
+        }
+
+        .tldr h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #7C3AED;
+            margin-bottom: 12px;
+        }
+
+        .tldr ul {
+            list-style: none;
+            font-size: 15px;
+        }
+
+        .tldr li {
+            padding: 4px 0;
+        }
+
+        .tldr li::before {
+            content: "✓";
+            color: #10B981;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        section {
+            margin-bottom: 32px;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #0A0A0B;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: #27272A;
+        }
+
+        ul {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .permission {
+            background: #F4F4F5;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .permission h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #7C3AED;
+            margin-bottom: 8px;
+            font-family: monospace;
+        }
+
+        .permission p {
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid #E4E4E7;
+            color: #71717A;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: #7C3AED;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo"><span>🍪</span></div>
+            <h1>Privacy Policy</h1>
+            <p class="subtitle">Cookie Manager Chrome Extension</p>
+            <p class="subtitle">Last updated: January 24, 2026</p>
+        </header>
+
+        <div class="tldr">
+            <h2>TL;DR</h2>
+            <ul>
+                <li>We collect nothing</li>
+                <li>Your cookies stay on your device</li>
+                <li>We make zero network requests</li>
+                <li>The code is open source</li>
+            </ul>
+        </div>
+
+        <section>
+            <h2>Our Commitment</h2>
+            <p>Cookie Manager is built by <a href="https://zovo.one">Zovo</a> with privacy as a core principle. We
+                believe developer tools should work entirely locally without any data collection.</p>
+        </section>
+
+        <section>
+            <h2>Data We Collect</h2>
+            <p><strong>None.</strong> Cookie Manager does not collect, store, or transmit any user data.</p>
+            <p>Specifically, we do NOT:</p>
+            <ul>
+                <li>Send your cookies to any server</li>
+                <li>Track your browsing activity</li>
+                <li>Use analytics or telemetry</li>
+                <li>Store data outside your browser</li>
+                <li>Make any network requests</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>What We Do Access</h2>
+            <p>Cookie Manager accesses the following data locally:</p>
+            <ul>
+                <li><strong>Cookies:</strong> Read and displayed only in the popup interface</li>
+                <li><strong>Current Tab URL:</strong> Used only to filter cookies by domain</li>
+                <li><strong>Local Settings:</strong> Your preferences stored in browser storage</li>
+            </ul>
+            <p>All data remains on your device and is never transmitted externally.</p>
+        </section>
+
+        <section>
+            <h2>Permissions Explained</h2>
+
+            <div class="permission">
+                <h3>cookies</h3>
+                <p>Required to read, create, modify, and delete cookies. This is the core functionality of the
+                    extension.</p>
+            </div>
+
+            <div class="permission">
+                <h3>activeTab</h3>
+                <p>Required to get the current tab's URL so we can show relevant cookies.</p>
+            </div>
+
+            <div class="permission">
+                <h3>storage</h3>
+                <p>Required to save your preferences (like read-only mode) locally on your device.</p>
+            </div>
+
+            <div class="permission">
+                <h3>host_permissions</h3>
+                <p>Required to access cookies for any website you visit. This allows the extension to work on all sites.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Open Source</h2>
+            <p>Cookie Manager is open source. You can review the complete source code and verify our privacy claims at:
+            </p>
+            <p><a href="https://github.com/nicholasip/cookie-manager">github.com/nicholasip/cookie-manager</a></p>
+        </section>
+
+        <section>
+            <h2>Contact</h2>
+            <p>For privacy concerns, contact: <a href="mailto:privacy@zovo.one">privacy@zovo.one</a></p>
+        </section>
+
+        <section>
+            <h2>Changes to This Policy</h2>
+            <p>We will update this policy as needed. Significant changes will be noted in the extension's changelog.</p>
+        </section>
+
+        <footer>
+            <p>Built by <a href="https://zovo.one">Zovo</a></p>
+        </footer>
+    </div>
+</body>
+
+</html>
