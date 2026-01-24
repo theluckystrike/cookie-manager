@@ -73,5 +73,14 @@ Cookie Manager operates 100% locally:
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+🚀 PART OF ZOVO
+
+Cookie Manager is part of the Zovo suite of premium Chrome extensions. We build privacy-focused, developer-friendly tools that just work.
+
+🌐 Visit Zovo: https://zovo.one
+📧 Support: support@zovo.one
+💻 Open Source: https://github.com/theluckystrike/cookie-manager
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 Built with 🍪 by Zovo — https://zovo.one
-Open Source: https://github.com/nicholasip/cookie-manager
