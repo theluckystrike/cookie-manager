@@ -1,0 +1,391 @@
+/* ==========================================================================
+   Zovo Onboarding Styles
+   Shared styles for extension onboarding flows
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --zovo-primary: #7C3AED;
+    --zovo-primary-hover: #6D28D9;
+    --zovo-primary-light: #EDE9FE;
+    --zovo-bg-primary: #FAFAF9;
+    --zovo-bg-secondary: #F4F4F5;
+    --zovo-text-primary: #0A0A0B;
+    --zovo-text-secondary: #71717A;
+    --zovo-text-muted: #A1A1AA;
+    --zovo-border: #E4E4E7;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --zovo-bg-primary: #0A0A0B;
+        --zovo-bg-secondary: #18181B;
+        --zovo-text-primary: #FAFAF9;
+        --zovo-text-secondary: #A1A1AA;
+        --zovo-text-muted: #71717A;
+        --zovo-border: #27272A;
+        --zovo-primary-light: rgba(124, 58, 237, 0.2);
+    }
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--zovo-bg-primary);
+    color: var(--zovo-text-primary);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Container */
+.zovo-onboarding {
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 32px;
+    text-align: center;
+}
+
+/* Progress Bar */
+.zovo-onboarding-progress {
+    height: 4px;
+    background: var(--zovo-border);
+    border-radius: 2px;
+    margin-bottom: 48px;
+    overflow: hidden;
+}
+
+.zovo-onboarding-progress-fill {
+    height: 100%;
+    background: var(--zovo-primary);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Slides */
+.zovo-onboarding-slides {
+    position: relative;
+    min-height: 320px;
+}
+
+.zovo-onboarding-slide {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.zovo-onboarding-slide.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Icon */
+.zovo-onboarding-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 24px;
+}
+
+.zovo-onboarding-icon img {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+}
+
+.zovo-onboarding-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Typography */
+.zovo-onboarding h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.2;
+}
+
+.zovo-onboarding h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.zovo-onboarding-subtitle {
+    font-size: 14px;
+    color: var(--zovo-primary);
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.zovo-onboarding p {
+    font-size: 15px;
+    color: var(--zovo-text-secondary);
+    line-height: 1.6;
+    max-width: 360px;
+}
+
+/* Feature Pills */
+.zovo-onboarding-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.zovo-onboarding-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--zovo-bg-secondary);
+    border-radius: 20px;
+    font-size: 13px;
+    color: var(--zovo-text-secondary);
+}
+
+/* Feature Image */
+.zovo-onboarding-feature-img {
+    width: 100%;
+    max-width: 320px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.zovo-onboarding-feature-img img {
+    width: 100%;
+    height: auto;
+}
+
+/* Pro Features */
+.zovo-onboarding-pro {
+    background: linear-gradient(135deg, var(--zovo-primary), #9333EA);
+    border-radius: 16px;
+    padding: 24px;
+    color: white;
+    margin-top: 16px;
+    text-align: left;
+}
+
+.zovo-onboarding-pro h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.zovo-onboarding-pro ul {
+    list-style: none;
+    margin-bottom: 16px;
+}
+
+.zovo-onboarding-pro li {
+    font-size: 14px;
+    padding: 6px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.zovo-onboarding-pro li::before {
+    content: '✓';
+    font-weight: bold;
+}
+
+/* Navigation */
+.zovo-onboarding-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 48px;
+}
+
+/* Dots */
+.zovo-onboarding-dots {
+    display: flex;
+    gap: 8px;
+}
+
+.zovo-onboarding-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--zovo-border);
+    transition: all 0.2s ease;
+}
+
+.zovo-onboarding-dot.active {
+    background: var(--zovo-primary);
+    width: 24px;
+    border-radius: 4px;
+}
+
+/* Buttons */
+.zovo-onboarding-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.zovo-onboarding-btn:hover {
+    transform: translateY(-1px);
+}
+
+.zovo-onboarding-btn-primary {
+    background: var(--zovo-primary);
+    color: white;
+}
+
+.zovo-onboarding-btn-primary:hover {
+    background: var(--zovo-primary-hover);
+}
+
+.zovo-onboarding-btn-ghost {
+    background: transparent;
+    color: var(--zovo-text-muted);
+}
+
+.zovo-onboarding-btn-ghost:hover {
+    color: var(--zovo-text-primary);
+}
+
+.zovo-onboarding-btn-block {
+    width: 100%;
+}
+
+/* Footer */
+.zovo-onboarding-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.zovo-onboarding-brand {
+    font-size: 13px;
+    color: var(--zovo-text-muted);
+}
+
+.zovo-onboarding-brand strong {
+    color: var(--zovo-primary);
+}
+
+.zovo-onboarding-skip {
+    font-size: 13px;
+    color: var(--zovo-text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.zovo-onboarding-skip:hover {
+    color: var(--zovo-text-secondary);
+}
+
+/* CTA Group */
+.zovo-onboarding-cta-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+    width: 100%;
+    max-width: 280px;
+}
+
+/* Shortcuts Demo */
+.zovo-onboarding-shortcuts {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+    width: 100%;
+    max-width: 280px;
+}
+
+.zovo-onboarding-shortcut {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--zovo-bg-secondary);
+    border-radius: 8px;
+}
+
+.zovo-onboarding-shortcut kbd {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 4px 8px;
+    background: var(--zovo-bg-primary);
+    border: 1px solid var(--zovo-border);
+    border-radius: 4px;
+}
+
+/* Success Animation */
+.zovo-onboarding-success {
+    font-size: 64px;
+    margin-bottom: 24px;
+    animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* Trust Badges */
+.zovo-onboarding-trust {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+    font-size: 12px;
+    color: var(--zovo-text-muted);
+}
+
+.zovo-onboarding-trust span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}

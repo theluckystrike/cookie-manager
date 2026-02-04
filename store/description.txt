@@ -1,86 +1,53 @@
-Cookie Manager
-Simple, clean cookie management for Chrome
+Cookie Manager — View, Edit, Export Cookies with Ease
 
-🍪 View, edit, export, and protect your cookies with a beautiful, developer-friendly interface.
+🎯 THE PROBLEM
+Browser DevTools make cookie management painful. Scrolling, clicking, copying — it takes forever.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✨ THE SOLUTION
+Cookie Manager gives you one-click access to all cookies. View, edit, export, and organize with a clean, modern interface.
 
-WHY COOKIE MANAGER?
+📦 FREE FEATURES
+• View all cookies for current site
+• Edit any cookie value, expiry, or flags
+• Delete cookies individually or in bulk
+• Search by name, value, or domain
+• Export up to 10 cookies at a time
+• 1 cookie profile for saving sets
 
-EditThisCookie (2M+ users) was removed from the Chrome Web Store. Other alternatives have cluttered, confusing interfaces. Cookie Manager gives developers exactly what they need: simple view/edit/clear functionality with a clean, modern UI.
+🚀 PRO FEATURES ($4/mo)
+• Bulk export all cookies at once
+• Import cookies from JSON/Netscape files
+• Unlimited cookie profiles
+• Cross-device sync
+• Protected cookies (prevent deletion)
+• Cookie change alerts
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+👨‍💻 PERFECT FOR
+• Web developers testing auth flows
+• QA testers managing sessions
+• Privacy-focused users auditing cookies
+• Anyone managing multiple accounts
 
-✨ FEATURES
+🔒 YOUR PRIVACY MATTERS
+• All data stored locally on YOUR device
+• No external analytics or tracking
+• No account required
+• We never see your cookie data
 
-• View All Cookies — See every cookie for the current site in a clean, searchable list
-• Edit Cookies — Modify name, value, domain, path, and expiration with a simple form
-• Add New Cookies — Create cookies from scratch in seconds
-• Delete & Clear — Remove individual cookies or clear all cookies for a domain
-• Export as JSON — One-click copy all cookies, formatted and ready to use
-• JWT Decode — Automatically detect and decode JWT tokens with expiration info
-• Read-Only Mode — Toggle protection to prevent accidental changes
-• Dark Mode — Automatic theme that follows your system preference
-• Keyboard Shortcuts — Power user friendly: "/" to search, Ctrl+E to export
+⌨️ HOW IT WORKS
+1. Click the extension icon
+2. See all cookies instantly
+3. Edit, delete, or export as needed
+4. Save profiles for quick switching
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💎 WHY COOKIE MANAGER?
+✓ Clean, intuitive interface
+✓ Faster than DevTools
+✓ Profile switching for multi-account
+✓ Backed by Zovo — trusted by developers
 
-👩‍💻 PERFECT FOR
+Download now and take control of your cookies!
 
-• Web developers debugging authentication
-• QA engineers testing session management
-• Security researchers analyzing cookie behavior
-• Anyone who needs to manage cookies efficiently
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚡ HOW IT WORKS
-
-1. Click the Cookie Manager icon in your toolbar
-2. View all cookies for the current site
-3. Click any cookie to edit or delete it
-4. Use Export to copy all cookies as JSON
-5. Enable Read-Only mode to prevent changes
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⌨️ KEYBOARD SHORTCUTS
-
-• / — Focus search
-• Escape — Close modal
-• Ctrl/Cmd + E — Export cookies
-• Ctrl/Cmd + N — Add new cookie
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🔒 PRIVACY FIRST
-
-Cookie Manager operates 100% locally:
-✅ No data collection
-✅ No analytics or tracking
-✅ No network requests
-✅ All data stays on your device
-✅ Open source for transparency
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-📋 PERMISSIONS EXPLAINED
-
-• cookies — Required to read, create, modify, and delete cookies
-• activeTab — Required to get the current tab's URL
-• storage — Required to save your preferences locally
-• host_permissions — Required to access cookies for any website
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-🚀 PART OF ZOVO
-
-Cookie Manager is part of the Zovo suite of premium Chrome extensions. We build privacy-focused, developer-friendly tools that just work.
-
-🌐 Visit Zovo: https://zovo.one
-📧 Support: support@zovo.one
-💻 Open Source: https://github.com/theluckystrike/cookie-manager
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Built with 🍪 by Zovo — https://zovo.one
+---
+Part of the Zovo developer tools suite
+https://zovo.one

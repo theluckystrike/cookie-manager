@@ -38,11 +38,31 @@ const ZOVO_CATALOG = [
         id: 'json-formatter-pro',
         name: 'JSON Formatter Pro',
         tagline: 'Format and validate JSON',
-        icon: 'https://zovo.one/icons/json.png',
+        icon: 'https://zovo.one/icons/json-formatter.png',
         storeUrl: 'https://chrome.google.com/webstore/detail/json-formatter-pro',
         zovoUrl: 'https://zovo.one/extensions/json-formatter-pro',
         category: 'developer',
-        featured: false
+        featured: true
+    },
+    {
+        id: 'form-filler-pro',
+        name: 'Form Filler Pro',
+        tagline: 'Auto-fill forms with custom profiles',
+        icon: 'https://zovo.one/icons/form-filler.png',
+        storeUrl: 'https://chrome.google.com/webstore/detail/form-filler-pro',
+        zovoUrl: 'https://zovo.one/extensions/form-filler-pro',
+        category: 'productivity',
+        featured: true
+    },
+    {
+        id: 'api-testing-lite',
+        name: 'API Testing Lite',
+        tagline: 'Lightweight REST API testing',
+        icon: 'https://zovo.one/icons/api-testing.png',
+        storeUrl: 'https://chrome.google.com/webstore/detail/api-testing-lite',
+        zovoUrl: 'https://zovo.one/extensions/api-testing-lite',
+        category: 'developer',
+        featured: true
     }
 ];
 
