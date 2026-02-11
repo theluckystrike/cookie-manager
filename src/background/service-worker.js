@@ -100,6 +100,53 @@ self.addEventListener('unhandledrejection', (event) => {
 debugLog('info', 'Monitoring', 'Error tracking & monitoring initialized (MD 11)');
 
 // ============================================================================
+// MV3 Architecture Integration (MD 12)
+// ============================================================================
+
+// Initialize lifecycle manager
+if (typeof SwLifecycle !== 'undefined') {
+    SwLifecycle.init();
+
+    // Register periodic maintenance alarm (every 30 minutes)
+    SwLifecycle.registerAlarm('maintenance', 30, async () => {
+        debugLog('info', 'Maintenance', 'Running periodic maintenance');
+
+        // Trim error logs
+        try {
+            const { errorLogs = [] } = await chrome.storage.local.get('errorLogs');
+            if (errorLogs.length > ERROR_LOG_MAX) {
+                await chrome.storage.local.set({ errorLogs: errorLogs.slice(-ERROR_LOG_MAX) });
+            }
+        } catch (e) {
+            debugLog('warn', 'Maintenance', 'Error trimming logs', e.message);
+        }
+
+        // Trim analytics
+        try {
+            const { analytics = [] } = await chrome.storage.local.get('analytics');
+            if (analytics.length > 100) {
+                await chrome.storage.local.set({ analytics: analytics.slice(-100) });
+            }
+        } catch (e) {
+            debugLog('warn', 'Maintenance', 'Error trimming analytics', e.message);
+        }
+    });
+
+    debugLog('info', 'MV3', 'Lifecycle manager initialized');
+}
+
+// Run storage migrations on startup
+if (typeof StorageSchema !== 'undefined') {
+    StorageSchema.migrate().then(result => {
+        if (result && result.migrated) {
+            debugLog('info', 'MV3', 'Storage migration complete', result);
+        }
+    }).catch(e => {
+        debugLog('warn', 'MV3', 'Storage migration error', e.message);
+    });
+}
+
+// ============================================================================
 // Cookie Operations (inline to avoid module loading issues in MV3)
 // ============================================================================
 
@@ -447,6 +494,11 @@ chrome.runtime.onInstalled.addListener(async (details) => {
             errorLogs: [],
             debugMode: false
         });
+
+        // Set initial schema version
+        if (typeof StorageSchema !== 'undefined') {
+            await chrome.storage.local.set({ _schemaVersion: StorageSchema.VERSION });
+        }
 
         // Check if onboarding already shown
         const { onboardingComplete } = await chrome.storage.local.get('onboardingComplete');
