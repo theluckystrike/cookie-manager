@@ -29,7 +29,11 @@ const ProfilesManager = {
     // Initialization
     // ========================================================================
 
-    async init() {
+    /**
+     * Initialize the profiles manager.
+     * @param {chrome.tabs.Tab} [tab] - The current active tab (avoids redundant chrome.tabs.query)
+     */
+    async init(tab) {
         if (this._initialized) {
             // Re-fetch profiles on each tab show
             await this.loadProfiles();
@@ -38,9 +42,12 @@ const ProfilesManager = {
 
         this._initialized = true;
 
-        // Get current tab info
+        // Use provided tab or fall back to querying
         try {
-            const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            if (!tab) {
+                const [activeTab] = await chrome.tabs.query({ active: true, currentWindow: true });
+                tab = activeTab;
+            }
             if (tab && tab.url && !tab.url.startsWith('chrome://') && !tab.url.startsWith('chrome-extension://')) {
                 const url = new URL(tab.url);
                 this._currentDomain = url.hostname;
@@ -85,12 +92,12 @@ const ProfilesManager = {
     async saveCurrentCookies() {
         // Check free tier limit
         if (this._profiles.length >= this.FREE_TIER_MAX) {
-            showToast('Upgrade to Pro for unlimited profiles', 'error');
+            this._showToast('Upgrade to Pro for unlimited profiles', 'error');
             return;
         }
 
         if (!this._currentDomain || !this._currentTabUrl) {
-            showToast('No domain available to save cookies from', 'error');
+            this._showToast('No domain available to save cookies from', 'error');
             return;
         }
 
@@ -100,7 +107,7 @@ const ProfilesManager = {
 
         // Check for duplicate name
         if (this._profiles.some(p => p.name === name)) {
-            showConfirm(
+            this._showConfirm(
                 'Overwrite Profile?',
                 `A profile named "${name}" already exists. Overwrite it?`,
                 async () => {
@@ -124,19 +131,19 @@ const ProfilesManager = {
             });
 
             if (response && response.success) {
-                showToast(`Profile "${name}" saved with ${response.cookieCount} cookies`, 'success');
+                this._showToast(`Profile "${name}" saved with ${response.cookieCount} cookies`, 'success');
                 await this.loadProfiles();
             } else {
-                showToast(response?.error || 'Failed to save profile', 'error');
+                this._showToast(response?.error || 'Failed to save profile', 'error');
             }
         } catch (e) {
             console.error('[Profiles] Save error:', e);
-            showToast('Failed to save profile', 'error');
+            this._showToast('Failed to save profile', 'error');
         }
     },
 
     async loadProfile(profileName) {
-        showConfirm(
+        this._showConfirm(
             'Load Profile?',
             `This will restore all cookies from "${profileName}" to the current domain. Existing cookies will not be cleared first.`,
             async () => {
@@ -151,25 +158,25 @@ const ProfilesManager = {
                         if (response.failed > 0) {
                             msg += ` (${response.failed} failed)`;
                         }
-                        showToast(msg, response.failed > 0 ? 'error' : 'success');
+                        this._showToast(msg, response.failed > 0 ? 'error' : 'success');
 
                         // Refresh the cookies tab if it exists
                         if (typeof loadCookies === 'function') {
                             loadCookies();
                         }
                     } else {
-                        showToast(response?.error || 'Failed to load profile', 'error');
+                        this._showToast(response?.error || 'Failed to load profile', 'error');
                     }
                 } catch (e) {
                     console.error('[Profiles] Load error:', e);
-                    showToast('Failed to load profile', 'error');
+                    this._showToast('Failed to load profile', 'error');
                 }
             }
         );
     },
 
     async deleteProfile(profileName) {
-        showConfirm(
+        this._showConfirm(
             'Delete Profile?',
             `Are you sure you want to delete "${profileName}"? This cannot be undone.`,
             async () => {
@@ -180,14 +187,14 @@ const ProfilesManager = {
                     });
 
                     if (response && response.success) {
-                        showToast(`Profile "${profileName}" deleted`, 'success');
+                        this._showToast(`Profile "${profileName}" deleted`, 'success');
                         await this.loadProfiles();
                     } else {
-                        showToast(response?.error || 'Failed to delete profile', 'error');
+                        this._showToast(response?.error || 'Failed to delete profile', 'error');
                     }
                 } catch (e) {
                     console.error('[Profiles] Delete error:', e);
-                    showToast('Failed to delete profile', 'error');
+                    this._showToast('Failed to delete profile', 'error');
                 }
             }
         );
@@ -392,6 +399,29 @@ const ProfilesManager = {
         });
 
         return card;
+    },
+
+    // ========================================================================
+    // Safe UI Helpers (showToast/showConfirm are defined in popup.js which loads after profiles.js)
+    // ========================================================================
+
+    _showToast(message, type) {
+        if (typeof showToast === 'function') {
+            showToast(message, type);
+        } else {
+            console.warn('[Profiles]', type === 'error' ? 'Error:' : 'Info:', message);
+        }
+    },
+
+    _showConfirm(title, message, onConfirm) {
+        if (typeof showConfirm === 'function') {
+            showConfirm(title, message, onConfirm);
+        } else {
+            // Fallback: use native confirm
+            if (confirm(title + '\n\n' + message)) {
+                onConfirm();
+            }
+        }
     },
 
     // ========================================================================

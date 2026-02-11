@@ -272,13 +272,14 @@ function switchTab(tabName) {
 
     // Initialize tab managers on first visit
     if (tabName === 'profiles' && typeof ProfilesManager !== 'undefined') {
-        ProfilesManager.init(currentDomain);
+        ProfilesManager.init(currentTab);
     }
     if (tabName === 'rules' && typeof RulesManager !== 'undefined') {
         RulesManager.init();
     }
     if (tabName === 'health' && typeof HealthManager !== 'undefined') {
         HealthManager.init();
+        HealthManager.onShow();
     }
 
     // Persist active tab

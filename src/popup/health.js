@@ -308,6 +308,30 @@ var HealthManager = (function () {
     // ========================================================================
 
     function render(analysis) {
+        // Show/hide the empty state vs content sections
+        var emptyEl = document.getElementById('healthEmpty');
+        var scoreSection = document.querySelector('.health-score-section');
+        var categoriesEl = document.getElementById('healthCategories');
+        var trackersSection = document.getElementById('healthTrackers');
+        var recsSection = document.getElementById('healthRecommendations');
+        var actionsSection = document.getElementById('healthActions');
+
+        if (analysis.totalCookies === 0) {
+            // No cookies: show empty state, hide everything else
+            if (emptyEl) emptyEl.hidden = false;
+            if (scoreSection) scoreSection.style.display = 'none';
+            if (categoriesEl) categoriesEl.style.display = 'none';
+            if (trackersSection) trackersSection.hidden = true;
+            if (recsSection) recsSection.hidden = true;
+            if (actionsSection) actionsSection.hidden = true;
+            return;
+        }
+
+        // Has cookies: hide empty state, show content
+        if (emptyEl) emptyEl.hidden = true;
+        if (scoreSection) scoreSection.style.display = '';
+        if (categoriesEl) categoriesEl.style.display = '';
+
         renderScoreCircle(analysis);
         renderCategoryBreakdown(analysis);
         renderTrackers(analysis);
@@ -316,24 +340,25 @@ var HealthManager = (function () {
     }
 
     function renderScoreCircle(analysis) {
-        var scoreEl = document.getElementById('healthScoreValue');
-        var gradeEl = document.getElementById('healthGradeLetter');
-        var labelEl = document.getElementById('healthScoreLabel');
-        var circleEl = document.getElementById('healthScoreCircle');
+        // healthGrade displays grade letter (HTML id="healthGrade")
+        var gradeEl = document.getElementById('healthGrade');
+        // healthSummary displays summary text (HTML id="healthSummary")
+        var summaryEl = document.getElementById('healthSummary');
+        // healthRingFill is the SVG circle to animate (HTML id="healthRingFill")
+        var circleEl = document.getElementById('healthRingFill');
 
-        if (!scoreEl || !gradeEl || !circleEl) return;
+        if (!gradeEl || !circleEl) return;
 
-        scoreEl.textContent = analysis.overallScore;
         gradeEl.textContent = analysis.grade;
         gradeEl.style.color = analysis.gradeColor;
 
-        if (labelEl) {
-            labelEl.textContent = analysis.totalCookies + ' cookie' + (analysis.totalCookies !== 1 ? 's' : '') + ' analyzed';
+        if (summaryEl) {
+            summaryEl.textContent = analysis.totalCookies + ' cookie' + (analysis.totalCookies !== 1 ? 's' : '') + ' analyzed \u2014 Score: ' + analysis.overallScore + '/100';
         }
 
         // Animate the SVG circle
-        // Circle: r=54, circumference = 2 * PI * 54 = 339.29
-        var circumference = 339.29;
+        // Circle: r=52 (from HTML), circumference = 2 * PI * 52 = 326.73
+        var circumference = 2 * Math.PI * 52;
         var offset = circumference - (analysis.overallScore / 100) * circumference;
         circleEl.style.strokeDasharray = circumference;
         circleEl.style.strokeDashoffset = offset;
@@ -341,75 +366,56 @@ var HealthManager = (function () {
     }
 
     function renderCategoryBreakdown(analysis) {
-        var container = document.getElementById('healthCategories');
-        if (!container) return;
-
-        container.textContent = '';
+        // Map analysis category keys to HTML element IDs
+        // HTML has: catSecure/catSecureFill, catHttpOnly/catHttpOnlyFill,
+        //           catSameSite/catSameSiteFill, catTrackers/catTrackersFill
+        var mapping = [
+            { key: 'secure',   valueId: 'catSecure',   fillId: 'catSecureFill' },
+            { key: 'httpOnly', valueId: 'catHttpOnly',  fillId: 'catHttpOnlyFill' },
+            { key: 'sameSite', valueId: 'catSameSite',  fillId: 'catSameSiteFill' },
+            { key: 'trackers', valueId: 'catTrackers',  fillId: 'catTrackersFill' }
+        ];
 
         var categories = analysis.categories;
-        var keys = ['secure', 'httpOnly', 'sameSite', 'trackers', 'quantity', 'expiry'];
 
-        for (var i = 0; i < keys.length; i++) {
-            var cat = categories[keys[i]];
-            var item = document.createElement('div');
-            item.className = 'health-category-item';
+        for (var i = 0; i < mapping.length; i++) {
+            var m = mapping[i];
+            var cat = categories[m.key];
+            if (!cat) continue;
 
-            var header = document.createElement('div');
-            header.className = 'health-category-header';
+            var valueEl = document.getElementById(m.valueId);
+            var fillEl = document.getElementById(m.fillId);
 
-            var labelSpan = document.createElement('span');
-            labelSpan.className = 'health-category-label';
-            labelSpan.textContent = cat.label;
+            if (valueEl) {
+                valueEl.textContent = cat.score + '/100';
+                valueEl.style.color = getGrade(cat.score).color;
+            }
 
-            var scoreSpan = document.createElement('span');
-            scoreSpan.className = 'health-category-score';
-            scoreSpan.textContent = cat.score + '/100';
-            scoreSpan.style.color = getGrade(cat.score).color;
-
-            header.appendChild(labelSpan);
-            header.appendChild(scoreSpan);
-
-            var barWrap = document.createElement('div');
-            barWrap.className = 'health-progress-bar';
-
-            var barFill = document.createElement('div');
-            barFill.className = 'health-progress-fill';
-            barFill.style.width = cat.score + '%';
-            barFill.style.backgroundColor = getGrade(cat.score).color;
-
-            barWrap.appendChild(barFill);
-
-            var detail = document.createElement('div');
-            detail.className = 'health-category-detail';
-            detail.textContent = cat.detail;
-
-            item.appendChild(header);
-            item.appendChild(barWrap);
-            item.appendChild(detail);
-
-            container.appendChild(item);
+            if (fillEl) {
+                fillEl.style.width = cat.score + '%';
+                fillEl.style.backgroundColor = getGrade(cat.score).color;
+            }
         }
     }
 
     function renderTrackers(analysis) {
+        // healthTrackers is the parent section (hidden by default in HTML)
+        var section = document.getElementById('healthTrackers');
+        // healthTrackerList is the container for tracker items
         var container = document.getElementById('healthTrackerList');
-        var countEl = document.getElementById('healthTrackerCount');
-        var emptyEl = document.getElementById('healthTrackersEmpty');
 
         if (!container) return;
 
         container.textContent = '';
 
-        if (countEl) {
-            countEl.textContent = analysis.trackers.length;
-        }
-
         if (analysis.trackers.length === 0) {
-            if (emptyEl) emptyEl.hidden = false;
+            // No trackers: hide the entire section
+            if (section) section.hidden = true;
             return;
         }
 
-        if (emptyEl) emptyEl.hidden = true;
+        // Has trackers: show the section
+        if (section) section.hidden = false;
 
         for (var i = 0; i < analysis.trackers.length; i++) {
             var tracker = analysis.trackers[i];
@@ -442,18 +448,26 @@ var HealthManager = (function () {
     }
 
     function renderRecommendations(analysis) {
-        var container = document.getElementById('healthRecommendations');
+        // healthRecommendations is the parent section (hidden by default)
+        var section = document.getElementById('healthRecommendations');
+        // healthRecList is the actual list container inside the section
+        var container = document.getElementById('healthRecList');
         if (!container) return;
 
         container.textContent = '';
 
         if (analysis.recommendations.length === 0) {
+            // No recommendations: hide section or show "all clear"
+            if (section) section.hidden = false;
             var allGood = document.createElement('div');
             allGood.className = 'health-rec-empty';
             allGood.textContent = 'All clear! Your cookies look healthy.';
             container.appendChild(allGood);
             return;
         }
+
+        // Has recommendations: show the section
+        if (section) section.hidden = false;
 
         for (var i = 0; i < analysis.recommendations.length; i++) {
             var rec = analysis.recommendations[i];
@@ -490,32 +504,26 @@ var HealthManager = (function () {
     }
 
     function setupQuickActions(analysis) {
-        var cleanTrackersBtn = document.getElementById('healthCleanTrackers');
-        var secureAllBtn = document.getElementById('healthSecureAll');
+        // healthActions is the parent section (hidden by default in HTML)
+        var actionsSection = document.getElementById('healthActions');
+        // cleanTrackersBtn is the button ID in HTML
+        var cleanTrackersBtn = document.getElementById('cleanTrackersBtn');
+
+        var hasTrackers = analysis.trackers.length > 0;
+
+        // Show the actions section only if there are trackers to clean
+        if (actionsSection) {
+            actionsSection.hidden = !hasTrackers;
+        }
 
         if (cleanTrackersBtn) {
             // Remove old listeners by replacing node
             var newCleanBtn = cleanTrackersBtn.cloneNode(true);
             cleanTrackersBtn.parentNode.replaceChild(newCleanBtn, cleanTrackersBtn);
 
-            newCleanBtn.disabled = analysis.trackers.length === 0;
+            newCleanBtn.disabled = !hasTrackers;
             newCleanBtn.addEventListener('click', function () {
                 cleanTrackingCookies(analysis.trackers);
-            });
-        }
-
-        if (secureAllBtn) {
-            var insecureCount = 0;
-            for (var i = 0; i < _cookies.length; i++) {
-                if (!_cookies[i].secure) insecureCount++;
-            }
-
-            var newSecureBtn = secureAllBtn.cloneNode(true);
-            secureAllBtn.parentNode.replaceChild(newSecureBtn, secureAllBtn);
-
-            newSecureBtn.disabled = insecureCount === 0;
-            newSecureBtn.addEventListener('click', function () {
-                secureAllCookies();
             });
         }
     }

@@ -1019,11 +1019,17 @@ async function handleMessage(message) {
                         return { error: 'Domain is required for auto-delete rule' };
                     }
 
+                    var rawInterval = payload?.intervalMinutes;
+                    // 0 means "on browser close", so allow it explicitly
+                    var intervalMinutes = (typeof rawInterval === 'number' && rawInterval >= 0)
+                        ? Math.min(rawInterval, 10080)
+                        : 60;
+
                     const rule = {
                         id: payload?.id || `rule_${Date.now()}`,
                         domain: domain,
                         pattern: sanitizeInput(payload?.pattern, 256) || '*',
-                        intervalMinutes: Math.max(1, Math.min(payload?.intervalMinutes || 60, 10080)),
+                        intervalMinutes: intervalMinutes,
                         enabled: payload?.enabled !== false,
                         createdAt: Date.now()
                     };

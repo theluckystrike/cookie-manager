@@ -41,6 +41,7 @@ var RulesManager = (function() {
     var _loading = false;
     var _formVisible = false;
     var _editingRuleId = null; // null = creating new
+    var _initialized = false;
 
     // ----- DOM references (resolved lazily on init) -----
     var _els = {};
@@ -48,22 +49,20 @@ var RulesManager = (function() {
     function $(id) { return document.getElementById(id); }
 
     function _resolveElements() {
-        _els.container     = $('rulesContainer');
+        _els.container     = $('tabRules');
         _els.list          = $('rulesList');
-        _els.emptyState    = $('rulesEmptyState');
-        _els.loadingState  = $('rulesLoadingState');
+        _els.emptyState    = $('rulesEmpty');
         _els.addBtn        = $('addRuleBtn');
-        _els.limitBanner   = $('rulesLimitBanner');
+        _els.limitBanner   = $('rulesLockOverlay');
 
         // Form
-        _els.formWrap      = $('ruleFormWrap');
+        _els.formWrap      = $('ruleFormOverlay');
         _els.formTitle      = $('ruleFormTitle');
         _els.domainInput   = $('ruleDomain');
         _els.patternInput  = $('ruleCookiePattern');
         _els.scheduleSelect = $('ruleSchedule');
-        _els.enabledToggle = $('ruleEnabled');
-        _els.saveBtn       = $('ruleSaveBtn');
-        _els.cancelBtn     = $('ruleCancelBtn');
+        _els.saveBtn       = $('ruleFormSave');
+        _els.cancelBtn     = $('ruleFormCancel');
     }
 
     // ----- Messaging helpers -----
@@ -171,13 +170,11 @@ var RulesManager = (function() {
         if (!_els.list) return;
         _els.list.hidden = true;
         if (_els.emptyState) _els.emptyState.hidden = true;
-        if (_els.loadingState) _els.loadingState.hidden = false;
         if (_els.limitBanner) _els.limitBanner.hidden = true;
     }
 
     function _render() {
         if (!_els.list) return;
-        if (_els.loadingState) _els.loadingState.hidden = true;
 
         var atLimit = _rules.length >= RULES_FREE_LIMIT;
 
@@ -329,7 +326,6 @@ var RulesManager = (function() {
 
         _els.domainInput.value   = rule ? rule.domain : '';
         _els.patternInput.value  = rule ? rule.pattern : '*';
-        _els.enabledToggle.checked = rule ? rule.enabled : true;
 
         // Select the matching schedule option
         var mins = rule ? rule.intervalMinutes : 60;
@@ -358,8 +354,11 @@ var RulesManager = (function() {
     async function _handleFormSubmit() {
         var domain = (_els.domainInput.value || '').trim();
         var pattern = (_els.patternInput.value || '').trim() || '*';
-        var intervalMinutes = parseInt(_els.scheduleSelect.value) || 60;
-        var enabled = _els.enabledToggle.checked;
+        var intervalMinutes = parseInt(_els.scheduleSelect.value);
+        if (isNaN(intervalMinutes)) intervalMinutes = 60;
+        // When editing, preserve the rule's enabled state; new rules default to enabled
+        var rule = _editingRuleId ? _rules.find(function(r) { return r.id === _editingRuleId; }) : null;
+        var enabled = rule ? rule.enabled : true;
 
         if (!domain) {
             _toast('Domain pattern is required', 'error');
@@ -432,10 +431,13 @@ var RulesManager = (function() {
         _resolveElements();
         if (!_els.container) {
             // Tab content element not found yet; bail silently
-            console.debug('[Rules] #rulesContainer not found, skipping init');
+            console.debug('[Rules] #tabRules not found, skipping init');
             return;
         }
-        _bindEvents();
+        if (!_initialized) {
+            _bindEvents();
+            _initialized = true;
+        }
         await _loadRules();
     }
 
