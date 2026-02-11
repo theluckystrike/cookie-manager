@@ -72,7 +72,15 @@
         SAVE_AUTO_DELETE_RULE: 'SAVE_AUTO_DELETE_RULE',
         DELETE_AUTO_DELETE_RULE: 'DELETE_AUTO_DELETE_RULE',
         // Help & Navigation
-        OPEN_FEEDBACK: 'OPEN_FEEDBACK'
+        OPEN_FEEDBACK: 'OPEN_FEEDBACK',
+        // Payment & Licensing (MD 08)
+        CHECK_LICENSE: 'CHECK_LICENSE',
+        ACTIVATE_LICENSE: 'ACTIVATE_LICENSE',
+        DEACTIVATE_LICENSE: 'DEACTIVATE_LICENSE',
+        GET_LICENSE_STATUS: 'GET_LICENSE_STATUS',
+        // Trial Management (MD 08)
+        GET_TRIAL_STATUS: 'GET_TRIAL_STATUS',
+        CHECK_TRIAL_AND_LICENSE: 'CHECK_TRIAL_AND_LICENSE'
     };
 
     var _knownActions = Object.create(null);

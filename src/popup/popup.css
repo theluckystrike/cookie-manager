@@ -2261,3 +2261,155 @@ a:focus-visible {
 .health-grade-c { color: var(--warning); }
 .health-grade-d { color: #F97316; }
 .health-grade-f { color: var(--danger); }
+
+/* ============================================================================
+   Subscription Status UI (Phase 08 - Payment Integration)
+   ============================================================================ */
+
+/* ---------- Subscription Badge ---------- */
+.subscription-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.4;
+    letter-spacing: 0.3px;
+    vertical-align: middle;
+    margin-top: 2px;
+}
+
+.badge-free {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+.badge-pro {
+    background: linear-gradient(135deg, #7C3AED, #6D28D9);
+    color: #FFFFFF;
+}
+
+.badge-trial {
+    background: #FEF3C7;
+    color: #92400E;
+}
+
+.badge-lifetime {
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: #FFFFFF;
+}
+
+/* ---------- Trial Banner ---------- */
+.trial-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+    background: #FEF3C7;
+    border-bottom: 1px solid #FDE68A;
+    flex-shrink: 0;
+}
+
+.trial-banner-text {
+    font-size: var(--text-sm);
+    color: #92400E;
+    font-weight: 500;
+}
+
+.trial-banner-text strong {
+    font-weight: 700;
+}
+
+.trial-banner-link {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.trial-banner-link:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* ---------- Manage Subscription Link ---------- */
+.manage-sub-link {
+    display: inline;
+    font-size: 12px;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition-fast);
+}
+
+.manage-sub-link:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
+}
+
+/* ---------- PRO Label (for feature elements) ---------- */
+.pro-label {
+    display: inline-block;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #7C3AED, #6D28D9);
+    color: #FFFFFF;
+    margin-left: 4px;
+    vertical-align: middle;
+    line-height: 1.4;
+}
+
+/* ---------- Feature Locked State ---------- */
+.feature-locked {
+    opacity: 0.6;
+    position: relative;
+    cursor: pointer;
+}
+
+.feature-locked::after {
+    content: 'PRO';
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, #7C3AED, #6D28D9);
+    color: #FFFFFF;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ---------- Dark Mode Variants ---------- */
+@media (prefers-color-scheme: dark) {
+    .badge-trial {
+        background: rgba(245, 158, 11, 0.2);
+        color: #FBBF24;
+    }
+
+    .trial-banner {
+        background: rgba(245, 158, 11, 0.15);
+        border-bottom-color: rgba(245, 158, 11, 0.25);
+    }
+
+    .trial-banner-text {
+        color: #FBBF24;
+    }
+
+    .pro-label {
+        background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+    }
+
+    .feature-locked::after {
+        background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+    }
+}

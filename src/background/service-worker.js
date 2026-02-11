@@ -53,6 +53,10 @@ try { importScripts('src/utils/cookies.js'); } catch(e) { console.warn('utils/co
 try { importScripts('src/utils/jwt.js'); } catch(e) { console.warn('utils/jwt.js not loaded:', e.message); }
 try { importScripts('src/utils/storage.js'); } catch(e) { console.warn('utils/storage.js not loaded:', e.message); }
 
+// Payment & Licensing (MD 08)
+try { importScripts('src/utils/license-manager.js'); } catch(e) { console.warn('license-manager.js not loaded:', e.message); }
+try { importScripts('src/utils/trial-manager.js'); } catch(e) { console.warn('trial-manager.js not loaded:', e.message); }
+
 // ============================================================================
 // Error Tracking & Monitoring (MD 11 - Crash Analytics)
 // ============================================================================
@@ -1101,6 +1105,124 @@ async function handleMessage(message) {
                 }
             }
 
+            // ==============================================================
+            // Payment & Licensing (MD 08)
+            // ==============================================================
+
+            case 'CHECK_LICENSE': {
+                if (typeof LicenseManager !== 'undefined') {
+                    try {
+                        var storedKeyData = await chrome.storage.local.get('licenseKey');
+                        var storedKey = storedKeyData.licenseKey || null;
+                        var licenseResult = await LicenseManager.checkLicense(storedKey, !!(payload && payload.forceRefresh));
+                        return { success: true, data: licenseResult };
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'LicenseManager not available' };
+            }
+
+            case 'ACTIVATE_LICENSE': {
+                if (typeof LicenseManager !== 'undefined') {
+                    try {
+                        var activateKey = payload && payload.licenseKey;
+                        if (!activateKey) {
+                            return { error: 'License key is required' };
+                        }
+                        var activateResult = await LicenseManager.activateLicense(activateKey);
+                        return { success: true, data: activateResult };
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'LicenseManager not available' };
+            }
+
+            case 'DEACTIVATE_LICENSE': {
+                if (typeof LicenseManager !== 'undefined') {
+                    try {
+                        var deactivateResult = await LicenseManager.deactivateLicense();
+                        return { success: true, data: deactivateResult };
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'LicenseManager not available' };
+            }
+
+            case 'GET_LICENSE_STATUS': {
+                if (typeof LicenseManager !== 'undefined') {
+                    try {
+                        var tier = await LicenseManager.getTier();
+                        var isProUser = await LicenseManager.isPro();
+                        var features = await LicenseManager.getFeatures();
+                        var expiresAt = await LicenseManager.getExpiryDate();
+                        return {
+                            success: true,
+                            data: {
+                                tier: tier,
+                                isPro: isProUser,
+                                features: features,
+                                expiresAt: expiresAt
+                            }
+                        };
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'LicenseManager not available' };
+            }
+
+            // ==============================================================
+            // Trial Management (MD 08)
+            // ==============================================================
+
+            case 'GET_TRIAL_STATUS': {
+                if (typeof TrialManager !== 'undefined') {
+                    try {
+                        var trialStatus = await TrialManager.getStatus();
+                        return { success: true, data: trialStatus };
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'TrialManager not available' };
+            }
+
+            case 'CHECK_TRIAL_AND_LICENSE': {
+                var combinedResult = {
+                    trial: { trialActive: false, trialDaysLeft: 0, trialExpired: false, trialStarted: false },
+                    license: { isPro: false, tier: 'free' },
+                    effectivelyPro: false
+                };
+
+                // Get trial status
+                if (typeof TrialManager !== 'undefined') {
+                    try {
+                        combinedResult.trial = await TrialManager.getStatus();
+                    } catch (e) {
+                        debugLog('warn', 'Trial', 'Failed to get trial status', e.message);
+                    }
+                }
+
+                // Get license status
+                if (typeof LicenseManager !== 'undefined') {
+                    try {
+                        var isPro = await LicenseManager.isPro();
+                        var tier = await LicenseManager.getTier();
+                        combinedResult.license = { isPro: isPro, tier: tier };
+                    } catch (e) {
+                        debugLog('warn', 'License', 'Failed to get license status', e.message);
+                    }
+                }
+
+                // Effectively Pro if either paid license or active trial
+                combinedResult.effectivelyPro = combinedResult.license.isPro || combinedResult.trial.trialActive;
+
+                return { success: true, data: combinedResult };
+            }
+
             case 'OPEN_FEEDBACK': {
                 // chrome.action.openPopup() requires a user gesture and cannot
                 // be called from a message handler.  Return an error so the
@@ -1235,6 +1357,21 @@ chrome.cookies.onChanged.addListener((changeInfo) => {
 });
 
 // ============================================================================
+// Notification Click Handler (MD 08 - Trial Notifications)
+// ============================================================================
+
+chrome.notifications.onClicked.addListener((notificationId) => {
+    if (notificationId === 'trial-reminder' || notificationId === 'trial-expired') {
+        var upgradeUrl = (typeof TrialManager !== 'undefined' && TrialManager.CONFIG)
+            ? TrialManager.CONFIG.upgradeUrl
+            : 'https://zovo.one/cookie-manager/upgrade';
+
+        chrome.tabs.create({ url: upgradeUrl });
+        chrome.notifications.clear(notificationId);
+    }
+});
+
+// ============================================================================
 // Installation & Startup
 // ============================================================================
 
@@ -1249,6 +1386,14 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     setupContextMenu();
     await recordStartupTimestamp('installed_' + details.reason);
     debugLog('info', 'Lifecycle', 'onInstalled fired', { reason: details.reason });
+
+    // Create license refresh alarm only if it doesn't already exist (MD 08)
+    chrome.alarms.get('licenseRefresh', (existing) => {
+        if (!existing) {
+            chrome.alarms.create('licenseRefresh', { periodInMinutes: 30 });
+            debugLog('info', 'License', 'Created licenseRefresh alarm (every 30 min)');
+        }
+    });
 
     if (details.reason === 'install') {
         // Initialize default settings
@@ -1274,6 +1419,16 @@ chrome.runtime.onInstalled.addListener(async (details) => {
             chrome.tabs.create({
                 url: chrome.runtime.getURL('onboarding/onboarding.html')
             });
+        }
+
+        // Start free trial (MD 08)
+        if (typeof TrialManager !== 'undefined') {
+            try {
+                var trialResult = await TrialManager.startTrial();
+                debugLog('info', 'Trial', 'Trial started on install', trialResult);
+            } catch (e) {
+                debugLog('warn', 'Trial', 'Failed to start trial on install', e.message);
+            }
         }
 
         // Track install event
@@ -1385,6 +1540,18 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
         return;
     }
 
+    if (alarm.name === 'trialDailyCheck') {
+        try {
+            if (typeof TrialManager !== 'undefined') {
+                await TrialManager.dailyCheck();
+                debugLog('info', 'Trial', 'Daily trial check complete');
+            }
+        } catch (e) {
+            debugLog('warn', 'Trial', 'Daily trial check failed', e.message);
+        }
+        return;
+    }
+
     if (alarm.name === 'auto-delete-cookies') {
         try {
             const { autoDeleteRules = [] } = await chrome.storage.local.get('autoDeleteRules');
@@ -1443,6 +1610,19 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
             }
         } catch (e) {
             debugLog('error', 'AutoDelete', 'Auto-delete alarm handler failed', e.message);
+        }
+        return;
+    }
+
+    // License refresh alarm (MD 08)
+    if (alarm.name === 'licenseRefresh') {
+        try {
+            if (typeof LicenseManager !== 'undefined') {
+                var licenseResult = await LicenseManager.checkLicense(null, true);
+                debugLog('info', 'License', 'Periodic license refresh complete', { tier: licenseResult.tier, valid: licenseResult.valid });
+            }
+        } catch (e) {
+            debugLog('warn', 'License', 'License refresh alarm failed', e.message);
         }
         return;
     }

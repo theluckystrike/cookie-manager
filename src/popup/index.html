@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=400">
     <title>Cookie Manager</title>
     <link rel="stylesheet" href="popup.css">
+    <link rel="stylesheet" href="../components/paywall.css">
 </head>
 
 <body>
@@ -20,6 +21,7 @@
                 <div class="brand-text">
                     <h1 class="brand-title" data-i18n="brandTitle">Cookie Manager</h1>
                     <span class="brand-domain" id="currentDomain" data-i18n="domainLoading">Loading...</span>
+                    <span class="subscription-badge" id="subscriptionBadge">Free</span>
                 </div>
             </div>
             <div class="header-actions">
@@ -42,6 +44,12 @@
             </svg>
             <input type="text" id="searchInput" placeholder="Search cookies..." data-i18n-placeholder="searchPlaceholder" autocomplete="off" spellcheck="false" aria-label="Search cookies">
             <span class="cookie-count" id="cookieCount" aria-live="polite">0</span>
+        </div>
+
+        <!-- Trial Banner -->
+        <div class="trial-banner" id="trialBanner" hidden>
+            <span class="trial-banner-text">Pro trial: <strong id="trialDaysLeft">7</strong> days remaining</span>
+            <a href="#" class="trial-banner-link" id="trialUpgradeLink">Upgrade now</a>
         </div>
 
         <!-- Tab Bar -->
@@ -496,6 +504,7 @@
                 </svg>
                 <span>Privacy</span>
             </a>
+            <a href="#" class="manage-sub-link" id="manageSubLink" hidden>Manage Subscription</a>
             <span class="footer-version" id="versionDisplay"></span>
             <a href="https://zovo.one" target="_blank" rel="noopener" class="footer-link">
                 <span class="footer-text" data-i18n="footerBuiltBy">Built by</span>
@@ -517,6 +526,10 @@
     <script src="../shared/architecture-patterns.js"></script>
     <script src="../shared/message-router.js"></script>
     <script src="../utils/jwt.js"></script>
+    <script src="../utils/license-manager.js"></script>
+    <script src="../utils/trial-manager.js"></script>
+    <script src="../utils/feature-gate.js"></script>
+    <script src="../components/paywall.js"></script>
     <script src="profiles.js"></script>
     <script src="rules.js"></script>
     <script src="health.js"></script>

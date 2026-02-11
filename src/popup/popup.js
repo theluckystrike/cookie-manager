@@ -1357,6 +1357,203 @@ function openHelpPage() {
 }
 
 // ============================================================================
+// Subscription Status UI (Phase 08 - Payment Integration)
+// ============================================================================
+
+function updateBadge(status) {
+    var badge = document.getElementById('subscriptionBadge');
+    if (!badge) return;
+
+    // Remove all badge variant classes
+    badge.classList.remove('badge-free', 'badge-pro', 'badge-trial', 'badge-lifetime');
+
+    var tier = (status && status.tier) ? status.tier : 'free';
+    var isTrialing = status && status.isTrialing;
+
+    if (tier === 'lifetime') {
+        badge.textContent = 'Lifetime';
+        badge.classList.add('badge-lifetime');
+    } else if (tier === 'pro') {
+        badge.textContent = 'Pro';
+        badge.classList.add('badge-pro');
+    } else if (isTrialing) {
+        badge.textContent = 'Trial';
+        badge.classList.add('badge-trial');
+    } else {
+        badge.textContent = 'Free';
+        badge.classList.add('badge-free');
+    }
+}
+
+function updateTrialBanner(status) {
+    var banner = document.getElementById('trialBanner');
+    if (!banner) return;
+
+    var isTrialing = status && status.isTrialing;
+    var daysLeft = (status && typeof status.trialDaysLeft === 'number') ? status.trialDaysLeft : 0;
+
+    if (isTrialing && daysLeft > 0) {
+        banner.hidden = false;
+        var daysEl = document.getElementById('trialDaysLeft');
+        if (daysEl) {
+            daysEl.textContent = daysLeft;
+        }
+
+        // Wire up upgrade link
+        var upgradeLink = document.getElementById('trialUpgradeLink');
+        if (upgradeLink && !upgradeLink._subListenerAttached) {
+            upgradeLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (typeof Paywall !== 'undefined' && Paywall.show) {
+                    Paywall.show('trial_banner');
+                }
+            });
+            upgradeLink._subListenerAttached = true;
+        }
+    } else {
+        banner.hidden = true;
+    }
+}
+
+function updateManageLink(status) {
+    var link = document.getElementById('manageSubLink');
+    if (!link) return;
+
+    var tier = (status && status.tier) ? status.tier : 'free';
+    var isPaidUser = (tier === 'pro' || tier === 'lifetime');
+
+    if (isPaidUser) {
+        link.hidden = false;
+        if (!link._subListenerAttached) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (typeof Paywall !== 'undefined' && Paywall.showManage) {
+                    Paywall.showManage();
+                } else {
+                    // Fallback: open subscription management via background
+                    chrome.runtime.sendMessage({ action: 'OPEN_MANAGE_SUBSCRIPTION' }).catch(function() {});
+                }
+            });
+            link._subListenerAttached = true;
+        }
+    } else {
+        link.hidden = true;
+    }
+}
+
+function updateProFeatureIndicators(status) {
+    var tier = (status && status.tier) ? status.tier : 'free';
+    var isTrialing = status && status.isTrialing;
+    var hasAccess = (tier === 'pro' || tier === 'lifetime' || isTrialing);
+
+    // Find all elements with data-feature attribute
+    var featureElements = document.querySelectorAll('[data-feature]');
+    featureElements.forEach(function(el) {
+        if (hasAccess) {
+            // User has pro access, remove locks
+            el.classList.remove('feature-locked');
+            var existingLabel = el.querySelector('.pro-label');
+            if (existingLabel) {
+                existingLabel.remove();
+            }
+        } else {
+            // User is on free tier, add locks
+            el.classList.add('feature-locked');
+
+            // Add PRO label if not already present
+            if (!el.querySelector('.pro-label')) {
+                var proLabel = document.createElement('span');
+                proLabel.className = 'pro-label';
+                proLabel.textContent = 'PRO';
+                el.appendChild(proLabel);
+            }
+
+            // Add click handler to show paywall
+            if (!el._paywallListenerAttached) {
+                el.addEventListener('click', function(e) {
+                    if (el.classList.contains('feature-locked')) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        var featureName = el.getAttribute('data-feature') || 'feature';
+                        if (typeof Paywall !== 'undefined' && Paywall.show) {
+                            Paywall.show(featureName);
+                        }
+                    }
+                });
+                el._paywallListenerAttached = true;
+            }
+        }
+    });
+}
+
+async function initSubscriptionUI() {
+    var licenseStatus = null;
+    var trialStatus = null;
+
+    // Fetch license status from background
+    try {
+        licenseStatus = await chrome.runtime.sendMessage({ action: 'GET_LICENSE_STATUS' });
+    } catch (e) {
+        console.debug('[Popup] Could not fetch license status:', e.message);
+    }
+
+    // Fetch trial status from background
+    try {
+        trialStatus = await chrome.runtime.sendMessage({ action: 'getTrialStatus' });
+    } catch (e) {
+        console.debug('[Popup] Could not fetch trial status:', e.message);
+    }
+
+    // Merge license and trial data into a combined status object
+    var status = {
+        tier: 'free',
+        isTrialing: false,
+        trialDaysLeft: 0
+    };
+
+    if (licenseStatus) {
+        status.tier = licenseStatus.tier || licenseStatus.plan || 'free';
+        if (licenseStatus.isTrialing) {
+            status.isTrialing = true;
+        }
+        if (typeof licenseStatus.trialDaysLeft === 'number') {
+            status.trialDaysLeft = licenseStatus.trialDaysLeft;
+        }
+    }
+
+    if (trialStatus) {
+        if (trialStatus.isActive || trialStatus.isTrialing) {
+            status.isTrialing = true;
+        }
+        if (typeof trialStatus.daysLeft === 'number') {
+            status.trialDaysLeft = trialStatus.daysLeft;
+        } else if (typeof trialStatus.trialDaysLeft === 'number') {
+            status.trialDaysLeft = trialStatus.trialDaysLeft;
+        }
+    }
+
+    // Use FeatureGate if available to refine access status
+    if (typeof FeatureGate !== 'undefined' && FeatureGate.getTier) {
+        try {
+            var gateTier = FeatureGate.getTier();
+            if (gateTier) {
+                status.tier = gateTier;
+            }
+        } catch (e) {
+            // FeatureGate not ready yet, use message-based status
+        }
+    }
+
+    // Update all UI elements
+    updateBadge(status);
+    updateTrialBanner(status);
+    updateManageLink(status);
+    updateProFeatureIndicators(status);
+
+    console.debug('[Popup] Subscription UI initialized:', status.tier, status.isTrialing ? '(trial)' : '');
+}
+
+// ============================================================================
 // Start
 // ============================================================================
 
@@ -1372,6 +1569,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (times.length > 20) times.shift();
             chrome.storage.local.set({ popupLoadTimes: times }).catch(() => {});
         }).catch(() => {});
+
+        // Initialize subscription status UI (Phase 08)
+        initSubscriptionUI().catch(function(err) {
+            console.debug('[Popup] Subscription UI init error:', err.message);
+        });
     }).catch((err) => {
         PopupErrorHandler.capture({ type: 'init_error', message: err.message, stack: err.stack });
     });
