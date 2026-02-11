@@ -11,6 +11,9 @@ try { importScripts('../shared/support-diagnostics.js'); } catch(e) { console.wa
 try { importScripts('../shared/perf-timer.js'); } catch(e) { console.warn('perf-timer.js not loaded:', e.message); }
 try { importScripts('../shared/storage-optimizer.js'); } catch(e) { console.warn('storage-optimizer.js not loaded:', e.message); }
 
+// Import shared modules (MD 21)
+try { importScripts('../shared/accessibility.js'); } catch(e) { console.warn('accessibility.js not loaded:', e.message); }
+
 // ============================================================================
 // Error Tracking & Monitoring (MD 11 - Crash Analytics)
 // ============================================================================
@@ -905,6 +908,8 @@ debugLog('info', 'Retention', 'Churn prevention & retention initialized (MD 17)'
 debugLog('info', 'Support', 'Customer support & feedback initialized (MD 19)');
 
 debugLog('info', 'Performance', 'Performance optimization initialized (MD 20)');
+
+debugLog('info', 'Accessibility', 'Accessibility compliance initialized (MD 21)');
 
 // Initial setup
 setupContextMenu();

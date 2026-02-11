@@ -44,6 +44,7 @@
       "src/shared/support-diagnostics.js",
       "src/shared/perf-timer.js",
       "src/shared/storage-optimizer.js",
+      "src/shared/accessibility.js",
       "src/background/service-worker.js"
     ]
   },

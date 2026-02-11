@@ -11,7 +11,7 @@
 <body>
     <div id="app">
         <!-- Zovo Branded Header -->
-        <header class="header">
+        <header class="header" role="banner">
             <div class="header-brand">
                 <div class="brand-logo">
                     <span class="logo-z">z</span>
@@ -23,9 +23,9 @@
                 </div>
             </div>
             <div class="header-actions">
-                <button class="icon-btn" id="refreshBtn" title="Refresh cookies">
+                <button class="icon-btn" id="refreshBtn" title="Refresh cookies" aria-label="Refresh cookies">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
                         <path d="M21 3v5h-5"></path>
                     </svg>
@@ -34,21 +34,21 @@
         </header>
 
         <!-- Search Bar -->
-        <div class="search-bar">
+        <div class="search-bar" role="search">
             <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.35-4.35"></path>
             </svg>
             <input type="text" id="searchInput" placeholder="Search cookies..." data-i18n-placeholder="searchPlaceholder" autocomplete="off" spellcheck="false">
-            <span class="cookie-count" id="cookieCount">0</span>
+            <span class="cookie-count" id="cookieCount" aria-live="polite">0</span>
         </div>
 
         <!-- Action Bar -->
         <div class="action-bar">
             <button class="btn btn-secondary" id="exportBtn">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                     <polyline points="7 10 12 15 17 10"></polyline>
                     <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -57,7 +57,7 @@
             </button>
             <button class="btn btn-secondary" id="addCookieBtn">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <line x1="12" y1="5" x2="12" y2="19"></line>
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                 </svg>
@@ -65,7 +65,7 @@
             </button>
             <button class="btn btn-danger" id="clearAllBtn">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <polyline points="3 6 5 6 21 6"></polyline>
                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                 </svg>
@@ -75,7 +75,7 @@
                 <input type="checkbox" id="readOnlyToggle">
                 <span class="toggle-slider"></span>
                 <svg class="lock-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                 </svg>
@@ -83,15 +83,15 @@
         </div>
 
         <!-- Cookie List -->
-        <div class="cookie-list" id="cookieList">
+        <div class="cookie-list" id="cookieList" role="main">
             <!-- Populated by JS -->
         </div>
 
         <!-- Empty State -->
-        <div class="empty-state" id="emptyState" hidden>
+        <div class="empty-state" id="emptyState" role="status" hidden>
             <div class="empty-icon">
                 <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round">
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="12" cy="12" r="10"></circle>
                     <circle cx="8" cy="9" r="1" fill="currentColor"></circle>
                     <circle cx="15" cy="9" r="1" fill="currentColor"></circle>
@@ -104,20 +104,20 @@
         </div>
 
         <!-- Loading State -->
-        <div class="loading-state" id="loadingState" hidden>
+        <div class="loading-state" id="loadingState" role="status" aria-live="polite" hidden>
             <div class="spinner"></div>
             <span data-i18n="loadingCookies">Loading cookies...</span>
         </div>
 
         <!-- Cookie Editor Modal -->
-        <div class="modal" id="editorModal" hidden>
+        <div class="modal" id="editorModal" role="dialog" aria-modal="true" aria-labelledby="editorTitle" hidden>
             <div class="modal-backdrop"></div>
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 id="editorTitle" data-i18n="titleEditCookie">Edit Cookie</h2>
-                    <button class="icon-btn modal-close" id="closeModal" title="Close">
+                    <button class="icon-btn modal-close" id="closeModal" title="Close" aria-label="Close dialog">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
@@ -126,7 +126,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="cookieName" data-i18n="labelName">Name</label>
-                        <input type="text" id="cookieName" placeholder="Cookie name" data-i18n-placeholder="placeholderCookieName" autocomplete="off">
+                        <input type="text" id="cookieName" placeholder="Cookie name" data-i18n-placeholder="placeholderCookieName" autocomplete="off" aria-required="true">
                     </div>
                     <div class="form-group">
                         <label for="cookieValue" data-i18n="labelValue">Value</label>
@@ -148,8 +148,8 @@
                     </div>
                     <div class="form-group">
                         <label for="cookieExpiry" data-i18n="labelExpiration">Expiration</label>
-                        <input type="datetime-local" id="cookieExpiry">
-                        <span class="form-hint" data-i18n="hintSessionCookie">Leave empty for session cookie</span>
+                        <input type="datetime-local" id="cookieExpiry" aria-describedby="cookieExpiryHint">
+                        <span class="form-hint" id="cookieExpiryHint" data-i18n="hintSessionCookie">Leave empty for session cookie</span>
                     </div>
                     <div class="form-row checkboxes">
                         <label class="checkbox">
@@ -175,7 +175,7 @@
                 <div class="modal-footer">
                     <button class="btn btn-danger-outline" id="deleteCookieBtn">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <polyline points="3 6 5 6 21 6"></polyline>
                             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
                             </path>
@@ -188,14 +188,14 @@
         </div>
 
         <!-- JWT Viewer Modal -->
-        <div class="modal" id="jwtModal" hidden>
+        <div class="modal" id="jwtModal" role="dialog" aria-modal="true" aria-labelledby="jwtModalTitle" hidden>
             <div class="modal-backdrop"></div>
             <div class="modal-content modal-lg">
                 <div class="modal-header">
-                    <h2 data-i18n="titleJwtToken">🔐 JWT Token</h2>
-                    <button class="icon-btn modal-close" id="closeJwtModal" title="Close">
+                    <h2 id="jwtModalTitle" data-i18n="titleJwtToken">🔐 JWT Token</h2>
+                    <button class="icon-btn modal-close" id="closeJwtModal" title="Close" aria-label="Close dialog">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
                             <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
@@ -205,9 +205,9 @@
                     <div class="jwt-section">
                         <div class="jwt-section-header">
                             <h3 data-i18n="jwtHeader">Header</h3>
-                            <button class="btn-copy" id="copyHeader" title="Copy">
+                            <button class="btn-copy" id="copyHeader" title="Copy" aria-label="Copy header">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
+                                    stroke-width="2" aria-hidden="true">
                                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                                 </svg>
@@ -218,9 +218,9 @@
                     <div class="jwt-section">
                         <div class="jwt-section-header">
                             <h3 data-i18n="jwtPayload">Payload</h3>
-                            <button class="btn-copy" id="copyPayload" title="Copy">
+                            <button class="btn-copy" id="copyPayload" title="Copy" aria-label="Copy payload">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
+                                    stroke-width="2" aria-hidden="true">
                                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                                 </svg>
@@ -234,7 +234,7 @@
         </div>
 
         <!-- Confirm Dialog -->
-        <div class="modal" id="confirmModal" hidden>
+        <div class="modal" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle" hidden>
             <div class="modal-backdrop"></div>
             <div class="modal-content modal-sm">
                 <div class="modal-header">
@@ -251,15 +251,15 @@
         </div>
 
         <!-- Toast Notification -->
-        <div class="toast" id="toast" hidden>
+        <div class="toast" id="toast" role="alert" aria-live="assertive" aria-atomic="true" hidden>
             <div class="toast-icon" id="toastIcon"></div>
             <span id="toastMessage"></span>
         </div>
 
         <!-- Zovo Branded Footer -->
-        <footer class="footer">
+        <footer class="footer" role="contentinfo">
             <a href="#" id="helpLink" class="footer-link footer-help" title="Help &amp; FAQ">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="12" cy="12" r="10"></circle>
                     <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                     <line x1="12" y1="17" x2="12.01" y2="17"></line>
@@ -271,9 +271,13 @@
                 <span class="footer-brand" data-i18n="footerBrand">zovo.</span>
             </a>
         </footer>
+
+        <!-- Accessibility Live Region -->
+        <div class="visually-hidden a11y-live-region" id="a11yAnnouncer" role="status" aria-live="polite" aria-atomic="true"></div>
     </div>
 
     <script src="../shared/i18n.js"></script>
+    <script src="../shared/accessibility.js"></script>
     <script src="popup.js"></script>
 </body>
 

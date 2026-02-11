@@ -937,14 +937,79 @@ body {
 }
 
 /* ---------- Utilities ---------- */
+
+/* Visually Hidden - Screen Reader Only */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Live Region - Screen Reader Announcements */
+.a11y-live-region {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 [hidden] {
     display: none !important;
 }
 
-/* Focus visible for accessibility */
+/* ---------- Enhanced Focus Visible for Accessibility ---------- */
 :focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
+}
+
+button:focus-visible,
+.btn:focus-visible,
+.icon-btn:focus-visible,
+.btn-copy:focus-visible,
+.btn-link:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--primary-light);
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 0;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+}
+
+.checkbox input:focus-visible + .checkbox-mark {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--primary-light);
+}
+
+.toggle input:focus-visible + .toggle-slider {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--primary-light);
+}
+
+a:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--primary-light);
+    border-radius: var(--radius-sm);
 }
 
 /* Selection */
@@ -1071,4 +1136,124 @@ body {
 @keyframes retentionSlideIn {
     from { opacity: 0; transform: translateY(-8px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================================
+   Accessibility Enhancements (Phase 21)
+   ============================================================================ */
+
+/* ---------- Reduced Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .spinner {
+        animation: pulse 2s ease-in-out infinite !important;
+        animation-duration: 2s !important;
+        border-top-color: var(--primary);
+    }
+
+    .toast {
+        animation: fadeIn 0.01ms ease !important;
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* ---------- Forced Colors (High Contrast Mode) ---------- */
+@media (forced-colors: active) {
+    .btn,
+    .btn-primary,
+    .btn-secondary,
+    .btn-danger,
+    .btn-danger-outline,
+    .icon-btn,
+    .btn-copy {
+        border: 2px solid ButtonText;
+    }
+
+    :focus-visible {
+        outline: 3px solid Highlight;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    a:focus-visible,
+    .btn:focus-visible,
+    .icon-btn:focus-visible {
+        outline: 3px solid Highlight;
+        box-shadow: none;
+    }
+
+    svg {
+        stroke: currentColor;
+    }
+
+    .badge {
+        border: 1px solid ButtonText;
+    }
+
+    .cookie-item {
+        border: 1px solid ButtonText;
+    }
+
+    .toggle-slider {
+        border: 2px solid ButtonText;
+    }
+
+    .checkbox-mark {
+        border: 2px solid ButtonText;
+    }
+}
+
+/* ---------- Enhanced Contrast ---------- */
+@media (prefers-contrast: more) {
+    :root {
+        --border-color: #71717A;
+        --text-muted: #52525B;
+        --text-secondary: #3F3F46;
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn {
+        font-weight: 600;
+    }
+
+    .btn-secondary {
+        border: 1px solid var(--border-color);
+    }
+
+    .badge {
+        font-weight: 600;
+        border: 1px solid currentColor;
+    }
+
+    .cookie-item {
+        border-width: 2px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        border-width: 2px;
+    }
+
+    :focus-visible {
+        outline-width: 3px;
+    }
 }

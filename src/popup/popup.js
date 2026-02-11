@@ -154,11 +154,14 @@ const JWT = {
 // State
 // ============================================================================
 
-let currentTab = null;
-let currentCookies = [];
-let selectedCookie = null;
-let isNewCookie = false;
-let settings = { readOnlyMode: false };
+var currentTab = null;
+var currentCookies = [];
+var selectedCookie = null;
+var isNewCookie = false;
+var settings = { readOnlyMode: false };
+var _editorFocusTrap = null; // MD 21 - focus trap for editor modal
+var _jwtFocusTrap = null; // MD 21 - focus trap for JWT modal
+var _confirmFocusTrap = null; // MD 21 - focus trap for confirm modal
 
 // ============================================================================
 // DOM Elements
@@ -228,6 +231,11 @@ async function init() {
     try {
         PopupErrorHandler.init();
 
+        // Accessibility (MD 21)
+        if (typeof A11yManager !== 'undefined' && A11yManager.initLiveRegion) {
+            A11yManager.initLiveRegion();
+        }
+
         // Load settings
         const settingsResponse = await chrome.runtime.sendMessage({ action: 'GET_SETTINGS' });
         settings = settingsResponse || { readOnlyMode: false };
@@ -266,6 +274,10 @@ async function init() {
         if (typeof initRetention === 'function') {
             initRetention();
         }
+
+        // Focus search on popup open (MD 21)
+        var searchEl = document.getElementById('searchInput');
+        if (searchEl) { searchEl.focus(); }
 
     } catch (error) {
         console.error('[Popup] Init error:', error);
@@ -311,6 +323,11 @@ function renderCookies(cookies) {
 
     elements.cookieCount.textContent = filtered.length;
     elements.loadingState.hidden = true;
+
+    // Announce search result count to screen readers (MD 21)
+    if (searchTerm && typeof A11yManager !== 'undefined' && A11yManager.announce) {
+        A11yManager.announce(filtered.length + ' cookie' + (filtered.length !== 1 ? 's' : '') + ' found');
+    }
 
     if (filtered.length === 0) {
         if (searchTerm) {
@@ -439,10 +456,23 @@ function openEditor(cookie = null) {
     }
 
     elements.editorModal.hidden = false;
+
+    // Focus trap for editor modal (MD 21)
+    if (typeof A11yManager !== 'undefined' && A11yManager.createTrap) {
+        _editorFocusTrap = A11yManager.createTrap(elements.editorModal);
+        _editorFocusTrap.activate();
+    }
+
     elements.cookieName.focus();
 }
 
 function closeEditor() {
+    // Deactivate focus trap (MD 21)
+    if (_editorFocusTrap && _editorFocusTrap.deactivate) {
+        _editorFocusTrap.deactivate();
+        _editorFocusTrap = null;
+    }
+
     elements.editorModal.hidden = true;
     selectedCookie = null;
     isNewCookie = false;
@@ -558,6 +588,13 @@ function showJwtDecoder() {
     elements.jwtExpiry.className = `jwt-expiry ${expiry.expired ? 'expired' : 'valid'}`;
 
     elements.jwtModal.hidden = false;
+
+    // Focus trap for JWT modal (MD 21)
+    if (typeof A11yManager !== 'undefined' && A11yManager.createTrap) {
+        _jwtFocusTrap = A11yManager.createTrap(elements.jwtModal);
+        _jwtFocusTrap.activate();
+    }
+
     if (typeof MilestoneTracker !== 'undefined') {
         MilestoneTracker.record('jwtDecode').catch(() => {});
     }
@@ -565,6 +602,12 @@ function showJwtDecoder() {
 }
 
 function closeJwtModal() {
+    // Deactivate focus trap (MD 21)
+    if (_jwtFocusTrap && _jwtFocusTrap.deactivate) {
+        _jwtFocusTrap.deactivate();
+        _jwtFocusTrap = null;
+    }
+
     elements.jwtModal.hidden = true;
 }
 
@@ -635,9 +678,21 @@ function showConfirm(title, message, onConfirm) {
     elements.confirmMessage.textContent = message;
     confirmCallback = onConfirm;
     elements.confirmModal.hidden = false;
+
+    // Focus trap for confirm modal (MD 21)
+    if (typeof A11yManager !== 'undefined' && A11yManager.createTrap) {
+        _confirmFocusTrap = A11yManager.createTrap(elements.confirmModal);
+        _confirmFocusTrap.activate();
+    }
 }
 
 function closeConfirm() {
+    // Deactivate focus trap (MD 21)
+    if (_confirmFocusTrap && _confirmFocusTrap.deactivate) {
+        _confirmFocusTrap.deactivate();
+        _confirmFocusTrap = null;
+    }
+
     elements.confirmModal.hidden = true;
     confirmCallback = null;
 }
@@ -675,6 +730,11 @@ function showToast(message, type = 'success') {
     }
 
     elements.toast.hidden = false;
+
+    // Announce to screen readers (MD 21)
+    if (typeof A11yManager !== 'undefined' && A11yManager.announce) {
+        A11yManager.announce(message);
+    }
 
     toastTimeout = setTimeout(() => {
         elements.toast.hidden = true;
@@ -771,6 +831,11 @@ function setupEventListeners() {
     // Close modals on backdrop click
     document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
         backdrop.addEventListener('click', () => {
+            // Deactivate any active focus traps (MD 21)
+            if (_editorFocusTrap && _editorFocusTrap.deactivate) { _editorFocusTrap.deactivate(); _editorFocusTrap = null; }
+            if (_jwtFocusTrap && _jwtFocusTrap.deactivate) { _jwtFocusTrap.deactivate(); _jwtFocusTrap = null; }
+            if (_confirmFocusTrap && _confirmFocusTrap.deactivate) { _confirmFocusTrap.deactivate(); _confirmFocusTrap = null; }
+
             elements.editorModal.hidden = true;
             elements.jwtModal.hidden = true;
             elements.confirmModal.hidden = true;
@@ -837,6 +902,27 @@ function setupEventListeners() {
             e.preventDefault();
             openHelpPage();
         });
+    }
+
+    // Keyboard shortcuts (MD 21)
+    if (typeof A11yManager !== 'undefined' && A11yManager.registerShortcut) {
+        A11yManager.registerShortcut('/', function() {
+            var searchInput = document.getElementById('searchInput');
+            if (searchInput) { searchInput.focus(); }
+        }, 'Focus search');
+
+        A11yManager.registerShortcut('escape', function() {
+            var modal = document.getElementById('editorModal');
+            if (modal && !modal.hidden) {
+                // close the modal - call existing close function
+                closeEditor();
+            }
+        }, 'Close modal');
+
+        A11yManager.registerShortcut('mod+shift+a', function() {
+            var addBtn = document.getElementById('addCookieBtn');
+            if (addBtn) { addBtn.click(); }
+        }, 'Add cookie');
     }
 }
 
