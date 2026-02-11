@@ -74,6 +74,7 @@ var RulesManager = (function() {
     // ----- Data operations -----
 
     async function _loadRules() {
+        if (_loading) return; // Prevent concurrent loads from rapid tab switching
         _loading = true;
         _renderLoading();
         try {
@@ -171,6 +172,7 @@ var RulesManager = (function() {
         _els.list.hidden = true;
         if (_els.emptyState) _els.emptyState.hidden = true;
         if (_els.limitBanner) _els.limitBanner.hidden = true;
+        if (_els.addBtn) _els.addBtn.hidden = true;
     }
 
     function _render() {

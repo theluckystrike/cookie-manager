@@ -51,6 +51,7 @@ var HealthManager = (function () {
     var _cookies = [];
     var _analysis = null;
     var _initialized = false;
+    var _fetchInProgress = false;
 
     // ========================================================================
     // Analysis Engine
@@ -638,6 +639,12 @@ var HealthManager = (function () {
     // ========================================================================
 
     function fetchCookiesAndAnalyze() {
+        // Guard against concurrent fetches from rapid tab switching
+        if (_fetchInProgress) {
+            return Promise.resolve(_analysis);
+        }
+        _fetchInProgress = true;
+
         return new Promise(function (resolve) {
             chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
                 var tab = tabs && tabs[0];
@@ -645,6 +652,7 @@ var HealthManager = (function () {
                     _cookies = [];
                     _analysis = analyzeCookies([]);
                     render(_analysis);
+                    _fetchInProgress = false;
                     resolve(_analysis);
                     return;
                 }
@@ -660,11 +668,13 @@ var HealthManager = (function () {
                     }
                     _analysis = analyzeCookies(_cookies);
                     render(_analysis);
+                    _fetchInProgress = false;
                     resolve(_analysis);
                 }).catch(function () {
                     _cookies = [];
                     _analysis = analyzeCookies([]);
                     render(_analysis);
+                    _fetchInProgress = false;
                     resolve(_analysis);
                 });
             });

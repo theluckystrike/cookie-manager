@@ -107,6 +107,7 @@ var currentCookies = [];
 var selectedCookie = null;
 var isNewCookie = false;
 var settings = { readOnlyMode: false };
+var _savingCookie = false;
 var _editorFocusTrap = null; // MD 21 - focus trap for editor modal
 var _jwtFocusTrap = null; // MD 21 - focus trap for JWT modal
 var _confirmFocusTrap = null; // MD 21 - focus trap for confirm modal
@@ -192,12 +193,13 @@ const TAB_IDS = ['cookies', 'profiles', 'rules', 'health'];
 function switchTab(tabName) {
     if (!TAB_IDS.includes(tabName)) return;
 
-    // Update tab buttons
+    // Update tab buttons (roving tabindex per WAI-ARIA tabs pattern)
     const tabButtons = document.querySelectorAll('.tab-btn');
     tabButtons.forEach(btn => {
         const isActive = btn.dataset.tab === tabName;
         btn.classList.toggle('active', isActive);
         btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        btn.setAttribute('tabindex', isActive ? '0' : '-1');
     });
 
     // Update tab content panels
@@ -463,7 +465,7 @@ function createCookieItemHTML(cookie) {
       </div>
       <div class="cookie-info">
         <div class="cookie-name">${escapeHtml(cookie.name)}</div>
-        <div class="cookie-value">${escapeHtml(displayValue) || '<empty>'}</div>
+        <div class="cookie-value">${escapeHtml(displayValue) || '&lt;empty&gt;'}</div>
         ${badges.length ? `<div class="cookie-badges">${badges.join('')}</div>` : ''}
       </div>
     </div>
@@ -553,6 +555,7 @@ function closeEditor() {
 }
 
 async function saveCookie() {
+    if (_savingCookie) return; // Prevent double-click
     if (settings.readOnlyMode) {
         showToast('Read-only mode is enabled', 'error');
         return;
@@ -589,6 +592,7 @@ async function saveCookie() {
         cookie.expirationDate = new Date(elements.cookieExpiry.value).getTime() / 1000;
     }
 
+    _savingCookie = true;
     try {
         // If editing an existing cookie and name/domain/path changed,
         // delete the old cookie first to avoid duplicates
@@ -631,6 +635,8 @@ async function saveCookie() {
     } catch (error) {
         console.error('[Popup] Save cookie error:', error);
         showToast('Failed to save cookie', 'error');
+    } finally {
+        _savingCookie = false;
     }
 }
 
@@ -886,6 +892,9 @@ function showConfirm(title, message, onConfirm) {
         _confirmFocusTrap = A11yManager.FocusTrap.createTrap(elements.confirmModal);
         _confirmFocusTrap.activate();
     }
+
+    // Focus the cancel button as the safe default action
+    elements.confirmCancel.focus();
 }
 
 function closeConfirm() {
@@ -1016,9 +1025,12 @@ function setupEventListeners() {
 
     // Refresh
     elements.refreshBtn.addEventListener('click', async () => {
+        if (elements.refreshBtn.disabled) return;
+        elements.refreshBtn.disabled = true;
         showLoading();
         await loadCookies();
         showToast('Cookies refreshed', 'success');
+        elements.refreshBtn.disabled = false;
     });
 
     // Actions
@@ -1033,8 +1045,12 @@ function setupEventListeners() {
     // Read-only toggle
     elements.readOnlyToggle.addEventListener('change', async (e) => {
         settings.readOnlyMode = e.target.checked;
-        await chrome.storage.local.set({ readOnlyMode: e.target.checked });
-        showToast(e.target.checked ? 'Read-only mode enabled' : 'Read-only mode disabled', 'success');
+        try {
+            await chrome.storage.local.set({ readOnlyMode: e.target.checked });
+            showToast(e.target.checked ? 'Read-only mode enabled' : 'Read-only mode disabled', 'success');
+        } catch {
+            showToast('Failed to save setting', 'error');
+        }
     });
 
     // Editor modal
@@ -1069,15 +1085,9 @@ function setupEventListeners() {
     // Close modals on backdrop click
     document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
         backdrop.addEventListener('click', () => {
-            // Deactivate any active focus traps (MD 21)
-            if (_editorFocusTrap && _editorFocusTrap.deactivate) { _editorFocusTrap.deactivate(); _editorFocusTrap = null; }
-            if (_jwtFocusTrap && _jwtFocusTrap.deactivate) { _jwtFocusTrap.deactivate(); _jwtFocusTrap = null; }
-            if (_confirmFocusTrap && _confirmFocusTrap.deactivate) { _confirmFocusTrap.deactivate(); _confirmFocusTrap = null; }
-
-            elements.editorModal.hidden = true;
-            elements.jwtModal.hidden = true;
-            elements.confirmModal.hidden = true;
-            selectedCookie = null;
+            if (!elements.editorModal.hidden) closeEditor();
+            if (!elements.jwtModal.hidden) closeJwtModal();
+            if (!elements.confirmModal.hidden) closeConfirm();
         });
     });
 
@@ -1125,9 +1135,9 @@ function setupEventListeners() {
         }
     });
 
-    // Save on Enter in editor (when not in textarea)
+    // Save on Enter in editor (when not in textarea or select)
     elements.editorModal.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'SELECT') {
             e.preventDefault();
             saveCookie();
         }
@@ -1356,12 +1366,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const loadTime = Math.round(performance.now() - startTime);
         console.debug(`[Popup] Loaded in ${loadTime}ms`);
         // Store popup load time
-        chrome.storage.local.get({ popupLoadTimes: [] }, (result) => {
+        chrome.storage.local.get({ popupLoadTimes: [] }).then((result) => {
             const times = result.popupLoadTimes;
             times.push({ time: loadTime, timestamp: Date.now() });
             if (times.length > 20) times.shift();
-            chrome.storage.local.set({ popupLoadTimes: times });
-        });
+            chrome.storage.local.set({ popupLoadTimes: times }).catch(() => {});
+        }).catch(() => {});
     }).catch((err) => {
         PopupErrorHandler.capture({ type: 'init_error', message: err.message, stack: err.stack });
     });

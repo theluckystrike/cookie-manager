@@ -40,13 +40,13 @@
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.35-4.35"></path>
             </svg>
-            <input type="text" id="searchInput" placeholder="Search cookies..." data-i18n-placeholder="searchPlaceholder" autocomplete="off" spellcheck="false">
+            <input type="text" id="searchInput" placeholder="Search cookies..." data-i18n-placeholder="searchPlaceholder" autocomplete="off" spellcheck="false" aria-label="Search cookies">
             <span class="cookie-count" id="cookieCount" aria-live="polite">0</span>
         </div>
 
         <!-- Tab Bar -->
         <nav class="tab-bar" role="tablist" aria-label="Main navigation">
-            <button class="tab-btn active" id="tabBtnCookies" role="tab" aria-selected="true" aria-controls="tabCookies" data-tab="cookies">
+            <button class="tab-btn active" id="tabBtnCookies" role="tab" aria-selected="true" aria-controls="tabCookies" data-tab="cookies" tabindex="0">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="12" cy="12" r="10"></circle>
                     <circle cx="8" cy="9" r="1" fill="currentColor"></circle>
@@ -56,21 +56,21 @@
                 </svg>
                 <span>Cookies</span>
             </button>
-            <button class="tab-btn" id="tabBtnProfiles" role="tab" aria-selected="false" aria-controls="tabProfiles" data-tab="profiles">
+            <button class="tab-btn" id="tabBtnProfiles" role="tab" aria-selected="false" aria-controls="tabProfiles" data-tab="profiles" tabindex="-1">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle>
                 </svg>
                 <span>Profiles</span>
             </button>
-            <button class="tab-btn" id="tabBtnRules" role="tab" aria-selected="false" aria-controls="tabRules" data-tab="rules">
+            <button class="tab-btn" id="tabBtnRules" role="tab" aria-selected="false" aria-controls="tabRules" data-tab="rules" tabindex="-1">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
                 <span>Rules</span>
             </button>
-            <button class="tab-btn" id="tabBtnHealth" role="tab" aria-selected="false" aria-controls="tabHealth" data-tab="health">
+            <button class="tab-btn" id="tabBtnHealth" role="tab" aria-selected="false" aria-controls="tabHealth" data-tab="health" tabindex="-1">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                 </svg>
@@ -79,7 +79,7 @@
         </nav>
 
         <!-- Tab: Cookies -->
-        <div class="tab-content active" id="tabCookies" role="tabpanel" aria-labelledby="tabBtnCookies">
+        <div class="tab-content active" id="tabCookies" role="tabpanel" aria-labelledby="tabBtnCookies" tabindex="0">
             <!-- Action Bar -->
             <div class="action-bar">
                 <button class="btn btn-secondary" id="exportBtn">
@@ -118,7 +118,7 @@
                     <span data-i18n="buttonClear">Clear</span>
                 </button>
                 <label class="toggle" title="Read-only mode">
-                    <input type="checkbox" id="readOnlyToggle">
+                    <input type="checkbox" id="readOnlyToggle" aria-label="Read-only mode">
                     <span class="toggle-slider"></span>
                     <svg class="lock-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -157,7 +157,7 @@
         </div>
 
         <!-- Tab: Profiles -->
-        <div class="tab-content" id="tabProfiles" role="tabpanel" aria-labelledby="tabBtnProfiles" hidden>
+        <div class="tab-content" id="tabProfiles" role="tabpanel" aria-labelledby="tabBtnProfiles" tabindex="0" hidden>
             <!-- Save Current Button -->
             <div class="profiles-header">
                 <button class="btn btn-primary profiles-save-btn" id="profilesSaveBtn">
@@ -216,7 +216,7 @@
         </div>
 
         <!-- Tab: Rules -->
-        <div class="tab-content" id="tabRules" role="tabpanel" aria-labelledby="tabBtnRules" hidden>
+        <div class="tab-content" id="tabRules" role="tabpanel" aria-labelledby="tabBtnRules" tabindex="0" hidden>
             <div class="rules-header">
                 <button class="btn btn-primary rules-add-btn" id="addRuleBtn">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -274,7 +274,7 @@
         </div>
 
         <!-- Tab: Health -->
-        <div class="tab-content" id="tabHealth" role="tabpanel" aria-labelledby="tabBtnHealth" hidden>
+        <div class="tab-content" id="tabHealth" role="tabpanel" aria-labelledby="tabBtnHealth" tabindex="0" hidden>
             <div class="health-score-section">
                 <div class="health-score-circle" id="healthScoreCircle">
                     <svg viewBox="0 0 120 120" class="health-ring">

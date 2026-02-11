@@ -42,8 +42,8 @@
         GET_CHURN_STATUS:     { p: null },
         GET_ENGAGEMENT_SCORE: { p: null },
         GET_RETENTION_TRIGGER:{ p: null },
-        RECORD_USAGE:         { p: null, tl: { usageAction: { t: S, r: R } } },
-        DISMISS_TRIGGER:      { p: null, tl: { triggerId: { t: S, r: R } } },
+        RECORD_USAGE:         { p: { usageAction: { t: S, r: R } } },
+        DISMISS_TRIGGER:      { p: { triggerId: { t: S, r: R } } },
         // Customer Support & Feedback (MD 19)
         SUBMIT_FEEDBACK:      { p: { type: { t: S, r: OPT }, message: { t: S, r: R }, metadata: { t: O, r: OPT } } },
         GET_FEEDBACK_STATS:   { p: null },
@@ -60,7 +60,7 @@
         // Version & Release Management (MD 22)
         GET_VERSION_INFO:     { p: null },
         GET_FEATURE_FLAGS:    { p: null },
-        SET_FEATURE_FLAG:     { p: null, tl: { flagName: { t: S, r: R }, enabled: { t: B, r: R } } },
+        SET_FEATURE_FLAG:     { p: { flagName: { t: S, r: R }, enabled: { t: B, r: R } } },
         GET_UPDATE_HISTORY:   { p: null },
         // Legal Compliance (MD 23)
         GET_PRIVACY_SUMMARY:  { p: null },
@@ -156,7 +156,7 @@
             }
         }
 
-        // Validate top-level fields (RECORD_USAGE, DISMISS_TRIGGER)
+        // Validate top-level fields if any schema defines them
         if (schema.tl) {
             _validateFields(message, schema.tl, errors, 'message ');
         }

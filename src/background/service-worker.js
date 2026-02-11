@@ -425,6 +425,14 @@ async function handleMessage(message) {
                     return { error: 'Read-only mode is enabled' };
                 }
 
+                // Extract domain from the URL for protection check
+                try {
+                    const deleteDomain = new URL(payload.url).hostname;
+                    if (await isProtected(deleteDomain)) {
+                        return { error: 'Domain is protected' };
+                    }
+                } catch (_) { /* invalid URL - let chrome.cookies.remove handle it */ }
+
                 return await CookieOps.remove(payload.url, payload.name);
             }
 
@@ -433,6 +441,10 @@ async function handleMessage(message) {
 
                 if (settings.readOnlyMode) {
                     return { error: 'Read-only mode is enabled' };
+                }
+
+                if (await isProtected(payload.domain)) {
+                    return { error: 'Domain is protected' };
                 }
 
                 return await CookieOps.clearDomain(payload.domain);
@@ -1090,12 +1102,10 @@ async function handleMessage(message) {
             }
 
             case 'OPEN_FEEDBACK': {
-                try {
-                    await chrome.action.openPopup();
-                    return { success: true };
-                } catch (e) {
-                    return { error: e.message };
-                }
+                // chrome.action.openPopup() requires a user gesture and cannot
+                // be called from a message handler.  Return an error so the
+                // caller can fall back to its own method of opening the popup.
+                return { error: 'Cannot open popup from background context' };
             }
 
             default:
@@ -1351,8 +1361,14 @@ async function trackEvent(eventName, properties = {}) {
 // Churn Prevention & Retention (MD 17)
 // ============================================================================
 
-// Create churn daily check alarm
-chrome.alarms.create('churn-daily-check', { periodInMinutes: 1440 });
+// Create churn daily check alarm only if it doesn't already exist.
+// Re-creating it on every SW wake-up would reset the scheduled time and
+// prevent the alarm from ever firing.
+chrome.alarms.get('churn-daily-check', (existing) => {
+    if (!existing) {
+        chrome.alarms.create('churn-daily-check', { periodInMinutes: 1440 });
+    }
+});
 
 // Handle alarms (churn check + auto-delete cookies)
 chrome.alarms.onAlarm.addListener(async (alarm) => {

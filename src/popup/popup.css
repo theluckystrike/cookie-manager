@@ -280,6 +280,13 @@ body {
     display: flex;
 }
 
+/* Tabs with dense content need internal scrolling */
+#tabHealth.tab-content.active,
+#tabProfiles.tab-content.active,
+#tabRules.tab-content.active {
+    overflow-y: auto;
+}
+
 /* ---------- Tab Placeholder (for upcoming features) ---------- */
 .tab-placeholder {
     display: flex;
@@ -453,10 +460,19 @@ body {
     gap: var(--space-1);
     margin-left: auto;
     cursor: pointer;
+    position: relative;
 }
 
 .toggle input {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 .toggle-slider {
@@ -843,10 +859,19 @@ body {
     font-size: var(--text-sm);
     cursor: pointer;
     user-select: none;
+    position: relative;
 }
 
 .checkbox input {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 .checkbox-mark {
@@ -966,6 +991,8 @@ body {
     animation: toastIn 200ms ease;
     z-index: 200;
     box-shadow: var(--shadow-lg);
+    max-width: 360px;
+    text-align: center;
 }
 
 @keyframes toastIn {
@@ -1044,12 +1071,14 @@ body {
 /* ---------- Legal Links (MD 23) ---------- */
 .footer-legal {
     font-size: 11px;
+    color: var(--text-muted);
     opacity: 0.7;
-    transition: opacity var(--transition);
+    transition: opacity var(--transition-fast);
 }
 
 .footer-legal:hover {
     opacity: 1;
+    color: var(--text-secondary);
 }
 
 /* ---------- Scrollbar ---------- */
@@ -1119,6 +1148,10 @@ body {
 :focus-visible {
     outline: 2px solid var(--primary);
     outline-offset: 2px;
+}
+
+.tab-content:focus-visible {
+    outline: none;
 }
 
 button:focus-visible,
