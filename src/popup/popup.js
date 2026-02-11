@@ -262,6 +262,11 @@ async function init() {
             }).catch(() => {});
         }
 
+        // Initialize retention tracking (MD 17)
+        if (typeof initRetention === 'function') {
+            initRetention();
+        }
+
     } catch (error) {
         console.error('[Popup] Init error:', error);
         showEmptyState('Error loading cookies');
@@ -489,6 +494,7 @@ async function saveCookie() {
         if (typeof MilestoneTracker !== 'undefined') {
             MilestoneTracker.record('edit').catch(() => {});
         }
+        recordRetentionUsage('edit');
         closeEditor();
         await loadCookies();
 
@@ -549,6 +555,7 @@ function showJwtDecoder() {
     if (typeof MilestoneTracker !== 'undefined') {
         MilestoneTracker.record('jwtDecode').catch(() => {});
     }
+    recordRetentionUsage('jwt');
 }
 
 function closeJwtModal() {
@@ -571,6 +578,7 @@ async function exportCookies() {
         if (typeof MilestoneTracker !== 'undefined') {
             MilestoneTracker.record('export').catch(() => {});
         }
+        recordRetentionUsage('export');
 
     } catch (error) {
         console.error('[Popup] Export error:', error);
@@ -599,6 +607,7 @@ async function clearAllCookies() {
                 if (typeof MilestoneTracker !== 'undefined') {
                     MilestoneTracker.record('clear').catch(() => {});
                 }
+                recordRetentionUsage('clear');
                 await loadCookies();
 
             } catch (error) {
@@ -895,6 +904,66 @@ function showGrowthBanner(message, actionLabel, onAction, onDismiss) {
     const footer = document.querySelector('.footer');
     if (footer) {
         footer.parentNode.insertBefore(banner, footer);
+    }
+}
+
+// ============================================================================
+// Churn Prevention & Retention (MD 17)
+// ============================================================================
+
+function initRetention() {
+    try {
+        // Record popup session open
+        chrome.runtime.sendMessage({ action: 'RECORD_USAGE', usageAction: 'session_open' }).catch(function() {});
+
+        // Check for retention trigger
+        chrome.runtime.sendMessage({ action: 'GET_RETENTION_TRIGGER' }).then(function(trigger) {
+            if (trigger && trigger.show === true) {
+                showRetentionBanner(trigger);
+            }
+        }).catch(function() {});
+    } catch (e) {
+        console.log('[Popup] Retention init skipped:', e.message);
+    }
+}
+
+function showRetentionBanner(trigger) {
+    var existing = document.getElementById('retentionBanner');
+    if (existing) existing.remove();
+
+    var banner = document.createElement('div');
+    banner.id = 'retentionBanner';
+    banner.className = 'retention-banner';
+
+    var messageText = (trigger && trigger.message) ? trigger.message : 'Welcome back! Check out what Cookie Manager can do.';
+    var safeMessage = typeof DomUtils !== 'undefined' ? DomUtils.escapeHtml(messageText) : escapeHtml(messageText);
+
+    banner.innerHTML = '<div class="retention-content">' +
+        '<span class="retention-text">' + safeMessage + '</span>' +
+        '<button class="retention-dismiss" aria-label="Dismiss">&times;</button>' +
+        '</div>';
+
+    // Insert before cookie list
+    var list = document.getElementById('cookieList');
+    if (list && list.parentNode) {
+        list.parentNode.insertBefore(banner, list);
+    }
+
+    // Dismiss handler
+    var dismissBtn = banner.querySelector('.retention-dismiss');
+    if (dismissBtn) {
+        dismissBtn.addEventListener('click', function() {
+            banner.remove();
+            chrome.runtime.sendMessage({ action: 'DISMISS_TRIGGER', triggerId: trigger.type }).catch(function() {});
+        });
+    }
+}
+
+function recordRetentionUsage(usageAction) {
+    try {
+        chrome.runtime.sendMessage({ action: 'RECORD_USAGE', usageAction: usageAction }).catch(function() {});
+    } catch (e) {
+        // Silently ignore retention tracking errors
     }
 }
 

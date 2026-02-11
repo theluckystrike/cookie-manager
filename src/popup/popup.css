@@ -1008,3 +1008,67 @@ body {
         transform: translateY(0);
     }
 }
+
+/* ============================================================================
+   Retention Banner (MD 17 - Churn Prevention)
+   ============================================================================ */
+
+.retention-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    margin: 0 0 2px 0;
+    background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%);
+    border-left: 3px solid #5b6abf;
+    border-radius: 0 6px 6px 0;
+    font-size: 12px;
+    color: #3a3f5c;
+    line-height: 1.4;
+    animation: retentionSlideIn 0.3s ease-out;
+}
+
+.retention-banner-icon {
+    flex-shrink: 0;
+    font-size: 16px;
+}
+
+.retention-banner-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.retention-banner-title {
+    font-weight: 600;
+    font-size: 12px;
+    margin-bottom: 2px;
+    color: #2d3250;
+}
+
+.retention-banner-message {
+    font-size: 11px;
+    color: #555b7a;
+}
+
+.retention-dismiss {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: #8b90a8;
+    cursor: pointer;
+    padding: 4px;
+    line-height: 1;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: color 0.15s, background 0.15s;
+}
+
+.retention-dismiss:hover {
+    color: #3a3f5c;
+    background: rgba(91, 106, 191, 0.1);
+}
+
+@keyframes retentionSlideIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}

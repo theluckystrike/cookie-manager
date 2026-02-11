@@ -399,6 +399,61 @@ async function handleMessage(message) {
                 };
             }
 
+            // ==============================================================
+            // Churn Prevention & Retention Messages (MD 17)
+            // ==============================================================
+
+            case 'GET_CHURN_STATUS': {
+                const { lastChurnAssessment = null } = await chrome.storage.local.get('lastChurnAssessment');
+                return lastChurnAssessment;
+            }
+
+            case 'GET_ENGAGEMENT_SCORE': {
+                if (typeof EngagementScore !== 'undefined') {
+                    try {
+                        return await EngagementScore.getSummary();
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'EngagementScore not available' };
+            }
+
+            case 'GET_RETENTION_TRIGGER': {
+                if (typeof RetentionTriggers !== 'undefined') {
+                    try {
+                        return await RetentionTriggers.getNextTrigger();
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'RetentionTriggers not available' };
+            }
+
+            case 'RECORD_USAGE': {
+                if (typeof ChurnDetector !== 'undefined') {
+                    try {
+                        await ChurnDetector.recordUsage(message.usageAction);
+                        return { success: true };
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'ChurnDetector not available' };
+            }
+
+            case 'DISMISS_TRIGGER': {
+                if (typeof RetentionTriggers !== 'undefined') {
+                    try {
+                        await RetentionTriggers.dismissTrigger(message.triggerId);
+                        return { success: true };
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'RetentionTriggers not available' };
+            }
+
             default:
                 return { error: 'Unknown action' };
         }
@@ -597,6 +652,34 @@ async function trackEvent(eventName, properties = {}) {
         console.error('[ServiceWorker] Analytics error:', e);
     }
 }
+
+// ============================================================================
+// Churn Prevention & Retention (MD 17)
+// ============================================================================
+
+// Create churn daily check alarm
+chrome.alarms.create('churn-daily-check', { periodInMinutes: 1440 });
+
+// Handle churn daily check alarm
+chrome.alarms.onAlarm.addListener(async (alarm) => {
+    if (alarm.name !== 'churn-daily-check') return;
+
+    try {
+        if (typeof ChurnDetector !== 'undefined') {
+            var assessment = await ChurnDetector.assessRisk();
+            await chrome.storage.local.set({ lastChurnAssessment: assessment });
+            if (typeof debugLog === 'function') {
+                debugLog('info', 'Retention', 'Daily churn assessment complete', assessment);
+            }
+        }
+    } catch (e) {
+        if (typeof debugLog === 'function') {
+            debugLog('warn', 'Retention', 'Churn assessment failed', e.message);
+        }
+    }
+});
+
+debugLog('info', 'Retention', 'Churn prevention & retention initialized (MD 17)');
 
 // Initial setup
 setupContextMenu();
