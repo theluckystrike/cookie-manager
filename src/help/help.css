@@ -11,11 +11,11 @@
     --help-text: #e0e0e0;
     --help-text-secondary: #a0a0b8;
     --help-text-muted: #6b6b85;
-    --help-accent: #667eea;
-    --help-accent-hover: #5a6fd6;
-    --help-accent-light: rgba(102, 126, 234, 0.15);
+    --help-accent: #7C3AED;
+    --help-accent-hover: #6D28D9;
+    --help-accent-light: rgba(124, 58, 237, 0.15);
     --help-border: rgba(255, 255, 255, 0.08);
-    --help-border-hover: rgba(102, 126, 234, 0.4);
+    --help-border-hover: rgba(124, 58, 237, 0.4);
     --help-radius: 8px;
     --help-radius-sm: 4px;
     --help-transition: 200ms ease;

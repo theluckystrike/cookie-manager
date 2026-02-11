@@ -99,16 +99,16 @@
             return chrome.storage.local.get({ _schemaVersion: 0 }).then(function (result) {
                 var stored = result._schemaVersion || 0;
                 if (stored >= CURRENT_VERSION) {
-                    console.log(TAG, 'Schema up to date at v' + stored);
+                    console.debug(TAG, 'Schema up to date at v' + stored);
                     return { migrated: false, from: stored, to: stored };
                 }
-                console.log(TAG, 'Migrating v' + stored + ' -> v' + CURRENT_VERSION);
+                console.debug(TAG, 'Migrating v' + stored + ' -> v' + CURRENT_VERSION);
                 return chrome.storage.local.get(null).then(function (allData) {
                     var data = Object.assign({}, allData);
                     for (var i = 0; i < MIGRATIONS.length; i++) {
                         var m = MIGRATIONS[i];
                         if (m.version > stored) {
-                            console.log(TAG, 'Running v' + m.version + ': ' + m.description);
+                            console.debug(TAG, 'Running v' + m.version + ': ' + m.description);
                             try { data = m.migrate(data); } catch (err) {
                                 console.error(TAG, 'Migration v' + m.version + ' failed', err);
                                 return { migrated: false, from: stored, to: stored, error: err.message };
@@ -121,7 +121,7 @@
                         if (typeof data[keys[k]] === 'undefined') data[keys[k]] = SCHEMA[keys[k]];
                     }
                     return chrome.storage.local.set(data).then(function () {
-                        console.log(TAG, 'Migration complete: v' + stored + ' -> v' + CURRENT_VERSION);
+                        console.debug(TAG, 'Migration complete: v' + stored + ' -> v' + CURRENT_VERSION);
                         return { migrated: true, from: stored, to: CURRENT_VERSION };
                     });
                 });

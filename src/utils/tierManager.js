@@ -142,10 +142,11 @@ class TierManager {
     }
 }
 
-// Export for Chrome extension
-const tierManager = new TierManager();
-window.tierManager = tierManager;
-window.TierManager = TierManager;
-window.TIER_CONFIG = TIER_CONFIG;
-window.FEATURE_SCORES = FEATURE_SCORES;
+// Export for Chrome extension (works in both service worker and window contexts)
+var tierManager = new TierManager();
+var _root = typeof self !== 'undefined' ? self : (typeof window !== 'undefined' ? window : {});
+_root.tierManager = tierManager;
+_root.TierManager = TierManager;
+_root.TIER_CONFIG = TIER_CONFIG;
+_root.FEATURE_SCORES = FEATURE_SCORES;
 

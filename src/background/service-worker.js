@@ -3,26 +3,55 @@
  * Handles message routing, context menus, and cookie change events
  */
 
-// Import shared modules (MD 19)
-try { importScripts('../shared/feedback-collector.js'); } catch(e) { console.warn('feedback-collector.js not loaded:', e.message); }
-try { importScripts('../shared/support-diagnostics.js'); } catch(e) { console.warn('support-diagnostics.js not loaded:', e.message); }
+// Import shared modules - MV3 importScripts paths are relative to extension root
+// Core messaging & schema
+try { importScripts('src/shared/message-types.js'); } catch(e) { console.warn('message-types.js not loaded:', e.message); }
+try { importScripts('src/shared/message-validator.js'); } catch(e) { console.warn('message-validator.js not loaded:', e.message); }
+try { importScripts('src/shared/message-router.js'); } catch(e) { console.warn('message-router.js not loaded:', e.message); }
+try { importScripts('src/shared/storage-schema.js'); } catch(e) { console.warn('storage-schema.js not loaded:', e.message); }
 
-// Import shared modules (MD 20)
-try { importScripts('../shared/perf-timer.js'); } catch(e) { console.warn('perf-timer.js not loaded:', e.message); }
-try { importScripts('../shared/storage-optimizer.js'); } catch(e) { console.warn('storage-optimizer.js not loaded:', e.message); }
+// Browser compatibility & security (MD 18)
+try { importScripts('src/shared/browser-compat.js'); } catch(e) { console.warn('browser-compat.js not loaded:', e.message); }
+try { importScripts('src/shared/cross-browser-api.js'); } catch(e) { console.warn('cross-browser-api.js not loaded:', e.message); }
+try { importScripts('src/shared/security-hardener.js'); } catch(e) { console.warn('security-hardener.js not loaded:', e.message); }
 
-// Import shared modules (MD 21)
-try { importScripts('../shared/accessibility.js'); } catch(e) { console.warn('accessibility.js not loaded:', e.message); }
+// Lifecycle & monitoring (MD 11, MD 12)
+try { importScripts('src/shared/sw-lifecycle.js'); } catch(e) { console.warn('sw-lifecycle.js not loaded:', e.message); }
+try { importScripts('src/shared/error-tracker.js'); } catch(e) { console.warn('error-tracker.js not loaded:', e.message); }
+try { importScripts('src/shared/debug-logger.js'); } catch(e) { console.warn('debug-logger.js not loaded:', e.message); }
 
-// Import shared modules (MD 22)
-try { importScripts('../shared/version-manager.js'); } catch(e) { console.warn('version-manager.js not loaded:', e.message); }
+// Growth & Retention modules (MD 14, MD 17)
+try { importScripts('src/shared/milestone-tracker.js'); } catch(e) { console.warn('milestone-tracker.js not loaded:', e.message); }
+try { importScripts('src/shared/churn-detector.js'); } catch(e) { console.warn('churn-detector.js not loaded:', e.message); }
+try { importScripts('src/shared/engagement-score.js'); } catch(e) { console.warn('engagement-score.js not loaded:', e.message); }
+try { importScripts('src/shared/retention-triggers.js'); } catch(e) { console.warn('retention-triggers.js not loaded:', e.message); }
+try { importScripts('src/shared/growth-prompts.js'); } catch(e) { console.warn('growth-prompts.js not loaded:', e.message); }
 
-// Import shared modules (MD 23)
-try { importScripts('../shared/legal-compliance.js'); } catch(e) { console.warn('legal-compliance.js not loaded:', e.message); }
+// Customer Support & Feedback (MD 19)
+try { importScripts('src/shared/feedback-collector.js'); } catch(e) { console.warn('feedback-collector.js not loaded:', e.message); }
+try { importScripts('src/shared/support-diagnostics.js'); } catch(e) { console.warn('support-diagnostics.js not loaded:', e.message); }
 
-// Import shared modules (MD 24)
-try { importScripts('../shared/architecture-patterns.js'); } catch(e) { console.warn('architecture-patterns.js not loaded:', e.message); }
-try { importScripts('../shared/message-router.js'); } catch(e) { console.warn('message-router.js not loaded:', e.message); }
+// Performance modules (MD 20)
+try { importScripts('src/shared/perf-timer.js'); } catch(e) { console.warn('perf-timer.js not loaded:', e.message); }
+try { importScripts('src/shared/performance-monitor.js'); } catch(e) { console.warn('performance-monitor.js not loaded:', e.message); }
+try { importScripts('src/shared/storage-optimizer.js'); } catch(e) { console.warn('storage-optimizer.js not loaded:', e.message); }
+
+// Accessibility (MD 21)
+try { importScripts('src/shared/accessibility.js'); } catch(e) { console.warn('accessibility.js not loaded:', e.message); }
+
+// Version & Release (MD 22)
+try { importScripts('src/shared/version-manager.js'); } catch(e) { console.warn('version-manager.js not loaded:', e.message); }
+
+// Legal Compliance (MD 23)
+try { importScripts('src/shared/legal-compliance.js'); } catch(e) { console.warn('legal-compliance.js not loaded:', e.message); }
+
+// Architecture Patterns (MD 24)
+try { importScripts('src/shared/architecture-patterns.js'); } catch(e) { console.warn('architecture-patterns.js not loaded:', e.message); }
+
+// Utility modules
+try { importScripts('src/utils/cookies.js'); } catch(e) { console.warn('utils/cookies.js not loaded:', e.message); }
+try { importScripts('src/utils/jwt.js'); } catch(e) { console.warn('utils/jwt.js not loaded:', e.message); }
+try { importScripts('src/utils/storage.js'); } catch(e) { console.warn('utils/storage.js not loaded:', e.message); }
 
 // ============================================================================
 // Error Tracking & Monitoring (MD 11 - Crash Analytics)
@@ -350,7 +379,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 async function handleMessage(message) {
     const { action, payload } = message;
 
-    console.log('[ServiceWorker] Received message:', action);
+    debugLog('info', 'MessageHandler', 'Received message: ' + action);
 
     try {
         switch (action) {
@@ -808,6 +837,251 @@ async function handleMessage(message) {
                 return { error: 'LegalCompliance not available' };
             }
 
+            // ==============================================================
+            // Extended Cookie Operations
+            // ==============================================================
+
+            case 'GET_ALL_COOKIES': {
+                try {
+                    const filters = {};
+                    if (payload?.domain) filters.domain = payload.domain;
+                    if (payload?.name) filters.name = payload.name;
+                    if (payload?.url) filters.url = payload.url;
+                    const cookies = await chrome.cookies.getAll(filters);
+                    return cookies || [];
+                } catch (e) {
+                    debugLog('error', 'CookieOps', 'GET_ALL_COOKIES failed', e.message);
+                    return { error: e.message };
+                }
+            }
+
+            // ==============================================================
+            // Cookie Profiles (save/load cookie sets)
+            // ==============================================================
+
+            case 'SAVE_COOKIE_PROFILE': {
+                try {
+                    const profileName = sanitizeInput(payload?.name, 128);
+                    if (!profileName) {
+                        return { error: 'Profile name is required' };
+                    }
+
+                    // Get cookies to save in the profile
+                    let cookiesToSave = payload?.cookies;
+                    if (!cookiesToSave && payload?.url) {
+                        cookiesToSave = await CookieOps.getAll(payload.url);
+                    }
+                    if (!cookiesToSave || !Array.isArray(cookiesToSave) || cookiesToSave.length === 0) {
+                        return { error: 'No cookies to save in profile' };
+                    }
+
+                    const { cookieProfiles = {} } = await chrome.storage.local.get('cookieProfiles');
+                    cookieProfiles[profileName] = {
+                        cookies: cookiesToSave,
+                        createdAt: Date.now(),
+                        updatedAt: Date.now(),
+                        cookieCount: cookiesToSave.length
+                    };
+
+                    await chrome.storage.local.set({ cookieProfiles });
+                    debugLog('info', 'Profiles', `Saved profile "${profileName}" with ${cookiesToSave.length} cookies`);
+                    return { success: true, name: profileName, cookieCount: cookiesToSave.length };
+                } catch (e) {
+                    debugLog('error', 'Profiles', 'SAVE_COOKIE_PROFILE failed', e.message);
+                    return { error: e.message };
+                }
+            }
+
+            case 'LOAD_COOKIE_PROFILE': {
+                try {
+                    const profileName = sanitizeInput(payload?.name, 128);
+                    if (!profileName) {
+                        return { error: 'Profile name is required' };
+                    }
+
+                    const { cookieProfiles = {} } = await chrome.storage.local.get('cookieProfiles');
+                    const profile = cookieProfiles[profileName];
+                    if (!profile) {
+                        return { error: `Profile "${profileName}" not found` };
+                    }
+
+                    const settingsCheck = await getSettings();
+                    if (settingsCheck.readOnlyMode) {
+                        return { error: 'Read-only mode is enabled' };
+                    }
+
+                    let restored = 0;
+                    let failed = 0;
+                    for (const cookie of profile.cookies) {
+                        try {
+                            const result = await CookieOps.set(cookie);
+                            if (result) {
+                                restored++;
+                            } else {
+                                failed++;
+                            }
+                        } catch {
+                            failed++;
+                        }
+                    }
+
+                    debugLog('info', 'Profiles', `Loaded profile "${profileName}": ${restored} restored, ${failed} failed`);
+                    return { success: true, name: profileName, restored, failed, total: profile.cookies.length };
+                } catch (e) {
+                    debugLog('error', 'Profiles', 'LOAD_COOKIE_PROFILE failed', e.message);
+                    return { error: e.message };
+                }
+            }
+
+            case 'GET_COOKIE_PROFILES': {
+                try {
+                    const { cookieProfiles = {} } = await chrome.storage.local.get('cookieProfiles');
+                    const list = Object.entries(cookieProfiles).map(([name, profile]) => ({
+                        name,
+                        cookieCount: profile.cookieCount || 0,
+                        createdAt: profile.createdAt,
+                        updatedAt: profile.updatedAt
+                    }));
+                    return list;
+                } catch (e) {
+                    debugLog('error', 'Profiles', 'GET_COOKIE_PROFILES failed', e.message);
+                    return { error: e.message };
+                }
+            }
+
+            case 'DELETE_COOKIE_PROFILE': {
+                try {
+                    const profileName = sanitizeInput(payload?.name, 128);
+                    if (!profileName) {
+                        return { error: 'Profile name is required' };
+                    }
+
+                    const { cookieProfiles = {} } = await chrome.storage.local.get('cookieProfiles');
+                    if (!cookieProfiles[profileName]) {
+                        return { error: `Profile "${profileName}" not found` };
+                    }
+
+                    delete cookieProfiles[profileName];
+                    await chrome.storage.local.set({ cookieProfiles });
+                    debugLog('info', 'Profiles', `Deleted profile "${profileName}"`);
+                    return { success: true, name: profileName };
+                } catch (e) {
+                    debugLog('error', 'Profiles', 'DELETE_COOKIE_PROFILE failed', e.message);
+                    return { error: e.message };
+                }
+            }
+
+            // ==============================================================
+            // Settings Management
+            // ==============================================================
+
+            case 'SAVE_SETTINGS': {
+                try {
+                    const allowedKeys = ['readOnlyMode', 'protectedDomains', 'showHttpOnly',
+                        'showSecure', 'showSessionCookies', 'defaultExportFormat',
+                        'theme', 'sortBy', 'sortOrder'];
+                    const updates = {};
+                    for (const key of allowedKeys) {
+                        if (payload && payload[key] !== undefined) {
+                            updates[key] = payload[key];
+                        }
+                    }
+                    if (Object.keys(updates).length === 0) {
+                        return { error: 'No valid settings to save' };
+                    }
+                    await chrome.storage.local.set(updates);
+                    debugLog('info', 'Settings', 'Settings saved', Object.keys(updates));
+                    return { success: true, updated: Object.keys(updates) };
+                } catch (e) {
+                    debugLog('error', 'Settings', 'SAVE_SETTINGS failed', e.message);
+                    return { error: e.message };
+                }
+            }
+
+            // ==============================================================
+            // Auto-Delete Rules
+            // ==============================================================
+
+            case 'GET_AUTO_DELETE_RULES': {
+                try {
+                    const { autoDeleteRules = [] } = await chrome.storage.local.get('autoDeleteRules');
+                    return autoDeleteRules;
+                } catch (e) {
+                    debugLog('error', 'AutoDelete', 'GET_AUTO_DELETE_RULES failed', e.message);
+                    return { error: e.message };
+                }
+            }
+
+            case 'SAVE_AUTO_DELETE_RULE': {
+                try {
+                    const domain = sanitizeInput(payload?.domain, 253);
+                    if (!domain) {
+                        return { error: 'Domain is required for auto-delete rule' };
+                    }
+
+                    const rule = {
+                        id: payload?.id || `rule_${Date.now()}`,
+                        domain: domain,
+                        pattern: sanitizeInput(payload?.pattern, 256) || '*',
+                        intervalMinutes: Math.max(1, Math.min(payload?.intervalMinutes || 60, 10080)),
+                        enabled: payload?.enabled !== false,
+                        createdAt: Date.now()
+                    };
+
+                    const { autoDeleteRules = [] } = await chrome.storage.local.get('autoDeleteRules');
+                    const existingIndex = autoDeleteRules.findIndex(r => r.id === rule.id);
+                    if (existingIndex >= 0) {
+                        autoDeleteRules[existingIndex] = rule;
+                    } else {
+                        autoDeleteRules.push(rule);
+                    }
+
+                    await chrome.storage.local.set({ autoDeleteRules });
+
+                    // Ensure auto-delete alarm is running
+                    await chrome.alarms.create('auto-delete-cookies', { periodInMinutes: 1 });
+
+                    debugLog('info', 'AutoDelete', `Saved rule for ${domain}`, rule);
+                    return { success: true, rule };
+                } catch (e) {
+                    debugLog('error', 'AutoDelete', 'SAVE_AUTO_DELETE_RULE failed', e.message);
+                    return { error: e.message };
+                }
+            }
+
+            case 'DELETE_AUTO_DELETE_RULE': {
+                try {
+                    const ruleId = payload?.id;
+                    if (!ruleId) {
+                        return { error: 'Rule ID is required' };
+                    }
+
+                    const { autoDeleteRules = [] } = await chrome.storage.local.get('autoDeleteRules');
+                    const filtered = autoDeleteRules.filter(r => r.id !== ruleId);
+                    await chrome.storage.local.set({ autoDeleteRules: filtered });
+
+                    // If no rules left, cancel the alarm
+                    if (filtered.length === 0 || filtered.every(r => !r.enabled)) {
+                        await chrome.alarms.clear('auto-delete-cookies');
+                    }
+
+                    debugLog('info', 'AutoDelete', `Deleted rule ${ruleId}`);
+                    return { success: true };
+                } catch (e) {
+                    debugLog('error', 'AutoDelete', 'DELETE_AUTO_DELETE_RULE failed', e.message);
+                    return { error: e.message };
+                }
+            }
+
+            case 'OPEN_FEEDBACK': {
+                try {
+                    await chrome.action.openPopup();
+                    return { success: true };
+                } catch (e) {
+                    return { error: e.message };
+                }
+            }
+
             default:
                 return { error: 'Unknown action' };
         }
@@ -862,7 +1136,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             if (settings.readOnlyMode) {
                 chrome.notifications.create({
                     type: 'basic',
-                    iconUrl: '/assets/icons/icon-128.png',
+                    iconUrl: 'assets/icons/icon-128.png',
                     title: 'Cookie Manager',
                     message: 'Read-only mode is enabled. Disable it to clear cookies.'
                 });
@@ -873,7 +1147,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
             chrome.notifications.create({
                 type: 'basic',
-                iconUrl: '/assets/icons/icon-128.png',
+                iconUrl: 'assets/icons/icon-128.png',
                 title: 'Cookies Cleared',
                 message: `Removed ${count} cookie${count !== 1 ? 's' : ''} from ${domain}`
             });
@@ -893,9 +1167,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 chrome.cookies.onChanged.addListener((changeInfo) => {
     // Log cookie changes for debugging
     const { removed, cookie, cause } = changeInfo;
-    console.log('[ServiceWorker] Cookie changed:', {
-        action: removed ? 'removed' : 'set',
-        name: cookie.name,
+    debugLog('info', 'CookieChange', (removed ? 'removed' : 'set') + ' ' + cookie.name, {
         domain: cookie.domain,
         cause
     });
@@ -906,7 +1178,7 @@ chrome.cookies.onChanged.addListener((changeInfo) => {
 // ============================================================================
 
 chrome.runtime.onInstalled.addListener(async (details) => {
-    console.log('[ServiceWorker] Installed:', details.reason);
+    debugLog('info', 'Lifecycle', 'Installed: ' + details.reason);
 
     // Version tracking (MD 22)
     if (typeof VersionManager !== 'undefined' && VersionManager.onInstalled) {
@@ -951,7 +1223,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
         const previousVersion = details.previousVersion;
         const currentVersion = chrome.runtime.getManifest().version;
 
-        console.log('[ServiceWorker] Updated from', previousVersion, 'to', currentVersion);
+        debugLog('info', 'Lifecycle', 'Updated from ' + previousVersion + ' to ' + currentVersion);
 
         // Track update
         await trackEvent('extension_updated', { previousVersion, currentVersion });
@@ -962,13 +1234,13 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 
         if (currentMajor > previousMajor) {
             // Could open a what's-new page here
-            console.log('[ServiceWorker] Major version update');
+            debugLog('info', 'Lifecycle', 'Major version update');
         }
     }
 });
 
 chrome.runtime.onStartup.addListener(async () => {
-    console.log('[ServiceWorker] Startup');
+    debugLog('info', 'Lifecycle', 'Startup');
     setupContextMenu();
     await recordStartupTimestamp('startup');
     debugLog('info', 'Lifecycle', 'onStartup fired');
@@ -982,6 +1254,18 @@ chrome.runtime.onStartup.addListener(async () => {
         }
     } catch (e) {
         console.error('[Monitoring] Error processing pending logs on startup:', e);
+    }
+
+    // Restore auto-delete alarm if there are active rules
+    try {
+        const { autoDeleteRules = [] } = await chrome.storage.local.get('autoDeleteRules');
+        const hasEnabledRules = autoDeleteRules.some(r => r.enabled);
+        if (hasEnabledRules) {
+            await chrome.alarms.create('auto-delete-cookies', { periodInMinutes: 1 });
+            debugLog('info', 'AutoDelete', `Restored auto-delete alarm (${autoDeleteRules.filter(r => r.enabled).length} active rules)`);
+        }
+    } catch (e) {
+        debugLog('warn', 'AutoDelete', 'Failed to restore auto-delete alarm on startup', e.message);
     }
 });
 
@@ -1019,22 +1303,80 @@ async function trackEvent(eventName, properties = {}) {
 // Create churn daily check alarm
 chrome.alarms.create('churn-daily-check', { periodInMinutes: 1440 });
 
-// Handle churn daily check alarm
+// Handle alarms (churn check + auto-delete cookies)
 chrome.alarms.onAlarm.addListener(async (alarm) => {
-    if (alarm.name !== 'churn-daily-check') return;
-
-    try {
-        if (typeof ChurnDetector !== 'undefined') {
-            var assessment = await ChurnDetector.assessRisk();
-            await chrome.storage.local.set({ lastChurnAssessment: assessment });
-            if (typeof debugLog === 'function') {
+    if (alarm.name === 'churn-daily-check') {
+        try {
+            if (typeof ChurnDetector !== 'undefined') {
+                var assessment = await ChurnDetector.assessRisk();
+                await chrome.storage.local.set({ lastChurnAssessment: assessment });
                 debugLog('info', 'Retention', 'Daily churn assessment complete', assessment);
             }
-        }
-    } catch (e) {
-        if (typeof debugLog === 'function') {
+        } catch (e) {
             debugLog('warn', 'Retention', 'Churn assessment failed', e.message);
         }
+        return;
+    }
+
+    if (alarm.name === 'auto-delete-cookies') {
+        try {
+            const { autoDeleteRules = [] } = await chrome.storage.local.get('autoDeleteRules');
+            const enabledRules = autoDeleteRules.filter(r => r.enabled);
+            if (enabledRules.length === 0) {
+                await chrome.alarms.clear('auto-delete-cookies');
+                return;
+            }
+
+            const now = Date.now();
+            let totalDeleted = 0;
+
+            for (const rule of enabledRules) {
+                // Check if enough time has passed since last run for this rule
+                const lastRun = rule.lastRun || 0;
+                if (now - lastRun < rule.intervalMinutes * 60000) continue;
+
+                try {
+                    const cookies = await chrome.cookies.getAll({ domain: rule.domain });
+                    let deletedCount = 0;
+
+                    for (const cookie of cookies) {
+                        // Match by pattern (* = all, otherwise match cookie name)
+                        const matches = rule.pattern === '*' ||
+                            cookie.name === rule.pattern ||
+                            (rule.pattern.includes('*') && new RegExp('^' + rule.pattern.replace(/\*/g, '.*') + '$').test(cookie.name));
+
+                        if (matches) {
+                            const cookieDomain = cookie.domain.startsWith('.')
+                                ? cookie.domain.slice(1)
+                                : cookie.domain;
+                            const url = `http${cookie.secure ? 's' : ''}://${cookieDomain}${cookie.path}`;
+                            await chrome.cookies.remove({ url, name: cookie.name });
+                            deletedCount++;
+                        }
+                    }
+
+                    // Update lastRun timestamp on the rule
+                    rule.lastRun = now;
+                    totalDeleted += deletedCount;
+
+                    if (deletedCount > 0) {
+                        debugLog('info', 'AutoDelete', `Deleted ${deletedCount} cookies for ${rule.domain}`);
+                    }
+                } catch (e) {
+                    debugLog('warn', 'AutoDelete', `Rule ${rule.id} failed for ${rule.domain}`, e.message);
+                }
+            }
+
+            // Persist updated lastRun timestamps
+            await chrome.storage.local.set({ autoDeleteRules });
+
+            if (totalDeleted > 0) {
+                debugLog('info', 'AutoDelete', `Auto-delete pass complete: ${totalDeleted} cookies removed`);
+            }
+        } catch (e) {
+            debugLog('error', 'AutoDelete', 'Auto-delete alarm handler failed', e.message);
+        }
+        return;
     }
 });
 
@@ -1075,4 +1417,4 @@ debugLog('info', 'Architecture', 'Architecture patterns initialized (MD 24)');
 // Initial setup
 setupContextMenu();
 
-console.log('[ServiceWorker] Cookie Manager initialized - Part of Zovo (https://zovo.one)');
+debugLog('info', 'Init', 'Cookie Manager initialized - Part of Zovo (https://zovo.one)');

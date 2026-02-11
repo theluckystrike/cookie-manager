@@ -21,7 +21,12 @@
 
     var STORAGE_KEY = 'errorLogs';
     var MAX_ENTRIES = 50;
-    var VERSION = chrome.runtime.getManifest().version;
+    var VERSION = '0.0.0';
+    try {
+        if (typeof chrome !== 'undefined' && chrome.runtime && typeof chrome.runtime.getManifest === 'function') {
+            VERSION = chrome.runtime.getManifest().version || '0.0.0';
+        }
+    } catch (e) { /* getManifest not available in this context */ }
 
     // ========================================================================
     // Severity Classification Patterns
@@ -173,7 +178,7 @@
                 });
             });
 
-            console.log('[ErrorTracker] Initialized for context:', _context);
+            console.debug('[ErrorTracker] Initialized for context:', _context);
         },
 
         track: function (error, extra) {

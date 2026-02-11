@@ -12,11 +12,11 @@
     --legal-text: #e0e0e0;
     --legal-text-secondary: #a0a0b8;
     --legal-text-muted: #6b6b85;
-    --legal-accent: #667eea;
-    --legal-accent-hover: #5a6fd6;
-    --legal-accent-light: rgba(102, 126, 234, 0.15);
+    --legal-accent: #7C3AED;
+    --legal-accent-hover: #6D28D9;
+    --legal-accent-light: rgba(124, 58, 237, 0.15);
     --legal-border: rgba(255, 255, 255, 0.08);
-    --legal-border-hover: rgba(102, 126, 234, 0.4);
+    --legal-border-hover: rgba(124, 58, 237, 0.4);
     --legal-success: #10B981;
     --legal-warning: #F59E0B;
     --legal-error: #EF4444;
@@ -273,7 +273,7 @@ body {
 }
 
 .legal-table tr:hover td {
-    background: rgba(102, 126, 234, 0.04);
+    background: rgba(124, 58, 237, 0.04);
 }
 
 /* ---------- Table Status Indicators ---------- */
@@ -285,6 +285,55 @@ body {
 .status-no {
     color: var(--legal-error);
     font-weight: 600;
+}
+
+/* ---------- Section Title (used in TOS) ---------- */
+.legal-section-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: 32px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--legal-border);
+    letter-spacing: -0.2px;
+}
+
+/* ---------- Legal List (explicit class) ---------- */
+.legal-list {
+    margin-bottom: 14px;
+    padding-left: 24px;
+}
+
+.legal-list li {
+    margin-bottom: 6px;
+    color: var(--legal-text-secondary);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.legal-list li::marker {
+    color: var(--legal-accent);
+}
+
+/* ---------- Legal Link ---------- */
+.legal-link {
+    color: var(--legal-accent);
+    text-decoration: none;
+    transition: color var(--legal-transition);
+}
+
+.legal-link:hover {
+    color: var(--legal-accent-hover);
+    text-decoration: underline;
+}
+
+/* ---------- Legal Intro ---------- */
+.legal-intro {
+    font-size: 13px;
+    color: var(--legal-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 12px;
 }
 
 /* ---------- Sections ---------- */

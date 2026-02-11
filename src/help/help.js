@@ -148,7 +148,7 @@
     function openPopupFallback() {
         try {
             if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.getURL) {
-                window.open(chrome.runtime.getURL('src/popup/popup.html'), '_blank');
+                window.open(chrome.runtime.getURL('src/popup/index.html'), '_blank');
             }
         } catch (e) { /* silently ignore */ }
     }

@@ -43,7 +43,51 @@
         GET_ENGAGEMENT_SCORE: { p: null },
         GET_RETENTION_TRIGGER:{ p: null },
         RECORD_USAGE:         { p: null, tl: { usageAction: { t: S, r: R } } },
-        DISMISS_TRIGGER:      { p: null, tl: { triggerId: { t: S, r: R } } }
+        DISMISS_TRIGGER:      { p: null, tl: { triggerId: { t: S, r: R } } },
+        // Customer Support & Feedback (MD 19)
+        SUBMIT_FEEDBACK:      { p: { type: { t: S, r: OPT }, message: { t: S, r: R }, metadata: { t: O, r: OPT } } },
+        GET_FEEDBACK_STATS:   { p: null },
+        GET_FEEDBACK:         { p: null },
+        EXPORT_FEEDBACK:      { p: null },
+        GET_DIAGNOSTICS:      { p: null },
+        GET_QUICK_CHECK:      { p: null },
+        // Performance Monitoring (MD 20)
+        GET_PERF_SUMMARY:     { p: null },
+        CHECK_PERF_BUDGETS:   { p: null },
+        GET_STORAGE_USAGE:    { p: null },
+        RUN_STORAGE_CLEANUP:  { p: null },
+        ANALYZE_STORAGE_KEYS: { p: null },
+        // Version & Release Management (MD 22)
+        GET_VERSION_INFO:     { p: null },
+        GET_FEATURE_FLAGS:    { p: null },
+        SET_FEATURE_FLAG:     { p: null, tl: { flagName: { t: S, r: R }, enabled: { t: B, r: R } } },
+        GET_UPDATE_HISTORY:   { p: null },
+        // Legal Compliance (MD 23)
+        GET_PRIVACY_SUMMARY:  { p: null },
+        EXPORT_USER_DATA:     { p: null },
+        DELETE_USER_DATA:     { p: { keepEssential: { t: B, r: OPT } } },
+        GET_DATA_SUMMARY:     { p: null },
+        GET_CONSENT_STATUS:   { p: null },
+        SET_CONSENT:          { p: { functional: { t: B, r: OPT }, analytics: { t: B, r: OPT } } },
+        GET_COMPLIANCE_LOG:   { p: null },
+        // Extended Cookie Operations
+        GET_ALL_COOKIES:      { p: { domain: { t: S, r: OPT }, name: { t: S, r: OPT }, url: { t: S, r: OPT } } },
+        // Cookie Profiles
+        SAVE_COOKIE_PROFILE:  { p: { name: { t: S, r: R }, cookies: { t: A, r: OPT }, url: { t: S, r: OPT } } },
+        LOAD_COOKIE_PROFILE:  { p: { name: { t: S, r: R } } },
+        GET_COOKIE_PROFILES:  { p: null },
+        DELETE_COOKIE_PROFILE:{ p: { name: { t: S, r: R } } },
+        // Settings Management
+        SAVE_SETTINGS:        { p: { readOnlyMode: { t: B, r: OPT }, showHttpOnly: { t: B, r: OPT },
+                                     showSecure: { t: B, r: OPT }, showSessionCookies: { t: B, r: OPT },
+                                     defaultExportFormat: { t: S, r: OPT }, theme: { t: S, r: OPT },
+                                     protectedDomains: { t: A, r: OPT }, sortBy: { t: S, r: OPT },
+                                     sortOrder: { t: S, r: OPT } } },
+        // Auto-Delete Rules
+        GET_AUTO_DELETE_RULES:    { p: null },
+        SAVE_AUTO_DELETE_RULE:    { p: { domain: { t: S, r: R }, id: { t: S, r: OPT }, pattern: { t: S, r: OPT },
+                                         intervalMinutes: { t: N, r: OPT }, enabled: { t: B, r: OPT } } },
+        DELETE_AUTO_DELETE_RULE:  { p: { id: { t: S, r: R } } }
     };
 
     // Build allowed-actions lookup from schema keys

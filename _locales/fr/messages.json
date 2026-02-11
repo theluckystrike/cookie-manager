@@ -99,13 +99,25 @@
     "message": "Nom du cookie",
     "description": "Placeholder for cookie name input"
   },
+  "placeholderCookieName": {
+    "message": "Nom du cookie",
+    "description": "Placeholder for cookie name input (popup key)"
+  },
   "placeholderValue": {
     "message": "Valeur du cookie",
     "description": "Placeholder for cookie value input"
   },
+  "placeholderCookieValue": {
+    "message": "Valeur du cookie",
+    "description": "Placeholder for cookie value input (popup key)"
+  },
   "placeholderDomain": {
     "message": ".example.com",
     "description": "Placeholder for domain input"
+  },
+  "placeholderPath": {
+    "message": "/",
+    "description": "Placeholder for path input"
   },
   "hintSessionCookie": {
     "message": "Laisser vide pour un cookie de session",
@@ -131,9 +143,17 @@
     "message": "En-tête",
     "description": "Label for JWT header section"
   },
+  "jwtHeader": {
+    "message": "En-tête",
+    "description": "JWT header section heading (popup key)"
+  },
   "labelPayload": {
     "message": "Contenu",
     "description": "Label for JWT payload section"
+  },
+  "jwtPayload": {
+    "message": "Contenu",
+    "description": "JWT payload section heading (popup key)"
   },
   "emptyTitle": {
     "message": "Aucun cookie trouvé",

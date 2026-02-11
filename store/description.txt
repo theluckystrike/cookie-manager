@@ -1,50 +1,48 @@
 Cookie Manager — View, Edit, Export Cookies with Ease
 
-🎯 THE PROBLEM
+THE PROBLEM
 Browser DevTools make cookie management painful. Scrolling, clicking, copying — it takes forever.
 
-✨ THE SOLUTION
+THE SOLUTION
 Cookie Manager gives you one-click access to all cookies. View, edit, export, and organize with a clean, modern interface.
 
-📦 FREE FEATURES
-• View all cookies for current site
-• Edit any cookie value, expiry, or flags
-• Delete cookies individually or in bulk
-• Search by name, value, or domain
-• Export up to 10 cookies at a time
-• 1 cookie profile for saving sets
+FEATURES (100% FREE)
+- View all cookies for current site
+- Edit any cookie value, expiry, or flags
+- Delete cookies individually or in bulk
+- Search by name, value, or domain
+- Export cookies as JSON or Netscape format
+- Import cookies from JSON files
+- JWT token detection and decoding
+- Read-only mode to prevent accidental changes
+- Domain protection settings
+- Keyboard shortcuts for fast workflow
+- Context menu integration
 
-🚀 PRO FEATURES ($4/mo)
-• Bulk export all cookies at once
-• Import cookies from JSON/Netscape files
-• Unlimited cookie profiles
-• Cross-device sync
-• Protected cookies (prevent deletion)
-• Cookie change alerts
+PERFECT FOR
+- Web developers testing auth flows
+- QA testers managing sessions
+- Privacy-focused users auditing cookies
+- Anyone managing multiple accounts
 
-👨‍💻 PERFECT FOR
-• Web developers testing auth flows
-• QA testers managing sessions
-• Privacy-focused users auditing cookies
-• Anyone managing multiple accounts
+YOUR PRIVACY MATTERS
+- All data stored locally on YOUR device
+- No external analytics or tracking
+- No account required
+- We never see your cookie data
+- Zero network requests
+- Open source
 
-🔒 YOUR PRIVACY MATTERS
-• All data stored locally on YOUR device
-• No external analytics or tracking
-• No account required
-• We never see your cookie data
-
-⌨️ HOW IT WORKS
+HOW IT WORKS
 1. Click the extension icon
 2. See all cookies instantly
 3. Edit, delete, or export as needed
-4. Save profiles for quick switching
 
-💎 WHY COOKIE MANAGER?
-✓ Clean, intuitive interface
-✓ Faster than DevTools
-✓ Profile switching for multi-account
-✓ Backed by Zovo — trusted by developers
+WHY COOKIE MANAGER?
+- Clean, intuitive interface
+- Faster than DevTools
+- JWT decoding built in
+- Backed by Zovo — trusted by developers
 
 Download now and take control of your cookies!
 

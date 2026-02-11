@@ -11,7 +11,12 @@
     "scripts": {
         "lint": "eslint src/",
         "test": "echo \"No tests configured\" && exit 0",
-        "package": "zip -r cookie-manager-v1.0.0.zip manifest.json src/ assets/ docs/ LICENSE README.md -x '*.DS_Store'"
+        "validate": "node scripts/validate.js",
+        "build": "node scripts/build.js",
+        "build:chrome": "node scripts/build.js chrome",
+        "build:firefox": "node scripts/build.js firefox",
+        "build:all": "node scripts/build.js all",
+        "package": "zip -r cookie-manager.zip manifest.json src/ assets/ _locales/ onboarding/ shared/ LICENSE README.md -x '*.DS_Store'"
     },
     "devDependencies": {
         "eslint": "^8.57.0"

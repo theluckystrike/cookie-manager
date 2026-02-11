@@ -245,9 +245,16 @@ async function init() {
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
         currentTab = tab;
 
+        // Set up event listeners early so UI is always interactive
+        setupEventListeners();
+
         if (!tab?.url || tab.url.startsWith('chrome://') || tab.url.startsWith('chrome-extension://')) {
             elements.currentDomain.textContent = 'Chrome page';
             showEmptyState('This page has no cookies');
+            // Disable action buttons on unsupported pages
+            elements.exportBtn.disabled = true;
+            elements.addCookieBtn.disabled = true;
+            elements.clearAllBtn.disabled = true;
             return;
         }
 
@@ -257,9 +264,6 @@ async function init() {
         // Load cookies
         showLoading();
         await loadCookies();
-
-        // Set up event listeners
-        setupEventListeners();
 
         // Track session milestone (MD 14 - Growth)
         if (typeof MilestoneTracker !== 'undefined') {
@@ -276,10 +280,12 @@ async function init() {
         }
 
         // Version display (MD 22)
-        if (typeof VersionManager !== 'undefined') {
-            var versionEl = document.getElementById('versionDisplay');
-            if (versionEl) {
+        var versionEl = document.getElementById('versionDisplay');
+        if (versionEl) {
+            if (typeof VersionManager !== 'undefined' && VersionManager.getDisplayVersion) {
                 versionEl.textContent = 'v' + VersionManager.getDisplayVersion();
+            } else {
+                versionEl.textContent = 'v' + chrome.runtime.getManifest().version;
             }
         }
 
@@ -317,7 +323,13 @@ async function loadCookies() {
             payload: { url: currentTab.url }
         });
 
-        currentCookies = response || [];
+        // Ensure response is an array (service worker may return {error:...})
+        if (Array.isArray(response)) {
+            currentCookies = response;
+        } else {
+            console.warn('[Popup] Unexpected response from GET_COOKIES:', response);
+            currentCookies = [];
+        }
         renderCookies(currentCookies);
 
     } catch (error) {
@@ -369,9 +381,15 @@ function renderCookies(cookies) {
         elements.cookieList.appendChild(template.content);
     });
 
-    // Add click handlers
+    // Add click and keyboard handlers
     elements.cookieList.querySelectorAll('.cookie-item').forEach((item, index) => {
         item.addEventListener('click', () => openEditor(filtered[index]));
+        item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openEditor(filtered[index]);
+            }
+        });
     });
 }
 
@@ -398,7 +416,7 @@ function createCookieItemHTML(cookie) {
         : cookie.value;
 
     return `
-    <div class="cookie-item" data-name="${escapeHtml(cookie.name)}">
+    <div class="cookie-item" data-name="${escapeHtml(cookie.name)}" tabindex="0" role="button" aria-label="Edit cookie ${escapeHtml(cookie.name)}">
       <div class="cookie-icon">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="12" cy="12" r="10"></circle>
@@ -537,6 +555,26 @@ async function saveCookie() {
     }
 
     try {
+        // If editing an existing cookie and name/domain/path changed,
+        // delete the old cookie first to avoid duplicates
+        if (!isNewCookie && selectedCookie) {
+            const nameChanged = selectedCookie.name !== name;
+            const domainChanged = selectedCookie.domain !== domain;
+            const pathChanged = selectedCookie.path !== path;
+
+            if (nameChanged || domainChanged || pathChanged) {
+                const oldDomain = selectedCookie.domain.startsWith('.')
+                    ? selectedCookie.domain.slice(1)
+                    : selectedCookie.domain;
+                const oldUrl = `http${selectedCookie.secure ? 's' : ''}://${oldDomain}${selectedCookie.path}`;
+
+                await chrome.runtime.sendMessage({
+                    action: 'DELETE_COOKIE',
+                    payload: { url: oldUrl, name: selectedCookie.name }
+                });
+            }
+        }
+
         const response = await chrome.runtime.sendMessage({
             action: 'SET_COOKIE',
             payload: cookie
@@ -569,25 +607,31 @@ async function deleteCookie() {
         return;
     }
 
-    const domain = selectedCookie.domain.startsWith('.')
-        ? selectedCookie.domain.slice(1)
-        : selectedCookie.domain;
-    const url = `http${selectedCookie.secure ? 's' : ''}://${domain}${selectedCookie.path}`;
+    showConfirm(
+        'Delete Cookie?',
+        `Are you sure you want to delete "${selectedCookie.name}"?`,
+        async () => {
+            const domain = selectedCookie.domain.startsWith('.')
+                ? selectedCookie.domain.slice(1)
+                : selectedCookie.domain;
+            const url = `http${selectedCookie.secure ? 's' : ''}://${domain}${selectedCookie.path}`;
 
-    try {
-        await chrome.runtime.sendMessage({
-            action: 'DELETE_COOKIE',
-            payload: { url, name: selectedCookie.name }
-        });
+            try {
+                await chrome.runtime.sendMessage({
+                    action: 'DELETE_COOKIE',
+                    payload: { url, name: selectedCookie.name }
+                });
 
-        showToast('Cookie deleted', 'success');
-        closeEditor();
-        await loadCookies();
+                showToast('Cookie deleted', 'success');
+                closeEditor();
+                await loadCookies();
 
-    } catch (error) {
-        console.error('[Popup] Delete cookie error:', error);
-        showToast('Failed to delete cookie', 'error');
-    }
+            } catch (error) {
+                console.error('[Popup] Delete cookie error:', error);
+                showToast('Failed to delete cookie', 'error');
+            }
+        }
+    );
 }
 
 // ============================================================================
@@ -637,14 +681,35 @@ function closeJwtModal() {
 // ============================================================================
 
 async function exportCookies() {
+    if (currentCookies.length === 0) {
+        showToast('No cookies to export', 'error');
+        return;
+    }
+
     try {
         const json = await chrome.runtime.sendMessage({
             action: 'EXPORT_COOKIES',
             payload: { url: currentTab.url, format: 'json' }
         });
 
-        await navigator.clipboard.writeText(json);
-        showToast(`${currentCookies.length} cookies copied to clipboard`, 'success');
+        // Download as JSON file
+        const domain = new URL(currentTab.url).hostname;
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `cookies-${domain}-${new Date().toISOString().slice(0, 10)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        // Also copy to clipboard as convenience
+        try {
+            await navigator.clipboard.writeText(json);
+            showToast(`${currentCookies.length} cookies exported and copied to clipboard`, 'success');
+        } catch {
+            showToast(`${currentCookies.length} cookies exported as JSON file`, 'success');
+        }
+
         if (typeof MilestoneTracker !== 'undefined') {
             MilestoneTracker.record('export').catch(() => {});
         }
@@ -659,6 +724,11 @@ async function exportCookies() {
 async function clearAllCookies() {
     if (settings.readOnlyMode) {
         showToast('Read-only mode is enabled', 'error');
+        return;
+    }
+
+    if (currentCookies.length === 0) {
+        showToast('No cookies to clear', 'error');
         return;
     }
 
@@ -1050,7 +1120,7 @@ function initRetention() {
             }
         }).catch(function() {});
     } catch (e) {
-        console.log('[Popup] Retention init skipped:', e.message);
+        console.debug('[Popup] Retention init skipped:', e.message);
     }
 }
 
@@ -1137,7 +1207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const startTime = performance.now();
     init().then(() => {
         const loadTime = Math.round(performance.now() - startTime);
-        console.log(`[Popup] Loaded in ${loadTime}ms`);
+        console.debug(`[Popup] Loaded in ${loadTime}ms`);
         // Store popup load time
         chrome.storage.local.get({ popupLoadTimes: [] }, (result) => {
             const times = result.popupLoadTimes;

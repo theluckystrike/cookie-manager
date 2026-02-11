@@ -252,8 +252,14 @@ body {
     white-space: nowrap;
 }
 
-.btn:active {
+.btn:active:not(:disabled) {
     transform: scale(0.97);
+}
+
+.btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 .btn-primary {
@@ -496,6 +502,16 @@ body {
     color: #92400E;
 }
 
+@media (prefers-color-scheme: dark) {
+    .badge-jwt {
+        color: var(--warning);
+    }
+
+    .jwt-badge span:first-child {
+        color: var(--warning);
+    }
+}
+
 .badge-session {
     background: var(--bg-tertiary);
     color: var(--text-muted);
@@ -600,7 +616,7 @@ body {
     max-height: 90%;
 }
 
-.modal-sm .modal-content {
+.modal-content.modal-sm {
     max-height: 50%;
 }
 
@@ -699,6 +715,12 @@ body {
     background-repeat: no-repeat;
     background-position: right 12px center;
     padding-right: 36px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .form-group select {
+        background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23A1A1AA' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    }
 }
 
 .form-hint {
@@ -880,10 +902,14 @@ body {
 
 /* ---------- Zovo Branded Footer ---------- */
 .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: var(--space-2) var(--space-4);
     border-top: 1px solid var(--border-color);
     background: var(--bg-primary);
-    text-align: center;
+    flex-shrink: 0;
+    min-height: 36px;
 }
 
 .footer-link {
@@ -893,6 +919,19 @@ body {
     text-decoration: none;
     font-size: var(--text-xs);
     transition: color var(--transition-fast);
+}
+
+.footer-help {
+    color: var(--text-secondary);
+}
+
+.footer-help:hover {
+    color: var(--primary);
+}
+
+.footer-version {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
 }
 
 .footer-text {
@@ -1085,6 +1124,21 @@ a:focus-visible {
     }
 }
 
+@media (prefers-color-scheme: dark) {
+    .growth-banner {
+        background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(124, 58, 237, 0.05));
+        border-top-color: rgba(124, 58, 237, 0.3);
+    }
+
+    .growth-banner .growth-text {
+        color: var(--text-secondary);
+    }
+
+    .growth-banner .btn-link {
+        color: var(--text-muted);
+    }
+}
+
 /* ============================================================================
    Retention Banner (MD 17 - Churn Prevention)
    ============================================================================ */
@@ -1102,6 +1156,19 @@ a:focus-visible {
     color: #3a3f5c;
     line-height: 1.4;
     animation: retentionSlideIn 0.3s ease-out;
+}
+
+.retention-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+}
+
+.retention-text {
+    flex: 1;
+    min-width: 0;
 }
 
 .retention-banner-icon {
@@ -1147,6 +1214,31 @@ a:focus-visible {
 @keyframes retentionSlideIn {
     from { opacity: 0; transform: translateY(-8px); }
     to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-color-scheme: dark) {
+    .retention-banner {
+        background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%);
+        border-left-color: var(--primary);
+        color: var(--text-secondary);
+    }
+
+    .retention-banner-title {
+        color: var(--text-primary);
+    }
+
+    .retention-banner-message {
+        color: var(--text-secondary);
+    }
+
+    .retention-dismiss {
+        color: var(--text-muted);
+    }
+
+    .retention-dismiss:hover {
+        color: var(--text-primary);
+        background: rgba(124, 58, 237, 0.1);
+    }
 }
 
 /* ============================================================================

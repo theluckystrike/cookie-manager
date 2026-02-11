@@ -99,13 +99,25 @@
     "message": "Cookie-Name",
     "description": "Placeholder for cookie name input"
   },
+  "placeholderCookieName": {
+    "message": "Cookie-Name",
+    "description": "Placeholder for cookie name input (popup key)"
+  },
   "placeholderValue": {
     "message": "Cookie-Wert",
     "description": "Placeholder for cookie value input"
   },
+  "placeholderCookieValue": {
+    "message": "Cookie-Wert",
+    "description": "Placeholder for cookie value input (popup key)"
+  },
   "placeholderDomain": {
     "message": ".example.com",
     "description": "Placeholder for domain input"
+  },
+  "placeholderPath": {
+    "message": "/",
+    "description": "Placeholder for path input"
   },
   "hintSessionCookie": {
     "message": "Leer lassen für Sitzungs-Cookie",
@@ -131,9 +143,17 @@
     "message": "Header",
     "description": "Label for JWT header section"
   },
+  "jwtHeader": {
+    "message": "Header",
+    "description": "JWT header section heading (popup key)"
+  },
   "labelPayload": {
     "message": "Nutzlast",
     "description": "Label for JWT payload section"
+  },
+  "jwtPayload": {
+    "message": "Nutzlast",
+    "description": "JWT payload section heading (popup key)"
   },
   "emptyTitle": {
     "message": "Keine Cookies gefunden",
