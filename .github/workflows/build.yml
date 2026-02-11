@@ -1,0 +1,79 @@
+name: Build & Release
+
+on:
+  push:
+    branches: [master]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Extension
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build all browsers
+        run: node scripts/build.js all
+
+      - name: Upload Chrome build
+        uses: actions/upload-artifact@v4
+        with:
+          name: cookie-manager-chrome
+          path: dist/cookie-manager-chrome.zip
+          if-no-files-found: error
+
+      - name: Upload Firefox build
+        uses: actions/upload-artifact@v4
+        with:
+          name: cookie-manager-firefox
+          path: dist/cookie-manager-firefox.zip
+          if-no-files-found: error
+
+      - name: Upload Edge build
+        uses: actions/upload-artifact@v4
+        with:
+          name: cookie-manager-edge
+          path: dist/cookie-manager-edge.zip
+          if-no-files-found: error
+
+  release:
+    name: Create Release
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Rename ZIPs with version
+        run: |
+          VERSION="${GITHUB_REF_NAME}"
+          mkdir -p release
+          cp artifacts/cookie-manager-chrome/cookie-manager-chrome.zip \
+             "release/cookie-manager-chrome-${VERSION}.zip"
+          cp artifacts/cookie-manager-firefox/cookie-manager-firefox.zip \
+             "release/cookie-manager-firefox-${VERSION}.zip"
+          cp artifacts/cookie-manager-edge/cookie-manager-edge.zip \
+             "release/cookie-manager-edge-${VERSION}.zip"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: release/*.zip
