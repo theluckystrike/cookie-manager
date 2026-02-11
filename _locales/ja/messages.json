@@ -1,0 +1,322 @@
+{
+  "extensionName": {
+    "message": "Cookie Manager",
+    "description": "Extension name shown in browser"
+  },
+  "extensionDescription": {
+    "message": "シンプルで使いやすい Cookie 管理ツール。Cookie の表示、編集、エクスポート、保護が可能です。",
+    "description": "Extension description for the store listing"
+  },
+  "actionTitle": {
+    "message": "Cookie Manager",
+    "description": "Browser action tooltip title"
+  },
+  "brandTitle": {
+    "message": "Cookie Manager",
+    "description": "Brand title shown in the UI header"
+  },
+  "domainLoading": {
+    "message": "読み込み中...",
+    "description": "Shown while domain info is loading"
+  },
+  "searchPlaceholder": {
+    "message": "Cookie を検索...",
+    "description": "Placeholder text in the search input"
+  },
+  "buttonExport": {
+    "message": "エクスポート",
+    "description": "Export button label"
+  },
+  "buttonAdd": {
+    "message": "追加",
+    "description": "Add button label"
+  },
+  "buttonClear": {
+    "message": "クリア",
+    "description": "Clear button label"
+  },
+  "buttonSave": {
+    "message": "Cookie を保存",
+    "description": "Save cookie button label"
+  },
+  "buttonDelete": {
+    "message": "削除",
+    "description": "Delete button label"
+  },
+  "buttonCancel": {
+    "message": "キャンセル",
+    "description": "Cancel button label"
+  },
+  "buttonConfirm": {
+    "message": "確認",
+    "description": "Confirm button label"
+  },
+  "labelName": {
+    "message": "名前",
+    "description": "Label for cookie name field"
+  },
+  "labelValue": {
+    "message": "値",
+    "description": "Label for cookie value field"
+  },
+  "labelDomain": {
+    "message": "ドメイン",
+    "description": "Label for cookie domain field"
+  },
+  "labelPath": {
+    "message": "パス",
+    "description": "Label for cookie path field"
+  },
+  "labelExpiration": {
+    "message": "有効期限",
+    "description": "Label for cookie expiration field"
+  },
+  "labelSecure": {
+    "message": "Secure",
+    "description": "Label for secure flag"
+  },
+  "labelHttpOnly": {
+    "message": "HttpOnly",
+    "description": "Label for HttpOnly flag"
+  },
+  "labelSameSite": {
+    "message": "SameSite",
+    "description": "Label for SameSite attribute"
+  },
+  "sameSiteLax": {
+    "message": "Lax",
+    "description": "SameSite Lax option"
+  },
+  "sameSiteStrict": {
+    "message": "Strict",
+    "description": "SameSite Strict option"
+  },
+  "sameSiteNone": {
+    "message": "None",
+    "description": "SameSite None option"
+  },
+  "placeholderName": {
+    "message": "Cookie 名",
+    "description": "Placeholder for cookie name input"
+  },
+  "placeholderValue": {
+    "message": "Cookie の値",
+    "description": "Placeholder for cookie value input"
+  },
+  "placeholderDomain": {
+    "message": ".example.com",
+    "description": "Placeholder for domain input"
+  },
+  "hintSessionCookie": {
+    "message": "セッション Cookie にするには空欄のままにしてください",
+    "description": "Hint text for expiration field"
+  },
+  "titleEditCookie": {
+    "message": "Cookie を編集",
+    "description": "Title for cookie edit dialog"
+  },
+  "titleAddCookie": {
+    "message": "Cookie を追加",
+    "description": "Title for cookie add dialog"
+  },
+  "titleJwtToken": {
+    "message": "JWT トークン",
+    "description": "Title for JWT token viewer"
+  },
+  "titleConfirm": {
+    "message": "確認",
+    "description": "Title for confirmation dialog"
+  },
+  "labelHeader": {
+    "message": "ヘッダー",
+    "description": "Label for JWT header section"
+  },
+  "labelPayload": {
+    "message": "ペイロード",
+    "description": "Label for JWT payload section"
+  },
+  "emptyTitle": {
+    "message": "Cookie が見つかりません",
+    "description": "Title shown when no cookies exist"
+  },
+  "emptySubtitle": {
+    "message": "このサイトには Cookie が設定されていません",
+    "description": "Subtitle shown when no cookies exist"
+  },
+  "loadingCookies": {
+    "message": "Cookie を読み込み中...",
+    "description": "Shown while cookies are being loaded"
+  },
+  "chromePage": {
+    "message": "Chrome ページ",
+    "description": "Label for Chrome internal pages"
+  },
+  "noCookiesForPage": {
+    "message": "このページには Cookie がありません",
+    "description": "Message when current page has no cookies"
+  },
+  "toastCookieCreated": {
+    "message": "Cookie を作成しました",
+    "description": "Toast notification after creating a cookie"
+  },
+  "toastCookieSaved": {
+    "message": "Cookie を保存しました",
+    "description": "Toast notification after saving a cookie"
+  },
+  "toastCookieDeleted": {
+    "message": "Cookie を削除しました",
+    "description": "Toast notification after deleting a cookie"
+  },
+  "toastCookiesRefreshed": {
+    "message": "Cookie を更新しました",
+    "description": "Toast notification after refreshing cookies"
+  },
+  "toastCopied": {
+    "message": "クリップボードにコピーしました",
+    "description": "Toast notification after copying to clipboard"
+  },
+  "toastDebugExported": {
+    "message": "デバッグバンドルをエクスポートしました",
+    "description": "Toast notification after exporting debug bundle"
+  },
+  "toastReadOnlyEnabled": {
+    "message": "読み取り専用モードを有効にしました",
+    "description": "Toast notification when read-only mode is enabled"
+  },
+  "toastReadOnlyDisabled": {
+    "message": "読み取り専用モードを無効にしました",
+    "description": "Toast notification when read-only mode is disabled"
+  },
+  "errorLoadCookies": {
+    "message": "Cookie の読み込みに失敗しました",
+    "description": "Error message when cookies fail to load"
+  },
+  "errorNoMatch": {
+    "message": "検索に一致する Cookie がありません",
+    "description": "Message when search returns no results"
+  },
+  "errorSaveCookie": {
+    "message": "Cookie の保存に失敗しました",
+    "description": "Error message when cookie save fails"
+  },
+  "errorDeleteCookie": {
+    "message": "Cookie の削除に失敗しました",
+    "description": "Error message when cookie delete fails"
+  },
+  "errorExportCookies": {
+    "message": "Cookie のエクスポートに失敗しました",
+    "description": "Error message when cookie export fails"
+  },
+  "errorClearCookies": {
+    "message": "Cookie のクリアに失敗しました",
+    "description": "Error message when clearing cookies fails"
+  },
+  "errorCopyFailed": {
+    "message": "コピーに失敗しました",
+    "description": "Error message when copy to clipboard fails"
+  },
+  "errorInvalidJwt": {
+    "message": "無効な JWT トークンです",
+    "description": "Error message for invalid JWT tokens"
+  },
+  "errorReadOnly": {
+    "message": "読み取り専用モードが有効です",
+    "description": "Error message when action blocked by read-only mode"
+  },
+  "errorNameRequired": {
+    "message": "Cookie 名は必須です",
+    "description": "Validation error for missing cookie name"
+  },
+  "errorDomainRequired": {
+    "message": "ドメインは必須です",
+    "description": "Validation error for missing domain"
+  },
+  "confirmClearTitle": {
+    "message": "すべての Cookie を削除しますか？",
+    "description": "Title for clear all cookies confirmation"
+  },
+  "confirmClearMessage": {
+    "message": "このドメインの $COUNT$ 件の Cookie がすべて削除されます。",
+    "description": "Message for clear all cookies confirmation",
+    "placeholders": {
+      "COUNT": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "toastCookiesExported": {
+    "message": "$COUNT$ 件の Cookie をクリップボードにコピーしました",
+    "description": "Toast notification after exporting cookies",
+    "placeholders": {
+      "COUNT": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "toastCookiesCleared": {
+    "message": "$COUNT$ 件の Cookie を削除しました",
+    "description": "Toast notification after clearing cookies",
+    "placeholders": {
+      "COUNT": {
+        "content": "$1",
+        "example": "5"
+      }
+    }
+  },
+  "contextClearSite": {
+    "message": "このサイトの Cookie を削除",
+    "description": "Context menu item to clear site cookies"
+  },
+  "contextOpenManager": {
+    "message": "Cookie Manager を開く",
+    "description": "Context menu item to open the extension"
+  },
+  "notifReadOnlyBlock": {
+    "message": "読み取り専用モードが有効です。Cookie を削除するには無効にしてください。",
+    "description": "Notification when read-only blocks clearing"
+  },
+  "notifCookiesCleared": {
+    "message": "Cookie を削除しました",
+    "description": "Notification title after cookies are cleared"
+  },
+  "notifCookiesRemovedCount": {
+    "message": "$DOMAIN$ から $COUNT$ 件の Cookie を削除しました",
+    "description": "Notification body with count and domain",
+    "placeholders": {
+      "COUNT": {
+        "content": "$1",
+        "example": "3"
+      },
+      "DOMAIN": {
+        "content": "$2",
+        "example": "example.com"
+      }
+    }
+  },
+  "footerBuiltBy": {
+    "message": "開発",
+    "description": "Footer text before brand name"
+  },
+  "footerBrand": {
+    "message": "zovo.",
+    "description": "Brand name in footer"
+  },
+  "badgeSecure": {
+    "message": "Secure",
+    "description": "Badge label for secure cookies"
+  },
+  "badgeHttpOnly": {
+    "message": "HttpOnly",
+    "description": "Badge label for HttpOnly cookies"
+  },
+  "badgeJwt": {
+    "message": "JWT",
+    "description": "Badge label for JWT cookies"
+  },
+  "badgeSession": {
+    "message": "セッション",
+    "description": "Badge label for session cookies"
+  }
+}

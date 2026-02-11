@@ -1,0 +1,314 @@
+{
+    "extensionName": {
+        "message": "Cookie Manager",
+        "description": "Extension name shown in the browser toolbar, store listing, and extensions page"
+    },
+    "extensionDescription": {
+        "message": "Simple, clean cookie management. View, edit, export, and protect cookies.",
+        "description": "Extension description shown in the Chrome Web Store and extensions page"
+    },
+    "actionTitle": {
+        "message": "Cookie Manager",
+        "description": "Tooltip shown when hovering over the extension icon in the toolbar"
+    },
+
+    "brandTitle": {
+        "message": "Cookie Manager",
+        "description": "Brand title displayed in the popup header"
+    },
+    "domainLoading": {
+        "message": "Loading...",
+        "description": "Placeholder text shown while the current domain is being determined"
+    },
+    "searchPlaceholder": {
+        "message": "Search cookies...",
+        "description": "Placeholder text in the cookie search input field"
+    },
+
+    "exportButton": {
+        "message": "Export",
+        "description": "Label for the export cookies button in the action bar"
+    },
+    "addButton": {
+        "message": "Add",
+        "description": "Label for the add cookie button in the action bar"
+    },
+    "clearButton": {
+        "message": "Clear",
+        "description": "Label for the clear all cookies button in the action bar"
+    },
+    "deleteButton": {
+        "message": "Delete",
+        "description": "Label for the delete cookie button in the editor modal footer"
+    },
+    "saveCookieButton": {
+        "message": "Save Cookie",
+        "description": "Label for the save button in the cookie editor modal"
+    },
+    "cancelButton": {
+        "message": "Cancel",
+        "description": "Label for the cancel button in the confirm dialog"
+    },
+    "confirmButton": {
+        "message": "Confirm",
+        "description": "Label for the confirm/OK button in the confirm dialog"
+    },
+
+    "emptyTitle": {
+        "message": "No cookies found",
+        "description": "Title shown in the empty state when no cookies exist"
+    },
+    "emptySubtitle": {
+        "message": "This site has no cookies set",
+        "description": "Subtitle shown in the empty state when no cookies exist for the current site"
+    },
+    "loadingCookies": {
+        "message": "Loading cookies...",
+        "description": "Text shown while cookies are being loaded from the browser"
+    },
+    "chromePage": {
+        "message": "Chrome page",
+        "description": "Domain label shown when the active tab is a chrome:// or chrome-extension:// page"
+    },
+    "chromePageNoCookies": {
+        "message": "This page has no cookies",
+        "description": "Empty state message shown for Chrome internal pages that cannot have cookies"
+    },
+    "errorLoadingCookies": {
+        "message": "Error loading cookies",
+        "description": "Empty state message shown when cookies fail to load"
+    },
+    "noSearchResults": {
+        "message": "No cookies match your search",
+        "description": "Empty state message shown when the search filter matches no cookies"
+    },
+
+    "editCookieTitle": {
+        "message": "Edit Cookie",
+        "description": "Modal title when editing an existing cookie"
+    },
+    "addCookieTitle": {
+        "message": "Add Cookie",
+        "description": "Modal title when creating a new cookie"
+    },
+    "nameLabel": {
+        "message": "Name",
+        "description": "Form field label for the cookie name input"
+    },
+    "valueLabel": {
+        "message": "Value",
+        "description": "Form field label for the cookie value input"
+    },
+    "domainLabel": {
+        "message": "Domain",
+        "description": "Form field label for the cookie domain input"
+    },
+    "pathLabel": {
+        "message": "Path",
+        "description": "Form field label for the cookie path input"
+    },
+    "expirationLabel": {
+        "message": "Expiration",
+        "description": "Form field label for the cookie expiration date input"
+    },
+    "cookieNamePlaceholder": {
+        "message": "Cookie name",
+        "description": "Placeholder text in the cookie name input field"
+    },
+    "cookieValuePlaceholder": {
+        "message": "Cookie value",
+        "description": "Placeholder text in the cookie value textarea"
+    },
+    "domainPlaceholder": {
+        "message": ".example.com",
+        "description": "Placeholder text in the cookie domain input field showing expected format"
+    },
+    "sessionCookieHint": {
+        "message": "Leave empty for session cookie",
+        "description": "Hint text below the expiration field explaining that an empty value creates a session cookie"
+    },
+    "secureLabel": {
+        "message": "Secure",
+        "description": "Checkbox label for the Secure cookie flag"
+    },
+    "httpOnlyLabel": {
+        "message": "HttpOnly",
+        "description": "Checkbox label for the HttpOnly cookie flag"
+    },
+    "sameSiteLax": {
+        "message": "Lax",
+        "description": "SameSite dropdown option for Lax policy"
+    },
+    "sameSiteStrict": {
+        "message": "Strict",
+        "description": "SameSite dropdown option for Strict policy"
+    },
+    "sameSiteNone": {
+        "message": "None",
+        "description": "SameSite dropdown option for None policy"
+    },
+    "sameSiteLabel": {
+        "message": "SameSite",
+        "description": "Form field label for the SameSite cookie attribute dropdown"
+    },
+
+    "jwtModalTitle": {
+        "message": "JWT Token",
+        "description": "Title of the JWT token decoder modal"
+    },
+    "jwtHeaderLabel": {
+        "message": "Header",
+        "description": "Section heading for the JWT header in the decoder modal"
+    },
+    "jwtPayloadLabel": {
+        "message": "Payload",
+        "description": "Section heading for the JWT payload in the decoder modal"
+    },
+    "confirmDialogTitle": {
+        "message": "Confirm",
+        "description": "Default title for the confirmation dialog"
+    },
+
+    "builtBy": {
+        "message": "Built by",
+        "description": "Footer text preceding the brand name"
+    },
+    "brandName": {
+        "message": "zovo.",
+        "description": "Brand name shown in the footer, links to zovo.one"
+    },
+
+    "readOnlyModeEnabled": {
+        "message": "Read-only mode is enabled",
+        "description": "Toast message shown when a write action is attempted while read-only mode is active"
+    },
+    "cookieNameRequired": {
+        "message": "Cookie name is required",
+        "description": "Validation error shown when trying to save a cookie without a name"
+    },
+    "domainRequired": {
+        "message": "Domain is required",
+        "description": "Validation error shown when trying to save a cookie without a domain"
+    },
+    "cookieCreated": {
+        "message": "Cookie created",
+        "description": "Success toast shown after a new cookie is created"
+    },
+    "cookieSaved": {
+        "message": "Cookie saved",
+        "description": "Success toast shown after an existing cookie is saved"
+    },
+    "failedToSaveCookie": {
+        "message": "Failed to save cookie",
+        "description": "Error toast shown when saving a cookie fails"
+    },
+    "cookieDeleted": {
+        "message": "Cookie deleted",
+        "description": "Success toast shown after a cookie is deleted"
+    },
+    "failedToDeleteCookie": {
+        "message": "Failed to delete cookie",
+        "description": "Error toast shown when deleting a cookie fails"
+    },
+    "invalidJwtToken": {
+        "message": "Invalid JWT token",
+        "description": "Error toast shown when trying to decode a value that is not a valid JWT"
+    },
+    "copiedToClipboard": {
+        "message": "Copied to clipboard",
+        "description": "Success toast shown after text is copied to the clipboard"
+    },
+    "failedToCopy": {
+        "message": "Failed to copy",
+        "description": "Error toast shown when a clipboard copy operation fails"
+    },
+    "cookiesCopiedToClipboard": {
+        "message": "$COUNT$ cookies copied to clipboard",
+        "description": "Success toast shown after exporting cookies, includes the number of cookies",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "12"
+            }
+        }
+    },
+    "failedToExportCookies": {
+        "message": "Failed to export cookies",
+        "description": "Error toast shown when the cookie export operation fails"
+    },
+    "clearAllCookiesTitle": {
+        "message": "Clear All Cookies?",
+        "description": "Confirm dialog title when the user clicks the clear all button"
+    },
+    "clearAllCookiesMessage": {
+        "message": "This will remove all $COUNT$ cookies for this domain.",
+        "description": "Confirm dialog body text explaining how many cookies will be removed",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "8"
+            }
+        }
+    },
+    "clearedCookies": {
+        "message": "Cleared $COUNT$ cookies",
+        "description": "Success toast shown after clearing all cookies for a domain",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "8"
+            }
+        }
+    },
+    "failedToClearCookies": {
+        "message": "Failed to clear cookies",
+        "description": "Error toast shown when the clear all cookies operation fails"
+    },
+    "readOnlyEnabled": {
+        "message": "Read-only mode enabled",
+        "description": "Toast shown when the user toggles read-only mode on"
+    },
+    "readOnlyDisabled": {
+        "message": "Read-only mode disabled",
+        "description": "Toast shown when the user toggles read-only mode off"
+    },
+    "cookiesRefreshed": {
+        "message": "Cookies refreshed",
+        "description": "Toast shown after the cookie list is manually refreshed"
+    },
+    "debugBundleExported": {
+        "message": "Debug bundle exported",
+        "description": "Toast shown after the debug bundle JSON file is downloaded"
+    },
+
+    "notificationReadOnlyBlocked": {
+        "message": "Read-only mode is enabled. Disable it to clear cookies.",
+        "description": "System notification shown when trying to clear cookies from the context menu while read-only mode is active"
+    },
+    "notificationCookiesCleared": {
+        "message": "Cookies Cleared",
+        "description": "Title of the system notification shown after cookies are cleared via the context menu"
+    },
+    "notificationRemovedCookies": {
+        "message": "Removed $COUNT$ cookie(s) from $DOMAIN$",
+        "description": "Body of the system notification showing how many cookies were removed and from which domain",
+        "placeholders": {
+            "count": {
+                "content": "$1",
+                "example": "5"
+            },
+            "domain": {
+                "content": "$2",
+                "example": "example.com"
+            }
+        }
+    },
+    "contextMenuClearCookies": {
+        "message": "Clear cookies for this site",
+        "description": "Context menu item that clears all cookies for the current site"
+    },
+    "contextMenuOpenManager": {
+        "message": "Open Cookie Manager",
+        "description": "Context menu item that opens the Cookie Manager popup"
+    }
+}
