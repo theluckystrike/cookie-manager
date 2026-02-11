@@ -4,6 +4,88 @@
  */
 
 // ============================================================================
+// Error Tracking (MD 11 - Crash Analytics)
+// ============================================================================
+
+const PopupErrorHandler = {
+    errors: [],
+
+    init() {
+        window.onerror = (message, source, lineno, colno, error) => {
+            this.capture({ type: 'ui_error', message, source, lineno, colno, stack: error?.stack });
+            return false;
+        };
+        window.addEventListener('unhandledrejection', (event) => {
+            this.capture({ type: 'promise_rejection', message: event.reason?.message || String(event.reason), stack: event.reason?.stack });
+        });
+    },
+
+    capture(errorData) {
+        const entry = {
+            ...errorData,
+            context: 'popup',
+            timestamp: Date.now(),
+            version: chrome.runtime.getManifest().version
+        };
+        this.errors.push(entry);
+        // Send to background for storage
+        chrome.runtime.sendMessage({ action: 'REPORT_ERROR', payload: entry }).catch(() => {});
+    },
+
+    async exportDebugBundle() {
+        const [errorLogs, healthData, settings] = await Promise.all([
+            chrome.runtime.sendMessage({ action: 'GET_ERROR_LOGS' }).catch(() => []),
+            chrome.runtime.sendMessage({ action: 'GET_HEALTH_REPORT' }).catch(() => ({})),
+            chrome.runtime.sendMessage({ action: 'GET_SETTINGS' }).catch(() => ({}))
+        ]);
+
+        const bundle = {
+            generatedAt: new Date().toISOString(),
+            extension: {
+                id: chrome.runtime.id,
+                version: chrome.runtime.getManifest().version,
+                name: chrome.runtime.getManifest().name
+            },
+            browser: {
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language
+            },
+            errors: errorLogs,
+            health: healthData,
+            sessionErrors: this.errors,
+            settings: this.sanitize(settings)
+        };
+
+        const blob = new Blob([JSON.stringify(bundle, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `cookie-manager-debug-${Date.now()}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        showToast('Debug bundle exported', 'success');
+    },
+
+    sanitize(obj) {
+        if (typeof obj !== 'object' || obj === null) return obj;
+        const sensitive = ['password', 'token', 'secret', 'api_key'];
+        const result = Array.isArray(obj) ? [] : {};
+        for (const [key, value] of Object.entries(obj)) {
+            if (sensitive.some(s => key.toLowerCase().includes(s))) {
+                result[key] = '[REDACTED]';
+            } else if (typeof value === 'object') {
+                result[key] = this.sanitize(value);
+            } else {
+                result[key] = value;
+            }
+        }
+        return result;
+    }
+};
+
+// ============================================================================
 // JWT Utility (inline to avoid module issues)
 // ============================================================================
 
@@ -144,6 +226,8 @@ const elements = {
 
 async function init() {
     try {
+        PopupErrorHandler.init();
+
         // Load settings
         const settingsResponse = await chrome.runtime.sendMessage({ action: 'GET_SETTINGS' });
         settings = settingsResponse || { readOnlyMode: false };
@@ -655,6 +739,13 @@ function setupEventListeners() {
 
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
+        // Ctrl/Cmd + Shift + D to export debug bundle
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'D') {
+            e.preventDefault();
+            PopupErrorHandler.exportDebugBundle();
+            return;
+        }
+
         // Escape to close modals
         if (e.key === 'Escape') {
             if (!elements.confirmModal.hidden) {
@@ -708,4 +799,19 @@ function isInputFocused() {
 // Start
 // ============================================================================
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', () => {
+    const startTime = performance.now();
+    init().then(() => {
+        const loadTime = Math.round(performance.now() - startTime);
+        console.log(`[Popup] Loaded in ${loadTime}ms`);
+        // Store popup load time
+        chrome.storage.local.get({ popupLoadTimes: [] }, (result) => {
+            const times = result.popupLoadTimes;
+            times.push({ time: loadTime, timestamp: Date.now() });
+            if (times.length > 20) times.shift();
+            chrome.storage.local.set({ popupLoadTimes: times });
+        });
+    }).catch((err) => {
+        PopupErrorHandler.capture({ type: 'init_error', message: err.message, stack: err.stack });
+    });
+});

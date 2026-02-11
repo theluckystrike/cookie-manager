@@ -4,6 +4,102 @@
  */
 
 // ============================================================================
+// Error Tracking & Monitoring (MD 11 - Crash Analytics)
+// ============================================================================
+
+const _swStartupTime = Date.now();
+const _debugLogBuffer = [];
+const DEBUG_BUFFER_MAX = 200;
+const ERROR_LOG_MAX = 50;
+
+function debugLog(level, source, message, data = null) {
+    const entry = { level, source, message, data, timestamp: Date.now() };
+    _debugLogBuffer.push(entry);
+    while (_debugLogBuffer.length > DEBUG_BUFFER_MAX) _debugLogBuffer.shift();
+
+    const tag = `[${source}]`;
+    if (level === 'error') console.error(tag, message, data ?? '');
+    else if (level === 'warn') console.warn(tag, message, data ?? '');
+    else console.log(tag, message, data ?? '');
+}
+
+async function storeErrorLog(errorEntry) {
+    try {
+        const { errorLogs = [] } = await chrome.storage.local.get('errorLogs');
+        errorLogs.push({ ...errorEntry, timestamp: errorEntry.timestamp || Date.now() });
+        while (errorLogs.length > ERROR_LOG_MAX) errorLogs.shift();
+        await chrome.storage.local.set({ errorLogs });
+    } catch (e) {
+        console.error('[Monitoring] Failed to store error log:', e);
+    }
+}
+
+async function recordStartupTimestamp(reason) {
+    try {
+        const { startupHistory = [] } = await chrome.storage.local.get('startupHistory');
+        startupHistory.push({ reason, timestamp: Date.now(), swStartupTime: _swStartupTime });
+        while (startupHistory.length > 20) startupHistory.shift();
+        await chrome.storage.local.set({ startupHistory });
+    } catch (e) {
+        console.error('[Monitoring] Failed to record startup:', e);
+    }
+}
+
+async function getHealthReport() {
+    try {
+        const data = await chrome.storage.local.get(['errorLogs', 'startupHistory', 'analytics']);
+        const errorLogs = data.errorLogs || [];
+        const startupHistory = data.startupHistory || [];
+        const analytics = data.analytics || [];
+        const now = Date.now();
+
+        return {
+            uptime: now - _swStartupTime,
+            errorCount: errorLogs.length,
+            errorsLastHour: errorLogs.filter(e => e.timestamp > now - 3600000).length,
+            errorsLastDay: errorLogs.filter(e => e.timestamp > now - 86400000).length,
+            startupCount: startupHistory.length,
+            lastStartup: startupHistory.length > 0 ? startupHistory[startupHistory.length - 1] : null,
+            analyticsEventCount: analytics.length,
+            debugBufferSize: _debugLogBuffer.length,
+            timestamp: now
+        };
+    } catch (e) {
+        return { error: e.message, timestamp: Date.now() };
+    }
+}
+
+// Global error handlers for service worker
+self.addEventListener('error', (event) => {
+    const errorEntry = {
+        type: 'uncaught_error',
+        message: event.message || 'Unknown error',
+        filename: event.filename || '',
+        lineno: event.lineno || 0,
+        colno: event.colno || 0,
+        source: 'service-worker',
+        timestamp: Date.now()
+    };
+    debugLog('error', 'GlobalHandler', 'Uncaught error', errorEntry);
+    storeErrorLog(errorEntry);
+});
+
+self.addEventListener('unhandledrejection', (event) => {
+    const reason = event.reason;
+    const errorEntry = {
+        type: 'unhandled_rejection',
+        message: reason?.message || String(reason) || 'Unknown rejection',
+        stack: reason?.stack || '',
+        source: 'service-worker',
+        timestamp: Date.now()
+    };
+    debugLog('error', 'GlobalHandler', 'Unhandled rejection', errorEntry);
+    storeErrorLog(errorEntry);
+});
+
+debugLog('info', 'Monitoring', 'Error tracking & monitoring initialized (MD 11)');
+
+// ============================================================================
 // Cookie Operations (inline to avoid module loading issues in MV3)
 // ============================================================================
 
@@ -177,6 +273,66 @@ async function handleMessage(message) {
             case 'GET_SETTINGS':
                 return await getSettings();
 
+            // ==============================================================
+            // Error Tracking & Monitoring Messages (MD 11)
+            // ==============================================================
+
+            case 'REPORT_ERROR': {
+                const errorEntry = {
+                    type: payload.type || 'reported_error',
+                    message: payload.message || 'Unknown error',
+                    stack: payload.stack || '',
+                    source: payload.source || 'popup',
+                    context: payload.context || {},
+                    timestamp: payload.timestamp || Date.now()
+                };
+                debugLog('error', 'ReportedError', errorEntry.message, errorEntry);
+                await storeErrorLog(errorEntry);
+                return { success: true };
+            }
+
+            case 'REPORT_ERRORS_BATCH': {
+                const errors = payload.errors || [];
+                for (const err of errors) {
+                    await storeErrorLog({
+                        type: err.type || 'reported_error',
+                        message: err.message || 'Unknown error',
+                        stack: err.stack || '',
+                        source: err.source || 'popup',
+                        timestamp: err.timestamp || Date.now()
+                    });
+                }
+                debugLog('info', 'ReportedError', `Batch received: ${errors.length} error(s)`);
+                return { success: true, count: errors.length };
+            }
+
+            case 'GET_ERROR_LOGS': {
+                const { errorLogs = [] } = await chrome.storage.local.get('errorLogs');
+                return errorLogs;
+            }
+
+            case 'CLEAR_ERROR_LOGS': {
+                await chrome.storage.local.set({ errorLogs: [] });
+                debugLog('info', 'Monitoring', 'Error logs cleared');
+                return { success: true };
+            }
+
+            case 'GET_DEBUG_LOGS': {
+                return [..._debugLogBuffer];
+            }
+
+            case 'GET_HEALTH_REPORT': {
+                return await getHealthReport();
+            }
+
+            case 'TOGGLE_DEBUG_MODE': {
+                const { debugMode = false } = await chrome.storage.local.get('debugMode');
+                const newMode = payload?.enabled !== undefined ? payload.enabled : !debugMode;
+                await chrome.storage.local.set({ debugMode: newMode });
+                debugLog('info', 'Monitoring', `Debug mode ${newMode ? 'enabled' : 'disabled'}`);
+                return { debugMode: newMode };
+            }
+
             default:
                 return { error: 'Unknown action' };
         }
@@ -278,6 +434,8 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     console.log('[ServiceWorker] Installed:', details.reason);
 
     setupContextMenu();
+    await recordStartupTimestamp('installed_' + details.reason);
+    debugLog('info', 'Lifecycle', 'onInstalled fired', { reason: details.reason });
 
     if (details.reason === 'install') {
         // Initialize default settings
@@ -285,7 +443,9 @@ chrome.runtime.onInstalled.addListener(async (details) => {
             ...STORAGE_DEFAULTS,
             installedAt: Date.now(),
             installSource: 'chrome_web_store',
-            analytics: []
+            analytics: [],
+            errorLogs: [],
+            debugMode: false
         });
 
         // Check if onboarding already shown
@@ -322,9 +482,22 @@ chrome.runtime.onInstalled.addListener(async (details) => {
     }
 });
 
-chrome.runtime.onStartup.addListener(() => {
+chrome.runtime.onStartup.addListener(async () => {
     console.log('[ServiceWorker] Startup');
     setupContextMenu();
+    await recordStartupTimestamp('startup');
+    debugLog('info', 'Lifecycle', 'onStartup fired');
+
+    // Trim error logs if needed
+    try {
+        const { errorLogs = [] } = await chrome.storage.local.get('errorLogs');
+        if (errorLogs.length > ERROR_LOG_MAX) {
+            const trimmed = errorLogs.slice(errorLogs.length - ERROR_LOG_MAX);
+            await chrome.storage.local.set({ errorLogs: trimmed });
+        }
+    } catch (e) {
+        console.error('[Monitoring] Error processing pending logs on startup:', e);
+    }
 });
 
 // ============================================================================
@@ -348,6 +521,7 @@ async function trackEvent(eventName, properties = {}) {
         }
 
         await chrome.storage.local.set({ analytics });
+        debugLog('info', 'Analytics', `Event: ${eventName}`, properties);
     } catch (e) {
         console.error('[ServiceWorker] Analytics error:', e);
     }
