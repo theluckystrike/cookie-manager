@@ -39,7 +39,11 @@
     "<all_urls>"
   ],
   "background": {
-    "scripts": ["src/background/service-worker.js"]
+    "scripts": [
+      "src/shared/feedback-collector.js",
+      "src/shared/support-diagnostics.js",
+      "src/background/service-worker.js"
+    ]
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'none'"

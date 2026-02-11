@@ -3,6 +3,10 @@
  * Handles message routing, context menus, and cookie change events
  */
 
+// Import shared modules (MD 19)
+try { importScripts('../shared/feedback-collector.js'); } catch(e) { console.warn('feedback-collector.js not loaded:', e.message); }
+try { importScripts('../shared/support-diagnostics.js'); } catch(e) { console.warn('support-diagnostics.js not loaded:', e.message); }
+
 // ============================================================================
 // Error Tracking & Monitoring (MD 11 - Crash Analytics)
 // ============================================================================
@@ -523,6 +527,81 @@ async function handleMessage(message) {
                 return { error: 'RetentionTriggers not available' };
             }
 
+            // ==============================================================
+            // Customer Support & Feedback (MD 19)
+            // ==============================================================
+
+            case 'SUBMIT_FEEDBACK': {
+                if (typeof FeedbackCollector !== 'undefined') {
+                    try {
+                        var entry = await FeedbackCollector.submitFeedback(
+                            payload.type || 'other',
+                            payload.message || '',
+                            payload.metadata || {}
+                        );
+                        return entry ? { success: true, entry: entry } : { error: 'Empty feedback' };
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'FeedbackCollector not available' };
+            }
+
+            case 'GET_FEEDBACK_STATS': {
+                if (typeof FeedbackCollector !== 'undefined') {
+                    try {
+                        return await FeedbackCollector.getFeedbackStats();
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'FeedbackCollector not available' };
+            }
+
+            case 'GET_FEEDBACK': {
+                if (typeof FeedbackCollector !== 'undefined') {
+                    try {
+                        return await FeedbackCollector.getFeedback(payload || {});
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'FeedbackCollector not available' };
+            }
+
+            case 'EXPORT_FEEDBACK': {
+                if (typeof FeedbackCollector !== 'undefined') {
+                    try {
+                        return await FeedbackCollector.exportFeedback();
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'FeedbackCollector not available' };
+            }
+
+            case 'GET_DIAGNOSTICS': {
+                if (typeof SupportDiagnostics !== 'undefined') {
+                    try {
+                        return await SupportDiagnostics.generateDebugBundle();
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'SupportDiagnostics not available' };
+            }
+
+            case 'GET_QUICK_CHECK': {
+                if (typeof SupportDiagnostics !== 'undefined') {
+                    try {
+                        return await SupportDiagnostics.quickCheck();
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'SupportDiagnostics not available' };
+            }
+
             default:
                 return { error: 'Unknown action' };
         }
@@ -749,6 +828,8 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 });
 
 debugLog('info', 'Retention', 'Churn prevention & retention initialized (MD 17)');
+
+debugLog('info', 'Support', 'Customer support & feedback initialized (MD 19)');
 
 // Initial setup
 setupContextMenu();

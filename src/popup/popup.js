@@ -825,6 +825,15 @@ function setupEventListeners() {
             saveCookie();
         }
     });
+
+    // Help link (MD 19)
+    var helpLink = document.getElementById('helpLink');
+    if (helpLink) {
+        helpLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            openHelpPage();
+        });
+    }
 }
 
 function isInputFocused() {
@@ -980,6 +989,33 @@ function recordRetentionUsage(usageAction) {
     } catch (e) {
         // Silently ignore retention tracking errors
     }
+}
+
+// ============================================================================
+// Customer Support & Feedback (MD 19)
+// ============================================================================
+
+async function submitFeedback(type, message) {
+    try {
+        const response = await chrome.runtime.sendMessage({
+            action: 'SUBMIT_FEEDBACK',
+            payload: { type: type, message: message, metadata: { source: 'popup' } }
+        });
+        if (response && response.success) {
+            showToast('Feedback submitted. Thank you!', 'success');
+        } else {
+            showToast(response?.error || 'Failed to submit feedback', 'error');
+        }
+        return response;
+    } catch (error) {
+        console.error('[Popup] Feedback error:', error);
+        showToast('Failed to submit feedback', 'error');
+        return null;
+    }
+}
+
+function openHelpPage() {
+    chrome.tabs.create({ url: chrome.runtime.getURL('src/help/help.html') });
 }
 
 // ============================================================================
