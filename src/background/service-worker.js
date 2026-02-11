@@ -14,6 +14,9 @@ try { importScripts('../shared/storage-optimizer.js'); } catch(e) { console.warn
 // Import shared modules (MD 21)
 try { importScripts('../shared/accessibility.js'); } catch(e) { console.warn('accessibility.js not loaded:', e.message); }
 
+// Import shared modules (MD 22)
+try { importScripts('../shared/version-manager.js'); } catch(e) { console.warn('version-manager.js not loaded:', e.message); }
+
 // ============================================================================
 // Error Tracking & Monitoring (MD 11 - Crash Analytics)
 // ============================================================================
@@ -678,6 +681,52 @@ async function handleMessage(message) {
                 return { error: 'StorageOptimizer not available' };
             }
 
+            // ==============================================================
+            // Version & Release Management (MD 22)
+            // ==============================================================
+
+            case 'GET_VERSION_INFO': {
+                if (typeof VersionManager !== 'undefined') {
+                    try {
+                        return {
+                            version: VersionManager.getVersion(),
+                            displayVersion: VersionManager.getDisplayVersion(),
+                            isPreRelease: VersionManager.isPreRelease()
+                        };
+                    } catch (e) { return { error: e.message }; }
+                }
+                return { error: 'VersionManager not available' };
+            }
+
+            case 'GET_FEATURE_FLAGS': {
+                if (typeof VersionManager !== 'undefined') {
+                    try {
+                        return VersionManager.getFlags();
+                    } catch (e) { return { error: e.message }; }
+                }
+                return { error: 'VersionManager not available' };
+            }
+
+            case 'SET_FEATURE_FLAG': {
+                if (typeof VersionManager !== 'undefined') {
+                    try {
+                        var flagName = message.flagName;
+                        var enabled = message.enabled;
+                        return VersionManager.setOverride(flagName, enabled);
+                    } catch (e) { return { error: e.message }; }
+                }
+                return { error: 'VersionManager not available' };
+            }
+
+            case 'GET_UPDATE_HISTORY': {
+                if (typeof VersionManager !== 'undefined') {
+                    try {
+                        return await VersionManager.getUpdateHistory();
+                    } catch (e) { return { error: e.message }; }
+                }
+                return { error: 'VersionManager not available' };
+            }
+
             default:
                 return { error: 'Unknown action' };
         }
@@ -777,6 +826,11 @@ chrome.cookies.onChanged.addListener((changeInfo) => {
 
 chrome.runtime.onInstalled.addListener(async (details) => {
     console.log('[ServiceWorker] Installed:', details.reason);
+
+    // Version tracking (MD 22)
+    if (typeof VersionManager !== 'undefined' && VersionManager.onInstalled) {
+        try { VersionManager.onInstalled(details); } catch(e) { debugLog('warn', 'Version', 'onInstalled tracking failed', e.message); }
+    }
 
     setupContextMenu();
     await recordStartupTimestamp('installed_' + details.reason);
@@ -910,6 +964,13 @@ debugLog('info', 'Support', 'Customer support & feedback initialized (MD 19)');
 debugLog('info', 'Performance', 'Performance optimization initialized (MD 20)');
 
 debugLog('info', 'Accessibility', 'Accessibility compliance initialized (MD 21)');
+
+// Load feature flag overrides at startup (MD 22)
+if (typeof VersionManager !== 'undefined' && VersionManager.loadOverrides) {
+    try { VersionManager.loadOverrides(); } catch(e) { /* silently ignore */ }
+}
+
+debugLog('info', 'Version', 'Version & release management initialized (MD 22)');
 
 // Initial setup
 setupContextMenu();

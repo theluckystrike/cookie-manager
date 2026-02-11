@@ -275,6 +275,14 @@ async function init() {
             initRetention();
         }
 
+        // Version display (MD 22)
+        if (typeof VersionManager !== 'undefined') {
+            var versionEl = document.getElementById('versionDisplay');
+            if (versionEl) {
+                versionEl.textContent = 'v' + VersionManager.getDisplayVersion();
+            }
+        }
+
         // Focus search on popup open (MD 21)
         var searchEl = document.getElementById('searchInput');
         if (searchEl) { searchEl.focus(); }

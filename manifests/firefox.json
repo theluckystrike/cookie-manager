@@ -45,6 +45,7 @@
       "src/shared/perf-timer.js",
       "src/shared/storage-optimizer.js",
       "src/shared/accessibility.js",
+      "src/shared/version-manager.js",
       "src/background/service-worker.js"
     ]
   },
