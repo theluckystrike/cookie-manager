@@ -172,10 +172,22 @@ const $ = (id) => document.getElementById(id);
 const elements = {
     currentDomain: $('currentDomain'),
     searchInput: $('searchInput'),
+    searchBar: document.querySelector('.search-bar'),
     cookieCount: $('cookieCount'),
     cookieList: $('cookieList'),
     emptyState: $('emptyState'),
     loadingState: $('loadingState'),
+
+    // Tabs
+    tabBar: document.querySelector('.tab-bar'),
+    tabBtnCookies: $('tabBtnCookies'),
+    tabBtnProfiles: $('tabBtnProfiles'),
+    tabBtnRules: $('tabBtnRules'),
+    tabBtnHealth: $('tabBtnHealth'),
+    tabCookies: $('tabCookies'),
+    tabProfiles: $('tabProfiles'),
+    tabRules: $('tabRules'),
+    tabHealth: $('tabHealth'),
 
     // Actions
     refreshBtn: $('refreshBtn'),
@@ -224,6 +236,74 @@ const elements = {
 };
 
 // ============================================================================
+// Tab Navigation
+// ============================================================================
+
+const TAB_IDS = ['cookies', 'profiles', 'rules', 'health'];
+
+function switchTab(tabName) {
+    if (!TAB_IDS.includes(tabName)) return;
+
+    // Update tab buttons
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    tabButtons.forEach(btn => {
+        const isActive = btn.dataset.tab === tabName;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+
+    // Update tab content panels
+    const tabPanels = document.querySelectorAll('.tab-content');
+    tabPanels.forEach(panel => {
+        const panelTab = panel.id.replace('tab', '').toLowerCase();
+        const isActive = panelTab === tabName;
+        panel.classList.toggle('active', isActive);
+        panel.hidden = !isActive;
+    });
+
+    // Show/hide search bar and action bar (only visible on Cookies tab)
+    if (elements.searchBar) {
+        elements.searchBar.style.display = tabName === 'cookies' ? '' : 'none';
+    }
+    const actionBar = document.querySelector('.action-bar');
+    if (actionBar) {
+        actionBar.style.display = tabName === 'cookies' ? '' : 'none';
+    }
+
+    // Initialize tab managers on first visit
+    if (tabName === 'profiles' && typeof ProfilesManager !== 'undefined') {
+        ProfilesManager.init(currentDomain);
+    }
+    if (tabName === 'rules' && typeof RulesManager !== 'undefined') {
+        RulesManager.init();
+    }
+    if (tabName === 'health' && typeof HealthManager !== 'undefined') {
+        HealthManager.init();
+    }
+
+    // Persist active tab
+    chrome.storage.local.set({ activePopupTab: tabName }).catch(() => {});
+
+    // Announce tab change to screen readers
+    if (typeof A11yManager !== 'undefined' && A11yManager.announce) {
+        const tabLabel = tabName.charAt(0).toUpperCase() + tabName.slice(1);
+        A11yManager.announce(tabLabel + ' tab selected');
+    }
+}
+
+async function restoreActiveTab() {
+    try {
+        const result = await chrome.storage.local.get({ activePopupTab: 'cookies' });
+        const savedTab = result.activePopupTab;
+        if (TAB_IDS.includes(savedTab)) {
+            switchTab(savedTab);
+        }
+    } catch {
+        // Default to cookies tab
+    }
+}
+
+// ============================================================================
 // Initialization
 // ============================================================================
 
@@ -247,6 +327,9 @@ async function init() {
 
         // Set up event listeners early so UI is always interactive
         setupEventListeners();
+
+        // Restore last active tab
+        await restoreActiveTab();
 
         if (!tab?.url || tab.url.startsWith('chrome://') || tab.url.startsWith('chrome-extension://')) {
             elements.currentDomain.textContent = 'Chrome page';
@@ -302,9 +385,12 @@ async function init() {
             });
         }
 
-        // Focus search on popup open (MD 21)
-        var searchEl = document.getElementById('searchInput');
-        if (searchEl) { searchEl.focus(); }
+        // Focus search on popup open (MD 21) - only if on Cookies tab
+        var activeTab = document.querySelector('.tab-btn.active');
+        if (activeTab && activeTab.dataset.tab === 'cookies') {
+            var searchEl = document.getElementById('searchInput');
+            if (searchEl) { searchEl.focus(); }
+        }
 
     } catch (error) {
         console.error('[Popup] Init error:', error);
@@ -721,6 +807,59 @@ async function exportCookies() {
     }
 }
 
+async function importCookies() {
+    if (settings.readOnlyMode) {
+        showToast('Read-only mode is enabled', 'error');
+        return;
+    }
+    const fileInput = document.getElementById('importFileInput');
+    if (!fileInput) return;
+    fileInput.value = '';
+    fileInput.click();
+}
+
+function handleImportFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+        try {
+            const cookies = JSON.parse(e.target.result);
+            if (!Array.isArray(cookies)) {
+                showToast('Invalid format: expected a JSON array of cookies', 'error');
+                return;
+            }
+            let imported = 0;
+            let failed = 0;
+            for (const cookie of cookies) {
+                try {
+                    const details = {
+                        url: (cookie.secure ? 'https://' : 'http://') + (cookie.domain || '').replace(/^\./, '') + (cookie.path || '/'),
+                        name: cookie.name,
+                        value: cookie.value || '',
+                        path: cookie.path || '/',
+                        secure: !!cookie.secure,
+                        httpOnly: !!cookie.httpOnly,
+                        sameSite: cookie.sameSite || 'lax'
+                    };
+                    if (cookie.expirationDate) {
+                        details.expirationDate = cookie.expirationDate;
+                    }
+                    await chrome.runtime.sendMessage({ action: 'SET_COOKIE', payload: details });
+                    imported++;
+                } catch {
+                    failed++;
+                }
+            }
+            showToast(`Imported ${imported} cookies` + (failed > 0 ? `, ${failed} failed` : ''), imported > 0 ? 'success' : 'error');
+            loadCookies();
+        } catch (err) {
+            showToast('Failed to parse JSON file', 'error');
+        }
+    };
+    reader.readAsText(file);
+}
+
 async function clearAllCookies() {
     if (settings.readOnlyMode) {
         showToast('Read-only mode is enabled', 'error');
@@ -862,6 +1001,38 @@ async function copyToClipboard(text) {
 // ============================================================================
 
 function setupEventListeners() {
+    // Tab navigation
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            switchTab(btn.dataset.tab);
+        });
+        // Arrow key navigation between tabs (accessibility)
+        btn.addEventListener('keydown', (e) => {
+            const tabs = Array.from(document.querySelectorAll('.tab-btn'));
+            const currentIndex = tabs.indexOf(btn);
+            let newIndex = -1;
+
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                e.preventDefault();
+                newIndex = (currentIndex + 1) % tabs.length;
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                newIndex = 0;
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                newIndex = tabs.length - 1;
+            }
+
+            if (newIndex >= 0) {
+                tabs[newIndex].focus();
+                switchTab(tabs[newIndex].dataset.tab);
+            }
+        });
+    });
+
     // Search (debounced for performance - MD 20)
     var _searchDebounceTimer = null;
     elements.searchInput.addEventListener('input', function() {
@@ -880,6 +1051,10 @@ function setupEventListeners() {
 
     // Actions
     elements.exportBtn.addEventListener('click', exportCookies);
+    const importBtn = document.getElementById('importBtn');
+    if (importBtn) importBtn.addEventListener('click', importCookies);
+    const importFileInput = document.getElementById('importFileInput');
+    if (importFileInput) importFileInput.addEventListener('change', handleImportFile);
     elements.addCookieBtn.addEventListener('click', () => openEditor(null));
     elements.clearAllBtn.addEventListener('click', clearAllCookies);
 

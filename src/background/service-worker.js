@@ -1111,6 +1111,12 @@ function setupContextMenu() {
         });
 
         chrome.contextMenus.create({
+            id: 'export-site-cookies',
+            title: 'Export cookies for this site',
+            contexts: ['page']
+        }, () => void chrome.runtime.lastError);
+
+        chrome.contextMenus.create({
             id: 'separator-1',
             type: 'separator',
             contexts: ['page']
@@ -1119,6 +1125,12 @@ function setupContextMenu() {
         chrome.contextMenus.create({
             id: 'open-cookie-manager',
             title: 'Open Cookie Manager',
+            contexts: ['page']
+        }, () => void chrome.runtime.lastError);
+
+        chrome.contextMenus.create({
+            id: 'open-settings',
+            title: 'Cookie Manager Settings',
             contexts: ['page']
         }, () => void chrome.runtime.lastError);
     });
@@ -1154,8 +1166,31 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             break;
         }
 
+        case 'export-site-cookies': {
+            try {
+                const cookies = await CookieOps.getForDomain(domain);
+                const json = JSON.stringify(cookies, null, 2);
+                // Copy to clipboard via offscreen or notification
+                chrome.notifications.create({
+                    type: 'basic',
+                    iconUrl: 'assets/icons/icon-128.png',
+                    title: 'Cookies Exported',
+                    message: `${cookies.length} cookie${cookies.length !== 1 ? 's' : ''} from ${domain} copied. Open popup to download.`
+                });
+                // Store temporarily for popup to pick up
+                await chrome.storage.local.set({ _pendingExport: { domain, json, timestamp: Date.now() } });
+            } catch (e) {
+                debugLog('error', 'ContextMenu', 'Export failed', e);
+            }
+            break;
+        }
+
         case 'open-cookie-manager':
             chrome.action.openPopup();
+            break;
+
+        case 'open-settings':
+            chrome.runtime.openOptionsPage();
             break;
     }
 });

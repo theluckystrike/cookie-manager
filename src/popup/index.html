@@ -44,69 +44,292 @@
             <span class="cookie-count" id="cookieCount" aria-live="polite">0</span>
         </div>
 
-        <!-- Action Bar -->
-        <div class="action-bar">
-            <button class="btn btn-secondary" id="exportBtn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
-                <span data-i18n="buttonExport">Export</span>
-            </button>
-            <button class="btn btn-secondary" id="addCookieBtn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                </svg>
-                <span data-i18n="buttonAdd">Add</span>
-            </button>
-            <button class="btn btn-danger" id="clearAllBtn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <polyline points="3 6 5 6 21 6"></polyline>
-                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                </svg>
-                <span data-i18n="buttonClear">Clear</span>
-            </button>
-            <label class="toggle" title="Read-only mode">
-                <input type="checkbox" id="readOnlyToggle">
-                <span class="toggle-slider"></span>
-                <svg class="lock-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-            </label>
-        </div>
-
-        <!-- Cookie List -->
-        <div class="cookie-list" id="cookieList" role="main">
-            <!-- Populated by JS -->
-        </div>
-
-        <!-- Empty State -->
-        <div class="empty-state" id="emptyState" role="status" hidden>
-            <div class="empty-icon">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <!-- Tab Bar -->
+        <nav class="tab-bar" role="tablist" aria-label="Main navigation">
+            <button class="tab-btn active" id="tabBtnCookies" role="tab" aria-selected="true" aria-controls="tabCookies" data-tab="cookies">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="12" cy="12" r="10"></circle>
                     <circle cx="8" cy="9" r="1" fill="currentColor"></circle>
                     <circle cx="15" cy="9" r="1" fill="currentColor"></circle>
                     <circle cx="9" cy="14" r="1" fill="currentColor"></circle>
                     <circle cx="14" cy="15" r="1" fill="currentColor"></circle>
                 </svg>
+                <span>Cookies</span>
+            </button>
+            <button class="tab-btn" id="tabBtnProfiles" role="tab" aria-selected="false" aria-controls="tabProfiles" data-tab="profiles">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <span>Profiles</span>
+            </button>
+            <button class="tab-btn" id="tabBtnRules" role="tab" aria-selected="false" aria-controls="tabRules" data-tab="rules">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>Rules</span>
+            </button>
+            <button class="tab-btn" id="tabBtnHealth" role="tab" aria-selected="false" aria-controls="tabHealth" data-tab="health">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+                <span>Health</span>
+            </button>
+        </nav>
+
+        <!-- Tab: Cookies -->
+        <div class="tab-content active" id="tabCookies" role="tabpanel" aria-labelledby="tabBtnCookies">
+            <!-- Action Bar -->
+            <div class="action-bar">
+                <button class="btn btn-secondary" id="exportBtn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span data-i18n="buttonExport">Export</span>
+                </button>
+                <button class="btn btn-secondary" id="importBtn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <span>Import</span>
+                </button>
+                <input type="file" id="importFileInput" accept=".json" hidden>
+                <button class="btn btn-secondary" id="addCookieBtn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <span data-i18n="buttonAdd">Add</span>
+                </button>
+                <button class="btn btn-danger" id="clearAllBtn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    <span data-i18n="buttonClear">Clear</span>
+                </button>
+                <label class="toggle" title="Read-only mode">
+                    <input type="checkbox" id="readOnlyToggle">
+                    <span class="toggle-slider"></span>
+                    <svg class="lock-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                </label>
             </div>
-            <p class="empty-title" data-i18n="emptyTitle">No cookies found</p>
-            <span class="empty-subtitle" data-i18n="emptySubtitle">This site has no cookies set</span>
+
+            <!-- Cookie List -->
+            <div class="cookie-list" id="cookieList" role="main">
+                <!-- Populated by JS -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state" id="emptyState" role="status" hidden>
+                <div class="empty-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <circle cx="8" cy="9" r="1" fill="currentColor"></circle>
+                        <circle cx="15" cy="9" r="1" fill="currentColor"></circle>
+                        <circle cx="9" cy="14" r="1" fill="currentColor"></circle>
+                        <circle cx="14" cy="15" r="1" fill="currentColor"></circle>
+                    </svg>
+                </div>
+                <p class="empty-title" data-i18n="emptyTitle">No cookies found</p>
+                <span class="empty-subtitle" data-i18n="emptySubtitle">This site has no cookies set</span>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-state" id="loadingState" role="status" aria-live="polite" hidden>
+                <div class="spinner"></div>
+                <span data-i18n="loadingCookies">Loading cookies...</span>
+            </div>
         </div>
 
-        <!-- Loading State -->
-        <div class="loading-state" id="loadingState" role="status" aria-live="polite" hidden>
-            <div class="spinner"></div>
-            <span data-i18n="loadingCookies">Loading cookies...</span>
+        <!-- Tab: Profiles -->
+        <div class="tab-content" id="tabProfiles" role="tabpanel" aria-labelledby="tabBtnProfiles" hidden>
+            <!-- Save Current Button -->
+            <div class="profiles-header">
+                <button class="btn btn-primary profiles-save-btn" id="profilesSaveBtn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                    <span>Save Current Cookies</span>
+                </button>
+                <!-- Lock overlay shown when at free tier limit -->
+                <div class="profiles-lock-overlay" id="profilesLockOverlay" hidden>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span>Upgrade to Pro for unlimited profiles</span>
+                </div>
+            </div>
+
+            <!-- Profile List -->
+            <div class="profiles-list" id="profilesList">
+                <!-- Populated by profiles.js -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="profiles-empty" id="profilesEmpty" hidden>
+                <div class="empty-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                        <polyline points="7 3 7 8 15 8"></polyline>
+                    </svg>
+                </div>
+                <p class="empty-title">No saved profiles</p>
+                <span class="empty-subtitle">Save your current cookies as a profile to quickly restore them later</span>
+            </div>
+
+            <!-- Profile Name Prompt Overlay -->
+            <div class="profile-name-overlay" id="profileNameOverlay" hidden>
+                <div class="profile-name-dialog">
+                    <h3>Save Cookie Profile</h3>
+                    <div class="form-group">
+                        <label for="profileNameInput">Profile Name</label>
+                        <input type="text" id="profileNameInput" placeholder="e.g. Dev Environment" autocomplete="off" maxlength="128">
+                    </div>
+                    <div class="profile-name-actions">
+                        <button class="btn btn-secondary" id="profileNameCancel">Cancel</button>
+                        <button class="btn btn-primary" id="profileNameSave">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Rules -->
+        <div class="tab-content" id="tabRules" role="tabpanel" aria-labelledby="tabBtnRules" hidden>
+            <div class="rules-header">
+                <button class="btn btn-primary rules-add-btn" id="addRuleBtn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Add Rule
+                </button>
+                <div class="rules-lock-overlay" id="rulesLockOverlay" hidden>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span>Free limit reached (1 rule). Upgrade for unlimited.</span>
+                </div>
+            </div>
+            <div class="rules-list" id="rulesList"></div>
+            <div class="rules-empty" id="rulesEmpty" hidden>
+                <div class="empty-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                </div>
+                <p class="empty-title">No rules yet</p>
+                <span class="empty-subtitle">Create a rule to automatically delete cookies on a schedule</span>
+            </div>
+            <!-- Add/Edit Rule Form -->
+            <div class="rule-form-overlay" id="ruleFormOverlay" hidden>
+                <div class="rule-form-dialog">
+                    <h3 id="ruleFormTitle">Add Auto-Delete Rule</h3>
+                    <div class="form-group">
+                        <label for="ruleDomain">Domain Pattern</label>
+                        <input type="text" id="ruleDomain" placeholder="e.g. *.google.com or facebook.com" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="ruleCookiePattern">Cookie Name Pattern</label>
+                        <input type="text" id="ruleCookiePattern" placeholder="* for all, or specific name" value="*" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="ruleSchedule">Schedule</label>
+                        <select id="ruleSchedule">
+                            <option value="60">Every hour</option>
+                            <option value="360">Every 6 hours</option>
+                            <option value="1440">Every day</option>
+                            <option value="0">On browser close</option>
+                        </select>
+                    </div>
+                    <div class="rule-form-actions">
+                        <button class="btn btn-secondary" id="ruleFormCancel">Cancel</button>
+                        <button class="btn btn-primary" id="ruleFormSave">Save Rule</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Health -->
+        <div class="tab-content" id="tabHealth" role="tabpanel" aria-labelledby="tabBtnHealth" hidden>
+            <div class="health-score-section">
+                <div class="health-score-circle" id="healthScoreCircle">
+                    <svg viewBox="0 0 120 120" class="health-ring">
+                        <circle cx="60" cy="60" r="52" class="health-ring-bg"></circle>
+                        <circle cx="60" cy="60" r="52" class="health-ring-fill" id="healthRingFill"></circle>
+                    </svg>
+                    <div class="health-grade" id="healthGrade">--</div>
+                    <div class="health-label">Cookie Health</div>
+                </div>
+                <p class="health-summary" id="healthSummary">Analyzing cookies...</p>
+            </div>
+            <div class="health-categories" id="healthCategories">
+                <div class="health-cat" data-cat="secure">
+                    <div class="health-cat-header"><span class="health-cat-label">Secure Cookies</span><span class="health-cat-value" id="catSecure">--</span></div>
+                    <div class="health-cat-bar"><div class="health-cat-fill" id="catSecureFill"></div></div>
+                </div>
+                <div class="health-cat" data-cat="httponly">
+                    <div class="health-cat-header"><span class="health-cat-label">HttpOnly</span><span class="health-cat-value" id="catHttpOnly">--</span></div>
+                    <div class="health-cat-bar"><div class="health-cat-fill" id="catHttpOnlyFill"></div></div>
+                </div>
+                <div class="health-cat" data-cat="samesite">
+                    <div class="health-cat-header"><span class="health-cat-label">SameSite Set</span><span class="health-cat-value" id="catSameSite">--</span></div>
+                    <div class="health-cat-bar"><div class="health-cat-fill" id="catSameSiteFill"></div></div>
+                </div>
+                <div class="health-cat" data-cat="trackers">
+                    <div class="health-cat-header"><span class="health-cat-label">Trackers Found</span><span class="health-cat-value" id="catTrackers">--</span></div>
+                    <div class="health-cat-bar"><div class="health-cat-fill health-cat-fill-warn" id="catTrackersFill"></div></div>
+                </div>
+            </div>
+            <div class="health-trackers" id="healthTrackers" hidden>
+                <h3 class="health-section-title">Tracking Cookies Detected</h3>
+                <div class="health-tracker-list" id="healthTrackerList"></div>
+            </div>
+            <div class="health-recommendations" id="healthRecommendations" hidden>
+                <h3 class="health-section-title">Recommendations</h3>
+                <div class="health-rec-list" id="healthRecList"></div>
+            </div>
+            <div class="health-actions" id="healthActions" hidden>
+                <button class="btn btn-danger" id="cleanTrackersBtn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                    Clean Trackers
+                </button>
+            </div>
+            <div class="health-empty" id="healthEmpty" hidden>
+                <div class="empty-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                </div>
+                <p class="empty-title">No cookies to analyze</p>
+                <span class="empty-subtitle">Visit a website to see its cookie health score</span>
+            </div>
         </div>
 
         <!-- Cookie Editor Modal -->
@@ -294,6 +517,9 @@
     <script src="../shared/architecture-patterns.js"></script>
     <script src="../shared/message-router.js"></script>
     <script src="../utils/jwt.js"></script>
+    <script src="profiles.js"></script>
+    <script src="rules.js"></script>
+    <script src="health.js"></script>
     <script src="popup.js"></script>
 </body>
 

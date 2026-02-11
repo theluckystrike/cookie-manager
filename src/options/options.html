@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Manager Settings</title>
+    <link rel="stylesheet" href="options.css">
+</head>
+
+<body>
+    <div id="optionsApp">
+        <!-- Header -->
+        <header class="options-header">
+            <div class="options-header-inner">
+                <div class="header-brand">
+                    <div class="brand-logo">
+                        <span class="logo-z">z</span>
+                    </div>
+                    <div class="brand-divider"></div>
+                    <div class="brand-text">
+                        <h1 class="brand-title">Cookie Manager</h1>
+                        <span class="brand-subtitle">Settings</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <span class="version-badge" id="versionBadge"></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="options-main">
+            <div class="options-container">
+
+                <!-- Sidebar Navigation -->
+                <nav class="options-nav" role="navigation" aria-label="Settings navigation">
+                    <a href="#general" class="nav-item active" data-section="general">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        <span>General</span>
+                    </a>
+                    <a href="#cookies" class="nav-item" data-section="cookies">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <circle cx="8" cy="9" r="1" fill="currentColor"></circle>
+                            <circle cx="15" cy="9" r="1" fill="currentColor"></circle>
+                            <circle cx="9" cy="14" r="1" fill="currentColor"></circle>
+                        </svg>
+                        <span>Cookies</span>
+                    </a>
+                    <a href="#notifications" class="nav-item" data-section="notifications">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                        </svg>
+                        <span>Notifications</span>
+                    </a>
+                    <a href="#data" class="nav-item" data-section="data">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                            <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                            <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+                        </svg>
+                        <span>Data</span>
+                    </a>
+                    <a href="#about" class="nav-item" data-section="about">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <span>About</span>
+                    </a>
+                </nav>
+
+                <!-- Settings Panels -->
+                <div class="options-panels">
+
+                    <!-- General Settings -->
+                    <section class="options-section active" id="section-general" aria-labelledby="heading-general">
+                        <h2 class="section-heading" id="heading-general">General Settings</h2>
+                        <p class="section-description">Configure appearance and default behavior.</p>
+
+                        <div class="settings-card">
+                            <div class="setting-row">
+                                <div class="setting-info">
+                                    <label for="themeMode">Theme</label>
+                                    <span class="setting-description">Choose light, dark, or auto (follows system).</span>
+                                </div>
+                                <select id="themeMode" class="setting-select">
+                                    <option value="auto">Auto (System)</option>
+                                    <option value="light">Light</option>
+                                    <option value="dark">Dark</option>
+                                </select>
+                            </div>
+
+                            <div class="setting-row">
+                                <div class="setting-info">
+                                    <label for="defaultTab">Default Tab</label>
+                                    <span class="setting-description">Which tab opens first when you launch the popup.</span>
+                                </div>
+                                <select id="defaultTab" class="setting-select">
+                                    <option value="cookies">Cookies</option>
+                                    <option value="profiles">Profiles</option>
+                                    <option value="rules">Rules</option>
+                                    <option value="health">Health</option>
+                                </select>
+                            </div>
+
+                            <div class="setting-row">
+                                <div class="setting-info">
+                                    <label for="readOnlyDefault">Read-Only Mode Default</label>
+                                    <span class="setting-description">Start with read-only mode enabled to prevent accidental edits.</span>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="readOnlyDefault">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Cookie Settings -->
+                    <section class="options-section" id="section-cookies" aria-labelledby="heading-cookies" hidden>
+                        <h2 class="section-heading" id="heading-cookies">Cookie Settings</h2>
+                        <p class="section-description">Configure cookie display and export preferences.</p>
+
+                        <div class="settings-card">
+                            <div class="setting-row">
+                                <div class="setting-info">
+                                    <label for="defaultExportFormat">Default Export Format</label>
+                                    <span class="setting-description">Format used when exporting cookies.</span>
+                                </div>
+                                <select id="defaultExportFormat" class="setting-select">
+                                    <option value="json">JSON</option>
+                                    <option value="netscape">Netscape</option>
+                                </select>
+                            </div>
+
+                            <div class="setting-row">
+                                <div class="setting-info">
+                                    <label for="showCookieSize">Show Cookie Size</label>
+                                    <span class="setting-description">Display the size of each cookie in the list.</span>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="showCookieSize">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="setting-row">
+                                <div class="setting-info">
+                                    <label for="cookieSortOrder">Cookie Sort Order</label>
+                                    <span class="setting-description">Default sorting for the cookie list.</span>
+                                </div>
+                                <select id="cookieSortOrder" class="setting-select">
+                                    <option value="name">Name (A-Z)</option>
+                                    <option value="domain">Domain</option>
+                                    <option value="date">Expiration Date</option>
+                                </select>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Notifications -->
+                    <section class="options-section" id="section-notifications" aria-labelledby="heading-notifications" hidden>
+                        <h2 class="section-heading" id="heading-notifications">Notifications</h2>
+                        <p class="section-description">Control when and how the extension notifies you.</p>
+
+                        <div class="settings-card">
+                            <div class="setting-row">
+                                <div class="setting-info">
+                                    <label for="notifyAutoDelete">Auto-Delete Notifications</label>
+                                    <span class="setting-description">Show a notification when cookies are automatically deleted by rules.</span>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="notifyAutoDelete" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+
+                            <div class="setting-row">
+                                <div class="setting-info">
+                                    <label for="notifyHealthAlerts">Health Alerts</label>
+                                    <span class="setting-description">Show alerts for insecure or problematic cookies.</span>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="notifyHealthAlerts" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Data Management -->
+                    <section class="options-section" id="section-data" aria-labelledby="heading-data" hidden>
+                        <h2 class="section-heading" id="heading-data">Data Management</h2>
+                        <p class="section-description">Export, import, or reset your extension data.</p>
+
+                        <div class="settings-card">
+                            <div class="data-action-row">
+                                <div class="setting-info">
+                                    <label>Export All Data</label>
+                                    <span class="setting-description">Download all extension data including profiles, rules, and settings as a JSON file.</span>
+                                </div>
+                                <button class="btn btn-secondary" id="exportAllData">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="7 10 12 15 17 10"></polyline>
+                                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    </svg>
+                                    <span>Export</span>
+                                </button>
+                            </div>
+
+                            <div class="data-action-row">
+                                <div class="setting-info">
+                                    <label>Import Data</label>
+                                    <span class="setting-description">Restore extension data from a previously exported JSON file.</span>
+                                </div>
+                                <button class="btn btn-secondary" id="importAllData">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                    </svg>
+                                    <span>Import</span>
+                                </button>
+                                <input type="file" id="importFileInput" accept=".json" hidden>
+                            </div>
+
+                            <div class="data-action-row data-action-danger">
+                                <div class="setting-info">
+                                    <label>Reset to Defaults</label>
+                                    <span class="setting-description">Clear all extension data and restore factory settings. This cannot be undone.</span>
+                                </div>
+                                <button class="btn btn-danger" id="resetDefaults">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                    <span>Reset</span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- About -->
+                    <section class="options-section" id="section-about" aria-labelledby="heading-about" hidden>
+                        <h2 class="section-heading" id="heading-about">About</h2>
+                        <p class="section-description">Extension information and useful links.</p>
+
+                        <div class="settings-card about-card">
+                            <div class="about-header">
+                                <div class="about-logo">
+                                    <div class="brand-logo brand-logo-lg">
+                                        <span class="logo-z">z</span>
+                                    </div>
+                                </div>
+                                <div class="about-info">
+                                    <h3 class="about-name">Zovo Cookie Manager</h3>
+                                    <span class="about-version" id="aboutVersion"></span>
+                                    <span class="about-author">by Michael Ip</span>
+                                </div>
+                            </div>
+
+                            <div class="about-links">
+                                <a href="https://zovo.one" target="_blank" rel="noopener" class="about-link">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="2" y1="12" x2="22" y2="12"></line>
+                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                                    </svg>
+                                    <span>zovo.one</span>
+                                </a>
+                                <a href="https://github.com/theluckystrike/cookie-manager" target="_blank" rel="noopener" class="about-link">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                                    </svg>
+                                    <span>GitHub Repository</span>
+                                </a>
+                                <a href="../legal/privacy-policy.html" target="_blank" rel="noopener" class="about-link">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                    </svg>
+                                    <span>Privacy Policy</span>
+                                </a>
+                                <a href="../legal/terms.html" target="_blank" rel="noopener" class="about-link">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                                    </svg>
+                                    <span>Terms of Service</span>
+                                </a>
+                                <a href="../help/help.html" target="_blank" rel="noopener" class="about-link">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                                    </svg>
+                                    <span>Help &amp; FAQ</span>
+                                </a>
+                            </div>
+
+                            <div class="about-footer">
+                                <span>Built by</span>
+                                <a href="https://zovo.one" target="_blank" rel="noopener" class="about-brand-link">zovo.</a>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </main>
+
+        <!-- Toast Notification -->
+        <div class="toast" id="toast" role="alert" aria-live="assertive" aria-atomic="true" hidden>
+            <div class="toast-icon" id="toastIcon"></div>
+            <span id="toastMessage"></span>
+        </div>
+
+        <!-- Confirm Dialog -->
+        <div class="modal-overlay" id="confirmOverlay" hidden>
+            <div class="confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+                <h3 id="confirmTitle"></h3>
+                <p id="confirmMessage"></p>
+                <div class="confirm-actions">
+                    <button class="btn btn-secondary" id="confirmCancel">Cancel</button>
+                    <button class="btn btn-danger" id="confirmOk">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+
+</html>
