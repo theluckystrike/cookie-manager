@@ -253,6 +253,15 @@ async function init() {
         // Set up event listeners
         setupEventListeners();
 
+        // Track session milestone (MD 14 - Growth)
+        if (typeof MilestoneTracker !== 'undefined') {
+            MilestoneTracker.record('session').then(newMilestones => {
+                if (newMilestones && newMilestones.length > 0) {
+                    checkGrowthPrompts(newMilestones);
+                }
+            }).catch(() => {});
+        }
+
     } catch (error) {
         console.error('[Popup] Init error:', error);
         showEmptyState('Error loading cookies');
@@ -477,6 +486,9 @@ async function saveCookie() {
         }
 
         showToast(isNewCookie ? 'Cookie created' : 'Cookie saved', 'success');
+        if (typeof MilestoneTracker !== 'undefined') {
+            MilestoneTracker.record('edit').catch(() => {});
+        }
         closeEditor();
         await loadCookies();
 
@@ -534,6 +546,9 @@ function showJwtDecoder() {
     elements.jwtExpiry.className = `jwt-expiry ${expiry.expired ? 'expired' : 'valid'}`;
 
     elements.jwtModal.hidden = false;
+    if (typeof MilestoneTracker !== 'undefined') {
+        MilestoneTracker.record('jwtDecode').catch(() => {});
+    }
 }
 
 function closeJwtModal() {
@@ -553,6 +568,9 @@ async function exportCookies() {
 
         await navigator.clipboard.writeText(json);
         showToast(`${currentCookies.length} cookies copied to clipboard`, 'success');
+        if (typeof MilestoneTracker !== 'undefined') {
+            MilestoneTracker.record('export').catch(() => {});
+        }
 
     } catch (error) {
         console.error('[Popup] Export error:', error);
@@ -578,6 +596,9 @@ async function clearAllCookies() {
                 });
 
                 showToast(`Cleared ${count} cookies`, 'success');
+                if (typeof MilestoneTracker !== 'undefined') {
+                    MilestoneTracker.record('clear').catch(() => {});
+                }
                 await loadCookies();
 
             } catch (error) {
@@ -793,6 +814,88 @@ function setupEventListeners() {
 function isInputFocused() {
     const active = document.activeElement;
     return active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.tagName === 'SELECT');
+}
+
+// ============================================================================
+// Growth Prompts (MD 14 - Viral Engine)
+// ============================================================================
+
+async function checkGrowthPrompts(newMilestones) {
+    if (typeof GrowthPrompts === 'undefined') return;
+
+    // Check review prompt first
+    const shouldReview = await GrowthPrompts.shouldShowReviewPrompt();
+    if (shouldReview) {
+        showGrowthBanner(
+            'Enjoying Cookie Manager? A quick review helps other developers find us!',
+            'Leave Review',
+            () => {
+                window.open(GrowthPrompts.getReviewUrl(), '_blank');
+                GrowthPrompts.recordReviewResponse('reviewed');
+            },
+            () => GrowthPrompts.recordReviewResponse('later')
+        );
+        return;
+    }
+
+    // Check share prompts for new milestones
+    for (const milestone of newMilestones) {
+        const config = GrowthPrompts.getPromptConfig(milestone.id);
+        if (!config) continue;
+
+        const shouldShow = await GrowthPrompts.shouldShowSharePrompt(milestone.id);
+        if (shouldShow) {
+            showGrowthBanner(
+                config.message,
+                'Share',
+                () => {
+                    const url = GrowthPrompts.getShareUrl('twitter');
+                    if (url) window.open(url, '_blank');
+                    GrowthPrompts.dismissSharePrompt(milestone.id);
+                },
+                () => GrowthPrompts.dismissSharePrompt(milestone.id)
+            );
+            return;
+        }
+    }
+}
+
+function showGrowthBanner(message, actionLabel, onAction, onDismiss) {
+    // Remove existing banner if present
+    const existing = document.getElementById('growthBanner');
+    if (existing) existing.remove();
+
+    const banner = document.createElement('div');
+    banner.id = 'growthBanner';
+    banner.className = 'growth-banner';
+
+    const text = document.createElement('span');
+    text.className = 'growth-text';
+    text.textContent = message;
+
+    const actions = document.createElement('div');
+    actions.className = 'growth-actions';
+
+    const actionBtn = document.createElement('button');
+    actionBtn.className = 'btn btn-primary btn-sm';
+    actionBtn.textContent = actionLabel;
+    actionBtn.addEventListener('click', () => { onAction(); banner.remove(); });
+
+    const dismissBtn = document.createElement('button');
+    dismissBtn.className = 'btn-link btn-sm';
+    dismissBtn.textContent = 'Later';
+    dismissBtn.addEventListener('click', () => { onDismiss(); banner.remove(); });
+
+    actions.appendChild(actionBtn);
+    actions.appendChild(dismissBtn);
+    banner.appendChild(text);
+    banner.appendChild(actions);
+
+    // Insert before footer
+    const footer = document.querySelector('.footer');
+    if (footer) {
+        footer.parentNode.insertBefore(banner, footer);
+    }
 }
 
 // ============================================================================

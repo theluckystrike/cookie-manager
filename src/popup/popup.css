@@ -952,3 +952,59 @@ body {
     background: var(--primary-light);
     color: var(--primary-hover);
 }
+
+/* ============================================================================
+   Growth Prompts (MD 14 - Viral Engine)
+   ============================================================================ */
+
+.growth-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #f0f4ff, #e8eeff);
+    border-top: 1px solid #d4dcf0;
+    animation: growthSlideIn 0.3s ease-out;
+}
+
+.growth-banner .growth-text {
+    font-size: 12px;
+    color: #374151;
+    line-height: 1.4;
+}
+
+.growth-banner .growth-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.growth-banner .btn-sm {
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 4px;
+}
+
+.growth-banner .btn-link {
+    font-size: 11px;
+    color: #6b7280;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+}
+
+.growth-banner .btn-link:hover {
+    color: #374151;
+}
+
+@keyframes growthSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

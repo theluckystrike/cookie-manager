@@ -380,6 +380,25 @@ async function handleMessage(message) {
                 return { debugMode: newMode };
             }
 
+            // ==============================================================
+            // Growth & Milestones (MD 14)
+            // ==============================================================
+
+            case 'GET_MILESTONES': {
+                const { _milestones = {}, _milestonesReached = [] } = await chrome.storage.local.get(['_milestones', '_milestonesReached']);
+                return { counters: _milestones, reached: _milestonesReached };
+            }
+
+            case 'GET_GROWTH_STATS': {
+                const data = await chrome.storage.local.get(['_milestones', '_milestonesReached', '_reviewPromptState', 'analytics']);
+                return {
+                    milestones: data._milestones || {},
+                    reached: data._milestonesReached || [],
+                    reviewState: data._reviewPromptState || null,
+                    totalEvents: (data.analytics || []).length
+                };
+            }
+
             default:
                 return { error: 'Unknown action' };
         }
