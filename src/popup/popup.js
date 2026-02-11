@@ -1499,7 +1499,7 @@ async function initSubscriptionUI() {
 
     // Fetch trial status from background
     try {
-        trialStatus = await chrome.runtime.sendMessage({ action: 'getTrialStatus' });
+        trialStatus = await chrome.runtime.sendMessage({ action: 'GET_TRIAL_STATUS' });
     } catch (e) {
         console.debug('[Popup] Could not fetch trial status:', e.message);
     }
@@ -1532,16 +1532,9 @@ async function initSubscriptionUI() {
         }
     }
 
-    // Use FeatureGate if available to refine access status
-    if (typeof FeatureGate !== 'undefined' && FeatureGate.getTier) {
-        try {
-            var gateTier = FeatureGate.getTier();
-            if (gateTier) {
-                status.tier = gateTier;
-            }
-        } catch (e) {
-            // FeatureGate not ready yet, use message-based status
-        }
+    // If trial is active but tier is still free, upgrade to pro for trial period
+    if (status.isTrialing && status.tier === 'free') {
+        status.tier = 'pro';
     }
 
     // Update all UI elements

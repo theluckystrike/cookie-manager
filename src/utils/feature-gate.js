@@ -190,11 +190,7 @@
         // Attempt to show Paywall modal (with typeof guard for environments
         // where the Paywall module has not been loaded)
         if (typeof Paywall !== 'undefined' && typeof Paywall.show === 'function') {
-            Paywall.show({
-                feature: featureId,
-                featureName: formatFeatureName(featureId),
-                requiredTier: 'pro'
-            });
+            Paywall.show(formatFeatureName(featureId));
         } else {
             // Fallback: log a warning so callers know the gate fired
             console.warn('[FeatureGate] Feature "' + featureId + '" requires Pro. Paywall module not loaded.');
