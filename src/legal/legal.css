@@ -1,0 +1,555 @@
+/* ==========================================================================
+   Cookie Manager - Legal Pages Styles
+   Brand: Zovo (https://zovo.one/brand)
+   Pages: Privacy Policy, Terms of Service
+   ========================================================================== */
+
+/* ---------- CSS Variables ---------- */
+:root {
+    --legal-bg: #1a1a2e;
+    --legal-bg-secondary: #16213e;
+    --legal-bg-card: #1e2745;
+    --legal-text: #e0e0e0;
+    --legal-text-secondary: #a0a0b8;
+    --legal-text-muted: #6b6b85;
+    --legal-accent: #667eea;
+    --legal-accent-hover: #5a6fd6;
+    --legal-accent-light: rgba(102, 126, 234, 0.15);
+    --legal-border: rgba(255, 255, 255, 0.08);
+    --legal-border-hover: rgba(102, 126, 234, 0.4);
+    --legal-success: #10B981;
+    --legal-warning: #F59E0B;
+    --legal-error: #EF4444;
+    --legal-radius: 8px;
+    --legal-radius-sm: 4px;
+    --legal-transition: 200ms ease;
+    --legal-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --legal-font-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+}
+
+/* ---------- Reset ---------- */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ---------- Base ---------- */
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--legal-font);
+    font-size: 14px;
+    color: var(--legal-text);
+    background: var(--legal-bg);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ---------- App Container ---------- */
+#legal-app {
+    max-width: 700px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0 24px;
+}
+
+/* ---------- Visually Hidden ---------- */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ---------- Header ---------- */
+.legal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--legal-border);
+}
+
+.legal-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.legal-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.3px;
+}
+
+.legal-subtitle {
+    font-size: 12px;
+    color: var(--legal-text-muted);
+    margin-top: 2px;
+}
+
+.icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: var(--legal-text-secondary);
+    border-radius: var(--legal-radius-sm);
+    cursor: pointer;
+    transition: all var(--legal-transition);
+    text-decoration: none;
+}
+
+.icon-btn:hover {
+    background: var(--legal-bg-card);
+    color: var(--legal-text);
+}
+
+/* ---------- Last Updated ---------- */
+.legal-meta {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--legal-border);
+    font-size: 12px;
+    color: var(--legal-text-muted);
+}
+
+/* ---------- Main Content ---------- */
+.legal-content {
+    flex: 1;
+    padding: 24px 0;
+}
+
+/* ---------- Headings ---------- */
+.legal-content h2 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: 32px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--legal-border);
+    letter-spacing: -0.2px;
+}
+
+.legal-content h2:first-child {
+    margin-top: 0;
+}
+
+.legal-content h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--legal-accent);
+    margin-top: 20px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ---------- Paragraphs ---------- */
+.legal-content p {
+    margin-bottom: 12px;
+    color: var(--legal-text-secondary);
+    line-height: 1.7;
+    font-size: 13px;
+}
+
+.legal-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* ---------- Links ---------- */
+.legal-content a {
+    color: var(--legal-accent);
+    text-decoration: none;
+    transition: color var(--legal-transition);
+}
+
+.legal-content a:hover {
+    color: var(--legal-accent-hover);
+    text-decoration: underline;
+}
+
+/* ---------- Lists ---------- */
+.legal-content ul,
+.legal-content ol {
+    margin-bottom: 14px;
+    padding-left: 24px;
+}
+
+.legal-content li {
+    margin-bottom: 6px;
+    color: var(--legal-text-secondary);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.legal-content li::marker {
+    color: var(--legal-accent);
+}
+
+/* ---------- Summary Card ---------- */
+.legal-summary-card {
+    background: var(--legal-bg-card);
+    border: 1px solid var(--legal-border);
+    border-radius: var(--legal-radius);
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.legal-summary-card p {
+    font-size: 13px;
+    color: var(--legal-text-secondary);
+}
+
+/* ---------- Quick Summary Highlight ---------- */
+.legal-highlight {
+    background: var(--legal-bg-card);
+    border-left: 3px solid var(--legal-accent);
+    border-radius: 0 var(--legal-radius) var(--legal-radius) 0;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+}
+
+.legal-highlight p {
+    color: var(--legal-text);
+    font-weight: 500;
+}
+
+/* ---------- Tables ---------- */
+.legal-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 20px;
+    border-radius: var(--legal-radius);
+    border: 1px solid var(--legal-border);
+}
+
+.legal-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.legal-table thead {
+    background: var(--legal-bg-secondary);
+}
+
+.legal-table th {
+    text-align: left;
+    padding: 10px 16px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--legal-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--legal-border);
+}
+
+.legal-table td {
+    padding: 10px 16px;
+    color: var(--legal-text-secondary);
+    border-bottom: 1px solid var(--legal-border);
+}
+
+.legal-table tr:last-child td {
+    border-bottom: none;
+}
+
+.legal-table tr:hover td {
+    background: rgba(102, 126, 234, 0.04);
+}
+
+/* ---------- Table Status Indicators ---------- */
+.status-yes {
+    color: var(--legal-success);
+    font-weight: 600;
+}
+
+.status-no {
+    color: var(--legal-error);
+    font-weight: 600;
+}
+
+/* ---------- Sections ---------- */
+.legal-section {
+    margin-bottom: 8px;
+}
+
+/* ---------- Emphasis Blocks ---------- */
+.legal-emphasis {
+    background: var(--legal-accent-light);
+    border-radius: var(--legal-radius);
+    padding: 14px 18px;
+    margin-bottom: 14px;
+}
+
+.legal-emphasis p {
+    color: var(--legal-text);
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+/* ---------- Inline Code / Technical Terms ---------- */
+.legal-content code {
+    font-family: var(--legal-font-mono);
+    font-size: 12px;
+    color: var(--legal-accent);
+    background: var(--legal-accent-light);
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+/* ---------- Divider ---------- */
+.legal-divider {
+    border: none;
+    border-top: 1px solid var(--legal-border);
+    margin: 24px 0;
+}
+
+/* ---------- Footer ---------- */
+.legal-footer {
+    padding: 20px 0;
+    text-align: center;
+    border-top: 1px solid var(--legal-border);
+    font-size: 12px;
+}
+
+.legal-footer .footer-text {
+    color: var(--legal-text-muted);
+}
+
+.legal-footer .footer-brand-link {
+    color: var(--legal-text-secondary);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--legal-transition);
+}
+
+.legal-footer .footer-brand-link:hover {
+    color: var(--legal-accent);
+}
+
+/* ---------- Scrollbar ---------- */
+body::-webkit-scrollbar {
+    width: 6px;
+}
+
+body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+    background: var(--legal-border);
+    border-radius: 3px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: var(--legal-text-muted);
+}
+
+/* ---------- Selection ---------- */
+::selection {
+    background: var(--legal-accent-light);
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   Focus Visible - Accessibility
+   ========================================================================== */
+:focus-visible {
+    outline: 2px solid var(--legal-accent);
+    outline-offset: 2px;
+}
+
+button:focus-visible,
+.icon-btn:focus-visible {
+    outline: 2px solid var(--legal-accent);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--legal-accent-light);
+}
+
+a:focus-visible {
+    outline: 2px solid var(--legal-accent);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px var(--legal-accent-light);
+    border-radius: var(--legal-radius-sm);
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* ==========================================================================
+   Forced Colors (High Contrast Mode)
+   ========================================================================== */
+@media (forced-colors: active) {
+    .icon-btn {
+        border: 2px solid ButtonText;
+    }
+
+    :focus-visible {
+        outline: 3px solid Highlight;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    .icon-btn:focus-visible {
+        outline: 3px solid Highlight;
+        box-shadow: none;
+    }
+
+    .legal-summary-card,
+    .legal-highlight,
+    .legal-emphasis {
+        border: 1px solid ButtonText;
+    }
+
+    .legal-table,
+    .legal-table th,
+    .legal-table td {
+        border: 1px solid ButtonText;
+    }
+
+    .legal-table-wrapper {
+        border: 1px solid ButtonText;
+    }
+
+    svg {
+        stroke: currentColor;
+    }
+
+    .status-yes,
+    .status-no {
+        font-weight: 700;
+        text-decoration: underline;
+    }
+}
+
+/* ==========================================================================
+   Enhanced Contrast
+   ========================================================================== */
+@media (prefers-contrast: more) {
+    :root {
+        --legal-border: rgba(255, 255, 255, 0.25);
+        --legal-text-muted: #8a8aa8;
+        --legal-text-secondary: #c0c0d8;
+    }
+
+    .legal-content h2 {
+        border-bottom-width: 2px;
+    }
+
+    .legal-highlight {
+        border-left-width: 4px;
+    }
+
+    .legal-table th {
+        font-weight: 700;
+    }
+
+    .legal-table td {
+        border-bottom-width: 2px;
+    }
+
+    .legal-summary-card {
+        border-width: 2px;
+    }
+
+    .icon-btn {
+        border: 1px solid var(--legal-border);
+    }
+
+    :focus-visible {
+        outline-width: 3px;
+    }
+
+    .legal-content a {
+        text-decoration: underline;
+    }
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 600px) {
+    #legal-app {
+        padding: 0 16px;
+    }
+
+    .legal-header {
+        padding: 16px 0;
+    }
+
+    .legal-title {
+        font-size: 18px;
+    }
+
+    .legal-content h2 {
+        font-size: 15px;
+    }
+
+    .legal-table th,
+    .legal-table td {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .legal-summary-card {
+        padding: 14px;
+    }
+
+    .legal-highlight {
+        padding: 12px 14px;
+    }
+}
+
+@media (max-width: 400px) {
+    #legal-app {
+        padding: 0 12px;
+    }
+
+    .legal-header {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .legal-table-wrapper {
+        font-size: 11px;
+    }
+}
+
+/* ---------- Hidden ---------- */
+[hidden] {
+    display: none !important;
+}

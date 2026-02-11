@@ -17,6 +17,9 @@ try { importScripts('../shared/accessibility.js'); } catch(e) { console.warn('ac
 // Import shared modules (MD 22)
 try { importScripts('../shared/version-manager.js'); } catch(e) { console.warn('version-manager.js not loaded:', e.message); }
 
+// Import shared modules (MD 23)
+try { importScripts('../shared/legal-compliance.js'); } catch(e) { console.warn('legal-compliance.js not loaded:', e.message); }
+
 // ============================================================================
 // Error Tracking & Monitoring (MD 11 - Crash Analytics)
 // ============================================================================
@@ -727,6 +730,80 @@ async function handleMessage(message) {
                 return { error: 'VersionManager not available' };
             }
 
+            // ==============================================================
+            // Legal Compliance (MD 23)
+            // ==============================================================
+
+            case 'GET_PRIVACY_SUMMARY': {
+                if (typeof LegalCompliance !== 'undefined') {
+                    try {
+                        return LegalCompliance.PrivacyConfig.getPrivacySummary();
+                    } catch (e) { return { error: e.message }; }
+                }
+                return { error: 'LegalCompliance not available' };
+            }
+
+            case 'EXPORT_USER_DATA': {
+                if (typeof LegalCompliance !== 'undefined') {
+                    try {
+                        var exportResult = await LegalCompliance.DataRights.exportUserData();
+                        await LegalCompliance.ComplianceLog.logRequest('export', { keyCount: Object.keys(exportResult.data || {}).length });
+                        return exportResult;
+                    } catch (e) { return { error: e.message }; }
+                }
+                return { error: 'LegalCompliance not available' };
+            }
+
+            case 'DELETE_USER_DATA': {
+                if (typeof LegalCompliance !== 'undefined') {
+                    try {
+                        var keepEssential = payload && payload.keepEssential !== false;
+                        var deleteResult = await LegalCompliance.DataRights.deleteUserData({ keepEssential: keepEssential });
+                        await LegalCompliance.ComplianceLog.logRequest('delete', { keepEssential: keepEssential });
+                        return deleteResult;
+                    } catch (e) { return { error: e.message }; }
+                }
+                return { error: 'LegalCompliance not available' };
+            }
+
+            case 'GET_DATA_SUMMARY': {
+                if (typeof LegalCompliance !== 'undefined') {
+                    try {
+                        return await LegalCompliance.DataRights.getDataSummary();
+                    } catch (e) { return { error: e.message }; }
+                }
+                return { error: 'LegalCompliance not available' };
+            }
+
+            case 'GET_CONSENT_STATUS': {
+                if (typeof LegalCompliance !== 'undefined') {
+                    try {
+                        return await LegalCompliance.ConsentManager.getConsent();
+                    } catch (e) { return { error: e.message }; }
+                }
+                return { error: 'LegalCompliance not available' };
+            }
+
+            case 'SET_CONSENT': {
+                if (typeof LegalCompliance !== 'undefined') {
+                    try {
+                        var consentResult = await LegalCompliance.ConsentManager.saveConsent(payload || {});
+                        await LegalCompliance.ComplianceLog.logRequest('consent_change', payload || {});
+                        return consentResult;
+                    } catch (e) { return { error: e.message }; }
+                }
+                return { error: 'LegalCompliance not available' };
+            }
+
+            case 'GET_COMPLIANCE_LOG': {
+                if (typeof LegalCompliance !== 'undefined') {
+                    try {
+                        return await LegalCompliance.ComplianceLog.getRequestLog(payload || {});
+                    } catch (e) { return { error: e.message }; }
+                }
+                return { error: 'LegalCompliance not available' };
+            }
+
             default:
                 return { error: 'Unknown action' };
         }
@@ -971,6 +1048,8 @@ if (typeof VersionManager !== 'undefined' && VersionManager.loadOverrides) {
 }
 
 debugLog('info', 'Version', 'Version & release management initialized (MD 22)');
+
+debugLog('info', 'Legal', 'Legal compliance initialized (MD 23)');
 
 // Initial setup
 setupContextMenu();
