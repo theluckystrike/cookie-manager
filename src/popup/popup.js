@@ -323,7 +323,13 @@ function renderCookies(cookies) {
 
     elements.emptyState.hidden = true;
     elements.cookieList.hidden = false;
-    elements.cookieList.innerHTML = filtered.map(cookie => createCookieItemHTML(cookie)).join('');
+    // Security: use DOM API instead of innerHTML (MD 18)
+    elements.cookieList.textContent = '';
+    filtered.forEach(function(cookie) {
+        var template = document.createElement('template');
+        template.innerHTML = createCookieItemHTML(cookie);
+        elements.cookieList.appendChild(template.content);
+    });
 
     // Add click handlers
     elements.cookieList.querySelectorAll('.cookie-item').forEach((item, index) => {
@@ -650,6 +656,7 @@ function showToast(message, type = 'success') {
     elements.toastMessage.textContent = message;
     elements.toast.className = `toast toast-${type}`;
 
+    // Security note: SVG icons are static strings, no user input (MD 18)
     // Set icon
     if (type === 'success') {
         elements.toastIcon.innerHTML = `
@@ -936,12 +943,20 @@ function showRetentionBanner(trigger) {
     banner.className = 'retention-banner';
 
     var messageText = (trigger && trigger.message) ? trigger.message : 'Welcome back! Check out what Cookie Manager can do.';
-    var safeMessage = typeof DomUtils !== 'undefined' ? DomUtils.escapeHtml(messageText) : escapeHtml(messageText);
 
-    banner.innerHTML = '<div class="retention-content">' +
-        '<span class="retention-text">' + safeMessage + '</span>' +
-        '<button class="retention-dismiss" aria-label="Dismiss">&times;</button>' +
-        '</div>';
+    // Security: use DOM API instead of innerHTML (MD 18)
+    var content = document.createElement('div');
+    content.className = 'retention-content';
+    var textSpan = document.createElement('span');
+    textSpan.className = 'retention-text';
+    textSpan.textContent = messageText;
+    var dismissBtn = document.createElement('button');
+    dismissBtn.className = 'retention-dismiss';
+    dismissBtn.setAttribute('aria-label', 'Dismiss');
+    dismissBtn.textContent = '\u00D7';
+    content.appendChild(textSpan);
+    content.appendChild(dismissBtn);
+    banner.appendChild(content);
 
     // Insert before cookie list
     var list = document.getElementById('cookieList');

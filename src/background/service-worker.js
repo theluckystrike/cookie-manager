@@ -147,6 +147,46 @@ if (typeof StorageSchema !== 'undefined') {
 }
 
 // ============================================================================
+// Security Hardening (MD 18 - Security Audit)
+// ============================================================================
+
+// Validate message sender origin
+function isValidSender(sender) {
+    if (typeof MessageValidator !== 'undefined' && typeof MessageValidator.isInternalSender === 'function') {
+        return MessageValidator.isInternalSender(sender);
+    }
+    // Fallback: check sender.id matches our extension
+    try {
+        return sender && sender.id === chrome.runtime.id;
+    } catch (e) {
+        return false;
+    }
+}
+
+// Validate and sanitize incoming message
+function validateIncomingMessage(message) {
+    if (typeof MessageValidator !== 'undefined' && typeof MessageValidator.validateMessage === 'function') {
+        return MessageValidator.validateMessage(message);
+    }
+    // Fallback: basic validation
+    if (!message || typeof message.action !== 'string') {
+        return { valid: false, errors: ['Missing or invalid action'] };
+    }
+    return { valid: true, errors: [] };
+}
+
+// Sanitize string input for cookie operations
+function sanitizeInput(str, maxLen) {
+    if (typeof SecurityHardener !== 'undefined' && typeof SecurityHardener.sanitizeString === 'function') {
+        return SecurityHardener.sanitizeString(str, maxLen);
+    }
+    if (typeof str !== 'string') return '';
+    return str.trim().substring(0, maxLen || 4096);
+}
+
+debugLog('info', 'Security', 'Security hardening initialized (MD 18)');
+
+// ============================================================================
 // Cookie Operations (inline to avoid module loading issues in MV3)
 // ============================================================================
 
@@ -257,6 +297,21 @@ async function isProtected(domain) {
 // ============================================================================
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    // Security: validate sender origin (MD 18)
+    if (!isValidSender(sender)) {
+        debugLog('warn', 'Security', 'Rejected message from unknown sender', { senderId: sender?.id });
+        sendResponse({ error: 'Unauthorized sender' });
+        return true;
+    }
+
+    // Security: validate message structure (MD 18)
+    var validation = validateIncomingMessage(message);
+    if (!validation.valid) {
+        debugLog('warn', 'Security', 'Rejected invalid message', { errors: validation.errors });
+        sendResponse({ error: 'Invalid message: ' + validation.errors.join(', ') });
+        return true;
+    }
+
     handleMessage(message).then(sendResponse);
     return true; // Indicates async response
 });
@@ -285,7 +340,21 @@ async function handleMessage(message) {
                     return { error: 'Domain is protected' };
                 }
 
-                const result = await CookieOps.set(payload);
+                // Sanitize cookie fields (MD 18)
+                var sanitizedPayload = {
+                    name: sanitizeInput(payload.name, 256),
+                    value: payload.value != null ? String(payload.value) : '',
+                    domain: sanitizeInput(payload.domain, 253),
+                    path: sanitizeInput(payload.path, 1024) || '/',
+                    secure: !!payload.secure,
+                    httpOnly: !!payload.httpOnly,
+                    sameSite: ['lax', 'strict', 'no_restriction'].indexOf(payload.sameSite) !== -1 ? payload.sameSite : 'lax'
+                };
+                if (payload.expirationDate != null && typeof payload.expirationDate === 'number') {
+                    sanitizedPayload.expirationDate = payload.expirationDate;
+                }
+
+                const result = await CookieOps.set(sanitizedPayload);
                 return result || { error: 'Failed to set cookie' };
             }
 
