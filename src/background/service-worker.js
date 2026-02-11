@@ -20,6 +20,10 @@ try { importScripts('../shared/version-manager.js'); } catch(e) { console.warn('
 // Import shared modules (MD 23)
 try { importScripts('../shared/legal-compliance.js'); } catch(e) { console.warn('legal-compliance.js not loaded:', e.message); }
 
+// Import shared modules (MD 24)
+try { importScripts('../shared/architecture-patterns.js'); } catch(e) { console.warn('architecture-patterns.js not loaded:', e.message); }
+try { importScripts('../shared/message-router.js'); } catch(e) { console.warn('message-router.js not loaded:', e.message); }
+
 // ============================================================================
 // Error Tracking & Monitoring (MD 11 - Crash Analytics)
 // ============================================================================
@@ -1050,6 +1054,23 @@ if (typeof VersionManager !== 'undefined' && VersionManager.loadOverrides) {
 debugLog('info', 'Version', 'Version & release management initialized (MD 22)');
 
 debugLog('info', 'Legal', 'Legal compliance initialized (MD 23)');
+
+// Service Registry initialization (MD 24)
+if (typeof ArchPatterns !== 'undefined' && ArchPatterns.ServiceRegistry) {
+    try {
+        if (typeof CookieOps !== 'undefined') ArchPatterns.ServiceRegistry.register('CookieOps', CookieOps);
+        if (typeof PerfTimer !== 'undefined') ArchPatterns.ServiceRegistry.register('PerfTimer', PerfTimer);
+        if (typeof StorageOptimizer !== 'undefined') ArchPatterns.ServiceRegistry.register('StorageOptimizer', StorageOptimizer);
+        if (typeof VersionManager !== 'undefined') ArchPatterns.ServiceRegistry.register('VersionManager', VersionManager);
+        if (typeof LegalCompliance !== 'undefined') ArchPatterns.ServiceRegistry.register('LegalCompliance', LegalCompliance);
+        if (typeof A11yManager !== 'undefined') ArchPatterns.ServiceRegistry.register('A11yManager', A11yManager);
+        debugLog('info', 'Architecture', 'Service registry populated with ' + ArchPatterns.ServiceRegistry.list().length + ' services');
+    } catch (e) {
+        debugLog('warn', 'Architecture', 'Service registry init failed', e.message);
+    }
+}
+
+debugLog('info', 'Architecture', 'Architecture patterns initialized (MD 24)');
 
 // Initial setup
 setupContextMenu();

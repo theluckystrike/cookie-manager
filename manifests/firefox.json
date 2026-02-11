@@ -47,6 +47,8 @@
       "src/shared/accessibility.js",
       "src/shared/version-manager.js",
       "src/shared/legal-compliance.js",
+      "src/shared/architecture-patterns.js",
+      "src/shared/message-router.js",
       "src/background/service-worker.js"
     ]
   },

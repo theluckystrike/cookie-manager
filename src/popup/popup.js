@@ -283,6 +283,19 @@ async function init() {
             }
         }
 
+        // Architecture patterns integration (MD 24)
+        if (typeof ArchPatterns !== 'undefined' && ArchPatterns.EventBus) {
+            ArchPatterns.EventBus.on('cookie:updated', function() {
+                loadCookies();
+            });
+            ArchPatterns.EventBus.on('settings:changed', function(newSettings) {
+                if (newSettings && typeof newSettings.readOnlyMode !== 'undefined') {
+                    settings.readOnlyMode = newSettings.readOnlyMode;
+                    elements.readOnlyToggle.checked = newSettings.readOnlyMode;
+                }
+            });
+        }
+
         // Focus search on popup open (MD 21)
         var searchEl = document.getElementById('searchInput');
         if (searchEl) { searchEl.focus(); }
