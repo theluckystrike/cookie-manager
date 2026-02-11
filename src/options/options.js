@@ -123,9 +123,39 @@
     // Data Management
     // =========================================================================
 
+    // Security: redact cookie values from exported profiles to prevent
+    // accidental sensitive data exposure (MD 18)
+    function redactCookieProfiles(data) {
+        if (!data || typeof data !== 'object') return data;
+        var clone = JSON.parse(JSON.stringify(data));
+        if (clone.cookieProfiles && typeof clone.cookieProfiles === 'object') {
+            var profileNames = Object.keys(clone.cookieProfiles);
+            for (var i = 0; i < profileNames.length; i++) {
+                var profile = clone.cookieProfiles[profileNames[i]];
+                if (profile && Array.isArray(profile.cookies)) {
+                    for (var j = 0; j < profile.cookies.length; j++) {
+                        if (profile.cookies[j] && typeof profile.cookies[j].value === 'string') {
+                            profile.cookies[j].value = '[REDACTED]';
+                        }
+                    }
+                }
+            }
+        }
+        // Redact error log stacks that may contain sensitive data
+        if (Array.isArray(clone.errorLogs)) {
+            for (var e = 0; e < clone.errorLogs.length; e++) {
+                if (clone.errorLogs[e] && clone.errorLogs[e].stack) {
+                    clone.errorLogs[e].stack = '[REDACTED]';
+                }
+            }
+        }
+        return clone;
+    }
+
     function exportAllData() {
         chrome.storage.local.get(null, function(data) {
-            var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            var safeData = redactCookieProfiles(data);
+            var blob = new Blob([JSON.stringify(safeData, null, 2)], { type: 'application/json' });
             var url = URL.createObjectURL(blob);
             var a = document.createElement('a');
             a.href = url;
@@ -143,15 +173,44 @@
         fileInput.click();
     }
 
+    // Security: allowlist of keys that may be imported (MD 18)
+    var IMPORTABLE_KEYS = [
+        'themeMode', 'defaultTab', 'readOnlyDefault', 'defaultExportFormat',
+        'showCookieSize', 'cookieSortOrder', 'notifyAutoDelete', 'notifyHealthAlerts',
+        'readOnlyMode', 'protectedDomains', 'cookieProfiles', 'autoDeleteRules',
+        'activePopupTab', 'debugMode'
+    ];
+
+    function sanitizeImportData(raw) {
+        if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) return null;
+        var clean = {};
+        for (var i = 0; i < IMPORTABLE_KEYS.length; i++) {
+            var key = IMPORTABLE_KEYS[i];
+            if (Object.prototype.hasOwnProperty.call(raw, key)) {
+                clean[key] = raw[key];
+            }
+        }
+        // Reject prototype pollution keys
+        if (Object.keys(clean).length === 0) return null;
+        return clean;
+    }
+
     function handleImportFile(event) {
         var file = event.target.files[0];
         if (!file) return;
         var reader = new FileReader();
         reader.onload = function(e) {
             try {
-                var data = JSON.parse(e.target.result);
-                if (typeof data !== 'object' || data === null || Array.isArray(data)) {
+                var raw = JSON.parse(e.target.result);
+                if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) {
                     showToast('Invalid backup file format', 'error');
+                    return;
+                }
+                // Security: only import allowlisted keys to prevent prototype pollution
+                // and overwriting internal extension state (MD 18)
+                var data = sanitizeImportData(raw);
+                if (!data) {
+                    showToast('No recognized settings found in backup file', 'error');
                     return;
                 }
                 chrome.storage.local.set(data, function() {

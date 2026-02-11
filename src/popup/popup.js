@@ -70,11 +70,15 @@ const PopupErrorHandler = {
 
     sanitize(obj) {
         if (typeof obj !== 'object' || obj === null) return obj;
-        const sensitive = ['password', 'token', 'secret', 'api_key'];
+        // Security: redact keys that may contain sensitive cookie/auth data (MD 18)
+        const sensitive = ['password', 'token', 'secret', 'api_key', 'authorization', 'cookie', 'set-cookie'];
         const result = Array.isArray(obj) ? [] : {};
         for (const [key, value] of Object.entries(obj)) {
             if (sensitive.some(s => key.toLowerCase().includes(s))) {
                 result[key] = '[REDACTED]';
+            } else if (key === 'stack' && typeof value === 'string') {
+                // Truncate stacks to first frame only to avoid leaking file paths
+                result[key] = value.split('\n').slice(0, 3).join('\n');
             } else if (typeof value === 'object') {
                 result[key] = this.sanitize(value);
             } else {
@@ -86,69 +90,13 @@ const PopupErrorHandler = {
 };
 
 // ============================================================================
-// JWT Utility (inline to avoid module issues)
+// JWT Utility -- uses global JWT from src/utils/jwt.js (loaded before popup.js)
 // ============================================================================
 
-const JWT = {
-    isJWT(value) {
-        if (!value || typeof value !== 'string') return false;
-        const parts = value.split('.');
-        if (parts.length !== 3) return false;
-
-        try {
-            JSON.parse(atob(this._b64ToB64(parts[0])));
-            JSON.parse(atob(this._b64ToB64(parts[1])));
-            return true;
-        } catch {
-            return false;
-        }
-    },
-
-    decode(token) {
-        if (!this.isJWT(token)) return null;
-        const parts = token.split('.');
-
-        try {
-            return {
-                header: JSON.parse(atob(this._b64ToB64(parts[0]))),
-                payload: JSON.parse(atob(this._b64ToB64(parts[1]))),
-                signature: parts[2]
-            };
-        } catch {
-            return null;
-        }
-    },
-
-    formatExpiry(exp) {
-        if (!exp) return { text: 'No expiration', expired: false };
-        const now = Date.now();
-        const expMs = exp * 1000;
-        const diff = expMs - now;
-
-        if (diff < 0) {
-            return { text: `Expired ${this._timeAgo(Math.abs(diff))} ago`, expired: true };
-        }
-        return { text: `Expires in ${this._timeAgo(diff)}`, expired: false };
-    },
-
-    _b64ToB64(b64url) {
-        let b64 = b64url.replace(/-/g, '+').replace(/_/g, '/');
-        while (b64.length % 4) b64 += '=';
-        return b64;
-    },
-
-    _timeAgo(ms) {
-        const s = Math.floor(ms / 1000);
-        const m = Math.floor(s / 60);
-        const h = Math.floor(m / 60);
-        const d = Math.floor(h / 24);
-
-        if (d > 0) return `${d}d ${h % 24}h`;
-        if (h > 0) return `${h}h ${m % 60}m`;
-        if (m > 0) return `${m}m`;
-        return `${s}s`;
-    }
-};
+// Verify the JWT global was loaded correctly
+if (typeof JWT === 'undefined') {
+    console.error('[Popup] JWT utility not loaded -- jwt.js must be included before popup.js');
+}
 
 // ============================================================================
 // State
@@ -286,9 +234,9 @@ function switchTab(tabName) {
     chrome.storage.local.set({ activePopupTab: tabName }).catch(() => {});
 
     // Announce tab change to screen readers
-    if (typeof A11yManager !== 'undefined' && A11yManager.announce) {
+    if (typeof A11yManager !== 'undefined' && A11yManager.LiveRegion.announce) {
         const tabLabel = tabName.charAt(0).toUpperCase() + tabName.slice(1);
-        A11yManager.announce(tabLabel + ' tab selected');
+        A11yManager.LiveRegion.announce(tabLabel + ' tab selected');
     }
 }
 
@@ -313,8 +261,8 @@ async function init() {
         PopupErrorHandler.init();
 
         // Accessibility (MD 21)
-        if (typeof A11yManager !== 'undefined' && A11yManager.initLiveRegion) {
-            A11yManager.initLiveRegion();
+        if (typeof A11yManager !== 'undefined' && A11yManager.LiveRegion.initLiveRegion) {
+            A11yManager.LiveRegion.initLiveRegion();
         }
 
         // Load settings
@@ -445,8 +393,8 @@ function renderCookies(cookies) {
     elements.loadingState.hidden = true;
 
     // Announce search result count to screen readers (MD 21)
-    if (searchTerm && typeof A11yManager !== 'undefined' && A11yManager.announce) {
-        A11yManager.announce(filtered.length + ' cookie' + (filtered.length !== 1 ? 's' : '') + ' found');
+    if (searchTerm && typeof A11yManager !== 'undefined' && A11yManager.LiveRegion.announce) {
+        A11yManager.LiveRegion.announce(filtered.length + ' cookie' + (filtered.length !== 1 ? 's' : '') + ' found');
     }
 
     if (filtered.length === 0) {
@@ -584,8 +532,8 @@ function openEditor(cookie = null) {
     elements.editorModal.hidden = false;
 
     // Focus trap for editor modal (MD 21)
-    if (typeof A11yManager !== 'undefined' && A11yManager.createTrap) {
-        _editorFocusTrap = A11yManager.createTrap(elements.editorModal);
+    if (typeof A11yManager !== 'undefined' && A11yManager.FocusTrap.createTrap) {
+        _editorFocusTrap = A11yManager.FocusTrap.createTrap(elements.editorModal);
         _editorFocusTrap.activate();
     }
 
@@ -735,15 +683,16 @@ function showJwtDecoder() {
     elements.jwtHeader.textContent = JSON.stringify(decoded.header, null, 2);
     elements.jwtPayload.textContent = JSON.stringify(decoded.payload, null, 2);
 
-    const expiry = JWT.formatExpiry(decoded.payload.exp);
-    elements.jwtExpiry.textContent = expiry.text;
-    elements.jwtExpiry.className = `jwt-expiry ${expiry.expired ? 'expired' : 'valid'}`;
+    const expiryText = JWT.formatExpiry(decoded.payload.exp);
+    const isExpired = JWT.isExpired(decoded);
+    elements.jwtExpiry.textContent = expiryText;
+    elements.jwtExpiry.className = `jwt-expiry ${isExpired ? 'expired' : 'valid'}`;
 
     elements.jwtModal.hidden = false;
 
     // Focus trap for JWT modal (MD 21)
-    if (typeof A11yManager !== 'undefined' && A11yManager.createTrap) {
-        _jwtFocusTrap = A11yManager.createTrap(elements.jwtModal);
+    if (typeof A11yManager !== 'undefined' && A11yManager.FocusTrap.createTrap) {
+        _jwtFocusTrap = A11yManager.FocusTrap.createTrap(elements.jwtModal);
         _jwtFocusTrap.activate();
     }
 
@@ -822,6 +771,13 @@ async function importCookies() {
 function handleImportFile(event) {
     const file = event.target.files[0];
     if (!file) return;
+
+    // Security: limit import file size to 1 MB to prevent DoS (MD 18)
+    if (file.size > 1048576) {
+        showToast('Import file too large (max 1 MB)', 'error');
+        return;
+    }
+
     const reader = new FileReader();
     reader.onload = async function(e) {
         try {
@@ -830,20 +786,35 @@ function handleImportFile(event) {
                 showToast('Invalid format: expected a JSON array of cookies', 'error');
                 return;
             }
+
+            // Security: limit number of cookies to prevent abuse (MD 18)
+            if (cookies.length > 500) {
+                showToast('Too many cookies in import file (max 500)', 'error');
+                return;
+            }
+
             let imported = 0;
             let failed = 0;
             for (const cookie of cookies) {
                 try {
+                    // Security: validate each cookie object has required string fields
+                    if (!cookie || typeof cookie !== 'object' ||
+                        typeof cookie.name !== 'string' || !cookie.name.trim() ||
+                        typeof cookie.domain !== 'string' || !cookie.domain.trim()) {
+                        failed++;
+                        continue;
+                    }
+
                     const details = {
                         url: (cookie.secure ? 'https://' : 'http://') + (cookie.domain || '').replace(/^\./, '') + (cookie.path || '/'),
                         name: cookie.name,
-                        value: cookie.value || '',
+                        value: typeof cookie.value === 'string' ? cookie.value : '',
                         path: cookie.path || '/',
                         secure: !!cookie.secure,
                         httpOnly: !!cookie.httpOnly,
                         sameSite: cookie.sameSite || 'lax'
                     };
-                    if (cookie.expirationDate) {
+                    if (typeof cookie.expirationDate === 'number') {
                         details.expirationDate = cookie.expirationDate;
                     }
                     await chrome.runtime.sendMessage({ action: 'SET_COOKIE', payload: details });
@@ -911,8 +882,8 @@ function showConfirm(title, message, onConfirm) {
     elements.confirmModal.hidden = false;
 
     // Focus trap for confirm modal (MD 21)
-    if (typeof A11yManager !== 'undefined' && A11yManager.createTrap) {
-        _confirmFocusTrap = A11yManager.createTrap(elements.confirmModal);
+    if (typeof A11yManager !== 'undefined' && A11yManager.FocusTrap.createTrap) {
+        _confirmFocusTrap = A11yManager.FocusTrap.createTrap(elements.confirmModal);
         _confirmFocusTrap.activate();
     }
 }
@@ -963,8 +934,8 @@ function showToast(message, type = 'success') {
     elements.toast.hidden = false;
 
     // Announce to screen readers (MD 21)
-    if (typeof A11yManager !== 'undefined' && A11yManager.announce) {
-        A11yManager.announce(message);
+    if (typeof A11yManager !== 'undefined' && A11yManager.LiveRegion.announce) {
+        A11yManager.LiveRegion.announce(message);
     }
 
     toastTimeout = setTimeout(() => {
@@ -1172,13 +1143,13 @@ function setupEventListeners() {
     }
 
     // Keyboard shortcuts (MD 21)
-    if (typeof A11yManager !== 'undefined' && A11yManager.registerShortcut) {
-        A11yManager.registerShortcut('/', function() {
+    if (typeof A11yManager !== 'undefined' && A11yManager.KeyboardShortcuts.registerShortcut) {
+        A11yManager.KeyboardShortcuts.registerShortcut('/', function() {
             var searchInput = document.getElementById('searchInput');
             if (searchInput) { searchInput.focus(); }
         }, 'Focus search');
 
-        A11yManager.registerShortcut('escape', function() {
+        A11yManager.KeyboardShortcuts.registerShortcut('escape', function() {
             var modal = document.getElementById('editorModal');
             if (modal && !modal.hidden) {
                 // close the modal - call existing close function
@@ -1186,7 +1157,7 @@ function setupEventListeners() {
             }
         }, 'Close modal');
 
-        A11yManager.registerShortcut('mod+shift+a', function() {
+        A11yManager.KeyboardShortcuts.registerShortcut('mod+shift+a', function() {
             var addBtn = document.getElementById('addCookieBtn');
             if (addBtn) { addBtn.click(); }
         }, 'Add cookie');
@@ -1287,7 +1258,7 @@ function showGrowthBanner(message, actionLabel, onAction, onDismiss) {
 function initRetention() {
     try {
         // Record popup session open
-        chrome.runtime.sendMessage({ action: 'RECORD_USAGE', usageAction: 'session_open' }).catch(function() {});
+        chrome.runtime.sendMessage({ action: 'RECORD_USAGE', payload: { usageAction: 'session_open' } }).catch(function() {});
 
         // Check for retention trigger
         chrome.runtime.sendMessage({ action: 'GET_RETENTION_TRIGGER' }).then(function(trigger) {
@@ -1335,14 +1306,14 @@ function showRetentionBanner(trigger) {
     if (dismissBtn) {
         dismissBtn.addEventListener('click', function() {
             banner.remove();
-            chrome.runtime.sendMessage({ action: 'DISMISS_TRIGGER', triggerId: trigger.type }).catch(function() {});
+            chrome.runtime.sendMessage({ action: 'DISMISS_TRIGGER', payload: { triggerId: trigger.type } }).catch(function() {});
         });
     }
 }
 
 function recordRetentionUsage(usageAction) {
     try {
-        chrome.runtime.sendMessage({ action: 'RECORD_USAGE', usageAction: usageAction }).catch(function() {});
+        chrome.runtime.sendMessage({ action: 'RECORD_USAGE', payload: { usageAction: usageAction } }).catch(function() {});
     } catch (e) {
         // Silently ignore retention tracking errors
     }

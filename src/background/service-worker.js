@@ -562,7 +562,7 @@ async function handleMessage(message) {
             case 'RECORD_USAGE': {
                 if (typeof ChurnDetector !== 'undefined') {
                     try {
-                        await ChurnDetector.recordUsage(message.usageAction);
+                        await ChurnDetector.recordUsage(payload?.usageAction);
                         return { success: true };
                     } catch (e) {
                         return { error: e.message };
@@ -574,7 +574,7 @@ async function handleMessage(message) {
             case 'DISMISS_TRIGGER': {
                 if (typeof RetentionTriggers !== 'undefined') {
                     try {
-                        await RetentionTriggers.dismissTrigger(message.triggerId);
+                        await RetentionTriggers.dismissTrigger(payload?.triggerId);
                         return { success: true };
                     } catch (e) {
                         return { error: e.message };
@@ -746,8 +746,8 @@ async function handleMessage(message) {
             case 'SET_FEATURE_FLAG': {
                 if (typeof VersionManager !== 'undefined') {
                     try {
-                        var flagName = message.flagName;
-                        var enabled = message.enabled;
+                        var flagName = payload?.flagName;
+                        var enabled = payload?.enabled;
                         return VersionManager.setOverride(flagName, enabled);
                     } catch (e) { return { error: e.message }; }
                 }
@@ -1025,10 +1025,20 @@ async function handleMessage(message) {
                         ? Math.min(rawInterval, 10080)
                         : 60;
 
+                    // Security: sanitize rule pattern - only allow alphanumeric, *, -, _, .
+                    // to prevent regex injection when pattern is used in auto-delete matching (MD 18)
+                    var rawPattern = sanitizeInput(payload?.pattern, 256) || '*';
+                    var safePattern = rawPattern.replace(/[^a-zA-Z0-9*\-_.]/g, '');
+                    if (!safePattern) safePattern = '*';
+
+                    // Security: sanitize rule ID to prevent injection (MD 18)
+                    var ruleId = payload?.id ? sanitizeInput(payload.id, 64).replace(/[^a-zA-Z0-9_\-]/g, '') : '';
+                    if (!ruleId) ruleId = `rule_${Date.now()}`;
+
                     const rule = {
-                        id: payload?.id || `rule_${Date.now()}`,
+                        id: ruleId,
                         domain: domain,
-                        pattern: sanitizeInput(payload?.pattern, 256) || '*',
+                        pattern: safePattern,
                         intervalMinutes: intervalMinutes,
                         enabled: payload?.enabled !== false,
                         createdAt: Date.now()
@@ -1174,7 +1184,7 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
 
         case 'export-site-cookies': {
             try {
-                const cookies = await CookieOps.getForDomain(domain);
+                const cookies = await chrome.cookies.getAll({ domain });
                 const json = JSON.stringify(cookies, null, 2);
                 // Copy to clipboard via offscreen or notification
                 chrome.notifications.create({
@@ -1382,9 +1392,10 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 
                     for (const cookie of cookies) {
                         // Match by pattern (* = all, otherwise match cookie name)
+                        // Security: escape regex special chars to prevent ReDoS / regex injection (MD 18)
                         const matches = rule.pattern === '*' ||
                             cookie.name === rule.pattern ||
-                            (rule.pattern.includes('*') && new RegExp('^' + rule.pattern.replace(/\*/g, '.*') + '$').test(cookie.name));
+                            (rule.pattern.includes('*') && new RegExp('^' + rule.pattern.replace(/[.+?^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*') + '$').test(cookie.name));
 
                         if (matches) {
                             const cookieDomain = cookie.domain.startsWith('.')

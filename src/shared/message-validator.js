@@ -87,7 +87,9 @@
         GET_AUTO_DELETE_RULES:    { p: null },
         SAVE_AUTO_DELETE_RULE:    { p: { domain: { t: S, r: R }, id: { t: S, r: OPT }, pattern: { t: S, r: OPT },
                                          intervalMinutes: { t: N, r: OPT }, enabled: { t: B, r: OPT } } },
-        DELETE_AUTO_DELETE_RULE:  { p: { id: { t: S, r: R } } }
+        DELETE_AUTO_DELETE_RULE:  { p: { id: { t: S, r: R } } },
+        // Misc
+        OPEN_FEEDBACK:           { p: null }
     };
 
     // Build allowed-actions lookup from schema keys

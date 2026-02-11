@@ -70,7 +70,9 @@
         // Auto-Delete Rules
         GET_AUTO_DELETE_RULES: 'GET_AUTO_DELETE_RULES',
         SAVE_AUTO_DELETE_RULE: 'SAVE_AUTO_DELETE_RULE',
-        DELETE_AUTO_DELETE_RULE: 'DELETE_AUTO_DELETE_RULE'
+        DELETE_AUTO_DELETE_RULE: 'DELETE_AUTO_DELETE_RULE',
+        // Help & Navigation
+        OPEN_FEEDBACK: 'OPEN_FEEDBACK'
     };
 
     var _knownActions = Object.create(null);

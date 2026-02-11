@@ -71,3 +71,16 @@
 - Only triggered by explicit user action (context menu click)
 
 **Data handling:** No user data is included in notifications. Only generic confirmation messages are displayed.
+
+---
+
+## alarms
+
+**Why needed:** Required for scheduled background tasks including auto-delete cookie rules and periodic maintenance.
+
+**How used:**
+- `chrome.alarms.create()` sets up periodic timers for auto-delete rules configured by the user
+- `chrome.alarms.onAlarm` listener executes cookie cleanup when timers fire
+- A daily churn-prevention check runs to assess user engagement
+
+**Data handling:** Alarms only trigger internal maintenance functions. No user data is transmitted or collected.
