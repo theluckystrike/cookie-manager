@@ -42,6 +42,8 @@
     "scripts": [
       "src/shared/feedback-collector.js",
       "src/shared/support-diagnostics.js",
+      "src/shared/perf-timer.js",
+      "src/shared/storage-optimizer.js",
       "src/background/service-worker.js"
     ]
   },

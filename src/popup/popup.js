@@ -711,9 +711,13 @@ async function copyToClipboard(text) {
 // ============================================================================
 
 function setupEventListeners() {
-    // Search
-    elements.searchInput.addEventListener('input', () => {
-        renderCookies(currentCookies);
+    // Search (debounced for performance - MD 20)
+    var _searchDebounceTimer = null;
+    elements.searchInput.addEventListener('input', function() {
+        if (_searchDebounceTimer) { clearTimeout(_searchDebounceTimer); }
+        _searchDebounceTimer = setTimeout(function() {
+            renderCookies(currentCookies);
+        }, 150);
     });
 
     // Refresh

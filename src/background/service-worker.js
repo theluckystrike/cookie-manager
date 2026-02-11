@@ -7,6 +7,10 @@
 try { importScripts('../shared/feedback-collector.js'); } catch(e) { console.warn('feedback-collector.js not loaded:', e.message); }
 try { importScripts('../shared/support-diagnostics.js'); } catch(e) { console.warn('support-diagnostics.js not loaded:', e.message); }
 
+// Import shared modules (MD 20)
+try { importScripts('../shared/perf-timer.js'); } catch(e) { console.warn('perf-timer.js not loaded:', e.message); }
+try { importScripts('../shared/storage-optimizer.js'); } catch(e) { console.warn('storage-optimizer.js not loaded:', e.message); }
+
 // ============================================================================
 // Error Tracking & Monitoring (MD 11 - Crash Analytics)
 // ============================================================================
@@ -133,6 +137,16 @@ if (typeof SwLifecycle !== 'undefined') {
             }
         } catch (e) {
             debugLog('warn', 'Maintenance', 'Error trimming analytics', e.message);
+        }
+
+        // Storage auto-compact (MD 20)
+        if (typeof StorageOptimizer !== 'undefined') {
+            try {
+                await StorageOptimizer.autoCompact();
+                debugLog('info', 'Maintenance', 'Storage auto-compact complete');
+            } catch (e) {
+                debugLog('warn', 'Maintenance', 'Storage auto-compact failed', e.message);
+            }
         }
     });
 
@@ -602,6 +616,65 @@ async function handleMessage(message) {
                 return { error: 'SupportDiagnostics not available' };
             }
 
+            // ==============================================================
+            // Performance Monitoring (MD 20)
+            // ==============================================================
+
+            case 'GET_PERF_SUMMARY': {
+                if (typeof PerfTimer !== 'undefined') {
+                    try {
+                        return PerfTimer.getSummary();
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'PerfTimer not available' };
+            }
+
+            case 'CHECK_PERF_BUDGETS': {
+                if (typeof PerfTimer !== 'undefined') {
+                    try {
+                        return PerfTimer.checkBudgets();
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'PerfTimer not available' };
+            }
+
+            case 'GET_STORAGE_USAGE': {
+                if (typeof StorageOptimizer !== 'undefined') {
+                    try {
+                        return await StorageOptimizer.getUsage();
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'StorageOptimizer not available' };
+            }
+
+            case 'RUN_STORAGE_CLEANUP': {
+                if (typeof StorageOptimizer !== 'undefined') {
+                    try {
+                        return await StorageOptimizer.autoCompact();
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'StorageOptimizer not available' };
+            }
+
+            case 'ANALYZE_STORAGE_KEYS': {
+                if (typeof StorageOptimizer !== 'undefined') {
+                    try {
+                        return await StorageOptimizer.analyzeKeys();
+                    } catch (e) {
+                        return { error: e.message };
+                    }
+                }
+                return { error: 'StorageOptimizer not available' };
+            }
+
             default:
                 return { error: 'Unknown action' };
         }
@@ -830,6 +903,8 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 debugLog('info', 'Retention', 'Churn prevention & retention initialized (MD 17)');
 
 debugLog('info', 'Support', 'Customer support & feedback initialized (MD 19)');
+
+debugLog('info', 'Performance', 'Performance optimization initialized (MD 20)');
 
 // Initial setup
 setupContextMenu();
