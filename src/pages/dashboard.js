@@ -278,9 +278,9 @@
 
                 if (!hasActivity) return;
 
-                // Clear previous content
-                barsContainer.innerHTML = '';
-                labelsContainer.innerHTML = '';
+                // Clear previous content (use textContent for safety)
+                barsContainer.textContent = '';
+                labelsContainer.textContent = '';
 
                 // Build bars
                 for (var b = 0; b < counts.length; b++) {
@@ -488,7 +488,7 @@
         // List pro features
         var listEl = $('ctaFeaturesList');
         if (listEl && proFeatures.length > 0) {
-            listEl.innerHTML = '';
+            listEl.textContent = '';
             for (var i = 0; i < proFeatures.length; i++) {
                 var li = document.createElement('li');
                 li.className = 'cta-feature-item';

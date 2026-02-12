@@ -1,79 +1,261 @@
 {
-    "extName": {
-        "message": "Cookie Manager",
-        "description": "Extension name shown in Chrome Web Store and browser toolbar. Max 45 chars."
+    "a11yCloseDialog": {
+        "message": "Cerrar diálogo",
+        "description": "Aria-label for modal close buttons."
     },
-    "extDescription": {
-        "message": "Ver, editar, crear y eliminar cookies. Exportar/importar perfiles, reglas de eliminación automática y decodificar JWT.",
-        "description": "Extension description for Chrome Web Store listing. Max 132 chars."
+    "a11yCloseUpgradeDialog": {
+        "message": "Cerrar diálogo de actualización",
+        "description": "Aria-label for the close button on the paywall modal."
     },
-    "extActionTitle": {
-        "message": "Cookie Manager",
-        "description": "Tooltip shown when hovering over the extension icon in the browser toolbar."
+    "a11yCookiesFound": {
+        "message": "No se encontraron cookies",
+        "description": "Empty state title when no cookies exist for the current domain."
     },
-
+    "a11yCopyHeader": {
+        "message": "Copiar encabezado",
+        "description": "Aria-label for the copy button in the JWT header section."
+    },
+    "a11yCopyPayload": {
+        "message": "Copiar contenido",
+        "description": "Aria-label for the copy button in the JWT payload section."
+    },
+    "a11yDeleteProfile": {
+        "message": "Eliminar perfil $NAME$",
+        "description": "Aria-label for the delete button on a profile card.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "a11yDeleteRule": {
+        "message": "Eliminar regla para $DOMAIN$",
+        "description": "Aria-label for the delete button on a rule card.",
+        "placeholders": {
+            "DOMAIN": {
+                "content": "$1",
+                "example": "*.google.com"
+            }
+        }
+    },
+    "a11yDismiss": {
+        "message": "Descartar",
+        "description": "Aria-label for the dismiss button on retention/growth banners."
+    },
+    "a11yEditCookie": {
+        "message": "Editar cookie $NAME$",
+        "description": "Aria-label for cookie list items, announces the cookie name for screen readers.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "session_id"
+            }
+        }
+    },
+    "a11yEditRule": {
+        "message": "Editar regla para $DOMAIN$",
+        "description": "Aria-label for the edit button on a rule card.",
+        "placeholders": {
+            "DOMAIN": {
+                "content": "$1",
+                "example": "*.google.com"
+            }
+        }
+    },
+    "a11yIncluded": {
+        "message": "Incluido",
+        "description": "Aria-label for checkmark icons in the paywall feature comparison table."
+    },
+    "a11yLicenseKey": {
+        "message": "Clave de licencia",
+        "description": "Aria-label for the license key input in the paywall."
+    },
+    "a11yLoadProfile": {
+        "message": "Cargar perfil $NAME$, $COUNT$ cookies",
+        "description": "Aria-label for profile cards, announces profile name and cookie count.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            },
+            "COUNT": {
+                "content": "$2",
+                "example": "12"
+            }
+        }
+    },
+    "a11yLoadProfileBtn": {
+        "message": "Cargar perfil $NAME$",
+        "description": "Aria-label for the load button on a profile card.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "a11yMainNavigation": {
+        "message": "Navegación principal",
+        "description": "Aria-label for the tab bar navigation element."
+    },
+    "a11yNotIncluded": {
+        "message": "No incluido",
+        "description": "Aria-label for dash/cross icons in the paywall feature comparison table."
+    },
+    "a11ySearchCookies": {
+        "message": "Buscar cookies",
+        "description": "Aria-label for the search input field."
+    },
+    "a11yTabSelected": {
+        "message": "Pestaña $TAB$ seleccionada",
+        "description": "Screen reader announcement when switching tabs.",
+        "placeholders": {
+            "TAB": {
+                "content": "$1",
+                "example": "Cookies"
+            }
+        }
+    },
+    "a11yToggleRule": {
+        "message": "$ACTION$ regla para $DOMAIN$",
+        "description": "Aria-label for the enable/disable toggle on a rule card.",
+        "placeholders": {
+            "ACTION": {
+                "content": "$1",
+                "example": "Disable"
+            },
+            "DOMAIN": {
+                "content": "$2",
+                "example": "*.google.com"
+            }
+        }
+    },
+    "ariaCloseDialog": {
+        "message": "Cerrar diálogo",
+        "description": "Aria-label for modal close buttons."
+    },
+    "ariaCopyHeader": {
+        "message": "Copiar encabezado",
+        "description": "Aria-label for the copy button in the JWT header section."
+    },
+    "ariaCopyPayload": {
+        "message": "Copiar contenido",
+        "description": "Aria-label for the copy button in the JWT payload section."
+    },
+    "ariaDashboardFeatureBreakdown": {
+        "message": "Feature usage breakdown"
+    },
+    "ariaDashboardUpgrade": {
+        "message": "Upgrade to Pro"
+    },
+    "ariaDashboardValueStatement": {
+        "message": "Value statement"
+    },
+    "ariaDashboardValueSummary": {
+        "message": "Value summary"
+    },
+    "ariaDashboardWeeklyActivity": {
+        "message": "Weekly activity"
+    },
+    "ariaDismissBanner": {
+        "message": "Descartar",
+        "description": "Aria-label for the dismiss button on retention/growth banners."
+    },
+    "ariaFiveStars": {
+        "message": "5 out of 5 stars"
+    },
+    "ariaLicenseKey": {
+        "message": "Clave de licencia",
+        "description": "Aria-label for the license key input in the paywall."
+    },
+    "ariaMainNav": {
+        "message": "Navegación principal",
+        "description": "Aria-label for the tab bar navigation element."
+    },
+    "ariaReadOnly": {
+        "message": "Read-only mode"
+    },
+    "ariaRefreshCookies": {
+        "message": "Actualizar cookies",
+        "description": "Tooltip and aria-label for the refresh button in the popup header."
+    },
+    "ariaSearchCookies": {
+        "message": "Buscar cookies",
+        "description": "Aria-label for the search input field."
+    },
+    "badgeFree": {
+        "message": "Gratis",
+        "description": "Subscription badge text for free-tier users."
+    },
+    "badgeLifetime": {
+        "message": "Vitalicio",
+        "description": "Subscription badge text for users with a lifetime license."
+    },
+    "badgeManageSub": {
+        "message": "Gestionar suscripción",
+        "description": "Footer link shown to paid users to manage their subscription."
+    },
+    "badgePro": {
+        "message": "Pro",
+        "description": "Subscription badge text for Pro subscribers."
+    },
+    "badgeTrial": {
+        "message": "Prueba",
+        "description": "Subscription badge text for users on a free trial."
+    },
+    "badgeUpgrade": {
+        "message": "Actualizar ahora",
+        "description": "Link text in the trial banner prompting user to upgrade before trial ends."
+    },
     "brandTitle": {
         "message": "Cookie Manager",
         "description": "Brand title shown in the popup header next to the Zovo logo."
     },
-
-    "ttlCookies": {
-        "message": "Cookies",
-        "description": "Tab label for the Cookies tab in the popup navigation bar."
+    "btnAdd": {
+        "message": "Agregar",
+        "description": "Button label to add/create a new cookie. Shown in the action bar."
     },
-    "ttlProfiles": {
-        "message": "Perfiles",
-        "description": "Tab label for the Profiles tab in the popup navigation bar."
+    "btnAddRule": {
+        "message": "Agregar regla",
+        "description": "Button label on the Rules tab to create a new auto-delete rule."
     },
-    "ttlRules": {
-        "message": "Reglas",
-        "description": "Tab label for the Rules tab in the popup navigation bar."
+    "btnCancel": {
+        "message": "Cancelar",
+        "description": "Button label to cancel and close a dialog or form."
     },
-    "ttlHealth": {
-        "message": "Salud",
-        "description": "Tab label for the Health tab in the popup navigation bar."
+    "btnCleanTrackers": {
+        "message": "Limpiar rastreadores",
+        "description": "Button on the Health tab to delete all detected tracking cookies."
     },
-    "ttlEditCookie": {
-        "message": "Editar cookie",
-        "description": "Modal title when editing an existing cookie."
+    "btnClear": {
+        "message": "Limpiar",
+        "description": "Button label to clear all cookies for the current domain. Shown in the action bar."
     },
-    "ttlAddCookie": {
-        "message": "Agregar cookie",
-        "description": "Modal title when creating a new cookie."
+    "btnClose": {
+        "message": "Cerrar",
+        "description": "Tooltip and aria-label for close buttons on modals."
     },
-    "ttlJwtToken": {
-        "message": "Token JWT",
-        "description": "Modal title for the JWT decoder viewer."
-    },
-    "ttlConfirm": {
+    "btnConfirm": {
         "message": "Confirmar",
-        "description": "Default title for confirmation dialogs."
+        "description": "Button label to confirm a destructive action in the confirm dialog."
     },
-    "ttlSaveCookieProfile": {
-        "message": "Guardar perfil de cookies",
-        "description": "Dialog title when saving current cookies as a profile."
+    "btnCopy": {
+        "message": "Copiar",
+        "description": "Tooltip and aria-label for copy-to-clipboard buttons in the JWT viewer."
     },
-    "ttlAddRule": {
-        "message": "Agregar regla de eliminación automática",
-        "description": "Form title when creating a new auto-delete rule."
+    "btnDecodeJwt": {
+        "message": "Decodificar",
+        "description": "Link button shown next to a JWT-detected cookie value to open the JWT decoder."
     },
-    "ttlEditRule": {
-        "message": "Editar regla",
-        "description": "Form title when editing an existing auto-delete rule."
+    "btnDelete": {
+        "message": "Eliminar",
+        "description": "Button label to delete a cookie. Shown in the editor modal footer."
     },
-    "ttlCookieHealth": {
-        "message": "Salud de cookies",
-        "description": "Label shown inside the health score circle on the Health tab."
+    "btnEdit": {
+        "message": "Editar",
+        "description": "Button label on a rule card to edit the auto-delete rule."
     },
-    "ttlTrackingCookiesDetected": {
-        "message": "Cookies de rastreo detectadas",
-        "description": "Section heading on the Health tab when trackers are found."
-    },
-    "ttlRecommendations": {
-        "message": "Recomendaciones",
-        "description": "Section heading for health recommendations on the Health tab."
-    },
-
     "btnExport": {
         "message": "Exportar",
         "description": "Button label to export cookies as JSON file. Shown in the action bar."
@@ -82,13 +264,21 @@
         "message": "Importar",
         "description": "Button label to import cookies from a JSON file. Shown in the action bar."
     },
-    "btnAdd": {
-        "message": "Agregar",
-        "description": "Button label to add/create a new cookie. Shown in the action bar."
+    "btnLater": {
+        "message": "Más tarde",
+        "description": "Dismiss button label for growth banners and retention prompts."
     },
-    "btnClear": {
-        "message": "Limpiar",
-        "description": "Button label to clear all cookies for the current domain. Shown in the action bar."
+    "btnLeaveReview": {
+        "message": "Dejar reseña",
+        "description": "Button label in the growth banner prompting user to leave a Chrome Web Store review."
+    },
+    "btnLoad": {
+        "message": "Cargar",
+        "description": "Button label on a profile card to restore cookies from that profile."
+    },
+    "btnRefresh": {
+        "message": "Actualizar cookies",
+        "description": "Tooltip and aria-label for the refresh button in the popup header."
     },
     "btnSave": {
         "message": "Guardar",
@@ -98,147 +288,1644 @@
         "message": "Guardar cookie",
         "description": "Button label in the cookie editor modal footer to save the cookie."
     },
-    "btnSaveRule": {
-        "message": "Guardar regla",
-        "description": "Button label in the rule form to save the auto-delete rule."
-    },
-    "btnDelete": {
-        "message": "Eliminar",
-        "description": "Button label to delete a cookie. Shown in the editor modal footer."
-    },
-    "btnCancel": {
-        "message": "Cancelar",
-        "description": "Button label to cancel and close a dialog or form."
-    },
-    "btnConfirm": {
-        "message": "Confirmar",
-        "description": "Button label to confirm a destructive action in the confirm dialog."
-    },
-    "btnClose": {
-        "message": "Cerrar",
-        "description": "Tooltip and aria-label for close buttons on modals."
-    },
-    "btnRefresh": {
-        "message": "Actualizar cookies",
-        "description": "Tooltip and aria-label for the refresh button in the popup header."
-    },
     "btnSaveCurrentCookies": {
         "message": "Guardar cookies actuales",
         "description": "Button label on the Profiles tab to save the current domain cookies as a profile."
     },
-    "btnAddRule": {
-        "message": "Agregar regla",
-        "description": "Button label on the Rules tab to create a new auto-delete rule."
-    },
-    "btnLoad": {
-        "message": "Cargar",
-        "description": "Button label on a profile card to restore cookies from that profile."
-    },
-    "btnEdit": {
-        "message": "Editar",
-        "description": "Button label on a rule card to edit the auto-delete rule."
-    },
-    "btnCleanTrackers": {
-        "message": "Limpiar rastreadores",
-        "description": "Button on the Health tab to delete all detected tracking cookies."
-    },
-    "btnDecodeJwt": {
-        "message": "Decodificar",
-        "description": "Link button shown next to a JWT-detected cookie value to open the JWT decoder."
-    },
-    "btnCopy": {
-        "message": "Copiar",
-        "description": "Tooltip and aria-label for copy-to-clipboard buttons in the JWT viewer."
-    },
-    "btnLeaveReview": {
-        "message": "Dejar reseña",
-        "description": "Button label in the growth banner prompting user to leave a Chrome Web Store review."
+    "btnSaveRule": {
+        "message": "Guardar regla",
+        "description": "Button label in the rule form to save the auto-delete rule."
     },
     "btnShare": {
         "message": "Compartir",
         "description": "Button label in the growth banner prompting user to share the extension."
     },
-    "btnLater": {
-        "message": "Más tarde",
-        "description": "Dismiss button label for growth banners and retention prompts."
-    },
     "btnUpgradeNow": {
         "message": "Actualizar ahora",
         "description": "Link text in the trial banner prompting user to upgrade before trial ends."
     },
-
-    "lblName": {
-        "message": "Nombre",
-        "description": "Form label for the cookie name field in the editor modal."
+    "buttonAdd": {
+        "message": "Agregar",
+        "description": "Button label to add/create a new cookie. Shown in the action bar."
     },
-    "lblValue": {
-        "message": "Valor",
-        "description": "Form label for the cookie value field in the editor modal."
+    "buttonAddRule": {
+        "message": "Agregar regla de eliminación automática",
+        "description": "Form title when creating a new auto-delete rule."
     },
-    "lblDomain": {
-        "message": "Dominio",
-        "description": "Form label for the cookie domain field in the editor modal."
+    "buttonCancel": {
+        "message": "Cancelar",
+        "description": "Button label to cancel and close a dialog or form."
     },
-    "lblPath": {
-        "message": "Ruta",
-        "description": "Form label for the cookie path field in the editor modal."
+    "buttonCleanTrackers": {
+        "message": "Limpiar rastreadores",
+        "description": "Button on the Health tab to delete all detected tracking cookies."
     },
-    "lblExpiration": {
-        "message": "Expiración",
-        "description": "Form label for the cookie expiration date field in the editor modal."
+    "buttonClear": {
+        "message": "Limpiar",
+        "description": "Button label to clear all cookies for the current domain. Shown in the action bar."
     },
-    "lblSecure": {
-        "message": "Secure",
-        "description": "Checkbox label for the Secure flag in the cookie editor."
+    "buttonConfirm": {
+        "message": "Confirmar",
+        "description": "Button label to confirm a destructive action in the confirm dialog."
     },
-    "lblHttpOnly": {
+    "buttonDelete": {
+        "message": "Eliminar",
+        "description": "Button label to delete a cookie. Shown in the editor modal footer."
+    },
+    "buttonEdit": {
+        "message": "Editar",
+        "description": "Button label on a rule card to edit the auto-delete rule."
+    },
+    "buttonExport": {
+        "message": "Exportar",
+        "description": "Button label to export cookies as JSON file. Shown in the action bar."
+    },
+    "buttonImport": {
+        "message": "Importar",
+        "description": "Button label to import cookies from a JSON file. Shown in the action bar."
+    },
+    "buttonLater": {
+        "message": "Más tarde",
+        "description": "Dismiss button label for growth banners and retention prompts."
+    },
+    "buttonLoad": {
+        "message": "Cargar",
+        "description": "Button label on a profile card to restore cookies from that profile."
+    },
+    "buttonSave": {
+        "message": "Guardar perfil de cookies",
+        "description": "Dialog title when saving current cookies as a profile."
+    },
+    "buttonSaveCookie": {
+        "message": "Guardar cookie",
+        "description": "Button label in the cookie editor modal footer to save the cookie."
+    },
+    "buttonSaveCurrentCookies": {
+        "message": "Guardar",
+        "description": "Generic save button label used in dialogs."
+    },
+    "buttonSaveRule": {
+        "message": "Guardar regla",
+        "description": "Button label in the rule form to save the auto-delete rule."
+    },
+    "confirmClearAllMsg": {
+        "message": "Esto eliminará todas las $COUNT$ cookies de este dominio.",
+        "description": "Confirm dialog message when clearing all cookies.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "15"
+            }
+        }
+    },
+    "confirmClearAllTitle": {
+        "message": "¿Limpiar todas las cookies?",
+        "description": "Confirm dialog title when clearing all cookies for a domain."
+    },
+    "confirmDeleteCookieMsg": {
+        "message": "¿Estás seguro de que quieres eliminar \"$NAME$\"?",
+        "description": "Confirm dialog message when deleting a single cookie.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "session_id"
+            }
+        }
+    },
+    "confirmDeleteCookieTitle": {
+        "message": "¿Eliminar cookie?",
+        "description": "Confirm dialog title when deleting a single cookie."
+    },
+    "confirmDeleteProfileMsg": {
+        "message": "¿Estás seguro de que quieres eliminar \"$NAME$\"? Esto no se puede deshacer.",
+        "description": "Confirm dialog message when deleting a profile.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "confirmDeleteProfileTitle": {
+        "message": "Eliminar perfil",
+        "description": "Tooltip for the delete icon button on a profile card."
+    },
+    "confirmDeleteRuleMsg": {
+        "message": "¿Eliminar la regla de eliminación automática para \"$DOMAIN$\"?",
+        "description": "Confirm dialog message when deleting a rule.",
+        "placeholders": {
+            "DOMAIN": {
+                "content": "$1",
+                "example": "*.google.com"
+            }
+        }
+    },
+    "confirmDeleteRuleTitle": {
+        "message": "¿Eliminar regla?",
+        "description": "Confirm dialog title when deleting an auto-delete rule."
+    },
+    "confirmLoadProfileMsg": {
+        "message": "Esto restaurará todas las cookies de \"$NAME$\" en el dominio actual. Las cookies existentes no se eliminarán primero.",
+        "description": "Confirm dialog message when loading a profile.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "confirmLoadProfileTitle": {
+        "message": "¿Cargar perfil?",
+        "description": "Confirm dialog title when loading/restoring a cookie profile."
+    },
+    "confirmOverwriteProfileMsg": {
+        "message": "Ya existe un perfil llamado \"$NAME$\". ¿Sobrescribirlo?",
+        "description": "Confirm dialog message when overwriting an existing profile.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "confirmOverwriteProfileTitle": {
+        "message": "¿Sobrescribir perfil?",
+        "description": "Confirm dialog title when saving a profile with a name that already exists."
+    },
+    "ctxClearCookies": {
+        "message": "Limpiar cookies de este sitio",
+        "description": "Context menu item to clear all cookies for the current site."
+    },
+    "ctxClearSiteCookies": {
+        "message": "Limpiar cookies de este sitio",
+        "description": "Context menu item to clear all cookies for the current site."
+    },
+    "ctxCookieManagerSettings": {
+        "message": "Configuración de Cookie Manager",
+        "description": "Context menu item to open the Cookie Manager settings/options page."
+    },
+    "ctxExportCookies": {
+        "message": "Exportar cookies de este sitio",
+        "description": "Context menu item to export cookies for the current site."
+    },
+    "ctxExportSiteCookies": {
+        "message": "Exportar cookies de este sitio",
+        "description": "Context menu item to export cookies for the current site."
+    },
+    "ctxOpenCookieManager": {
+        "message": "Abrir Cookie Manager",
+        "description": "Context menu item to open the Cookie Manager popup."
+    },
+    "ctxSettings": {
+        "message": "Configuración de Cookie Manager",
+        "description": "Context menu item to open the Cookie Manager settings/options page."
+    },
+    "dashboardActionsToday": {
+        "message": "Actions Today"
+    },
+    "dashboardBreakdownEmpty": {
+        "message": "No feature usage data yet. Use Cookie Manager features to see your breakdown."
+    },
+    "dashboardChartEmpty": {
+        "message": "No activity recorded yet. Start managing cookies to see your weekly chart."
+    },
+    "dashboardCtaDesc": {
+        "message": "You are using"
+    },
+    "dashboardCtaTitle": {
+        "message": "Unlock More with Cookie Manager Pro"
+    },
+    "dashboardExportStats": {
+        "message": "Export Stats"
+    },
+    "dashboardFeatureBreakdown": {
+        "message": "Feature Usage Breakdown"
+    },
+    "dashboardFeatureDesc": {
+        "message": "How you use Cookie Manager"
+    },
+    "dashboardFeaturesUsed": {
+        "message": "Features Used"
+    },
+    "dashboardFooterBrand": {
+        "message": "Cookie Manager by"
+    },
+    "dashboardMemberSince": {
+        "message": "Member since --"
+    },
+    "dashboardPageTitle": {
+        "message": "Cookie Manager - Value Dashboard"
+    },
+    "dashboardResetStats": {
+        "message": "Reset Stats"
+    },
+    "dashboardSubtitle": {
+        "message": "Value Dashboard"
+    },
+    "dashboardTimeSaved": {
+        "message": "Time Saved This Week"
+    },
+    "dashboardTotalManaged": {
+        "message": "Total Cookies Managed"
+    },
+    "dashboardUpgradeBtn": {
+        "message": "Upgrade to Pro"
+    },
+    "dashboardValueStatement": {
+        "message": "Start using Cookie Manager to see your personalized value summary."
+    },
+    "dashboardWeeklyActivity": {
+        "message": "Weekly Activity"
+    },
+    "dashboardWeeklyDesc": {
+        "message": "Cookies managed over the last 7 days"
+    },
+    "dlgCleanTrackers": {
+        "message": "¿Limpiar cookies de rastreo?",
+        "description": "Confirm dialog title when cleaning tracking cookies on the Health tab."
+    },
+    "dlgCleanTrackersMsg": {
+        "message": "¿Eliminar $COUNT$ cookies de rastreo? Esto no se puede deshacer.",
+        "description": "Confirm dialog message when cleaning trackers.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "dlgClearAllCookies": {
+        "message": "¿Limpiar todas las cookies?",
+        "description": "Confirm dialog title when clearing all cookies for a domain."
+    },
+    "dlgClearAllCookiesMsg": {
+        "message": "Esto eliminará todas las $COUNT$ cookies de este dominio.",
+        "description": "Confirm dialog message when clearing all cookies.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "15"
+            }
+        }
+    },
+    "dlgDeleteCookie": {
+        "message": "¿Eliminar cookie?",
+        "description": "Confirm dialog title when deleting a single cookie."
+    },
+    "dlgDeleteCookieMsg": {
+        "message": "¿Estás seguro de que quieres eliminar \"$NAME$\"?",
+        "description": "Confirm dialog message when deleting a single cookie.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "session_id"
+            }
+        }
+    },
+    "dlgDeleteProfile": {
+        "message": "¿Eliminar perfil?",
+        "description": "Confirm dialog title when deleting a saved cookie profile."
+    },
+    "dlgDeleteProfileMsg": {
+        "message": "¿Estás seguro de que quieres eliminar \"$NAME$\"? Esto no se puede deshacer.",
+        "description": "Confirm dialog message when deleting a profile.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "dlgDeleteRule": {
+        "message": "¿Eliminar regla?",
+        "description": "Confirm dialog title when deleting an auto-delete rule."
+    },
+    "dlgDeleteRuleMsg": {
+        "message": "¿Eliminar la regla de eliminación automática para \"$DOMAIN$\"?",
+        "description": "Confirm dialog message when deleting a rule.",
+        "placeholders": {
+            "DOMAIN": {
+                "content": "$1",
+                "example": "*.google.com"
+            }
+        }
+    },
+    "dlgLoadProfile": {
+        "message": "¿Cargar perfil?",
+        "description": "Confirm dialog title when loading/restoring a cookie profile."
+    },
+    "dlgLoadProfileMsg": {
+        "message": "Esto restaurará todas las cookies de \"$NAME$\" en el dominio actual. Las cookies existentes no se eliminarán primero.",
+        "description": "Confirm dialog message when loading a profile.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "dlgOverwriteProfile": {
+        "message": "¿Sobrescribir perfil?",
+        "description": "Confirm dialog title when saving a profile with a name that already exists."
+    },
+    "dlgOverwriteProfileMsg": {
+        "message": "Ya existe un perfil llamado \"$NAME$\". ¿Sobrescribirlo?",
+        "description": "Confirm dialog message when overwriting an existing profile.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "dlgSecureAllCookies": {
+        "message": "¿Asegurar todas las cookies?",
+        "description": "Confirm dialog title when adding the Secure flag to all insecure cookies."
+    },
+    "dlgSecureAllCookiesMsg": {
+        "message": "¿Establecer la bandera Secure en $COUNT$ cookies? Algunas cookies pueden no funcionar en sitios solo HTTP.",
+        "description": "Confirm dialog message when securing all cookies.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "8"
+            }
+        }
+    },
+    "domainChromePage": {
+        "message": "Página de Chrome",
+        "description": "Domain display text when the active tab is a chrome:// internal page."
+    },
+    "emptyChromePage": {
+        "message": "Esta página no tiene cookies",
+        "description": "Empty state message for chrome:// pages or pages with no cookies."
+    },
+    "emptyNoCookies": {
+        "message": "Este sitio no tiene cookies configuradas",
+        "description": "Empty state subtitle when no cookies exist for the current domain."
+    },
+    "emptyNoCookiesFound": {
+        "message": "No cookies found"
+    },
+    "emptyNoSearchMatch": {
+        "message": "Ninguna cookie coincide con tu búsqueda",
+        "description": "Empty state subtitle when a search returns zero results."
+    },
+    "emptySubtitle": {
+        "message": "Actualiza a Cookie Manager Pro para el kit completo de herramientas.",
+        "description": "Paywall modal subtitle text below the title."
+    },
+    "emptyTitle": {
+        "message": "Cookie Manager",
+        "description": "Tooltip shown when hovering over the extension icon in the browser toolbar."
+    },
+    "errCookieNameRequired": {
+        "message": "El nombre de la cookie es obligatorio",
+        "description": "Validation error when the cookie name field is empty."
+    },
+    "errDomainPatternRequired": {
+        "message": "El patrón de dominio es obligatorio",
+        "description": "Validation error when the rule domain pattern field is empty."
+    },
+    "errDomainProtected": {
+        "message": "El dominio está protegido",
+        "description": "Error when attempting to modify cookies on a protected domain."
+    },
+    "errDomainRequired": {
+        "message": "El dominio es obligatorio",
+        "description": "Validation error when the cookie domain field is empty."
+    },
+    "errEnterLicenseKey": {
+        "message": "Por favor ingresa una clave de licencia.",
+        "description": "Validation error in the paywall when the license key field is empty."
+    },
+    "errFailedClearCookies": {
+        "message": "Error al limpiar las cookies",
+        "description": "Error message when clearing domain cookies fails."
+    },
+    "errFailedConnect": {
+        "message": "Error de conexión. Por favor intenta de nuevo.",
+        "description": "Error in the paywall when the license activation request fails."
+    },
+    "errFailedCopy": {
+        "message": "Error al copiar",
+        "description": "Error message when clipboard copy operation fails."
+    },
+    "errFailedDeleteCookie": {
+        "message": "Error al eliminar la cookie",
+        "description": "Error message when a cookie delete operation fails."
+    },
+    "errFailedDeleteProfile": {
+        "message": "Error al eliminar el perfil",
+        "description": "Error when deleting a cookie profile fails."
+    },
+    "errFailedDeleteRule": {
+        "message": "Error al eliminar la regla",
+        "description": "Error when deleting an auto-delete rule fails."
+    },
+    "errFailedExportCookies": {
+        "message": "Error al exportar las cookies",
+        "description": "Error message when exporting cookies fails."
+    },
+    "errFailedLoadProfile": {
+        "message": "Error al cargar el perfil",
+        "description": "Error when loading/restoring a cookie profile fails."
+    },
+    "errFailedParseJson": {
+        "message": "Error al analizar el archivo JSON",
+        "description": "Error when the imported file is not valid JSON."
+    },
+    "errFailedSaveCookie": {
+        "message": "Error al guardar la cookie",
+        "description": "Error message when a cookie save operation fails."
+    },
+    "errFailedSaveProfile": {
+        "message": "Error al guardar el perfil",
+        "description": "Error when saving a cookie profile fails."
+    },
+    "errFailedSaveRule": {
+        "message": "Error al guardar la regla",
+        "description": "Error when saving an auto-delete rule fails."
+    },
+    "errFailedSaveSetting": {
+        "message": "Error al guardar la configuración",
+        "description": "Error when saving a user setting (e.g., read-only toggle) fails."
+    },
+    "errFailedSubmitFeedback": {
+        "message": "Error al enviar el comentario",
+        "description": "Error when the feedback submission fails."
+    },
+    "errFreePlanRuleLimit": {
+        "message": "El plan gratuito permite 1 regla. Actualiza para más.",
+        "description": "Error when a free-tier user tries to create more than 1 auto-delete rule."
+    },
+    "errFreeRuleLimit": {
+        "message": "El plan gratuito permite 1 regla. Actualiza para más.",
+        "description": "Error when a free-tier user tries to create more than 1 auto-delete rule."
+    },
+    "errImportFileTooLarge": {
+        "message": "Archivo de importación demasiado grande (máx. 1 MB)",
+        "description": "Error when the imported JSON file exceeds the 1 MB size limit."
+    },
+    "errImportInvalidFormat": {
+        "message": "Formato no válido: se esperaba un arreglo JSON de cookies",
+        "description": "Error when the imported file does not contain a valid JSON array."
+    },
+    "errImportTooManyCookies": {
+        "message": "Demasiadas cookies en el archivo de importación (máx. 500)",
+        "description": "Error when the imported file contains more than 500 cookies."
+    },
+    "errInvalidImportFormat": {
+        "message": "Formato no válido: se esperaba un arreglo JSON de cookies",
+        "description": "Error when the imported file does not contain a valid JSON array."
+    },
+    "errInvalidJwt": {
+        "message": "Token JWT no válido",
+        "description": "Error message when the cookie value cannot be decoded as a valid JWT."
+    },
+    "errInvalidLicenseKey": {
+        "message": "Clave de licencia no válida. Verifica e intenta de nuevo.",
+        "description": "Error in the paywall when the entered license key is not valid."
+    },
+    "errLicenseConnectionFailed": {
+        "message": "Error de conexión. Por favor intenta de nuevo.",
+        "description": "Error in the paywall when the license activation request fails."
+    },
+    "errLicenseKeyRequired": {
+        "message": "Por favor ingresa una clave de licencia.",
+        "description": "Validation error in the paywall when the license key field is empty."
+    },
+    "errLoadingCookies": {
+        "message": "Error al cargar las cookies",
+        "description": "Error message displayed in the empty state when cookie loading fails."
+    },
+    "errNoCookiesToClear": {
+        "message": "No hay cookies para limpiar",
+        "description": "Error when attempting to clear all cookies but none exist."
+    },
+    "errNoCookiesToExport": {
+        "message": "No hay cookies para exportar",
+        "description": "Error when attempting to export but there are no cookies."
+    },
+    "errNoCookiesToSave": {
+        "message": "No hay cookies para guardar en el perfil",
+        "description": "Error from the background when there are no cookies to save in a profile."
+    },
+    "errNoDomainAvailable": {
+        "message": "No hay dominio disponible para guardar cookies",
+        "description": "Error when attempting to save a profile but no domain is detected."
+    },
+    "errProfileNameRequired": {
+        "message": "El nombre del perfil es obligatorio",
+        "description": "Error from the background when saving a profile without a name."
+    },
+    "errProfileNotFound": {
+        "message": "Perfil \"$NAME$\" no encontrado",
+        "description": "Error when trying to load or delete a profile that does not exist.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "errReadOnlyMode": {
+        "message": "El modo de solo lectura está activado",
+        "description": "Error message when attempting a write operation while read-only mode is active."
+    },
+    "errRuntimeNotAvailable": {
+        "message": "El entorno de ejecución de la extensión no está disponible.",
+        "description": "Error in the paywall when chrome.runtime is not accessible."
+    },
+    "errUpgradeForProfiles": {
+        "message": "Upgrade to Pro for unlimited profiles"
+    },
+    "extActionTitle": {
+        "message": "Cookie Manager",
+        "description": "Tooltip shown when hovering over the extension icon in the browser toolbar."
+    },
+    "extDescription": {
+        "message": "Ver, editar, crear y eliminar cookies. Exportar/importar perfiles, reglas de eliminación automática y decodificar JWT.",
+        "description": "Extension description for Chrome Web Store listing. Max 132 chars."
+    },
+    "extName": {
+        "message": "Cookie Manager",
+        "description": "Extension name shown in Chrome Web Store and browser toolbar. Max 45 chars."
+    },
+    "featureAdvancedExport": {
+        "message": "Formatos de exportación avanzados",
+        "description": "Feature name in paywall comparison: Netscape, CSV export formats."
+    },
+    "featureAutoDeleteRules": {
+        "message": "Reglas de eliminación automática",
+        "description": "Feature name in paywall comparison: scheduled cookie deletion rules."
+    },
+    "featureBulkOps": {
+        "message": "Operaciones masivas",
+        "description": "Feature name in paywall comparison: bulk cookie operations."
+    },
+    "featureCookieProfiles": {
+        "message": "Perfiles de cookies",
+        "description": "Feature name in paywall comparison: saving/loading cookie sets."
+    },
+    "featureEditDeleteCreate": {
+        "message": "Edit, Delete & Create Cookies"
+    },
+    "featureHealthDashboard": {
+        "message": "Panel de salud",
+        "description": "Feature name in paywall comparison: cookie health scoring and analysis."
+    },
+    "featureImportCookies": {
+        "message": "Import Cookies"
+    },
+    "featureJwtDecoder": {
+        "message": "Decodificador JWT",
+        "description": "Feature name in paywall comparison: decode and view JWT token cookies."
+    },
+    "featureNoDailyLimits": {
+        "message": "No Daily Limits"
+    },
+    "featureUnlimited": {
+        "message": "Actualiza a Pro para perfiles ilimitados",
+        "description": "Lock overlay message on the Profiles tab when the free-tier profile limit is reached."
+    },
+    "featureViewSearchCookies": {
+        "message": "View & Search Cookies"
+    },
+    "footerBrand": {
+        "message": "zovo.",
+        "description": "Brand name shown in the footer attribution. Do not translate."
+    },
+    "footerBuiltBy": {
+        "message": "Creado por",
+        "description": "Footer text before the brand name 'zovo.' attribution."
+    },
+    "footerEnterLicense": {
+        "message": "Enter License Key"
+    },
+    "footerHelp": {
+        "message": "Ayuda",
+        "description": "Footer link label for the help/FAQ page."
+    },
+    "footerManageSub": {
+        "message": "Gestionar suscripción",
+        "description": "Footer link shown to paid users to manage their subscription."
+    },
+    "footerPrivacy": {
+        "message": "Privacidad",
+        "description": "Footer link label for the privacy policy page."
+    },
+    "growthLeaveReview": {
+        "message": "Dejar reseña",
+        "description": "Button label in the growth banner prompting user to leave a Chrome Web Store review."
+    },
+    "growthReviewPrompt": {
+        "message": "¿Te gusta Cookie Manager? Una reseña rápida ayuda a otros desarrolladores a encontrarnos.",
+        "description": "Growth banner text prompting the user to leave a review on the Chrome Web Store."
+    },
+    "growthShare": {
+        "message": "Compartir",
+        "description": "Button label in the growth banner prompting user to share the extension."
+    },
+    "healthAnalyzing": {
+        "message": "Analizando cookies...",
+        "description": "Summary text shown on the Health tab while analysis is in progress."
+    },
+    "healthCatHttpOnly": {
         "message": "HttpOnly",
         "description": "Checkbox label for the HttpOnly flag in the cookie editor."
     },
-    "lblSameSite": {
+    "healthCatSameSite": {
         "message": "SameSite",
         "description": "Form label for the SameSite dropdown in the cookie editor."
     },
-    "lblProfileName": {
+    "healthCatSecure": {
+        "message": "Secure",
+        "description": "Checkbox label for the Secure flag in the cookie editor."
+    },
+    "healthCatTrackers": {
+        "message": "Rastreadores encontrados",
+        "description": "Health category label for the number of tracking cookies detected."
+    },
+    "healthEmptySubtitle": {
+        "message": "Visita un sitio web para ver su puntuación de salud de cookies",
+        "description": "Empty state subtitle on the Health tab when there are no cookies."
+    },
+    "healthEmptyTitle": {
+        "message": "No hay cookies para analizar",
+        "description": "Empty state title on the Health tab when there are no cookies."
+    },
+    "healthLabel": {
+        "message": "PRO",
+        "description": "Small label appended to locked features indicating they require a Pro subscription."
+    },
+    "healthRecsTitle": {
+        "message": "Recomendaciones",
+        "description": "Section heading for health recommendations on the Health tab."
+    },
+    "healthTrackersTitle": {
+        "message": "Tracking Cookies Detected"
+    },
+    "hintSessionCookie": {
+        "message": "Agregar cookie",
+        "description": "Modal title when creating a new cookie."
+    },
+    "jwtDecode": {
+        "message": "Decodificar",
+        "description": "Link button shown next to a JWT-detected cookie value to open the JWT decoder."
+    },
+    "jwtDetected": {
+        "message": "JWT detectado",
+        "description": "Badge text shown on the cookie value field when a JWT token is detected."
+    },
+    "jwtHeader": {
+        "message": "Encabezado",
+        "description": "Section heading for the JWT header section in the JWT decoder modal."
+    },
+    "jwtPayload": {
+        "message": "Contenido",
+        "description": "Section heading for the JWT payload section in the JWT decoder modal."
+    },
+    "labelCookieNamePattern": {
+        "message": "Patrón de nombre de cookie",
+        "description": "Form label for the cookie name pattern input in the auto-delete rule form."
+    },
+    "labelDomain": {
+        "message": "ej. *.google.com o facebook.com",
+        "description": "Placeholder text for the domain pattern input in the rule form."
+    },
+    "labelDomainPattern": {
+        "message": "Patrón de dominio",
+        "description": "Form label for the domain pattern input in the auto-delete rule form."
+    },
+    "labelExpiration": {
+        "message": "Expiración",
+        "description": "Form label for the cookie expiration date field in the editor modal."
+    },
+    "labelHttpOnly": {
+        "message": "HttpOnly",
+        "description": "Badge label for cookies with the HttpOnly flag set."
+    },
+    "labelName": {
+        "message": "El nombre del perfil es obligatorio",
+        "description": "Error from the background when saving a profile without a name."
+    },
+    "labelPath": {
+        "message": "Ruta",
+        "description": "Form label for the cookie path field in the editor modal."
+    },
+    "labelProfileName": {
         "message": "Nombre del perfil",
         "description": "Form label for the profile name input when saving a cookie profile."
     },
-    "lblDomainPattern": {
-        "message": "Patrón de dominio",
-        "description": "Form label for the domain pattern input in the auto-delete rule form."
+    "labelSameSite": {
+        "message": "Lax",
+        "description": "SameSite dropdown option: Lax policy."
+    },
+    "labelSchedule": {
+        "message": "Programación",
+        "description": "Form label for the schedule dropdown in the auto-delete rule form."
+    },
+    "labelSecure": {
+        "message": "Secure",
+        "description": "Badge label for cookies with the Secure flag set."
+    },
+    "labelValue": {
+        "message": "Valor",
+        "description": "Form label for the cookie value field in the editor modal."
     },
     "lblCookieNamePattern": {
         "message": "Patrón de nombre de cookie",
         "description": "Form label for the cookie name pattern input in the auto-delete rule form."
     },
-    "lblSchedule": {
-        "message": "Programación",
-        "description": "Form label for the schedule dropdown in the auto-delete rule form."
+    "lblDomain": {
+        "message": "Dominio",
+        "description": "Form label for the cookie domain field in the editor modal."
     },
-    "lblReadOnlyMode": {
-        "message": "Modo de solo lectura",
-        "description": "Title and aria-label for the read-only toggle switch in the action bar."
+    "lblDomainPattern": {
+        "message": "Patrón de dominio",
+        "description": "Form label for the domain pattern input in the auto-delete rule form."
+    },
+    "lblExpiration": {
+        "message": "Expiración",
+        "description": "Form label for the cookie expiration date field in the editor modal."
     },
     "lblHelp": {
         "message": "Ayuda",
         "description": "Footer link label for the help/FAQ page."
     },
-    "lblPrivacy": {
-        "message": "Privacidad",
-        "description": "Footer link label for the privacy policy page."
+    "lblHttpOnly": {
+        "message": "HttpOnly",
+        "description": "Checkbox label for the HttpOnly flag in the cookie editor."
     },
     "lblManageSubscription": {
         "message": "Gestionar suscripción",
         "description": "Footer link shown to paid users to manage their subscription."
     },
-
-    "plhSearchCookies": {
-        "message": "Buscar cookies...",
-        "description": "Placeholder text for the cookie search input field in the popup."
+    "lblName": {
+        "message": "Nombre",
+        "description": "Form label for the cookie name field in the editor modal."
+    },
+    "lblPath": {
+        "message": "Ruta",
+        "description": "Form label for the cookie path field in the editor modal."
+    },
+    "lblPrivacy": {
+        "message": "Privacidad",
+        "description": "Footer link label for the privacy policy page."
+    },
+    "lblProfileName": {
+        "message": "Nombre del perfil",
+        "description": "Form label for the profile name input when saving a cookie profile."
+    },
+    "lblReadOnlyMode": {
+        "message": "Modo de solo lectura",
+        "description": "Title and aria-label for the read-only toggle switch in the action bar."
+    },
+    "lblSameSite": {
+        "message": "SameSite",
+        "description": "Form label for the SameSite dropdown in the cookie editor."
+    },
+    "lblSchedule": {
+        "message": "Programación",
+        "description": "Form label for the schedule dropdown in the auto-delete rule form."
+    },
+    "lblSecure": {
+        "message": "Secure",
+        "description": "Checkbox label for the Secure flag in the cookie editor."
+    },
+    "lblValue": {
+        "message": "Valor",
+        "description": "Form label for the cookie value field in the editor modal."
+    },
+    "loadingCookies": {
+        "message": "Guardar cookies actuales",
+        "description": "Button label on the Profiles tab to save the current domain cookies as a profile."
+    },
+    "msgAllClearHealthy": {
+        "message": "Todo bien. Tus cookies se ven saludables.",
+        "description": "Message shown in the recommendations section when no issues are found."
+    },
+    "msgAllCookies": {
+        "message": "Todas las cookies",
+        "description": "Badge text on a rule card when the cookie name pattern is set to wildcard (*)."
+    },
+    "msgAnalyzingCookies": {
+        "message": "Analizando cookies...",
+        "description": "Summary text shown on the Health tab while analysis is in progress."
+    },
+    "msgChromePage": {
+        "message": "Página de Chrome",
+        "description": "Domain display text when the active tab is a chrome:// internal page."
+    },
+    "msgCookieAffectedSingular": {
+        "message": "1 cookie afectada",
+        "description": "Singular form of affected cookie count on rule cards."
+    },
+    "msgCookieCount": {
+        "message": "$COUNT$ cookies",
+        "description": "Cookie count display on profile cards, e.g., '12 cookies'.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "12"
+            }
+        }
+    },
+    "msgCookieCountSingular": {
+        "message": "1 cookie",
+        "description": "Singular form of cookie count display on profile cards."
+    },
+    "msgCookieFoundSingular": {
+        "message": "1 cookie encontrada",
+        "description": "Singular screen reader announcement when search returns 1 result."
+    },
+    "msgCookiesAffected": {
+        "message": "$COUNT$ cookies afectadas",
+        "description": "Count of cookies matching a rule, shown on rule cards.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "msgCookiesFoundCount": {
+        "message": "$COUNT$ cookies encontradas",
+        "description": "Screen reader announcement after a search, e.g., '5 cookies found'.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "msgCreateRuleHint": {
+        "message": "Crea una regla para eliminar cookies automáticamente según un horario",
+        "description": "Empty state subtitle on the Rules tab when no rules exist."
+    },
+    "msgDayAgo": {
+        "message": "hace 1 día",
+        "description": "Singular relative time text for exactly one day ago."
+    },
+    "msgDaysAgo": {
+        "message": "hace $COUNT$ días",
+        "description": "Relative time text for days, e.g., '5 days ago'.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "msgDomainLoading": {
+        "message": "Cargando...",
+        "description": "Placeholder text shown for the domain name while the popup initializes."
+    },
+    "msgEmptyValue": {
+        "message": "(vacío)",
+        "description": "Display text when a cookie value is empty string."
+    },
+    "msgFooterBrand": {
+        "message": "zovo.",
+        "description": "Brand name shown in the footer attribution. Do not translate."
+    },
+    "msgFooterBuiltBy": {
+        "message": "Creado por",
+        "description": "Footer text before the brand name 'zovo.' attribution."
+    },
+    "msgHealthHttpOnly": {
+        "message": "HttpOnly",
+        "description": "Health category label for the percentage of cookies with the HttpOnly flag."
+    },
+    "msgHealthSameSiteSet": {
+        "message": "SameSite configurado",
+        "description": "Health category label for the percentage of cookies with SameSite configured."
+    },
+    "msgHealthSecureCookies": {
+        "message": "Cookies seguras",
+        "description": "Health category label for the percentage of cookies with the Secure flag."
+    },
+    "msgHealthSummary": {
+        "message": "$COUNT$ cookies analizadas - Puntuación: $SCORE$/100",
+        "description": "Health tab summary line below the grade circle.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "15"
+            },
+            "SCORE": {
+                "content": "$2",
+                "example": "82"
+            }
+        }
+    },
+    "msgHealthTrackersFound": {
+        "message": "Rastreadores encontrados",
+        "description": "Health category label for the number of tracking cookies detected."
+    },
+    "msgHourAgo": {
+        "message": "hace 1 hora",
+        "description": "Singular relative time text for exactly one hour ago."
+    },
+    "msgHoursAgo": {
+        "message": "hace $COUNT$ horas",
+        "description": "Relative time text for hours, e.g., '3 hours ago'.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "3"
+            }
+        }
+    },
+    "msgJustNow": {
+        "message": "justo ahora",
+        "description": "Relative time text for very recent actions (under 1 minute ago)."
+    },
+    "msgJwtDetected": {
+        "message": "JWT detectado",
+        "description": "Badge text shown on the cookie value field when a JWT token is detected."
+    },
+    "msgJwtHeader": {
+        "message": "Encabezado",
+        "description": "Section heading for the JWT header section in the JWT decoder modal."
+    },
+    "msgJwtPayload": {
+        "message": "Contenido",
+        "description": "Section heading for the JWT payload section in the JWT decoder modal."
+    },
+    "msgLoadingCookies": {
+        "message": "Cargando cookies...",
+        "description": "Loading state message shown while cookies are being fetched."
+    },
+    "msgMinutesAgo": {
+        "message": "hace $COUNT$ min",
+        "description": "Relative time text for minutes, e.g., '5 min ago'.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "msgNoCookiesFound": {
+        "message": "No se encontraron cookies",
+        "description": "Empty state title when no cookies exist for the current domain."
+    },
+    "msgNoCookiesSet": {
+        "message": "Este sitio no tiene cookies configuradas",
+        "description": "Empty state subtitle when no cookies exist for the current domain."
+    },
+    "msgNoCookiesToAnalyze": {
+        "message": "No hay cookies para analizar",
+        "description": "Empty state title on the Health tab when there are no cookies."
+    },
+    "msgNoRulesYet": {
+        "message": "Aún no hay reglas",
+        "description": "Empty state title on the Rules tab when no auto-delete rules exist."
+    },
+    "msgNoSavedProfiles": {
+        "message": "No hay perfiles guardados",
+        "description": "Empty state title on the Profiles tab when no profiles exist."
+    },
+    "msgNoSearchResults": {
+        "message": "Ninguna cookie coincide con tu búsqueda",
+        "description": "Empty state subtitle when a search returns zero results."
+    },
+    "msgRecAddHttpOnly": {
+        "message": "Agregar bandera HttpOnly",
+        "description": "Health recommendation title: add HttpOnly flag to exposed cookies."
+    },
+    "msgRecAddHttpOnlyDetail": {
+        "message": "$COUNT$ cookies son accesibles por JavaScript y podrían ser robadas mediante XSS.",
+        "description": "Health recommendation detail text for adding HttpOnly flag.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "4"
+            }
+        }
+    },
+    "msgRecAddSecureFlag": {
+        "message": "Agregar bandera Secure",
+        "description": "Health recommendation title: add Secure flag to insecure cookies."
+    },
+    "msgRecAddSecureFlagDetail": {
+        "message": "$COUNT$ cookies carecen de la bandera Secure, haciéndolas vulnerables en conexiones HTTP.",
+        "description": "Health recommendation detail text for adding Secure flag.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "msgRecReduceLifespan": {
+        "message": "Reducir duración de cookies",
+        "description": "Health recommendation title: reduce lifespan of long-lived cookies."
+    },
+    "msgRecReduceLifespanDetail": {
+        "message": "$COUNT$ cookies persisten más de 1 año. Duraciones más cortas reducen la exposición al rastreo.",
+        "description": "Health recommendation detail text for reducing cookie lifespan.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "2"
+            }
+        }
+    },
+    "msgRecRemoveTrackers": {
+        "message": "Eliminar cookies de rastreo",
+        "description": "Health recommendation title: remove tracking cookies."
+    },
+    "msgRecRemoveTrackersDetail": {
+        "message": "Elimina $COUNT$ cookies de rastreo para mejorar tu puntuación de privacidad.",
+        "description": "Health recommendation detail text for removing trackers.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "3"
+            }
+        }
+    },
+    "msgRecSetSameSite": {
+        "message": "Establecer política SameSite",
+        "description": "Health recommendation title: set SameSite policy on cookies."
+    },
+    "msgRecSetSameSiteDetail": {
+        "message": "$COUNT$ cookies carecen de una política SameSite, aumentando el riesgo de CSRF.",
+        "description": "Health recommendation detail text for setting SameSite.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "6"
+            }
+        }
+    },
+    "msgReviewPrompt": {
+        "message": "¿Te gusta Cookie Manager? Una reseña rápida ayuda a otros desarrolladores a encontrarnos.",
+        "description": "Growth banner text prompting the user to leave a review on the Chrome Web Store."
+    },
+    "msgSaveProfileHint": {
+        "message": "Guarda tus cookies actuales como perfil para restaurarlas rápidamente después",
+        "description": "Empty state subtitle on the Profiles tab when no profiles exist."
+    },
+    "msgSavedDatePrefix": {
+        "message": "Guardado",
+        "description": "Prefix before relative time on profile cards, e.g., 'Saved 2 hours ago'."
+    },
+    "msgTabSelected": {
+        "message": "Pestaña $TAB$ seleccionada",
+        "description": "Screen reader announcement when switching tabs.",
+        "placeholders": {
+            "TAB": {
+                "content": "$1",
+                "example": "Cookies"
+            }
+        }
+    },
+    "msgThisPageNoCookies": {
+        "message": "Esta página no tiene cookies",
+        "description": "Empty state message for chrome:// pages or pages with no cookies."
+    },
+    "msgUnknownDate": {
+        "message": "fecha desconocida",
+        "description": "Fallback text when a profile has no recorded date."
+    },
+    "msgVisitWebsite": {
+        "message": "Visita un sitio web para ver su puntuación de salud de cookies",
+        "description": "Empty state subtitle on the Health tab when there are no cookies."
+    },
+    "msgWelcomeBack": {
+        "message": "Bienvenido de vuelta. Descubre lo que Cookie Manager puede hacer.",
+        "description": "Default retention banner message shown to returning users."
+    },
+    "ntfClearedCookies": {
+        "message": "$COUNT$ cookies eliminadas",
+        "description": "Toast notification after clearing all cookies for a domain.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "15"
+            }
+        }
+    },
+    "ntfCookieCreated": {
+        "message": "Cookie creada",
+        "description": "Toast notification shown after successfully creating a new cookie."
+    },
+    "ntfCookieDeleted": {
+        "message": "Cookie eliminada",
+        "description": "Toast notification shown after successfully deleting a cookie."
+    },
+    "ntfCookieSaved": {
+        "message": "Cookie guardada",
+        "description": "Toast notification shown after successfully saving/updating a cookie."
+    },
+    "ntfCookiesCleared": {
+        "message": "Cookies eliminadas",
+        "description": "System notification title shown after clearing cookies via context menu."
+    },
+    "ntfCookiesClearedMsg": {
+        "message": "Se eliminaron $COUNT$ cookies de $DOMAIN$",
+        "description": "System notification body after clearing cookies via context menu.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "12"
+            },
+            "DOMAIN": {
+                "content": "$2",
+                "example": "example.com"
+            }
+        }
+    },
+    "ntfCookiesClearedTitle": {
+        "message": "Cookies Cleared"
+    },
+    "ntfCookiesExportedClipboard": {
+        "message": "$COUNT$ cookies exportadas y copiadas al portapapeles",
+        "description": "Toast notification after exporting cookies with clipboard copy.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "12"
+            }
+        }
+    },
+    "ntfCookiesExportedContextMsg": {
+        "message": "$COUNT$ cookies de $DOMAIN$ copiadas. Abre el popup para descargar.",
+        "description": "System notification body after exporting cookies via context menu.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "8"
+            },
+            "DOMAIN": {
+                "content": "$2",
+                "example": "example.com"
+            }
+        }
+    },
+    "ntfCookiesExportedFile": {
+        "message": "$COUNT$ cookies exportadas como archivo JSON",
+        "description": "Toast notification after exporting cookies as file (clipboard unavailable).",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "12"
+            }
+        }
+    },
+    "ntfCookiesExportedMsg": {
+        "message": "$COUNT$ cookies de $DOMAIN$ copiadas. Abre el popup para descargar.",
+        "description": "System notification body after exporting cookies via context menu.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "8"
+            },
+            "DOMAIN": {
+                "content": "$2",
+                "example": "example.com"
+            }
+        }
+    },
+    "ntfCookiesExportedTitle": {
+        "message": "Cookies exportadas",
+        "description": "System notification title shown after exporting cookies via context menu."
+    },
+    "ntfCookiesImported": {
+        "message": "$IMPORTED$ cookies importadas",
+        "description": "Toast notification after importing cookies successfully.",
+        "placeholders": {
+            "IMPORTED": {
+                "content": "$1",
+                "example": "8"
+            }
+        }
+    },
+    "ntfCookiesRefreshed": {
+        "message": "Cookies actualizadas",
+        "description": "Toast notification shown after refreshing the cookie list."
+    },
+    "ntfCookiesSecured": {
+        "message": "$COUNT$ cookies aseguradas",
+        "description": "Toast notification after setting the Secure flag on insecure cookies.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "3"
+            }
+        }
+    },
+    "ntfCopiedToClipboard": {
+        "message": "Copiado al portapapeles",
+        "description": "Toast notification after successfully copying text to clipboard."
+    },
+    "ntfDebugBundleExported": {
+        "message": "Paquete de depuración exportado",
+        "description": "Toast notification after exporting a debug bundle file."
+    },
+    "ntfFeedbackSubmitted": {
+        "message": "Comentario enviado. ¡Gracias!",
+        "description": "Toast notification after successfully submitting user feedback."
+    },
+    "ntfImportedCookies": {
+        "message": "$IMPORTED$ cookies importadas",
+        "description": "Toast notification after importing cookies successfully.",
+        "placeholders": {
+            "IMPORTED": {
+                "content": "$1",
+                "example": "8"
+            }
+        }
+    },
+    "ntfImportedCookiesWithFailures": {
+        "message": "$IMPORTED$ cookies importadas, $FAILED$ fallaron",
+        "description": "Toast notification after importing cookies when some failed.",
+        "placeholders": {
+            "IMPORTED": {
+                "content": "$1",
+                "example": "8"
+            },
+            "FAILED": {
+                "content": "$2",
+                "example": "2"
+            }
+        }
+    },
+    "ntfProfileDeleted": {
+        "message": "Perfil \"$NAME$\" eliminado",
+        "description": "Toast notification after deleting a cookie profile.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "ntfProfileRestored": {
+        "message": "$RESTORED$ de $TOTAL$ cookies restauradas",
+        "description": "Toast notification after loading a cookie profile.",
+        "placeholders": {
+            "RESTORED": {
+                "content": "$1",
+                "example": "10"
+            },
+            "TOTAL": {
+                "content": "$2",
+                "example": "12"
+            }
+        }
+    },
+    "ntfProfileRestoredWithFailures": {
+        "message": "$RESTORED$ de $TOTAL$ cookies restauradas ($FAILED$ fallaron)",
+        "description": "Toast notification after loading a profile with some failures.",
+        "placeholders": {
+            "RESTORED": {
+                "content": "$1",
+                "example": "10"
+            },
+            "TOTAL": {
+                "content": "$2",
+                "example": "12"
+            },
+            "FAILED": {
+                "content": "$3",
+                "example": "2"
+            }
+        }
+    },
+    "ntfProfileSaved": {
+        "message": "Perfil \"$NAME$\" guardado con $COUNT$ cookies",
+        "description": "Toast notification after successfully saving a cookie profile.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            },
+            "COUNT": {
+                "content": "$2",
+                "example": "12"
+            }
+        }
+    },
+    "ntfReadOnlyDisabled": {
+        "message": "Modo de solo lectura desactivado",
+        "description": "Toast notification when the read-only toggle is turned off."
+    },
+    "ntfReadOnlyEnabled": {
+        "message": "Modo de solo lectura activado",
+        "description": "Toast notification when the read-only toggle is turned on."
+    },
+    "ntfReadOnlyNotification": {
+        "message": "El modo de solo lectura está activado. Desactívalo para limpiar las cookies.",
+        "description": "System notification body when user tries to clear via context menu but read-only is on."
+    },
+    "ntfRuleCreated": {
+        "message": "Regla creada",
+        "description": "Toast notification after creating a new auto-delete rule."
+    },
+    "ntfRuleDeleted": {
+        "message": "Regla eliminada",
+        "description": "Toast notification after deleting an auto-delete rule."
+    },
+    "ntfRuleUpdated": {
+        "message": "Regla actualizada",
+        "description": "Toast notification after updating an existing auto-delete rule."
+    },
+    "ntfTrackersRemoved": {
+        "message": "$COUNT$ cookies de rastreo eliminadas",
+        "description": "Toast notification after cleaning tracking cookies from the Health tab.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "optEvery6Hours": {
+        "message": "Cada 6 horas",
+        "description": "Schedule option for auto-delete rules: run every 6 hours."
+    },
+    "optEveryDay": {
+        "message": "Cada día",
+        "description": "Schedule option for auto-delete rules: run every day."
+    },
+    "optEveryHour": {
+        "message": "Cada hora",
+        "description": "Schedule option for auto-delete rules: run every hour."
+    },
+    "optLax": {
+        "message": "Lax",
+        "description": "SameSite dropdown option: Lax policy."
+    },
+    "optNone": {
+        "message": "None",
+        "description": "SameSite dropdown option: None (no restriction) policy."
+    },
+    "optOnBrowserClose": {
+        "message": "Al cerrar el navegador",
+        "description": "Schedule option for auto-delete rules: run when the browser closes."
+    },
+    "optSameSiteLax": {
+        "message": "Lax",
+        "description": "SameSite dropdown option: Lax policy."
+    },
+    "optSameSiteNone": {
+        "message": "None",
+        "description": "SameSite dropdown option: None (no restriction) policy."
+    },
+    "optSameSiteStrict": {
+        "message": "Strict",
+        "description": "SameSite dropdown option: Strict policy."
+    },
+    "optScheduleEvery6Hours": {
+        "message": "Cada 6 horas",
+        "description": "Schedule option for auto-delete rules: run every 6 hours."
+    },
+    "optScheduleEveryDay": {
+        "message": "Cada día",
+        "description": "Schedule option for auto-delete rules: run every day."
+    },
+    "optScheduleEveryHour": {
+        "message": "Cada hora",
+        "description": "Schedule option for auto-delete rules: run every hour."
+    },
+    "optScheduleOnBrowserClose": {
+        "message": "Al cerrar el navegador",
+        "description": "Schedule option for auto-delete rules: run when the browser closes."
+    },
+    "optStrict": {
+        "message": "Strict",
+        "description": "SameSite dropdown option: Strict policy."
+    },
+    "payActivateLicense": {
+        "message": "Activar licencia",
+        "description": "Button text to submit the license key for activation."
+    },
+    "payActivating": {
+        "message": "Activando...",
+        "description": "Button text shown while the license activation is in progress."
+    },
+    "payAnnual": {
+        "message": "Anual",
+        "description": "Pricing tier name for annual subscription in the paywall."
+    },
+    "payAnnualNote": {
+        "message": "$$2.50/mes facturado anualmente",
+        "description": "Note below the annual price showing monthly equivalent."
+    },
+    "payAnnualPrice": {
+        "message": "$$29.99/año",
+        "description": "Annual subscription price displayed in the paywall."
+    },
+    "payBestValue": {
+        "message": "Mejor valor",
+        "description": "Badge shown on the annual pricing tier to indicate best value."
+    },
+    "payCtaAnnual": {
+        "message": "Obtener Pro Anual — $$29.99/año",
+        "description": "Primary CTA button text for annual subscription in the paywall."
+    },
+    "payCtaMonthly": {
+        "message": "Iniciar Mensual — $$3.99/mes",
+        "description": "Secondary CTA button text for monthly subscription in the paywall."
+    },
+    "payFeatureAdvancedExport": {
+        "message": "Formatos de exportación avanzados",
+        "description": "Feature name in paywall comparison: Netscape, CSV export formats."
+    },
+    "payFeatureAutoDeleteRules": {
+        "message": "Reglas de eliminación automática",
+        "description": "Feature name in paywall comparison: scheduled cookie deletion rules."
+    },
+    "payFeatureBasicCookies": {
+        "message": "Gestión básica de cookies",
+        "description": "Feature name in paywall comparison: basic cookie CRUD operations."
+    },
+    "payFeatureBulkOps": {
+        "message": "Operaciones masivas",
+        "description": "Feature name in paywall comparison: bulk cookie operations."
+    },
+    "payFeatureCookieProfiles": {
+        "message": "Perfiles de cookies",
+        "description": "Feature name in paywall comparison: saving/loading cookie sets."
+    },
+    "payFeatureHeader": {
+        "message": "Característica",
+        "description": "Column header in the paywall feature comparison table."
+    },
+    "payFeatureHealthDashboard": {
+        "message": "Panel de salud",
+        "description": "Feature name in paywall comparison: cookie health scoring and analysis."
+    },
+    "payFeatureJwtDecoder": {
+        "message": "Decodificador JWT",
+        "description": "Feature name in paywall comparison: decode and view JWT token cookies."
+    },
+    "payFreeHeader": {
+        "message": "Gratis",
+        "description": "Column header for the free tier in the paywall comparison table."
+    },
+    "payLicenseToggle": {
+        "message": "¿Ya tienes una clave de licencia?",
+        "description": "Toggle button text to show the license key input form in the paywall."
+    },
+    "payMonthly": {
+        "message": "Mensual",
+        "description": "Pricing tier name for monthly subscription in the paywall."
+    },
+    "payMonthlyNote": {
+        "message": "Facturado mensualmente",
+        "description": "Note below the monthly price in the paywall."
+    },
+    "payMonthlyPrice": {
+        "message": "$$3.99/mes",
+        "description": "Monthly subscription price displayed in the paywall."
+    },
+    "payProHeader": {
+        "message": "Pro",
+        "description": "Column header for the Pro tier in the paywall comparison table."
+    },
+    "payRulesFreeLimitReached": {
+        "message": "Límite gratuito alcanzado (1 regla). Actualiza para ilimitadas.",
+        "description": "Lock overlay message on the Rules tab when the free-tier rule limit is reached."
+    },
+    "paySavePercent": {
+        "message": "Ahorra 37%",
+        "description": "Savings badge shown on the annual pricing tier."
+    },
+    "payTrialBanner": {
+        "message": "Prueba Pro: $DAYS$ días restantes",
+        "description": "Trial banner text shown at the top of the popup during an active trial.",
+        "placeholders": {
+            "DAYS": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "payTrustCancelAnytime": {
+        "message": "Cancela en cualquier momento",
+        "description": "Trust signal text in the paywall footer."
+    },
+    "payTrustMoneyBack": {
+        "message": "Devolución en 7 días",
+        "description": "Trust signal text in the paywall footer."
+    },
+    "payTrustSecure": {
+        "message": "Pago seguro",
+        "description": "Trust signal text in the paywall footer."
+    },
+    "payUnlimited": {
+        "message": "Ilimitado",
+        "description": "Feature limit text for Pro tier in paywall comparison table."
+    },
+    "payUpgradeProUnlimited": {
+        "message": "Actualiza a Pro para perfiles ilimitados",
+        "description": "Lock overlay message on the Profiles tab when the free-tier profile limit is reached."
+    },
+    "payUpgradeSubtitle": {
+        "message": "Actualiza a Cookie Manager Pro para el kit completo de herramientas.",
+        "description": "Paywall modal subtitle text below the title."
+    },
+    "payUpgradeTitle": {
+        "message": "Desbloquear $FEATURE$",
+        "description": "Paywall modal title. Shows which feature triggered the upgrade prompt.",
+        "placeholders": {
+            "FEATURE": {
+                "content": "$1",
+                "example": "Cookie Profiles"
+            }
+        }
+    },
+    "paywallActivateLicense": {
+        "message": "¿Ya tienes una clave de licencia?",
+        "description": "Toggle button text to show the license key input form in the paywall."
+    },
+    "paywallActivating": {
+        "message": "Activando...",
+        "description": "Button text shown while the license activation is in progress."
+    },
+    "paywallAnnual": {
+        "message": "Anual",
+        "description": "Annual tier name displayed in the paywall."
+    },
+    "paywallBestValue": {
+        "message": "Best Value"
+    },
+    "paywallBilledAnnually": {
+        "message": "$$2.50/mes facturado anualmente",
+        "description": "Note below the annual price showing monthly equivalent."
+    },
+    "paywallBilledMonthly": {
+        "message": "Facturado mensualmente",
+        "description": "Note below the monthly price in the paywall."
+    },
+    "paywallColFeature": {
+        "message": "Característica",
+        "description": "Column header in the paywall feature comparison table."
+    },
+    "paywallColFree": {
+        "message": "Gratis",
+        "description": "Column header for the free tier in the paywall comparison table."
+    },
+    "paywallColPro": {
+        "message": "Pro",
+        "description": "Column header for the Pro tier in the paywall comparison table."
+    },
+    "paywallCtaAnnual": {
+        "message": "Obtener Pro Anual — $$29.99/año",
+        "description": "Primary CTA button text for annual subscription in the paywall."
+    },
+    "paywallCtaMonthly": {
+        "message": "Iniciar Mensual — $$3.99/mes",
+        "description": "Secondary CTA button text for monthly subscription in the paywall."
+    },
+    "paywallHaveLicenseKey": {
+        "message": "Already have a license key?"
+    },
+    "paywallMonthly": {
+        "message": "Mensual",
+        "description": "Monthly tier name displayed in the paywall."
+    },
+    "paywallSave37": {
+        "message": "Ahorra 37%",
+        "description": "Savings badge shown on the annual pricing tier."
+    },
+    "paywallSubtitle": {
+        "message": "Upgrade to Cookie Manager Pro for the full toolkit."
+    },
+    "paywallTrustCancel": {
+        "message": "Cancela en cualquier momento",
+        "description": "Trust signal text in the paywall footer."
+    },
+    "paywallTrustMoneyBack": {
+        "message": "Devolución en 7 días",
+        "description": "Trust signal text in the paywall footer."
+    },
+    "paywallTrustSecure": {
+        "message": "Secure checkout"
+    },
+    "paywallUnlockTitle": {
+        "message": "Desbloquear $FEATURE$",
+        "description": "Paywall modal title. Shows which feature triggered the upgrade prompt.",
+        "placeholders": {
+            "FEATURE": {
+                "content": "$1",
+                "example": "Cookie Profiles"
+            }
+        }
     },
     "plhCookieName": {
         "message": "Nombre de la cookie",
         "description": "Placeholder text for the cookie name input in the editor modal."
+    },
+    "plhCookieNamePattern": {
+        "message": "Nombre",
+        "description": "Form label for the cookie name field in the editor modal."
     },
     "plhCookieValue": {
         "message": "Valor de la cookie",
@@ -248,6 +1935,14 @@
         "message": ".example.com",
         "description": "Placeholder text for the domain input in the cookie editor modal."
     },
+    "plhDomainPattern": {
+        "message": "Dominio",
+        "description": "Form label for the cookie domain field in the editor modal."
+    },
+    "plhLicenseKey": {
+        "message": "XXXX-XXXX-XXXX-XXXX",
+        "description": "Placeholder text for the license key input in the paywall modal."
+    },
     "plhPath": {
         "message": "/",
         "description": "Placeholder text for the path input in the cookie editor modal."
@@ -256,26 +1951,154 @@
         "message": "ej. Entorno de desarrollo",
         "description": "Placeholder text for the profile name input when saving a profile."
     },
-    "plhRuleDomain": {
-        "message": "ej. *.google.com o facebook.com",
-        "description": "Placeholder text for the domain pattern input in the rule form."
-    },
     "plhRuleCookiePattern": {
         "message": "* para todas, o nombre específico",
         "description": "Placeholder text for the cookie name pattern input in the rule form."
     },
-    "plhLicenseKey": {
-        "message": "XXXX-XXXX-XXXX-XXXX",
-        "description": "Placeholder text for the license key input in the paywall modal."
+    "plhRuleDomain": {
+        "message": "ej. *.google.com o facebook.com",
+        "description": "Placeholder text for the domain pattern input in the rule form."
     },
-
-    "tipSessionCookie": {
-        "message": "Deja vacío para cookie de sesión",
-        "description": "Hint text below the expiration date field in the cookie editor."
+    "plhSearchCookies": {
+        "message": "Buscar cookies...",
+        "description": "Placeholder text for the cookie search input field in the popup."
     },
-    "tipRestoreProfile": {
-        "message": "Restaurar cookies de este perfil",
-        "description": "Tooltip for the Load button on a profile card."
+    "profileCookieCount": {
+        "message": "$COUNT$ cookies",
+        "description": "Cookie count display on profile cards, e.g., '12 cookies'.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "12"
+            }
+        }
+    },
+    "profileJustNow": {
+        "message": "justo ahora",
+        "description": "Relative time text for very recent actions (under 1 minute ago)."
+    },
+    "profileNamePrompt": {
+        "message": "Profile name:"
+    },
+    "profileSavedPrefix": {
+        "message": "Guardado",
+        "description": "Prefix before relative time on profile cards, e.g., 'Saved 2 hours ago'."
+    },
+    "profileUnknownDate": {
+        "message": "fecha desconocida",
+        "description": "Fallback text when a profile has no recorded date."
+    },
+    "profilesEmptySubtitle": {
+        "message": "Crea una regla para eliminar cookies automáticamente según un horario",
+        "description": "Empty state subtitle on the Rules tab when no rules exist."
+    },
+    "profilesEmptyTitle": {
+        "message": "No hay perfiles guardados",
+        "description": "Empty state title on the Profiles tab when no profiles exist."
+    },
+    "profilesUpgradeMsg": {
+        "message": "Upgrade to Pro for unlimited profiles"
+    },
+    "retentionWelcomeBack": {
+        "message": "Bienvenido de vuelta. Descubre lo que Cookie Manager puede hacer.",
+        "description": "Default retention banner message shown to returning users."
+    },
+    "ruleAllCookies": {
+        "message": "Todas las cookies",
+        "description": "Badge text on a rule card when the cookie name pattern is set to wildcard (*)."
+    },
+    "ruleCookiesAffected": {
+        "message": "$COUNT$ cookies afectadas",
+        "description": "Count of cookies matching a rule, shown on rule cards.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "rulesEmptySubtitle": {
+        "message": "Crea una regla para eliminar cookies automáticamente según un horario",
+        "description": "Empty state subtitle on the Rules tab when no rules exist."
+    },
+    "rulesEmptyTitle": {
+        "message": "Aún no hay reglas",
+        "description": "Empty state title on the Rules tab when no auto-delete rules exist."
+    },
+    "rulesUpgradeMsg": {
+        "message": "Límite gratuito alcanzado (1 regla). Actualiza para ilimitadas.",
+        "description": "Lock overlay message on the Rules tab when the free-tier rule limit is reached."
+    },
+    "scheduleEvery6Hours": {
+        "message": "Cada 6 horas",
+        "description": "Schedule option for auto-delete rules: run every 6 hours."
+    },
+    "scheduleEveryDay": {
+        "message": "Cada día",
+        "description": "Schedule option for auto-delete rules: run every day."
+    },
+    "scheduleEveryHour": {
+        "message": "Cada hora",
+        "description": "Schedule option for auto-delete rules: run every hour."
+    },
+    "scheduleOnBrowserClose": {
+        "message": "Al cerrar el navegador",
+        "description": "Schedule option for auto-delete rules: run when the browser closes."
+    },
+    "stsFree": {
+        "message": "Gratis",
+        "description": "Subscription badge text for free-tier users."
+    },
+    "stsHttpOnly": {
+        "message": "HttpOnly",
+        "description": "Badge label for cookies with the HttpOnly flag set."
+    },
+    "stsJwt": {
+        "message": "JWT",
+        "description": "Badge label for cookies detected as JWT tokens."
+    },
+    "stsLifetime": {
+        "message": "Vitalicio",
+        "description": "Subscription badge text for users with a lifetime license."
+    },
+    "stsPro": {
+        "message": "Pro",
+        "description": "Subscription badge text for Pro subscribers."
+    },
+    "stsProLabel": {
+        "message": "PRO",
+        "description": "Small label appended to locked features indicating they require a Pro subscription."
+    },
+    "stsSecure": {
+        "message": "Secure",
+        "description": "Badge label for cookies with the Secure flag set."
+    },
+    "stsSession": {
+        "message": "Sesión",
+        "description": "Badge label for session cookies (no expiration date)."
+    },
+    "stsTrial": {
+        "message": "Prueba",
+        "description": "Subscription badge text for users on a free trial."
+    },
+    "tabCookies": {
+        "message": "Cookies de rastreo detectadas",
+        "description": "Section heading on the Health tab when trackers are found."
+    },
+    "tabHealth": {
+        "message": "Salud",
+        "description": "Tab label for the Health tab in the popup navigation bar."
+    },
+    "tabProfiles": {
+        "message": "Perfiles",
+        "description": "Tab label for the Profiles tab in the popup navigation bar."
+    },
+    "tabRules": {
+        "message": "Reglas",
+        "description": "Tab label for the Rules tab in the popup navigation bar."
+    },
+    "tipAddCookie": {
+        "message": "Use the"
     },
     "tipDeleteProfile": {
         "message": "Eliminar perfil",
@@ -293,866 +2116,263 @@
         "message": "Ayuda y preguntas frecuentes",
         "description": "Tooltip for the Help link in the footer."
     },
+    "tipNavigateWebsite": {
+        "message": "Navigate to a website to view its cookies"
+    },
     "tipPrivacyPolicy": {
         "message": "Política de privacidad",
         "description": "Tooltip for the Privacy link in the footer."
     },
-
-    "msgDomainLoading": {
-        "message": "Cargando...",
-        "description": "Placeholder text shown for the domain name while the popup initializes."
+    "tipRestoreProfile": {
+        "message": "Restaurar cookies de este perfil",
+        "description": "Tooltip for the Load button on a profile card."
     },
-    "msgChromePage": {
-        "message": "Página de Chrome",
-        "description": "Domain display text when the active tab is a chrome:// internal page."
+    "tipSearchCookies": {
+        "message": "Press"
     },
-    "msgLoadingCookies": {
-        "message": "Cargando cookies...",
-        "description": "Loading state message shown while cookies are being fetched."
+    "tipSessionCookie": {
+        "message": "Deja vacío para cookie de sesión",
+        "description": "Hint text below the expiration date field in the cookie editor."
     },
-    "msgAnalyzingCookies": {
-        "message": "Analizando cookies...",
-        "description": "Summary text shown on the Health tab while analysis is in progress."
+    "titleAddCookie": {
+        "message": "Agregar cookie",
+        "description": "Modal title when creating a new cookie."
     },
-    "msgNoCookiesFound": {
-        "message": "No se encontraron cookies",
-        "description": "Empty state title when no cookies exist for the current domain."
+    "titleAddRule": {
+        "message": "Agregar regla",
+        "description": "Button label on the Rules tab to create a new auto-delete rule."
     },
-    "msgNoCookiesSet": {
-        "message": "Este sitio no tiene cookies configuradas",
-        "description": "Empty state subtitle when no cookies exist for the current domain."
+    "titleConfirm": {
+        "message": "Confirmar",
+        "description": "Default title for confirmation dialogs."
     },
-    "msgNoSearchResults": {
-        "message": "Ninguna cookie coincide con tu búsqueda",
-        "description": "Empty state subtitle when a search returns zero results."
+    "titleEditCookie": {
+        "message": "Editar cookie",
+        "description": "Modal title when editing an existing cookie."
     },
-    "msgNoCookiesToAnalyze": {
-        "message": "No hay cookies para analizar",
-        "description": "Empty state title on the Health tab when there are no cookies."
+    "titleEditRule": {
+        "message": "Editar regla",
+        "description": "Form title when editing an existing auto-delete rule."
     },
-    "msgVisitWebsite": {
-        "message": "Visita un sitio web para ver su puntuación de salud de cookies",
-        "description": "Empty state subtitle on the Health tab when there are no cookies."
+    "titleJwtToken": {
+        "message": "Token JWT",
+        "description": "Modal title for the JWT decoder viewer."
     },
-    "msgNoSavedProfiles": {
-        "message": "No hay perfiles guardados",
-        "description": "Empty state title on the Profiles tab when no profiles exist."
-    },
-    "msgSaveProfileHint": {
+    "titleSaveProfile": {
         "message": "Guarda tus cookies actuales como perfil para restaurarlas rápidamente después",
         "description": "Empty state subtitle on the Profiles tab when no profiles exist."
     },
-    "msgNoRulesYet": {
-        "message": "Aún no hay reglas",
-        "description": "Empty state title on the Rules tab when no auto-delete rules exist."
-    },
-    "msgCreateRuleHint": {
-        "message": "Crea una regla para eliminar cookies automáticamente según un horario",
-        "description": "Empty state subtitle on the Rules tab when no rules exist."
-    },
-    "msgJwtDetected": {
-        "message": "JWT detectado",
-        "description": "Badge text shown on the cookie value field when a JWT token is detected."
-    },
-    "msgJwtHeader": {
-        "message": "Encabezado",
-        "description": "Section heading for the JWT header section in the JWT decoder modal."
-    },
-    "msgJwtPayload": {
-        "message": "Contenido",
-        "description": "Section heading for the JWT payload section in the JWT decoder modal."
-    },
-    "msgAllCookies": {
-        "message": "Todas las cookies",
-        "description": "Badge text on a rule card when the cookie name pattern is set to wildcard (*)."
-    },
-    "msgAllClearHealthy": {
-        "message": "Todo bien. Tus cookies se ven saludables.",
-        "description": "Message shown in the recommendations section when no issues are found."
-    },
-    "msgWelcomeBack": {
-        "message": "Bienvenido de vuelta. Descubre lo que Cookie Manager puede hacer.",
-        "description": "Default retention banner message shown to returning users."
-    },
-    "msgReviewPrompt": {
-        "message": "¿Te gusta Cookie Manager? Una reseña rápida ayuda a otros desarrolladores a encontrarnos.",
-        "description": "Growth banner text prompting the user to leave a review on the Chrome Web Store."
-    },
-    "msgThisPageNoCookies": {
-        "message": "Esta página no tiene cookies",
-        "description": "Empty state message for chrome:// pages or pages with no cookies."
-    },
-    "msgFooterBuiltBy": {
-        "message": "Creado por",
-        "description": "Footer text before the brand name 'zovo.' attribution."
-    },
-    "msgFooterBrand": {
-        "message": "zovo.",
-        "description": "Brand name shown in the footer attribution. Do not translate."
-    },
-    "msgEmptyValue": {
-        "message": "(vacío)",
-        "description": "Display text when a cookie value is empty string."
-    },
-
-    "stsFree": {
-        "message": "Gratis",
-        "description": "Subscription badge text for free-tier users."
-    },
-    "stsPro": {
-        "message": "Pro",
-        "description": "Subscription badge text for Pro subscribers."
-    },
-    "stsTrial": {
-        "message": "Prueba",
-        "description": "Subscription badge text for users on a free trial."
-    },
-    "stsLifetime": {
-        "message": "Vitalicio",
-        "description": "Subscription badge text for users with a lifetime license."
-    },
-    "stsProLabel": {
-        "message": "PRO",
-        "description": "Small label appended to locked features indicating they require a Pro subscription."
-    },
-    "stsSecure": {
-        "message": "Secure",
-        "description": "Badge label for cookies with the Secure flag set."
-    },
-    "stsHttpOnly": {
-        "message": "HttpOnly",
-        "description": "Badge label for cookies with the HttpOnly flag set."
-    },
-    "stsJwt": {
-        "message": "JWT",
-        "description": "Badge label for cookies detected as JWT tokens."
-    },
-    "stsSession": {
-        "message": "Sesión",
-        "description": "Badge label for session cookies (no expiration date)."
-    },
-
-    "ntfCookieCreated": {
-        "message": "Cookie creada",
-        "description": "Toast notification shown after successfully creating a new cookie."
-    },
-    "ntfCookieSaved": {
-        "message": "Cookie guardada",
-        "description": "Toast notification shown after successfully saving/updating a cookie."
-    },
-    "ntfCookieDeleted": {
-        "message": "Cookie eliminada",
-        "description": "Toast notification shown after successfully deleting a cookie."
-    },
-    "ntfCookiesRefreshed": {
-        "message": "Cookies actualizadas",
-        "description": "Toast notification shown after refreshing the cookie list."
-    },
-    "ntfCookiesExportedClipboard": {
-        "message": "$COUNT$ cookies exportadas y copiadas al portapapeles",
-        "description": "Toast notification after exporting cookies with clipboard copy.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "12" } }
-    },
-    "ntfCookiesExportedFile": {
-        "message": "$COUNT$ cookies exportadas como archivo JSON",
-        "description": "Toast notification after exporting cookies as file (clipboard unavailable).",
-        "placeholders": { "COUNT": { "content": "$1", "example": "12" } }
-    },
-    "ntfImportedCookies": {
-        "message": "$IMPORTED$ cookies importadas",
-        "description": "Toast notification after importing cookies successfully.",
-        "placeholders": { "IMPORTED": { "content": "$1", "example": "8" } }
-    },
-    "ntfImportedCookiesWithFailures": {
-        "message": "$IMPORTED$ cookies importadas, $FAILED$ fallaron",
-        "description": "Toast notification after importing cookies when some failed.",
-        "placeholders": { "IMPORTED": { "content": "$1", "example": "8" }, "FAILED": { "content": "$2", "example": "2" } }
-    },
-    "ntfClearedCookies": {
-        "message": "$COUNT$ cookies eliminadas",
-        "description": "Toast notification after clearing all cookies for a domain.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "15" } }
-    },
-    "ntfReadOnlyEnabled": {
-        "message": "Modo de solo lectura activado",
-        "description": "Toast notification when the read-only toggle is turned on."
-    },
-    "ntfReadOnlyDisabled": {
-        "message": "Modo de solo lectura desactivado",
-        "description": "Toast notification when the read-only toggle is turned off."
-    },
-    "ntfCopiedToClipboard": {
-        "message": "Copiado al portapapeles",
-        "description": "Toast notification after successfully copying text to clipboard."
-    },
-    "ntfDebugBundleExported": {
-        "message": "Paquete de depuración exportado",
-        "description": "Toast notification after exporting a debug bundle file."
-    },
-    "ntfProfileSaved": {
-        "message": "Perfil \"$NAME$\" guardado con $COUNT$ cookies",
-        "description": "Toast notification after successfully saving a cookie profile.",
-        "placeholders": { "NAME": { "content": "$1", "example": "Dev Environment" }, "COUNT": { "content": "$2", "example": "12" } }
-    },
-    "ntfProfileRestored": {
-        "message": "$RESTORED$ de $TOTAL$ cookies restauradas",
-        "description": "Toast notification after loading a cookie profile.",
-        "placeholders": { "RESTORED": { "content": "$1", "example": "10" }, "TOTAL": { "content": "$2", "example": "12" } }
-    },
-    "ntfProfileRestoredWithFailures": {
-        "message": "$RESTORED$ de $TOTAL$ cookies restauradas ($FAILED$ fallaron)",
-        "description": "Toast notification after loading a profile with some failures.",
-        "placeholders": { "RESTORED": { "content": "$1", "example": "10" }, "TOTAL": { "content": "$2", "example": "12" }, "FAILED": { "content": "$3", "example": "2" } }
-    },
-    "ntfProfileDeleted": {
-        "message": "Perfil \"$NAME$\" eliminado",
-        "description": "Toast notification after deleting a cookie profile.",
-        "placeholders": { "NAME": { "content": "$1", "example": "Dev Environment" } }
-    },
-    "ntfRuleCreated": {
-        "message": "Regla creada",
-        "description": "Toast notification after creating a new auto-delete rule."
-    },
-    "ntfRuleUpdated": {
-        "message": "Regla actualizada",
-        "description": "Toast notification after updating an existing auto-delete rule."
-    },
-    "ntfRuleDeleted": {
-        "message": "Regla eliminada",
-        "description": "Toast notification after deleting an auto-delete rule."
-    },
-    "ntfFeedbackSubmitted": {
-        "message": "Comentario enviado. ¡Gracias!",
-        "description": "Toast notification after successfully submitting user feedback."
-    },
-    "ntfTrackersRemoved": {
-        "message": "$COUNT$ cookies de rastreo eliminadas",
-        "description": "Toast notification after cleaning tracking cookies from the Health tab.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "5" } }
-    },
-    "ntfCookiesSecured": {
-        "message": "$COUNT$ cookies aseguradas",
-        "description": "Toast notification after setting the Secure flag on insecure cookies.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "3" } }
-    },
-    "ntfCookiesCleared": {
-        "message": "Cookies eliminadas",
-        "description": "System notification title shown after clearing cookies via context menu."
-    },
-    "ntfCookiesClearedMsg": {
-        "message": "Se eliminaron $COUNT$ cookies de $DOMAIN$",
-        "description": "System notification body after clearing cookies via context menu.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "12" }, "DOMAIN": { "content": "$2", "example": "example.com" } }
-    },
-    "ntfReadOnlyNotification": {
-        "message": "El modo de solo lectura está activado. Desactívalo para limpiar las cookies.",
-        "description": "System notification body when user tries to clear via context menu but read-only is on."
-    },
-    "ntfCookiesExportedTitle": {
-        "message": "Cookies exportadas",
-        "description": "System notification title shown after exporting cookies via context menu."
-    },
-    "ntfCookiesExportedContextMsg": {
-        "message": "$COUNT$ cookies de $DOMAIN$ copiadas. Abre el popup para descargar.",
-        "description": "System notification body after exporting cookies via context menu.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "8" }, "DOMAIN": { "content": "$2", "example": "example.com" } }
-    },
-
-    "errReadOnlyMode": {
-        "message": "El modo de solo lectura está activado",
-        "description": "Error message when attempting a write operation while read-only mode is active."
-    },
-    "errCookieNameRequired": {
-        "message": "El nombre de la cookie es obligatorio",
-        "description": "Validation error when the cookie name field is empty."
-    },
-    "errDomainRequired": {
-        "message": "El dominio es obligatorio",
-        "description": "Validation error when the cookie domain field is empty."
-    },
-    "errDomainPatternRequired": {
-        "message": "El patrón de dominio es obligatorio",
-        "description": "Validation error when the rule domain pattern field is empty."
-    },
-    "errNoCookiesToExport": {
-        "message": "No hay cookies para exportar",
-        "description": "Error when attempting to export but there are no cookies."
-    },
-    "errNoCookiesToClear": {
-        "message": "No hay cookies para limpiar",
-        "description": "Error when attempting to clear all cookies but none exist."
-    },
-    "errFailedSaveCookie": {
-        "message": "Error al guardar la cookie",
-        "description": "Error message when a cookie save operation fails."
-    },
-    "errFailedDeleteCookie": {
-        "message": "Error al eliminar la cookie",
-        "description": "Error message when a cookie delete operation fails."
-    },
-    "errFailedExportCookies": {
-        "message": "Error al exportar las cookies",
-        "description": "Error message when exporting cookies fails."
-    },
-    "errFailedClearCookies": {
-        "message": "Error al limpiar las cookies",
-        "description": "Error message when clearing domain cookies fails."
-    },
-    "errFailedCopy": {
-        "message": "Error al copiar",
-        "description": "Error message when clipboard copy operation fails."
-    },
-    "errInvalidJwt": {
-        "message": "Token JWT no válido",
-        "description": "Error message when the cookie value cannot be decoded as a valid JWT."
-    },
-    "errImportFileTooLarge": {
-        "message": "Archivo de importación demasiado grande (máx. 1 MB)",
-        "description": "Error when the imported JSON file exceeds the 1 MB size limit."
-    },
-    "errImportInvalidFormat": {
-        "message": "Formato no válido: se esperaba un arreglo JSON de cookies",
-        "description": "Error when the imported file does not contain a valid JSON array."
-    },
-    "errImportTooManyCookies": {
-        "message": "Demasiadas cookies en el archivo de importación (máx. 500)",
-        "description": "Error when the imported file contains more than 500 cookies."
-    },
-    "errFailedParseJson": {
-        "message": "Error al analizar el archivo JSON",
-        "description": "Error when the imported file is not valid JSON."
-    },
-    "errFailedSaveSetting": {
-        "message": "Error al guardar la configuración",
-        "description": "Error when saving a user setting (e.g., read-only toggle) fails."
-    },
-    "errLoadingCookies": {
-        "message": "Error al cargar las cookies",
-        "description": "Error message displayed in the empty state when cookie loading fails."
-    },
-    "errNoDomainAvailable": {
-        "message": "No hay dominio disponible para guardar cookies",
-        "description": "Error when attempting to save a profile but no domain is detected."
-    },
-    "errFailedSaveProfile": {
-        "message": "Error al guardar el perfil",
-        "description": "Error when saving a cookie profile fails."
-    },
-    "errFailedLoadProfile": {
-        "message": "Error al cargar el perfil",
-        "description": "Error when loading/restoring a cookie profile fails."
-    },
-    "errFailedDeleteProfile": {
-        "message": "Error al eliminar el perfil",
-        "description": "Error when deleting a cookie profile fails."
-    },
-    "errFailedSaveRule": {
-        "message": "Error al guardar la regla",
-        "description": "Error when saving an auto-delete rule fails."
-    },
-    "errFailedDeleteRule": {
-        "message": "Error al eliminar la regla",
-        "description": "Error when deleting an auto-delete rule fails."
-    },
-    "errFailedSubmitFeedback": {
-        "message": "Error al enviar el comentario",
-        "description": "Error when the feedback submission fails."
-    },
-    "errDomainProtected": {
-        "message": "El dominio está protegido",
-        "description": "Error when attempting to modify cookies on a protected domain."
-    },
-    "errFreePlanRuleLimit": {
-        "message": "El plan gratuito permite 1 regla. Actualiza para más.",
-        "description": "Error when a free-tier user tries to create more than 1 auto-delete rule."
-    },
-    "errProfileNameRequired": {
-        "message": "El nombre del perfil es obligatorio",
-        "description": "Error from the background when saving a profile without a name."
-    },
-    "errNoCookiesToSave": {
-        "message": "No hay cookies para guardar en el perfil",
-        "description": "Error from the background when there are no cookies to save in a profile."
-    },
-    "errProfileNotFound": {
-        "message": "Perfil \"$NAME$\" no encontrado",
-        "description": "Error when trying to load or delete a profile that does not exist.",
-        "placeholders": { "NAME": { "content": "$1", "example": "Dev Environment" } }
-    },
-    "errLicenseKeyRequired": {
-        "message": "Por favor ingresa una clave de licencia.",
-        "description": "Validation error in the paywall when the license key field is empty."
-    },
-    "errLicenseConnectionFailed": {
-        "message": "Error de conexión. Por favor intenta de nuevo.",
-        "description": "Error in the paywall when the license activation request fails."
-    },
-    "errInvalidLicenseKey": {
-        "message": "Clave de licencia no válida. Verifica e intenta de nuevo.",
-        "description": "Error in the paywall when the entered license key is not valid."
-    },
-    "errRuntimeNotAvailable": {
-        "message": "El entorno de ejecución de la extensión no está disponible.",
-        "description": "Error in the paywall when chrome.runtime is not accessible."
-    },
-
-    "dlgDeleteCookie": {
-        "message": "¿Eliminar cookie?",
-        "description": "Confirm dialog title when deleting a single cookie."
-    },
-    "dlgDeleteCookieMsg": {
-        "message": "¿Estás seguro de que quieres eliminar \"$NAME$\"?",
-        "description": "Confirm dialog message when deleting a single cookie.",
-        "placeholders": { "NAME": { "content": "$1", "example": "session_id" } }
-    },
-    "dlgClearAllCookies": {
-        "message": "¿Limpiar todas las cookies?",
-        "description": "Confirm dialog title when clearing all cookies for a domain."
-    },
-    "dlgClearAllCookiesMsg": {
-        "message": "Esto eliminará todas las $COUNT$ cookies de este dominio.",
-        "description": "Confirm dialog message when clearing all cookies.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "15" } }
-    },
-    "dlgOverwriteProfile": {
-        "message": "¿Sobrescribir perfil?",
-        "description": "Confirm dialog title when saving a profile with a name that already exists."
-    },
-    "dlgOverwriteProfileMsg": {
-        "message": "Ya existe un perfil llamado \"$NAME$\". ¿Sobrescribirlo?",
-        "description": "Confirm dialog message when overwriting an existing profile.",
-        "placeholders": { "NAME": { "content": "$1", "example": "Dev Environment" } }
-    },
-    "dlgLoadProfile": {
-        "message": "¿Cargar perfil?",
-        "description": "Confirm dialog title when loading/restoring a cookie profile."
-    },
-    "dlgLoadProfileMsg": {
-        "message": "Esto restaurará todas las cookies de \"$NAME$\" en el dominio actual. Las cookies existentes no se eliminarán primero.",
-        "description": "Confirm dialog message when loading a profile.",
-        "placeholders": { "NAME": { "content": "$1", "example": "Dev Environment" } }
-    },
-    "dlgDeleteProfile": {
-        "message": "¿Eliminar perfil?",
-        "description": "Confirm dialog title when deleting a saved cookie profile."
-    },
-    "dlgDeleteProfileMsg": {
-        "message": "¿Estás seguro de que quieres eliminar \"$NAME$\"? Esto no se puede deshacer.",
-        "description": "Confirm dialog message when deleting a profile.",
-        "placeholders": { "NAME": { "content": "$1", "example": "Dev Environment" } }
-    },
-    "dlgDeleteRule": {
-        "message": "¿Eliminar regla?",
-        "description": "Confirm dialog title when deleting an auto-delete rule."
-    },
-    "dlgDeleteRuleMsg": {
-        "message": "¿Eliminar la regla de eliminación automática para \"$DOMAIN$\"?",
-        "description": "Confirm dialog message when deleting a rule.",
-        "placeholders": { "DOMAIN": { "content": "$1", "example": "*.google.com" } }
-    },
-    "dlgCleanTrackers": {
-        "message": "¿Limpiar cookies de rastreo?",
-        "description": "Confirm dialog title when cleaning tracking cookies on the Health tab."
-    },
-    "dlgCleanTrackersMsg": {
-        "message": "¿Eliminar $COUNT$ cookies de rastreo? Esto no se puede deshacer.",
-        "description": "Confirm dialog message when cleaning trackers.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "5" } }
-    },
-    "dlgSecureAllCookies": {
-        "message": "¿Asegurar todas las cookies?",
-        "description": "Confirm dialog title when adding the Secure flag to all insecure cookies."
-    },
-    "dlgSecureAllCookiesMsg": {
-        "message": "¿Establecer la bandera Secure en $COUNT$ cookies? Algunas cookies pueden no funcionar en sitios solo HTTP.",
-        "description": "Confirm dialog message when securing all cookies.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "8" } }
-    },
-
-    "ctxClearSiteCookies": {
-        "message": "Limpiar cookies de este sitio",
-        "description": "Context menu item to clear all cookies for the current site."
-    },
-    "ctxExportSiteCookies": {
-        "message": "Exportar cookies de este sitio",
-        "description": "Context menu item to export cookies for the current site."
-    },
-    "ctxOpenCookieManager": {
-        "message": "Abrir Cookie Manager",
-        "description": "Context menu item to open the Cookie Manager popup."
-    },
-    "ctxCookieManagerSettings": {
-        "message": "Configuración de Cookie Manager",
-        "description": "Context menu item to open the Cookie Manager settings/options page."
-    },
-
-    "optScheduleEveryHour": {
-        "message": "Cada hora",
-        "description": "Schedule option for auto-delete rules: run every hour."
-    },
-    "optScheduleEvery6Hours": {
-        "message": "Cada 6 horas",
-        "description": "Schedule option for auto-delete rules: run every 6 hours."
-    },
-    "optScheduleEveryDay": {
-        "message": "Cada día",
-        "description": "Schedule option for auto-delete rules: run every day."
-    },
-    "optScheduleOnBrowserClose": {
-        "message": "Al cerrar el navegador",
-        "description": "Schedule option for auto-delete rules: run when the browser closes."
-    },
-    "optSameSiteLax": {
-        "message": "Lax",
-        "description": "SameSite dropdown option: Lax policy."
-    },
-    "optSameSiteStrict": {
-        "message": "Strict",
-        "description": "SameSite dropdown option: Strict policy."
-    },
-    "optSameSiteNone": {
-        "message": "None",
-        "description": "SameSite dropdown option: None (no restriction) policy."
-    },
-
-    "payUpgradeTitle": {
-        "message": "Desbloquear $FEATURE$",
-        "description": "Paywall modal title. Shows which feature triggered the upgrade prompt.",
-        "placeholders": { "FEATURE": { "content": "$1", "example": "Cookie Profiles" } }
-    },
-    "payUpgradeSubtitle": {
-        "message": "Actualiza a Cookie Manager Pro para el kit completo de herramientas.",
-        "description": "Paywall modal subtitle text below the title."
-    },
-    "payFeatureHeader": {
-        "message": "Característica",
-        "description": "Column header in the paywall feature comparison table."
-    },
-    "payFreeHeader": {
-        "message": "Gratis",
-        "description": "Column header for the free tier in the paywall comparison table."
-    },
-    "payProHeader": {
-        "message": "Pro",
-        "description": "Column header for the Pro tier in the paywall comparison table."
-    },
-    "payFeatureBasicCookies": {
-        "message": "Gestión básica de cookies",
-        "description": "Feature name in paywall comparison: basic cookie CRUD operations."
-    },
-    "payFeatureCookieProfiles": {
-        "message": "Perfiles de cookies",
-        "description": "Feature name in paywall comparison: saving/loading cookie sets."
-    },
-    "payFeatureAutoDeleteRules": {
-        "message": "Reglas de eliminación automática",
-        "description": "Feature name in paywall comparison: scheduled cookie deletion rules."
-    },
-    "payFeatureAdvancedExport": {
-        "message": "Formatos de exportación avanzados",
-        "description": "Feature name in paywall comparison: Netscape, CSV export formats."
-    },
-    "payFeatureHealthDashboard": {
-        "message": "Panel de salud",
-        "description": "Feature name in paywall comparison: cookie health scoring and analysis."
-    },
-    "payFeatureJwtDecoder": {
-        "message": "Decodificador JWT",
-        "description": "Feature name in paywall comparison: decode and view JWT token cookies."
-    },
-    "payFeatureBulkOps": {
-        "message": "Operaciones masivas",
-        "description": "Feature name in paywall comparison: bulk cookie operations."
-    },
-    "payUnlimited": {
-        "message": "Ilimitado",
-        "description": "Feature limit text for Pro tier in paywall comparison table."
-    },
-    "payMonthly": {
-        "message": "Mensual",
-        "description": "Pricing tier name for monthly subscription in the paywall."
-    },
-    "payMonthlyPrice": {
-        "message": "$3.99/mes",
-        "description": "Monthly subscription price displayed in the paywall."
-    },
-    "payMonthlyNote": {
-        "message": "Facturado mensualmente",
-        "description": "Note below the monthly price in the paywall."
-    },
-    "payAnnual": {
-        "message": "Anual",
-        "description": "Pricing tier name for annual subscription in the paywall."
-    },
-    "payAnnualPrice": {
-        "message": "$29.99/año",
-        "description": "Annual subscription price displayed in the paywall."
-    },
-    "payAnnualNote": {
-        "message": "$2.50/mes facturado anualmente",
-        "description": "Note below the annual price showing monthly equivalent."
-    },
-    "payBestValue": {
-        "message": "Mejor valor",
-        "description": "Badge shown on the annual pricing tier to indicate best value."
-    },
-    "paySavePercent": {
-        "message": "Ahorra 37%",
-        "description": "Savings badge shown on the annual pricing tier."
-    },
-    "payCtaAnnual": {
-        "message": "Obtener Pro Anual - $29.99/año",
-        "description": "Primary CTA button text for annual subscription in the paywall."
-    },
-    "payCtaMonthly": {
-        "message": "Iniciar Mensual - $3.99/mes",
-        "description": "Secondary CTA button text for monthly subscription in the paywall."
-    },
-    "payTrustSecure": {
-        "message": "Pago seguro",
-        "description": "Trust signal text in the paywall footer."
-    },
-    "payTrustMoneyBack": {
-        "message": "Devolución en 7 días",
-        "description": "Trust signal text in the paywall footer."
-    },
-    "payTrustCancelAnytime": {
-        "message": "Cancela en cualquier momento",
-        "description": "Trust signal text in the paywall footer."
-    },
-    "payLicenseToggle": {
-        "message": "¿Ya tienes una clave de licencia?",
-        "description": "Toggle button text to show the license key input form in the paywall."
-    },
-    "payActivateLicense": {
+    "trialBannerText": {
+        "message": "Prueba Pro: $DAYS$ días restantes",
+        "description": "Trial banner text shown at the top of the popup during an active trial.",
+        "placeholders": {
+            "DAYS": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "trialUpgradeLink": {
+        "message": "Upgrade now"
+    },
+    "ttlAddCookie": {
+        "message": "Agregar cookie",
+        "description": "Modal title when creating a new cookie."
+    },
+    "ttlAddRule": {
+        "message": "Agregar regla de eliminación automática",
+        "description": "Form title when creating a new auto-delete rule."
+    },
+    "ttlClose": {
+        "message": "Cerrar",
+        "description": "Tooltip and aria-label for close buttons on modals."
+    },
+    "ttlConfirm": {
+        "message": "Confirmar",
+        "description": "Default title for confirmation dialogs."
+    },
+    "ttlCookieHealth": {
+        "message": "Salud de cookies",
+        "description": "Label shown inside the health score circle on the Health tab."
+    },
+    "ttlCookies": {
+        "message": "Cookies",
+        "description": "Tab label for the Cookies tab in the popup navigation bar."
+    },
+    "ttlCopy": {
+        "message": "Copiar",
+        "description": "Tooltip and aria-label for copy-to-clipboard buttons in the JWT viewer."
+    },
+    "ttlEditCookie": {
+        "message": "Editar cookie",
+        "description": "Modal title when editing an existing cookie."
+    },
+    "ttlEditRule": {
+        "message": "Editar regla",
+        "description": "Form title when editing an existing auto-delete rule."
+    },
+    "ttlHealth": {
+        "message": "Salud",
+        "description": "Tab label for the Health tab in the popup navigation bar."
+    },
+    "ttlHelpFaq": {
+        "message": "Ayuda y preguntas frecuentes",
+        "description": "Tooltip for the Help link in the footer."
+    },
+    "ttlJwtToken": {
+        "message": "Token JWT",
+        "description": "Modal title for the JWT decoder viewer."
+    },
+    "ttlPrivacyPolicy": {
+        "message": "Política de privacidad",
+        "description": "Tooltip for the Privacy link in the footer."
+    },
+    "ttlProfiles": {
+        "message": "Perfiles",
+        "description": "Tab label for the Profiles tab in the popup navigation bar."
+    },
+    "ttlReadOnly": {
+        "message": "Modo de solo lectura",
+        "description": "Title and aria-label for the read-only toggle switch in the action bar."
+    },
+    "ttlRecommendations": {
+        "message": "Recomendaciones",
+        "description": "Section heading for health recommendations on the Health tab."
+    },
+    "ttlRefreshCookies": {
+        "message": "Cookies",
+        "description": "Tab label for the Cookies tab in the popup navigation bar."
+    },
+    "ttlRules": {
+        "message": "Reglas",
+        "description": "Tab label for the Rules tab in the popup navigation bar."
+    },
+    "ttlSaveCookieProfile": {
+        "message": "Guardar perfil de cookies",
+        "description": "Dialog title when saving current cookies as a profile."
+    },
+    "ttlTrackingCookiesDetected": {
+        "message": "Cookies de rastreo detectadas",
+        "description": "Section heading on the Health tab when trackers are found."
+    },
+    "upgradeActivateLicense": {
         "message": "Activar licencia",
         "description": "Button text to submit the license key for activation."
     },
-    "payActivating": {
-        "message": "Activando...",
-        "description": "Button text shown while the license activation is in progress."
+    "upgradeBackToExt": {
+        "message": "Back to Cookie Manager"
     },
-    "payUpgradeProUnlimited": {
-        "message": "Actualiza a Pro para perfiles ilimitados",
-        "description": "Lock overlay message on the Profiles tab when the free-tier profile limit is reached."
+    "upgradeBestValue": {
+        "message": "Mejor valor",
+        "description": "Badge shown on the annual pricing tier to indicate best value."
     },
-    "payRulesFreeLimitReached": {
-        "message": "Límite gratuito alcanzado (1 regla). Actualiza para ilimitadas.",
-        "description": "Lock overlay message on the Rules tab when the free-tier rule limit is reached."
+    "upgradeBilledAnnually": {
+        "message": "Billed $$47.88/yr"
     },
-    "payTrialBanner": {
-        "message": "Prueba Pro: $DAYS$ días restantes",
-        "description": "Trial banner text shown at the top of the popup during an active trial.",
-        "placeholders": { "DAYS": { "content": "$1", "example": "5" } }
+    "upgradeBilledMonthly": {
+        "message": "Billed monthly"
     },
-
-    "msgCookieCount": {
-        "message": "$COUNT$ cookies",
-        "description": "Cookie count display on profile cards, e.g., '12 cookies'.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "12" } }
+    "upgradeChoosePlan": {
+        "message": "Choose Your Plan"
     },
-    "msgCookieCountSingular": {
-        "message": "1 cookie",
-        "description": "Singular form of cookie count display on profile cards."
+    "upgradeColFeature": {
+        "message": "Feature"
     },
-    "msgCookiesAffected": {
-        "message": "$COUNT$ cookies afectadas",
-        "description": "Count of cookies matching a rule, shown on rule cards.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "5" } }
+    "upgradeColFree": {
+        "message": "Free"
     },
-    "msgCookieAffectedSingular": {
-        "message": "1 cookie afectada",
-        "description": "Singular form of affected cookie count on rule cards."
+    "upgradeColPro": {
+        "message": "Pro"
     },
-    "msgSavedDatePrefix": {
-        "message": "Guardado",
-        "description": "Prefix before relative time on profile cards, e.g., 'Saved 2 hours ago'."
+    "upgradeComparisonTitle": {
+        "message": "Free vs Pro Comparison"
     },
-    "msgJustNow": {
-        "message": "justo ahora",
-        "description": "Relative time text for very recent actions (under 1 minute ago)."
+    "upgradeFooterCopyright": {
+        "message": "Cookie Manager by"
     },
-    "msgMinutesAgo": {
-        "message": "hace $COUNT$ min",
-        "description": "Relative time text for minutes, e.g., '5 min ago'.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "5" } }
+    "upgradeGetAnnual": {
+        "message": "Get Annual"
     },
-    "msgHoursAgo": {
-        "message": "hace $COUNT$ horas",
-        "description": "Relative time text for hours, e.g., '3 hours ago'.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "3" } }
+    "upgradeGetMonthly": {
+        "message": "Get Monthly"
     },
-    "msgHourAgo": {
-        "message": "hace 1 hora",
-        "description": "Singular relative time text for exactly one hour ago."
+    "upgradeHeroSubtitle": {
+        "message": "Remove all limits and access every professional feature with a Pro upgrade."
     },
-    "msgDaysAgo": {
-        "message": "hace $COUNT$ días",
-        "description": "Relative time text for days, e.g., '5 days ago'.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "5" } }
+    "upgradeHeroTitle": {
+        "message": "Unlock the Full Power of Cookie Manager"
     },
-    "msgDayAgo": {
-        "message": "hace 1 día",
-        "description": "Singular relative time text for exactly one day ago."
+    "upgradeLimitReached": {
+        "message": "You've reached your daily limit."
     },
-    "msgUnknownDate": {
-        "message": "fecha desconocida",
-        "description": "Fallback text when a profile has no recorded date."
+    "upgradePageTitle": {
+        "message": "Upgrade to Cookie Manager Pro"
     },
-    "msgCookiesFoundCount": {
-        "message": "$COUNT$ cookies encontradas",
-        "description": "Screen reader announcement after a search, e.g., '5 cookies found'.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "5" } }
+    "upgradePeriodMonth": {
+        "message": "/mo"
     },
-    "msgCookieFoundSingular": {
-        "message": "1 cookie encontrada",
-        "description": "Singular screen reader announcement when search returns 1 result."
+    "upgradePerkAllPro": {
+        "message": "All Pro features"
     },
-    "msgTabSelected": {
-        "message": "Pestaña $TAB$ seleccionada",
-        "description": "Screen reader announcement when switching tabs.",
-        "placeholders": { "TAB": { "content": "$1", "example": "Cookies" } }
+    "upgradePerkBestPrice": {
+        "message": "Best price per month"
     },
-    "msgHealthSummary": {
-        "message": "$COUNT$ cookies analizadas - Puntuación: $SCORE$/100",
-        "description": "Health tab summary line below the grade circle.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "15" }, "SCORE": { "content": "$2", "example": "82" } }
+    "upgradePerkCancel": {
+        "message": "Cancel anytime"
     },
-    "msgHealthSecureCookies": {
-        "message": "Cookies seguras",
-        "description": "Health category label for the percentage of cookies with the Secure flag."
+    "upgradePerkUnlimited": {
+        "message": "Ilimitado",
+        "description": "Feature limit text for Pro tier in paywall comparison table."
     },
-    "msgHealthHttpOnly": {
-        "message": "HttpOnly",
-        "description": "Health category label for the percentage of cookies with the HttpOnly flag."
+    "upgradePlanAnnual": {
+        "message": "Anual",
+        "description": "Pricing tier name for annual subscription in the paywall."
     },
-    "msgHealthSameSiteSet": {
-        "message": "SameSite configurado",
-        "description": "Health category label for the percentage of cookies with SameSite configured."
+    "upgradePlanMonthly": {
+        "message": "Mensual",
+        "description": "Pricing tier name for monthly subscription in the paywall."
     },
-    "msgHealthTrackersFound": {
-        "message": "Rastreadores encontrados",
-        "description": "Health category label for the number of tracking cookies detected."
+    "upgradeRestoreDesc": {
+        "message": "Enter your license key to restore your Pro subscription."
     },
-    "msgRecRemoveTrackers": {
-        "message": "Eliminar cookies de rastreo",
-        "description": "Health recommendation title: remove tracking cookies."
+    "upgradeRestorePurchase": {
+        "message": "Restore Purchase"
     },
-    "msgRecRemoveTrackersDetail": {
-        "message": "Elimina $COUNT$ cookies de rastreo para mejorar tu puntuación de privacidad.",
-        "description": "Health recommendation detail text for removing trackers.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "3" } }
+    "upgradeRestoreTitle": {
+        "message": "Restore Purchase"
     },
-    "msgRecAddSecureFlag": {
-        "message": "Agregar bandera Secure",
-        "description": "Health recommendation title: add Secure flag to insecure cookies."
+    "upgradeSave20": {
+        "message": "Save 20%"
     },
-    "msgRecAddSecureFlagDetail": {
-        "message": "$COUNT$ cookies carecen de la bandera Secure, haciéndolas vulnerables en conexiones HTTP.",
-        "description": "Health recommendation detail text for adding Secure flag.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "5" } }
+    "upgradeTestimonial1": {
+        "message": "\"Cookie Manager Pro saves me hours every week. The bulk operations and export formats are exactly what I needed.\""
     },
-    "msgRecAddHttpOnly": {
-        "message": "Agregar bandera HttpOnly",
-        "description": "Health recommendation title: add HttpOnly flag to exposed cookies."
+    "upgradeTestimonial2": {
+        "message": "\"The health dashboard alone is worth the upgrade. I can finally see which cookies are problematic at a glance.\""
     },
-    "msgRecAddHttpOnlyDetail": {
-        "message": "$COUNT$ cookies son accesibles por JavaScript y podrían ser robadas mediante XSS.",
-        "description": "Health recommendation detail text for adding HttpOnly flag.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "4" } }
+    "upgradeTestimonial3": {
+        "message": "\"Unlimited profiles and auto-delete rules make testing across environments effortless. Highly recommend!\""
     },
-    "msgRecSetSameSite": {
-        "message": "Establecer política SameSite",
-        "description": "Health recommendation title: set SameSite policy on cookies."
+    "upgradeTestimonialAuthor1": {
+        "message": "- Alex R., Web Developer"
     },
-    "msgRecSetSameSiteDetail": {
-        "message": "$COUNT$ cookies carecen de una política SameSite, aumentando el riesgo de CSRF.",
-        "description": "Health recommendation detail text for setting SameSite.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "6" } }
+    "upgradeTestimonialAuthor2": {
+        "message": "- Maria S., QA Engineer"
     },
-    "msgRecReduceLifespan": {
-        "message": "Reducir duración de cookies",
-        "description": "Health recommendation title: reduce lifespan of long-lived cookies."
+    "upgradeTestimonialAuthor3": {
+        "message": "- James T., DevOps Lead"
     },
-    "msgRecReduceLifespanDetail": {
-        "message": "$COUNT$ cookies persisten más de 1 año. Duraciones más cortas reducen la exposición al rastreo.",
-        "description": "Health recommendation detail text for reducing cookie lifespan.",
-        "placeholders": { "COUNT": { "content": "$1", "example": "2" } }
+    "upgradeTrustCancel": {
+        "message": "Cancel anytime"
     },
-
-    "a11yEditCookie": {
-        "message": "Editar cookie $NAME$",
-        "description": "Aria-label for cookie list items, announces the cookie name for screen readers.",
-        "placeholders": { "NAME": { "content": "$1", "example": "session_id" } }
+    "upgradeTrustGuarantee": {
+        "message": "7-day money-back guarantee"
     },
-    "a11yLoadProfile": {
-        "message": "Cargar perfil $NAME$, $COUNT$ cookies",
-        "description": "Aria-label for profile cards, announces profile name and cookie count.",
-        "placeholders": { "NAME": { "content": "$1", "example": "Dev Environment" }, "COUNT": { "content": "$2", "example": "12" } }
+    "upgradeTrustSecure": {
+        "message": "Pago seguro",
+        "description": "Trust signal text in the paywall footer."
     },
-    "a11yEditRule": {
-        "message": "Editar regla para $DOMAIN$",
-        "description": "Aria-label for the edit button on a rule card.",
-        "placeholders": { "DOMAIN": { "content": "$1", "example": "*.google.com" } }
-    },
-    "a11yDeleteRule": {
-        "message": "Eliminar regla para $DOMAIN$",
-        "description": "Aria-label for the delete button on a rule card.",
-        "placeholders": { "DOMAIN": { "content": "$1", "example": "*.google.com" } }
-    },
-    "a11yToggleRule": {
-        "message": "$ACTION$ regla para $DOMAIN$",
-        "description": "Aria-label for the enable/disable toggle on a rule card.",
-        "placeholders": { "ACTION": { "content": "$1", "example": "Disable" }, "DOMAIN": { "content": "$2", "example": "*.google.com" } }
-    },
-    "a11ySearchCookies": {
-        "message": "Buscar cookies",
-        "description": "Aria-label for the search input field."
-    },
-    "a11yCloseDialog": {
-        "message": "Cerrar diálogo",
-        "description": "Aria-label for modal close buttons."
-    },
-    "a11yDismiss": {
-        "message": "Descartar",
-        "description": "Aria-label for the dismiss button on retention/growth banners."
-    },
-    "a11yMainNavigation": {
-        "message": "Navegación principal",
-        "description": "Aria-label for the tab bar navigation element."
-    },
-    "a11yCopyHeader": {
-        "message": "Copiar encabezado",
-        "description": "Aria-label for the copy button in the JWT header section."
-    },
-    "a11yCopyPayload": {
-        "message": "Copiar contenido",
-        "description": "Aria-label for the copy button in the JWT payload section."
-    },
-    "a11yLicenseKey": {
-        "message": "Clave de licencia",
-        "description": "Aria-label for the license key input in the paywall."
-    },
-    "a11yCloseUpgradeDialog": {
-        "message": "Cerrar diálogo de actualización",
-        "description": "Aria-label for the close button on the paywall modal."
-    },
-    "a11yIncluded": {
-        "message": "Incluido",
-        "description": "Aria-label for checkmark icons in the paywall feature comparison table."
-    },
-    "a11yNotIncluded": {
-        "message": "No incluido",
-        "description": "Aria-label for dash/cross icons in the paywall feature comparison table."
-    },
-    "a11yDeleteProfile": {
-        "message": "Eliminar perfil $NAME$",
-        "description": "Aria-label for the delete button on a profile card.",
-        "placeholders": { "NAME": { "content": "$1", "example": "Dev Environment" } }
-    },
-    "a11yLoadProfileBtn": {
-        "message": "Cargar perfil $NAME$",
-        "description": "Aria-label for the load button on a profile card.",
-        "placeholders": { "NAME": { "content": "$1", "example": "Dev Environment" } }
+    "upgradeTrustedTitle": {
+        "message": "Trusted by Cookie Professionals"
     }
 }

@@ -58,17 +58,44 @@ class ZovoPopupIntegration {
             }
         }
 
-        container.innerHTML = `
-            <div class="zovo-retention-prompt">
-                <button class="zovo-retention-close" id="dismissPrompt" aria-label="Dismiss">×</button>
-                <h4 class="zovo-retention-title">${prompt.title}</h4>
-                <p class="zovo-retention-message">${prompt.message}</p>
-                ${prompt.ctaUrl
-                ? `<a href="${prompt.ctaUrl}" target="_blank" class="zovo-btn zovo-btn-primary zovo-btn-sm">${prompt.cta}</a>`
-                : `<button class="zovo-btn zovo-btn-primary zovo-btn-sm" data-action="${prompt.ctaAction}">${prompt.cta}</button>`
-            }
-            </div>
-        `;
+        // Build prompt DOM safely to prevent XSS from prompt data
+        var promptDiv = document.createElement('div');
+        promptDiv.className = 'zovo-retention-prompt';
+
+        var closeBtn = document.createElement('button');
+        closeBtn.className = 'zovo-retention-close';
+        closeBtn.id = 'dismissPrompt';
+        closeBtn.setAttribute('aria-label', 'Dismiss');
+        closeBtn.textContent = '\u00D7';
+        promptDiv.appendChild(closeBtn);
+
+        var titleEl = document.createElement('h4');
+        titleEl.className = 'zovo-retention-title';
+        titleEl.textContent = prompt.title || '';
+        promptDiv.appendChild(titleEl);
+
+        var msgEl = document.createElement('p');
+        msgEl.className = 'zovo-retention-message';
+        msgEl.textContent = prompt.message || '';
+        promptDiv.appendChild(msgEl);
+
+        if (prompt.ctaUrl) {
+            var ctaLink = document.createElement('a');
+            ctaLink.href = prompt.ctaUrl;
+            ctaLink.target = '_blank';
+            ctaLink.className = 'zovo-btn zovo-btn-primary zovo-btn-sm';
+            ctaLink.textContent = prompt.cta || '';
+            promptDiv.appendChild(ctaLink);
+        } else {
+            var ctaBtn = document.createElement('button');
+            ctaBtn.className = 'zovo-btn zovo-btn-primary zovo-btn-sm';
+            ctaBtn.setAttribute('data-action', prompt.ctaAction || '');
+            ctaBtn.textContent = prompt.cta || '';
+            promptDiv.appendChild(ctaBtn);
+        }
+
+        container.textContent = '';
+        container.appendChild(promptDiv);
 
         // Handle dismiss
         const dismissBtn = container.querySelector('#dismissPrompt');
@@ -156,13 +183,23 @@ class ZovoPopupIntegration {
                 card.href = ext.zovoUrl;
                 card.target = '_blank';
                 card.className = 'zovo-extension-card';
-                card.innerHTML = `
-                    <img src="${ext.icon}" alt="${ext.name}" onerror="this.style.display='none'">
-                    <div class="zovo-extension-card-info">
-                        <h5>${ext.name}</h5>
-                        <p>${ext.tagline}</p>
-                    </div>
-                `;
+
+                const img = document.createElement('img');
+                img.src = ext.icon || '';
+                img.alt = ext.name || '';
+                img.addEventListener('error', function () { this.style.display = 'none'; });
+                card.appendChild(img);
+
+                const info = document.createElement('div');
+                info.className = 'zovo-extension-card-info';
+                const h5 = document.createElement('h5');
+                h5.textContent = ext.name || '';
+                info.appendChild(h5);
+                const p = document.createElement('p');
+                p.textContent = ext.tagline || '';
+                info.appendChild(p);
+                card.appendChild(info);
+
                 list.appendChild(card);
             });
         }
@@ -209,10 +246,21 @@ const additionalStyles = `
 }
 `;
 
-// Inject additional styles
-const styleEl = document.createElement('style');
-styleEl.textContent = additionalStyles;
-document.head.appendChild(styleEl);
+// Inject additional styles (wait for DOM to be ready)
+function _injectPopupIntegrationStyles() {
+    if (document.head) {
+        var styleEl = document.createElement('style');
+        styleEl.textContent = additionalStyles;
+        document.head.appendChild(styleEl);
+    }
+}
+if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', _injectPopupIntegrationStyles);
+    } else {
+        _injectPopupIntegrationStyles();
+    }
+}
 
 // Export
 if (typeof window !== 'undefined') {

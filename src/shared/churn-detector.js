@@ -21,6 +21,10 @@
         return new Promise(function (resolve) {
             try {
                 chrome.storage.local.get(STORAGE_KEY, function (r) {
+                    if (chrome.runtime.lastError) {
+                        resolve(fallback);
+                        return;
+                    }
                     resolve(r[STORAGE_KEY] !== undefined ? r[STORAGE_KEY] : fallback);
                 });
             } catch (e) { resolve(fallback); }
@@ -31,7 +35,14 @@
         var d = {};
         d[STORAGE_KEY] = value;
         return new Promise(function (resolve) {
-            try { chrome.storage.local.set(d, function () { resolve(); }); }
+            try {
+                chrome.storage.local.set(d, function () {
+                    if (chrome.runtime.lastError) {
+                        console.warn('[ChurnDetector] write error:', chrome.runtime.lastError.message);
+                    }
+                    resolve();
+                });
+            }
             catch (e) { resolve(); }
         });
     }

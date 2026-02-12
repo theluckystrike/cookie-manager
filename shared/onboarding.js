@@ -175,7 +175,9 @@ if (typeof window !== 'undefined') {
     window.ZovoOnboarding = ZovoOnboarding;
 }
 
-if (typeof chrome !== 'undefined' && chrome.runtime) {
-    // Can be called from service worker
+if (typeof self !== 'undefined') {
+    // Can be called from service worker (self) or window context
+    self.triggerOnboardingOnInstall = triggerOnboardingOnInstall;
+} else if (typeof window !== 'undefined') {
     window.triggerOnboardingOnInstall = triggerOnboardingOnInstall;
 }

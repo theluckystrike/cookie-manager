@@ -1,0 +1,124 @@
+CHROME WEB STORE LISTING
+========================
+
+Title:
+Cookie Manager - Edit, Export & Profiles
+
+Short Description:
+View, edit, export, and manage cookies with profiles, auto-delete rules, JWT decoding, and a health dashboard. Works offline.
+
+Category:
+Developer Tools
+
+Tags:
+cookies, developer tools, privacy, cookie editor, cookie manager
+
+
+DETAILED DESCRIPTION
+====================
+
+Take full control of your browser cookies with Cookie Manager, a developer tool that works entirely offline and never collects your data.
+
+Cookie Manager gives you everything you need to inspect, edit, create, export, and organize cookies across every website you visit. Whether you debug authentication flows, test staging environments, or clean up tracking cookies, Cookie Manager handles it faster than DevTools alone.
+
+
+CORE FEATURES (FREE)
+
+View every cookie on any site in a clean, organized popup. See names, values, domains, paths, expiry dates, and security flags at a glance.
+
+Edit any cookie field directly. Change the name, value, domain, path, expiration, SameSite attribute, Secure flag, or HttpOnly flag with a single click.
+
+Delete cookies one at a time or clear them all in bulk. Remove exactly what you want without digging through browser settings.
+
+Create new cookies from scratch. Set every attribute manually and add cookies to any domain instantly.
+
+Export cookies in JSON format. Save your cookie data for documentation, debugging, or sharing with teammates.
+
+Search and filter cookies by name, domain, or value. Find the exact cookie you need in seconds, even on sites with hundreds of cookies.
+
+Save up to 2 Cookie Profiles for free. Capture a full set of cookies for a specific environment and restore them later with one click. Switch between logged-in accounts, test different user roles, or reset to a known state without logging in again.
+
+Set up 1 Auto-Delete Rule for free. Schedule automatic cookie cleanup by domain or pattern. Keep your browser clean without remembering to do it yourself.
+
+Decode JWT tokens built right into the extension. Paste or select any JSON Web Token and instantly see the decoded header, payload, and signature. No need to open a separate website or tool.
+
+Dark mode follows your system preference automatically.
+
+Available in 6 languages: English, Spanish, French, German, Japanese, and Portuguese (Brazil).
+
+
+PRO FEATURES
+
+Upgrade to Pro and unlock the full toolkit:
+
+Unlimited Cookie Profiles. Save as many environment snapshots as you need. Manage dozens of projects, clients, or test configurations without limits.
+
+Unlimited Auto-Delete Rules. Create cleanup rules for every domain and pattern that matters. Automate your cookie hygiene across your entire browsing session.
+
+Import cookies from a file. Load cookies from JSON or Netscape format to restore sessions, share environments with your team, or migrate data between browsers.
+
+Export cookies in Netscape format. Generate files compatible with curl, wget, and other command-line tools that accept Netscape cookie files.
+
+Cookie Health Dashboard. Get a security score, privacy analysis, and performance metrics for every site you visit. Receive actionable recommendations to reduce tracking exposure and improve cookie hygiene.
+
+Bulk operations on multiple cookies. Select several cookies at once and delete, export, or modify them together. Save time when managing large cookie sets.
+
+
+WHAT MAKES COOKIE MANAGER DIFFERENT
+
+Most cookie extensions let you view and delete cookies. Cookie Manager goes further.
+
+Built-in JWT decoder means you never leave the extension to inspect tokens. Cookie Profiles let you switch environments instantly instead of logging in and out. The Health Dashboard gives you a security audit no other cookie extension offers. Auto-Delete Rules keep your browser clean on autopilot.
+
+The free tier is generous. You get full editing, exporting, searching, JWT decoding, 2 profiles, and 1 auto-delete rule at no cost. Pro unlocks unlimited profiles, unlimited rules, import, Netscape export, bulk operations, and the Health Dashboard.
+
+Everything runs locally in your browser. No servers, no accounts, no data collection, no tracking. Your cookies never leave your machine.
+
+
+PERFECT FOR
+
+Web Developers
+Debug authentication, inspect session cookies, decode JWTs, and switch between staging and production environments in seconds. Stop wasting time in DevTools or rewriting curl commands by hand.
+
+QA Engineers
+Save cookie profiles for different test accounts and restore them with one click. Verify cookie attributes, test SameSite behavior, and validate security flags without writing scripts.
+
+Privacy-Conscious Users
+See exactly which cookies every site sets. Delete tracking cookies in bulk, schedule automatic cleanup, and review the Health Dashboard to understand your exposure. No data leaves your browser.
+
+
+PERMISSIONS EXPLAINED
+
+Cookie Manager requests only the permissions it needs to function. Here is what each one does and why:
+
+Cookies Permission: Allows the extension to read, create, edit, and delete cookies in your browser. This is the core functionality of the extension. Without it, Cookie Manager cannot access any cookie data.
+
+Storage Permission: Saves your Cookie Profiles, Auto-Delete Rules, and extension settings locally in your browser. Nothing is sent to any server. All data stays on your device.
+
+Context Menus Permission: Adds a right-click menu option for quick cookie actions. Right-click on any page to access Cookie Manager shortcuts without opening the popup.
+
+Notifications Permission: Displays a brief notification when an Auto-Delete Rule runs. This lets you know cookies were cleaned up automatically so you are never surprised by a missing session.
+
+Alarms Permission: Schedules Auto-Delete Rules to run at the intervals you set. The extension uses browser alarms to trigger cleanup on time, even when the popup is closed.
+
+All URLs Host Permission: Gives Cookie Manager access to cookies on every domain. Cookies are domain-specific, so the extension needs this broad permission to manage cookies across all the sites you visit. Without it, Cookie Manager could only see cookies for a single domain.
+
+
+PRIVACY AND DATA PRACTICES
+
+Cookie Manager collects zero user data. No analytics, no telemetry, no crash reporting, no usage tracking.
+
+All cookie data, profiles, rules, and settings stay in your local browser storage. Nothing is transmitted to any external server. The extension works entirely offline after installation.
+
+Cookie Manager does not inject scripts into web pages. It does not modify page content. It does not communicate with any remote endpoint.
+
+Your data belongs to you. Period.
+
+
+SUPPORT
+
+Website: https://www.zovo.one
+Email: support@zovo.one
+Developer: Michael Ip
+
+If you find a bug or have a feature request, reach out at support@zovo.one and expect a response within 24 hours.

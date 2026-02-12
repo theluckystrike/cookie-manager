@@ -127,9 +127,18 @@
 
     function readLogs() {
         return new Promise(function (resolve) {
-            chrome.storage.local.get(STORAGE_KEY, function (result) {
-                resolve(result[STORAGE_KEY] || []);
-            });
+            try {
+                chrome.storage.local.get(STORAGE_KEY, function (result) {
+                    if (chrome.runtime.lastError) {
+                        console.warn('[ErrorTracker] readLogs error:', chrome.runtime.lastError.message);
+                        resolve([]);
+                        return;
+                    }
+                    resolve((result && result[STORAGE_KEY]) || []);
+                });
+            } catch (e) {
+                resolve([]);
+            }
         });
     }
 
@@ -137,9 +146,16 @@
         var data = {};
         data[STORAGE_KEY] = logs;
         return new Promise(function (resolve) {
-            chrome.storage.local.set(data, function () {
+            try {
+                chrome.storage.local.set(data, function () {
+                    if (chrome.runtime.lastError) {
+                        console.warn('[ErrorTracker] writeLogs error:', chrome.runtime.lastError.message);
+                    }
+                    resolve();
+                });
+            } catch (e) {
                 resolve();
-            });
+            }
         });
     }
 

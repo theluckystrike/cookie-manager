@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>Cookie Manager — Profiles & Rules</title>
+  <link rel="stylesheet" href="promo-shared.css">
+  <style>
+    .panels-container {
+      display: flex;
+      gap: 32px;
+      align-items: stretch;
+      margin-top: 8px;
+    }
+    .panel-card {
+      background: #FFFFFF;
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(124, 58, 237, 0.08), 0 2px 8px rgba(0,0,0,0.04);
+      border: 1px solid #E2E8F0;
+      overflow: hidden;
+      width: 480px;
+    }
+    .panel-top {
+      background: #7C3AED;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .panel-top svg {
+      width: 20px;
+      height: 20px;
+      color: #FFFFFF;
+    }
+    .panel-top-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #FFFFFF;
+    }
+    .panel-top .panel-badge {
+      margin-left: auto;
+      background: rgba(255,255,255,0.2);
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 10px;
+    }
+    .panel-inner {
+      padding: 16px 22px;
+    }
+
+    /* Profile items */
+    .profile-item {
+      display: flex;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #F1F5F9;
+      gap: 14px;
+    }
+    .profile-item:last-child {
+      border-bottom: none;
+    }
+    .profile-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .profile-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+    .profile-icon.dev {
+      background: #DBEAFE;
+      color: #2563EB;
+    }
+    .profile-icon.prod {
+      background: #D1FAE5;
+      color: #059669;
+    }
+    .profile-icon.staging {
+      background: #FEF3C7;
+      color: #D97706;
+    }
+    .profile-details {
+      flex: 1;
+    }
+    .profile-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1E293B;
+    }
+    .profile-meta {
+      font-size: 12px;
+      color: #94A3B8;
+      margin-top: 2px;
+    }
+    .profile-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .profile-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: default;
+    }
+    .profile-btn.save {
+      background: #F5F3FF;
+      color: #7C3AED;
+    }
+    .profile-btn.restore {
+      background: #7C3AED;
+      color: #FFFFFF;
+    }
+
+    /* Rule items */
+    .rule-item {
+      padding: 14px 0;
+      border-bottom: 1px solid #F1F5F9;
+    }
+    .rule-item:last-child {
+      border-bottom: none;
+    }
+    .rule-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .rule-status {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .rule-status.active { background: #22C55E; }
+    .rule-status.paused { background: #F59E0B; }
+    .rule-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1E293B;
+      flex: 1;
+    }
+    .rule-toggle {
+      width: 36px;
+      height: 20px;
+      border-radius: 10px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .rule-toggle.on { background: #7C3AED; }
+    .rule-toggle.off { background: #CBD5E1; }
+    .rule-toggle::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: #FFFFFF;
+      border-radius: 50%;
+      top: 2px;
+    }
+    .rule-toggle.on::after { left: 18px; }
+    .rule-toggle.off::after { left: 2px; }
+    .rule-detail {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #64748B;
+      padding-left: 18px;
+    }
+    .rule-detail svg {
+      width: 13px;
+      height: 13px;
+      color: #94A3B8;
+      flex-shrink: 0;
+    }
+    .rule-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .add-rule-btn {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px;
+      border: 2px dashed #E2E8F0;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #94A3B8;
+      cursor: default;
+    }
+
+    /* Callout */
+    .main-callout {
+      position: absolute;
+      bottom: 68px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #7C3AED;
+      color: #FFFFFF;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      box-shadow: 0 4px 16px rgba(124, 58, 237, 0.25);
+    }
+    .main-callout svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <h1 class="headline">Save Cookie Profiles. <span class="accent">Automate Cleanup.</span></h1>
+    <p class="subtext">Switch between environments instantly and keep your browser tidy on autopilot</p>
+
+    <div class="panels-container">
+
+      <!-- Left Panel: Cookie Profiles -->
+      <div class="panel-card">
+        <div class="panel-top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span class="panel-top-title">Cookie Profiles</span>
+          <span class="panel-badge">3 saved</span>
+        </div>
+        <div class="panel-inner">
+          <!-- Development -->
+          <div class="profile-item">
+            <div class="profile-icon dev">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </div>
+            <div class="profile-details">
+              <div class="profile-name">Development</div>
+              <div class="profile-meta">12 cookies &middot; Last saved 2h ago</div>
+            </div>
+            <div class="profile-actions">
+              <span class="profile-btn save">Save</span>
+              <span class="profile-btn restore">Restore</span>
+            </div>
+          </div>
+          <!-- Production -->
+          <div class="profile-item">
+            <div class="profile-icon prod">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="profile-details">
+              <div class="profile-name">Production</div>
+              <div class="profile-meta">8 cookies &middot; Last saved 1d ago</div>
+            </div>
+            <div class="profile-actions">
+              <span class="profile-btn save">Save</span>
+              <span class="profile-btn restore">Restore</span>
+            </div>
+          </div>
+          <!-- Staging -->
+          <div class="profile-item">
+            <div class="profile-icon staging">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div class="profile-details">
+              <div class="profile-name">Staging</div>
+              <div class="profile-meta">6 cookies &middot; Last saved 3d ago</div>
+            </div>
+            <div class="profile-actions">
+              <span class="profile-btn save">Save</span>
+              <span class="profile-btn restore">Restore</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Panel: Auto-Delete Rules -->
+      <div class="panel-card">
+        <div class="panel-top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span class="panel-top-title">Auto-Delete Rules</span>
+          <span class="panel-badge">2 active</span>
+        </div>
+        <div class="panel-inner">
+          <!-- Rule 1 -->
+          <div class="rule-item">
+            <div class="rule-header">
+              <span class="rule-status active"></span>
+              <span class="rule-name">Clear analytics cookies</span>
+              <div class="rule-toggle on"></div>
+            </div>
+            <div class="rule-detail">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Every 24 hours &middot;
+              <span class="rule-tag badge-yellow">_ga, _gid, _gat</span>
+            </div>
+          </div>
+          <!-- Rule 2 -->
+          <div class="rule-item">
+            <div class="rule-header">
+              <span class="rule-status active"></span>
+              <span class="rule-name">Remove tracking pixels</span>
+              <div class="rule-toggle on"></div>
+            </div>
+            <div class="rule-detail">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Every 6 hours &middot;
+              <span class="rule-tag badge-red">_fbp, _fbc, fr</span>
+            </div>
+          </div>
+          <!-- Rule 3 (paused) -->
+          <div class="rule-item">
+            <div class="rule-header">
+              <span class="rule-status paused"></span>
+              <span class="rule-name">Clear expired cookies</span>
+              <div class="rule-toggle off"></div>
+            </div>
+            <div class="rule-detail">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              Daily at midnight &middot;
+              <span class="rule-tag badge-purple">All expired</span>
+            </div>
+          </div>
+
+          <div class="add-rule-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+            Add New Rule
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Callout -->
+    <div class="main-callout">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
+      Switch between environments instantly
+    </div>
+
+    <!-- Watermark -->
+    <div class="watermark">
+      <span class="logo-mark">z</span> Cookie Manager by Zovo
+    </div>
+
+  </div>
+</body>
+</html>

@@ -101,20 +101,28 @@
 
         if (!banner || !bannerText) return;
 
-        // Build banner message
+        // Build banner message using safe DOM API (no innerHTML with user-derived data)
         var featureName = FEATURE_DISPLAY_NAMES[params.feature] || params.feature;
-        var safeFeature = escapeHtml(featureName);
-        var message = '';
+        bannerText.textContent = '';
 
         if (params.reason === 'limit') {
-            message = 'You\u2019ve reached your daily limit for <strong>' + safeFeature + '</strong>. Upgrade to Pro for unlimited access.';
+            bannerText.appendChild(document.createTextNode('You\u2019ve reached your daily limit for '));
+            var strong1 = document.createElement('strong');
+            strong1.textContent = featureName;
+            bannerText.appendChild(strong1);
+            bannerText.appendChild(document.createTextNode('. Upgrade to Pro for unlimited access.'));
         } else if (params.reason === 'pro_only') {
-            message = '<strong>' + safeFeature + '</strong> is a Pro-only feature. Upgrade to unlock it.';
+            var strong2 = document.createElement('strong');
+            strong2.textContent = featureName;
+            bannerText.appendChild(strong2);
+            bannerText.appendChild(document.createTextNode(' is a Pro-only feature. Upgrade to unlock it.'));
         } else {
-            message = 'Upgrade to Pro to unlock full access to <strong>' + safeFeature + '</strong>.';
+            bannerText.appendChild(document.createTextNode('Upgrade to Pro to unlock full access to '));
+            var strong3 = document.createElement('strong');
+            strong3.textContent = featureName;
+            bannerText.appendChild(strong3);
+            bannerText.appendChild(document.createTextNode('.'));
         }
-
-        bannerText.innerHTML = message;
         banner.hidden = false;
 
         // Close button
@@ -166,12 +174,21 @@
 
         var features = COMPARISON_FEATURES;
 
-        // If FeatureManager is available, try to augment from it
-        if (typeof window.FeatureManager !== 'undefined' && window.FeatureManager.getFeatures) {
+        // If FeatureManager is available, build the table from its registry data.
+        // FeatureManager.getComparisonTable() returns { name, free, pro } but uses
+        // '--' and 'Included' instead of 'cross'/'check'. Map to the format that
+        // buildCellHtml() expects.
+        if (typeof window.FeatureManager !== 'undefined' && typeof window.FeatureManager.getComparisonTable === 'function') {
             try {
-                var registeredFeatures = window.FeatureManager.getFeatures();
-                if (registeredFeatures && registeredFeatures.length > 0) {
-                    features = registeredFeatures;
+                var rawFeatures = window.FeatureManager.getComparisonTable();
+                if (rawFeatures && rawFeatures.length > 0) {
+                    features = rawFeatures.map(function (f) {
+                        return {
+                            name: f.name,
+                            free: f.free === '--' ? 'cross' : (f.free === 'Included' ? 'check' : f.free),
+                            pro:  f.pro === '--'  ? 'cross' : (f.pro === 'Included'  ? 'check' : f.pro)
+                        };
+                    });
                 }
             } catch (e) {
                 // Fall back to hardcoded features
@@ -356,15 +373,32 @@
     function showActivationSuccess() {
         var hero = document.querySelector('.upgrade-hero');
         if (hero) {
-            hero.innerHTML =
-                '<div class="hero-success">' +
-                    '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--success); margin-bottom: 16px;">' +
-                        '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>' +
-                        '<polyline points="22 4 12 14.01 9 11.01"></polyline>' +
-                    '</svg>' +
-                    '<h2 class="hero-title" style="color: var(--success);">Pro Activated!</h2>' +
-                    '<p class="hero-subtitle">Your license has been activated. All Pro features are now unlocked.</p>' +
-                '</div>';
+            // Use DOM API instead of innerHTML for CSP compliance
+            hero.textContent = '';
+            var successDiv = document.createElement('div');
+            successDiv.className = 'hero-success';
+
+            // SVG checkmark icon (static content, safe for innerHTML on detached element)
+            var iconWrapper = document.createElement('div');
+            iconWrapper.innerHTML =
+                '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--success); margin-bottom: 16px;">' +
+                    '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>' +
+                    '<polyline points="22 4 12 14.01 9 11.01"></polyline>' +
+                '</svg>';
+            if (iconWrapper.firstChild) successDiv.appendChild(iconWrapper.firstChild);
+
+            var title = document.createElement('h2');
+            title.className = 'hero-title';
+            title.style.color = 'var(--success)';
+            title.textContent = 'Pro Activated!';
+            successDiv.appendChild(title);
+
+            var subtitle = document.createElement('p');
+            subtitle.className = 'hero-subtitle';
+            subtitle.textContent = 'Your license has been activated. All Pro features are now unlocked.';
+            successDiv.appendChild(subtitle);
+
+            hero.appendChild(successDiv);
         }
 
         // Hide pricing and comparison sections, keep social proof

@@ -5,6 +5,9 @@
     "description": "__MSG_extDescription__",
     "default_locale": "en",
     "author": "Michael Ip",
+    "short_name": "CookieMgr",
+    "version_name": "1.0.0",
+    "minimum_chrome_version": "110",
     "homepage_url": "https://www.zovo.one",
     "icons": {
         "16": "assets/icons/icon-16.png",

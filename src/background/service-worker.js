@@ -1317,15 +1317,19 @@ async function handleMessage(message) {
 // ============================================================================
 
 async function recordDailyHistory() {
-    var today = new Date().toISOString().split('T')[0];
-    var result = await chrome.storage.local.get('dailyHistory');
-    var history = result.dailyHistory || {};
-    history[today] = (history[today] || 0) + 1;
-    var keys = Object.keys(history).sort();
-    if (keys.length > 30) {
-        keys.slice(0, keys.length - 30).forEach(function(k) { delete history[k]; });
+    try {
+        var today = new Date().toISOString().split('T')[0];
+        var result = await chrome.storage.local.get('dailyHistory');
+        var history = result.dailyHistory || {};
+        history[today] = (history[today] || 0) + 1;
+        var keys = Object.keys(history).sort();
+        if (keys.length > 30) {
+            keys.slice(0, keys.length - 30).forEach(function(k) { delete history[k]; });
+        }
+        await chrome.storage.local.set({ dailyHistory: history });
+    } catch (e) {
+        debugLog('warn', 'DailyHistory', 'Failed to record daily history', e.message);
     }
-    await chrome.storage.local.set({ dailyHistory: history });
 }
 
 // ============================================================================
@@ -1374,12 +1378,40 @@ function setupContextMenu() {
 }
 
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-    if (!tab?.url || tab.url.startsWith('chrome://')) return;
+    // Validate tab exists and has a usable URL
+    if (!tab || !tab.id || !tab.url) return;
+    if (tab.url.startsWith('chrome://') || tab.url.startsWith('chrome-extension://') || tab.url.startsWith('about:')) return;
 
-    const domain = new URL(tab.url).hostname;
+    let domain;
+    try {
+        domain = new URL(tab.url).hostname;
+    } catch (e) {
+        debugLog('warn', 'ContextMenu', 'Invalid tab URL', tab.url);
+        return;
+    }
 
     switch (info.menuItemId) {
         case 'clear-site-cookies': {
+            // Premium feature gate: bulk_operations requires pro tier
+            if (typeof FeatureManager !== 'undefined') {
+                try {
+                    if (!FeatureManager._initialized) await FeatureManager.init();
+                    var featureCheck = FeatureManager.checkFeature('bulk_operations');
+                    if (featureCheck && !featureCheck.allowed) {
+                        chrome.notifications.create({
+                            type: 'basic',
+                            iconUrl: 'assets/icons/icon-128.png',
+                            title: chrome.i18n.getMessage('extName') || 'Cookie Manager',
+                            message: chrome.i18n.getMessage('ntfProFeature') || 'Clear All is a Pro feature. Open Cookie Manager to upgrade.'
+                        });
+                        return;
+                    }
+                } catch (e) {
+                    debugLog('warn', 'ContextMenu', 'Feature gate check failed for clear-site-cookies', e.message);
+                    // Allow operation to proceed if gate check fails
+                }
+            }
+
             const settings = await getSettings();
 
             if (settings.readOnlyMode) {
@@ -1388,6 +1420,16 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
                     iconUrl: 'assets/icons/icon-128.png',
                     title: chrome.i18n.getMessage('extName') || 'Cookie Manager',
                     message: chrome.i18n.getMessage('ntfReadOnlyEnabled') || 'Read-only mode is enabled. Disable it to clear cookies.'
+                });
+                return;
+            }
+
+            if (await isProtected(domain)) {
+                chrome.notifications.create({
+                    type: 'basic',
+                    iconUrl: 'assets/icons/icon-128.png',
+                    title: chrome.i18n.getMessage('extName') || 'Cookie Manager',
+                    message: chrome.i18n.getMessage('ntfDomainProtected') || 'This domain is protected. Remove it from the protected list first.'
                 });
                 return;
             }
@@ -1423,7 +1465,14 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
         }
 
         case 'open-cookie-manager':
-            chrome.action.openPopup();
+            try {
+                await chrome.action.openPopup();
+            } catch (e) {
+                // chrome.action.openPopup() may fail if no user gesture or in older Chrome
+                // Fall back to opening the popup as a tab
+                debugLog('warn', 'ContextMenu', 'openPopup failed, opening as tab', e.message);
+                chrome.tabs.create({ url: chrome.runtime.getURL('src/popup/index.html') });
+            }
             break;
 
         case 'open-settings':
@@ -1478,6 +1527,7 @@ chrome.runtime.onInstalled.addListener(async (details) => {
 
     // Create license refresh alarm only if it doesn't already exist (MD 08)
     chrome.alarms.get('licenseRefresh', (existing) => {
+        void chrome.runtime.lastError; // Suppress any error from alarms.get
         if (!existing) {
             chrome.alarms.create('licenseRefresh', { periodInMinutes: 30 });
             debugLog('info', 'License', 'Created licenseRefresh alarm (every 30 min)');
@@ -1507,9 +1557,9 @@ chrome.runtime.onInstalled.addListener(async (details) => {
         const { onboardingComplete } = await chrome.storage.local.get('onboardingComplete');
 
         if (!onboardingComplete) {
-            // Open onboarding tab
+            // Open welcome page tab (Phase 07)
             chrome.tabs.create({
-                url: chrome.runtime.getURL('onboarding/onboarding.html')
+                url: chrome.runtime.getURL('src/welcome/welcome.html')
             });
         }
 
@@ -1612,6 +1662,7 @@ async function trackEvent(eventName, properties = {}) {
 // Re-creating it on every SW wake-up would reset the scheduled time and
 // prevent the alarm from ever firing.
 chrome.alarms.get('churn-daily-check', (existing) => {
+    void chrome.runtime.lastError; // Suppress any error from alarms.get
     if (!existing) {
         chrome.alarms.create('churn-daily-check', { periodInMinutes: 1440 });
     }

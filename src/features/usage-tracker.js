@@ -31,7 +31,6 @@
      * }
      */
     var _usageData = {};
-    var _initialized = false;
 
     /**
      * Cached limits config loaded from limits-config.json.
@@ -234,7 +233,7 @@
     function init() {
         return _loadFromStorage().then(function (data) {
             _usageData = data || {};
-            _initialized = true;
+            UsageTracker._initialized = true;
         });
     }
 
@@ -465,6 +464,13 @@
     // ========================================================================
 
     var UsageTracker = {
+        /**
+         * Whether init() has been called successfully.
+         * Exposed so external code (e.g. service worker) can check
+         * `UsageTracker._initialized` before calling init().
+         */
+        _initialized:       false,
+
         init:               init,
         recordUsage:        recordUsage,
         checkLimit:         checkLimit,

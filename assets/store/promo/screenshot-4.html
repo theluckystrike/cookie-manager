@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>Cookie Manager — Health Dashboard</title>
+  <link rel="stylesheet" href="promo-shared.css">
+  <style>
+    .health-layout {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+      margin-top: 8px;
+      width: 100%;
+      max-width: 1060px;
+    }
+
+    /* Score card */
+    .score-card {
+      background: #FFFFFF;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(124, 58, 237, 0.08), 0 2px 8px rgba(0,0,0,0.04);
+      border: 1px solid #E2E8F0;
+      padding: 32px 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      width: 280px;
+      flex-shrink: 0;
+    }
+    .score-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .score-ring {
+      width: 180px;
+      height: 180px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .score-ring svg {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+    .score-ring .ring-bg {
+      fill: none;
+      stroke: #F1F5F9;
+      stroke-width: 10;
+    }
+    .score-ring .ring-fill {
+      fill: none;
+      stroke: #7C3AED;
+      stroke-width: 10;
+      stroke-linecap: round;
+      /* 78% of circumference (2*PI*70 = 439.8) => 343.1 */
+      stroke-dasharray: 343.1 439.8;
+    }
+    .score-center {
+      position: absolute;
+      text-align: center;
+    }
+    .score-number {
+      font-size: 48px;
+      font-weight: 800;
+      color: #1E293B;
+      line-height: 1;
+    }
+    .score-max {
+      font-size: 16px;
+      color: #94A3B8;
+      font-weight: 500;
+    }
+    .score-label {
+      font-size: 13px;
+      color: #7C3AED;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .score-summary {
+      font-size: 13px;
+      color: #64748B;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* Right panels */
+    .health-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Bars card */
+    .bars-card {
+      background: #FFFFFF;
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+      border: 1px solid #E2E8F0;
+      overflow: hidden;
+    }
+    .bars-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid #F1F5F9;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .bars-header svg {
+      width: 18px;
+      height: 18px;
+      color: #7C3AED;
+    }
+    .bars-header-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1E293B;
+    }
+    .bars-body {
+      padding: 20px 24px;
+    }
+
+    /* Bar row enhancements */
+    .hbar-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .hbar-row:last-child {
+      margin-bottom: 0;
+    }
+    .hbar-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .hbar-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+    .hbar-icon.security { background: #D1FAE5; color: #059669; }
+    .hbar-icon.privacy  { background: #FEF3C7; color: #D97706; }
+    .hbar-icon.perf     { background: #DBEAFE; color: #2563EB; }
+    .hbar-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1E293B;
+      width: 100px;
+      flex-shrink: 0;
+    }
+    .hbar-track {
+      flex: 1;
+      height: 12px;
+      background: #F1F5F9;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .hbar-fill {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 0.6s ease;
+    }
+    .hbar-fill.green  { background: linear-gradient(90deg, #22C55E, #16A34A); }
+    .hbar-fill.yellow { background: linear-gradient(90deg, #F59E0B, #D97706); }
+    .hbar-fill.blue   { background: linear-gradient(90deg, #3B82F6, #2563EB); }
+    .hbar-pct {
+      font-size: 16px;
+      font-weight: 700;
+      width: 48px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .hbar-pct.green  { color: #16A34A; }
+    .hbar-pct.yellow { color: #D97706; }
+    .hbar-pct.blue   { color: #2563EB; }
+
+    /* Recommendations card */
+    .recs-card {
+      background: #FFFFFF;
+      border-radius: 14px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+      border: 1px solid #E2E8F0;
+      overflow: hidden;
+    }
+    .recs-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid #F1F5F9;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .recs-header svg {
+      width: 18px;
+      height: 18px;
+      color: #7C3AED;
+    }
+    .recs-header-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1E293B;
+    }
+    .recs-body {
+      padding: 12px 24px;
+    }
+    .rec-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #F8FAFC;
+    }
+    .rec-item:last-child {
+      border-bottom: none;
+    }
+    .rec-severity {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .rec-severity.warn   { background: #F59E0B; }
+    .rec-severity.error  { background: #EF4444; }
+    .rec-severity.info   { background: #3B82F6; }
+    .rec-severity.ok     { background: #22C55E; }
+    .rec-text {
+      font-size: 14px;
+      color: #334155;
+      flex: 1;
+      line-height: 1.4;
+    }
+    .rec-text strong {
+      font-weight: 600;
+      color: #1E293B;
+    }
+    .rec-action {
+      font-size: 12px;
+      font-weight: 600;
+      color: #7C3AED;
+      flex-shrink: 0;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <h1 class="headline">Cookie Health <span class="accent">at a Glance</span></h1>
+    <p class="subtext">Identify security risks, privacy issues, and optimize your cookie configuration</p>
+
+    <div class="health-layout">
+
+      <!-- Left: Score Ring -->
+      <div class="score-card">
+        <div class="score-title">Overall Score</div>
+        <div class="score-ring">
+          <svg viewBox="0 0 160 160">
+            <circle class="ring-bg" cx="80" cy="80" r="70"/>
+            <circle class="ring-fill" cx="80" cy="80" r="70"/>
+          </svg>
+          <div class="score-center">
+            <div class="score-number">78</div>
+            <div class="score-max">/ 100</div>
+          </div>
+        </div>
+        <div class="score-label">Good - Room for Improvement</div>
+        <div class="score-summary">Scanned 24 cookies across<br>4 domains on this page</div>
+      </div>
+
+      <!-- Right: Bars + Recommendations -->
+      <div class="health-right">
+
+        <!-- Category Bars -->
+        <div class="bars-card">
+          <div class="bars-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+            <span class="bars-header-title">Category Breakdown</span>
+          </div>
+          <div class="bars-body">
+            <div class="hbar-row">
+              <div class="hbar-icon security">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <div class="hbar-label">Security</div>
+              <div class="hbar-track"><div class="hbar-fill green" style="width: 85%;"></div></div>
+              <div class="hbar-pct green">85%</div>
+            </div>
+            <div class="hbar-row">
+              <div class="hbar-icon privacy">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </div>
+              <div class="hbar-label">Privacy</div>
+              <div class="hbar-track"><div class="hbar-fill yellow" style="width: 62%;"></div></div>
+              <div class="hbar-pct yellow">62%</div>
+            </div>
+            <div class="hbar-row">
+              <div class="hbar-icon perf">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <div class="hbar-label">Performance</div>
+              <div class="hbar-track"><div class="hbar-fill blue" style="width: 91%;"></div></div>
+              <div class="hbar-pct blue">91%</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recommendations -->
+        <div class="recs-card">
+          <div class="recs-header">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span class="recs-header-title">Recommendations</span>
+          </div>
+          <div class="recs-body">
+            <div class="rec-item">
+              <span class="rec-severity warn"></span>
+              <span class="rec-text">Set <strong>SameSite=Lax</strong> on 3 cookies missing the attribute</span>
+              <span class="rec-action">Fix &rarr;</span>
+            </div>
+            <div class="rec-item">
+              <span class="rec-severity error"></span>
+              <span class="rec-text">Remove <strong>5 expired cookies</strong> that are no longer valid</span>
+              <span class="rec-action">Clean &rarr;</span>
+            </div>
+            <div class="rec-item">
+              <span class="rec-severity info"></span>
+              <span class="rec-text">Enable <strong>Secure flag</strong> on 2 cookies sent over HTTPS</span>
+              <span class="rec-action">Fix &rarr;</span>
+            </div>
+            <div class="rec-item">
+              <span class="rec-severity ok"></span>
+              <span class="rec-text"><strong>HttpOnly</strong> is correctly set on all session cookies</span>
+              <span class="rec-action" style="color: #16A34A;">OK</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Watermark -->
+    <div class="watermark">
+      <span class="logo-mark">z</span> Cookie Manager by Zovo
+    </div>
+
+  </div>
+</body>
+</html>

@@ -47,16 +47,22 @@
             marks: marks
         };
 
-        return chrome.storage.local.get({ startupHistory: [] }).then(function(result) {
-            var history = result.startupHistory;
-            history.push(entry);
-            if (history.length > MAX_STARTUP_HISTORY) {
-                history = history.slice(history.length - MAX_STARTUP_HISTORY);
-            }
-            return chrome.storage.local.set({ startupHistory: history }).then(function() {
+        try {
+            return chrome.storage.local.get({ startupHistory: [] }).then(function(result) {
+                var history = result.startupHistory;
+                history.push(entry);
+                if (history.length > MAX_STARTUP_HISTORY) {
+                    history = history.slice(history.length - MAX_STARTUP_HISTORY);
+                }
+                return chrome.storage.local.set({ startupHistory: history }).then(function() {
+                    return entry;
+                });
+            }).catch(function() {
                 return entry;
             });
-        });
+        } catch (e) {
+            return Promise.resolve(entry);
+        }
     };
 
     // ========================================================================
@@ -146,16 +152,22 @@
         var durationMs = Math.round((now() - this._popupTimerStart) * 100) / 100;
         this._popupTimerStart = null;
 
-        return chrome.storage.local.get({ popupLoadTimes: [] }).then(function(result) {
-            var times = result.popupLoadTimes;
-            times.push({ timestamp: Date.now(), durationMs: durationMs });
-            if (times.length > MAX_POPUP_LOAD_TIMES) {
-                times = times.slice(times.length - MAX_POPUP_LOAD_TIMES);
-            }
-            return chrome.storage.local.set({ popupLoadTimes: times }).then(function() {
+        try {
+            return chrome.storage.local.get({ popupLoadTimes: [] }).then(function(result) {
+                var times = result.popupLoadTimes;
+                times.push({ timestamp: Date.now(), durationMs: durationMs });
+                if (times.length > MAX_POPUP_LOAD_TIMES) {
+                    times = times.slice(times.length - MAX_POPUP_LOAD_TIMES);
+                }
+                return chrome.storage.local.set({ popupLoadTimes: times }).then(function() {
+                    return durationMs;
+                });
+            }).catch(function() {
                 return durationMs;
             });
-        });
+        } catch (e) {
+            return Promise.resolve(durationMs);
+        }
     };
 
     // ========================================================================
@@ -165,6 +177,7 @@
     PerformanceMonitor.prototype.getHealthReport = function() {
         var self = this;
 
+        try {
         return chrome.storage.local.get({
             popupLoadTimes: [],
             errorLogs: [],
@@ -193,7 +206,22 @@
                 errorRate: errorRate,
                 operationStats: self.getStats()
             };
+        }).catch(function() {
+            return {
+                popupLoadTime: null,
+                memoryUsage: null,
+                errorRate: 0,
+                operationStats: self.getStats()
+            };
         });
+        } catch (e) {
+            return Promise.resolve({
+                popupLoadTime: null,
+                memoryUsage: null,
+                errorRate: 0,
+                operationStats: this.getStats()
+            });
+        }
     };
 
     global.PerformanceMonitor = PerformanceMonitor;

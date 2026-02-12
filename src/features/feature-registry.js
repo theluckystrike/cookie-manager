@@ -199,7 +199,6 @@
     // ========================================================================
 
     var _currentTier = TIERS.FREE;
-    var _initialized = false;
 
     // ========================================================================
     // Internal Helpers
@@ -253,14 +252,22 @@
     var featureManager = {
 
         /**
+         * Whether init() has been called successfully.
+         * Exposed as a property so external code (e.g. service worker) can
+         * check `FeatureManager._initialized` before calling init().
+         */
+        _initialized: false,
+
+        /**
          * Initialize the FeatureManager by resolving the current license tier.
          * Safe to call multiple times; subsequent calls re-sync the tier.
          * @returns {Promise<void>}
          */
         init: function init() {
+            var self = featureManager;
             return _resolveTierFromStorage().then(function (tier) {
                 _currentTier = tier;
-                _initialized = true;
+                self._initialized = true;
             });
         },
 

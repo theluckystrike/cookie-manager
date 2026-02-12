@@ -58,7 +58,7 @@
         var msgEl = document.getElementById('confirmMessage');
         var cancelBtn = document.getElementById('confirmCancel');
         var okBtn = document.getElementById('confirmOk');
-        if (!overlay) return;
+        if (!overlay || !titleEl || !msgEl || !cancelBtn || !okBtn) return;
 
         titleEl.textContent = title;
         msgEl.textContent = message;
@@ -98,6 +98,10 @@
 
     function loadSettings() {
         chrome.storage.local.get(DEFAULTS, function(result) {
+            if (chrome.runtime.lastError) {
+                console.warn('[Options] Error loading settings:', chrome.runtime.lastError.message);
+                return;
+            }
             Object.keys(SETTING_IDS).forEach(function(key) {
                 var el = document.getElementById(key);
                 if (!el) return;
@@ -115,6 +119,10 @@
         var data = {};
         data[key] = value;
         chrome.storage.local.set(data, function() {
+            if (chrome.runtime.lastError) {
+                showToast('Failed to save setting', 'error');
+                return;
+            }
             showToast('Setting saved', 'success');
         });
     }
@@ -154,6 +162,10 @@
 
     function exportAllData() {
         chrome.storage.local.get(null, function(data) {
+            if (chrome.runtime.lastError) {
+                showToast('Failed to export data', 'error');
+                return;
+            }
             var safeData = redactCookieProfiles(data);
             var blob = new Blob([JSON.stringify(safeData, null, 2)], { type: 'application/json' });
             var url = URL.createObjectURL(blob);
@@ -214,6 +226,10 @@
                     return;
                 }
                 chrome.storage.local.set(data, function() {
+                    if (chrome.runtime.lastError) {
+                        showToast('Failed to import data', 'error');
+                        return;
+                    }
                     showToast('Data imported successfully. Reloading...', 'success');
                     setTimeout(function() { location.reload(); }, 1500);
                 });
@@ -230,6 +246,10 @@
             'This will clear all extension data including profiles, rules, and settings. This cannot be undone.',
             function() {
                 chrome.storage.local.clear(function() {
+                    if (chrome.runtime.lastError) {
+                        showToast('Failed to clear data', 'error');
+                        return;
+                    }
                     showToast('All data cleared. Reloading...', 'success');
                     setTimeout(function() { location.reload(); }, 1500);
                 });

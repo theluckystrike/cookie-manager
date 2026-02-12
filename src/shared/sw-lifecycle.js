@@ -134,16 +134,20 @@
          * @returns {Promise} Resolves with the operation result.
          */
         keepAlive: function (operation) {
-            var port, interval;
+            var port, heartbeatTimer, alive = true;
             try { port = chrome.runtime.connect({ name: 'sw-keepalive' }); }
             catch (_) { return Promise.resolve().then(operation); }
 
-            interval = setInterval(function () {
+            function sendHeartbeat() {
+                if (!alive) return;
                 try { port.postMessage({ type: 'keepalive', ts: Date.now() }); } catch (_) {}
-            }, 20000);
+                heartbeatTimer = setTimeout(sendHeartbeat, 20000);
+            }
+            heartbeatTimer = setTimeout(sendHeartbeat, 20000);
 
             function cleanup() {
-                clearInterval(interval);
+                alive = false;
+                clearTimeout(heartbeatTimer);
                 try { port.disconnect(); } catch (_) {}
             }
 

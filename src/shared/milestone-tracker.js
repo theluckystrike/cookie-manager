@@ -17,6 +17,10 @@
         return new Promise(function (resolve) {
             try {
                 chrome.storage.local.get(key, function (r) {
+                    if (chrome.runtime.lastError) {
+                        resolve(fallback);
+                        return;
+                    }
                     resolve(r[key] !== undefined ? r[key] : fallback);
                 });
             } catch (e) { resolve(fallback); }
@@ -26,7 +30,14 @@
     function write(key, value) {
         var d = {}; d[key] = value;
         return new Promise(function (resolve) {
-            try { chrome.storage.local.set(d, function () { resolve(); }); }
+            try {
+                chrome.storage.local.set(d, function () {
+                    if (chrome.runtime.lastError) {
+                        console.warn('[MilestoneTracker] write error:', chrome.runtime.lastError.message);
+                    }
+                    resolve();
+                });
+            }
             catch (e) { resolve(); }
         });
     }

@@ -68,6 +68,9 @@
             try {
                 return chrome.storage.local.get(SCHEMA).then(function (result) {
                     return Object.assign({}, SCHEMA, result);
+                }).catch(function (err) {
+                    console.error(TAG, 'getAll promise failed', err);
+                    return Object.assign({}, SCHEMA);
                 });
             } catch (err) {
                 console.error(TAG, 'getAll failed', err);
@@ -79,7 +82,10 @@
             try {
                 var q = {};
                 q[key] = SCHEMA.hasOwnProperty(key) ? SCHEMA[key] : undefined;
-                return chrome.storage.local.get(q).then(function (r) { return r[key]; });
+                return chrome.storage.local.get(q).then(function (r) { return r[key]; }).catch(function (err) {
+                    console.error(TAG, 'get promise failed', key, err);
+                    return SCHEMA.hasOwnProperty(key) ? SCHEMA[key] : undefined;
+                });
             } catch (err) {
                 console.error(TAG, 'get failed', key, err);
                 return Promise.resolve(SCHEMA.hasOwnProperty(key) ? SCHEMA[key] : undefined);
@@ -88,7 +94,9 @@
 
         set: function (data) {
             try {
-                return chrome.storage.local.set(data);
+                return chrome.storage.local.set(data).catch(function (err) {
+                    console.error(TAG, 'set promise failed', err);
+                });
             } catch (err) {
                 console.error(TAG, 'set failed', err);
                 return Promise.resolve();

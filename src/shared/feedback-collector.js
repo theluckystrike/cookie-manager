@@ -50,7 +50,12 @@
         return new Promise(function (resolve) {
             try {
                 if (typeof chrome === 'undefined' || !chrome.storage) { resolve(); return; }
-                chrome.storage.local.set(data, function () { resolve(); });
+                chrome.storage.local.set(data, function () {
+                    if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.lastError) {
+                        console.warn('[FeedbackCollector] write failed:', chrome.runtime.lastError.message);
+                    }
+                    resolve();
+                });
             } catch (e) { resolve(); }
         });
     }

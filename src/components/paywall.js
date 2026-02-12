@@ -391,6 +391,10 @@
         if (typeof chrome === 'undefined' || !chrome.storage || !chrome.storage.local) return;
 
         chrome.storage.local.get({ paywallImpressions: [] }, function (result) {
+            if (chrome.runtime.lastError) {
+                console.warn('[Paywall] Error reading impressions:', chrome.runtime.lastError.message);
+                return;
+            }
             var impressions = result.paywallImpressions || [];
 
             impressions.push({
@@ -403,7 +407,11 @@
                 impressions = impressions.slice(impressions.length - IMPRESSION_CAP);
             }
 
-            chrome.storage.local.set({ paywallImpressions: impressions });
+            chrome.storage.local.set({ paywallImpressions: impressions }, function () {
+                if (chrome.runtime.lastError) {
+                    console.warn('[Paywall] Error saving impressions:', chrome.runtime.lastError.message);
+                }
+            });
         });
     }
 
@@ -418,6 +426,11 @@
                 return;
             }
             chrome.storage.local.get({ paywallImpressions: [] }, function (result) {
+                if (chrome.runtime.lastError) {
+                    console.warn('[Paywall] Error reading impression count:', chrome.runtime.lastError.message);
+                    resolve(0);
+                    return;
+                }
                 var impressions = result.paywallImpressions || [];
                 resolve(impressions.length);
             });
@@ -444,6 +457,13 @@
         overlay.className = 'paywall-overlay';
         overlay.setAttribute('role', 'dialog');
         overlay.setAttribute('aria-modal', 'true');
+        // Format snake_case feature IDs to human-friendly names
+        if (featureName && featureName.indexOf('_') !== -1) {
+            featureName = featureName.split('_').map(function(word) {
+                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+            }).join(' ');
+        }
+
         overlay.innerHTML = buildModalHTML(featureName || 'Pro Features');
 
         document.body.appendChild(overlay);

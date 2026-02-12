@@ -131,8 +131,8 @@
         feedbackBtn.addEventListener('click', function () {
             try {
                 if (typeof chrome !== 'undefined' && chrome.runtime && chrome.runtime.sendMessage) {
-                    chrome.runtime.sendMessage({ action: 'OPEN_FEEDBACK' }, function () {
-                        if (chrome.runtime.lastError) {
+                    chrome.runtime.sendMessage({ action: 'OPEN_FEEDBACK' }, function (response) {
+                        if (chrome.runtime.lastError || (response && response.error)) {
                             openPopupFallback();
                         }
                     });

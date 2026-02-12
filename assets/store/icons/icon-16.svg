@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <!-- Purple rounded square background -->
+  <rect width="16" height="16" rx="3.5" ry="3.5" fill="#7C3AED"/>
+  <!-- Cookie body with bite taken out of upper-right -->
+  <path d="M7.8 3.4
+           C8.4 3.4 9 3.6 9.4 3.9
+           C8.8 4.4 8.7 5.1 9.1 5.6
+           C9.5 6.1 10.2 6.1 10.7 5.7
+           C11.8 6.5 12.5 7.8 12.5 8.2
+           C12.5 10.8 10.5 12.5 7.8 12.5
+           C5.4 12.5 3.5 10.5 3.5 8
+           C3.5 5.6 5.4 3.4 7.8 3.4Z"
+        fill="white"/>
+  <!-- Two chocolate chips -->
+  <circle cx="6.8" cy="7.4" r="0.9" fill="#7C3AED"/>
+  <circle cx="8.4" cy="9.8" r="0.9" fill="#7C3AED"/>
+</svg>

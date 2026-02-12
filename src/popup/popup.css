@@ -163,10 +163,11 @@ body {
 }
 
 .brand-title {
-    font-size: var(--text-base);
-    font-weight: 600;
+    font-size: var(--text-lg);
+    font-weight: 700;
     color: var(--text-primary);
     line-height: 1.2;
+    letter-spacing: -0.01em;
 }
 
 .brand-domain {
@@ -240,11 +241,13 @@ body {
 .cookie-count {
     font-size: var(--text-xs);
     font-weight: 600;
-    color: var(--text-muted);
-    background: var(--bg-tertiary);
+    color: var(--primary);
+    background: var(--primary-light);
     padding: 3px 8px;
     border-radius: var(--radius-full);
     flex-shrink: 0;
+    min-width: 24px;
+    text-align: center;
 }
 
 /* ---------- Tab Bar ---------- */
@@ -273,7 +276,7 @@ body {
     font-weight: 500;
     cursor: pointer;
     position: relative;
-    transition: color var(--transition-fast), background var(--transition-fast);
+    transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
     border-bottom: 2px solid transparent;
 }
 
@@ -284,7 +287,9 @@ body {
 
 .tab-btn.active {
     color: var(--primary);
+    font-weight: 600;
     border-bottom-color: var(--primary);
+    background: var(--primary-light);
 }
 
 .tab-btn svg {
@@ -339,16 +344,6 @@ body {
     color: var(--text-muted);
     max-width: 260px;
     line-height: 1.4;
-}
-
-/* ---------- Action Bar ---------- */
-.action-bar {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
-    border-bottom: 1px solid var(--border-color);
-    background: var(--bg-primary);
 }
 
 /* ---------- Buttons ---------- */
@@ -559,6 +554,7 @@ body {
 
 .cookie-item:hover {
     border-color: var(--primary);
+    background: var(--bg-secondary);
     transform: translateY(-1px);
     box-shadow: var(--shadow-sm);
 }
@@ -677,6 +673,40 @@ body {
     color: var(--text-muted);
 }
 
+/* Empty State Tips (Onboarding) */
+.empty-tips {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-4);
+    width: 100%;
+    max-width: 280px;
+}
+
+.empty-tip {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    text-align: left;
+    line-height: 1.4;
+}
+
+.empty-tip svg {
+    flex-shrink: 0;
+    color: var(--primary);
+    opacity: 0.7;
+}
+
+.empty-tip strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
 /* ---------- Loading State ---------- */
 .loading-state {
     display: flex;
@@ -776,7 +806,8 @@ body {
 
 .modal-header h2 {
     font-size: var(--text-lg);
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: -0.01em;
 }
 
 .modal-body {
@@ -922,6 +953,18 @@ body {
     transform: rotate(45deg) translateY(-1px);
 }
 
+/* Checkbox Highlight (SameSite=None → Secure required) */
+.checkbox-highlighted {
+    background: var(--warning-bg);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-md);
+    transition: background var(--transition-fast);
+}
+
+.checkbox-highlighted .checkbox-mark {
+    border-color: var(--warning);
+}
+
 /* ---------- JWT Badge in Form ---------- */
 .jwt-badge {
     display: flex;
@@ -1047,12 +1090,13 @@ body {
 .footer {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: var(--space-3);
     padding: var(--space-2) var(--space-4);
     border-top: 1px solid var(--border-color);
     background: var(--bg-primary);
     flex-shrink: 0;
     min-height: 36px;
+    flex-wrap: wrap;
 }
 
 .footer-link {
@@ -2040,11 +2084,12 @@ a:focus-visible {
 }
 
 .health-summary {
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     color: var(--text-secondary);
     text-align: center;
     max-width: 300px;
-    line-height: 1.4;
+    line-height: 1.5;
+    margin-top: var(--space-1);
 }
 
 /* Health Categories */
@@ -2059,6 +2104,14 @@ a:focus-visible {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    cursor: pointer;
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+    transition: background var(--transition-fast);
+}
+
+.health-cat:hover {
+    background: var(--bg-secondary);
 }
 
 .health-cat-header {
@@ -2171,6 +2224,7 @@ a:focus-visible {
     padding: var(--space-2) var(--space-3);
     background: rgba(124, 58, 237, 0.05);
     border: 1px solid rgba(124, 58, 237, 0.1);
+    border-left: 3px solid var(--primary);
     border-radius: var(--radius-md);
     font-size: var(--text-sm);
     color: var(--text-secondary);
@@ -2180,11 +2234,13 @@ a:focus-visible {
 .health-rec-card.health-rec-warning {
     background: rgba(245, 158, 11, 0.06);
     border-color: rgba(245, 158, 11, 0.15);
+    border-left: 3px solid var(--warning);
 }
 
 .health-rec-card.health-rec-security {
     background: rgba(239, 68, 68, 0.05);
     border-color: rgba(239, 68, 68, 0.12);
+    border-left: 3px solid var(--danger);
 }
 
 .health-rec-card.health-rec-info {
@@ -2292,20 +2348,41 @@ a:focus-visible {
 /* ---------- Subscription Badge ---------- */
 .subscription-badge {
     display: inline-block;
-    padding: 2px 8px;
+    padding: 1px 6px;
     border-radius: 100px;
-    font-size: 11px;
-    font-weight: 700;
+    font-size: 10px;
+    font-weight: 600;
     text-transform: uppercase;
     line-height: 1.4;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.2px;
     vertical-align: middle;
     margin-top: 2px;
+    cursor: pointer;
 }
 
 .badge-free {
-    background: var(--bg-tertiary);
-    color: var(--text-secondary);
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: lowercase;
+    letter-spacing: 0;
+    opacity: 0.6;
+}
+
+.badge-upgrade {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    font-size: 10px;
+    padding: 1px 6px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.badge-upgrade:hover {
+    color: var(--primary);
+    border-color: var(--primary);
 }
 
 .badge-pro {
@@ -2390,7 +2467,7 @@ a:focus-visible {
 
 /* ---------- Feature Locked State ---------- */
 .feature-locked {
-    opacity: 0.6;
+    opacity: 0.7;
     position: relative;
     cursor: pointer;
 }
@@ -2398,18 +2475,19 @@ a:focus-visible {
 .feature-locked::after {
     content: 'PRO';
     position: absolute;
-    top: 4px;
-    right: 4px;
-    padding: 1px 5px;
+    top: 2px;
+    right: 2px;
+    padding: 0px 4px;
     border-radius: 3px;
-    font-size: 9px;
+    font-size: 8px;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    background: linear-gradient(135deg, #7C3AED, #6D28D9);
+    letter-spacing: 0.3px;
+    background: var(--primary);
     color: #FFFFFF;
     pointer-events: none;
     z-index: 1;
+    line-height: 1.4;
 }
 
 /* ---------- Dark Mode Variants ---------- */
@@ -2433,7 +2511,7 @@ a:focus-visible {
     }
 
     .feature-locked::after {
-        background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+        background: var(--primary);
     }
 }
 
@@ -2460,7 +2538,7 @@ a:focus-visible {
     color: #fff;
 }
 .feature-locked:hover {
-    opacity: 0.85;
+    opacity: 0.9;
 }
 .lock-icon {
     font-size: 12px;

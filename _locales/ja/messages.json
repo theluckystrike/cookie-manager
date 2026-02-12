@@ -1,75 +1,260 @@
 {
-    "extName": {
-        "message": "Cookie Manager",
-        "description": "Extension name shown in Chrome Web Store and browser toolbar. Max 45 chars."
+    "a11yCloseDialog": {
+        "message": "ダイアログを閉じる",
+        "description": "Aria-label for modal close buttons."
     },
-    "extDescription": {
-        "message": "ブラウザのcookieの表示、編集、作成、削除。プロファイルのエクスポート/インポート、自動削除ルール、JWTデコード。",
-        "description": "Extension description for Chrome Web Store listing. Max 132 chars."
+    "a11yCloseUpgradeDialog": {
+        "message": "アップグレードダイアログを閉じる",
+        "description": "Aria-label for the close button on the paywall modal."
     },
-    "extActionTitle": {
-        "message": "Cookie Manager",
-        "description": "Tooltip shown when hovering over the extension icon in the browser toolbar."
+    "a11yCookiesFound": {
+        "message": "cookieが見つかりません",
+        "description": "Empty state title when no cookies exist for the current domain."
+    },
+    "a11yCopyHeader": {
+        "message": "ヘッダーをコピー",
+        "description": "Aria-label for the copy button in the JWT header section."
+    },
+    "a11yCopyPayload": {
+        "message": "ペイロードをコピー",
+        "description": "Aria-label for the copy button in the JWT payload section."
+    },
+    "a11yDeleteProfile": {
+        "message": "プロファイル $NAME$ を削除",
+        "description": "Aria-label for the delete button on a profile card.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "a11yDeleteRule": {
+        "message": "$DOMAIN$ のルールを削除",
+        "description": "Aria-label for the delete button on a rule card.",
+        "placeholders": {
+            "DOMAIN": {
+                "content": "$1",
+                "example": "*.google.com"
+            }
+        }
+    },
+    "a11yDismiss": {
+        "message": "閉じる",
+        "description": "Aria-label for the dismiss button on retention/growth banners."
+    },
+    "a11yEditCookie": {
+        "message": "cookie $NAME$ を編集",
+        "description": "Aria-label for cookie list items, announces the cookie name for screen readers.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "session_id"
+            }
+        }
+    },
+    "a11yEditRule": {
+        "message": "$DOMAIN$ のルールを編集",
+        "description": "Aria-label for the edit button on a rule card.",
+        "placeholders": {
+            "DOMAIN": {
+                "content": "$1",
+                "example": "*.google.com"
+            }
+        }
+    },
+    "a11yIncluded": {
+        "message": "含まれています",
+        "description": "Aria-label for checkmark icons in the paywall feature comparison table."
+    },
+    "a11yLicenseKey": {
+        "message": "ライセンスキー",
+        "description": "Aria-label for the license key input in the paywall."
+    },
+    "a11yLoadProfile": {
+        "message": "プロファイル $NAME$ を読み込み、$COUNT$個のcookie",
+        "description": "Aria-label for profile cards, announces profile name and cookie count.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            },
+            "COUNT": {
+                "content": "$2",
+                "example": "12"
+            }
+        }
+    },
+    "a11yLoadProfileBtn": {
+        "message": "プロファイル $NAME$ を読み込み",
+        "description": "Aria-label for the load button on a profile card.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "a11yMainNavigation": {
+        "message": "メインナビゲーション",
+        "description": "Aria-label for the tab bar navigation element."
+    },
+    "a11yNotIncluded": {
+        "message": "含まれていません",
+        "description": "Aria-label for dash/cross icons in the paywall feature comparison table."
+    },
+    "a11ySearchCookies": {
+        "message": "cookieを検索",
+        "description": "Aria-label for the search input field."
+    },
+    "a11yTabSelected": {
+        "message": "$TAB$タブが選択されました",
+        "description": "Screen reader announcement when switching tabs.",
+        "placeholders": {
+            "TAB": {
+                "content": "$1",
+                "example": "Cookies"
+            }
+        }
+    },
+    "a11yToggleRule": {
+        "message": "$DOMAIN$ のルールを$ACTION$",
+        "description": "Aria-label for the enable/disable toggle on a rule card.",
+        "placeholders": {
+            "ACTION": {
+                "content": "$1",
+                "example": "Disable"
+            },
+            "DOMAIN": {
+                "content": "$2",
+                "example": "*.google.com"
+            }
+        }
+    },
+    "ariaCloseDialog": {
+        "message": "ダイアログを閉じる",
+        "description": "Aria-label for modal close buttons."
+    },
+    "ariaCopyHeader": {
+        "message": "ヘッダーをコピー",
+        "description": "Aria-label for the copy button in the JWT header section."
+    },
+    "ariaCopyPayload": {
+        "message": "ペイロードをコピー",
+        "description": "Aria-label for the copy button in the JWT payload section."
+    },
+    "ariaDashboardFeatureBreakdown": {
+        "message": "Feature usage breakdown"
+    },
+    "ariaDashboardUpgrade": {
+        "message": "Upgrade to Pro"
+    },
+    "ariaDashboardValueStatement": {
+        "message": "Value statement"
+    },
+    "ariaDashboardValueSummary": {
+        "message": "Value summary"
+    },
+    "ariaDashboardWeeklyActivity": {
+        "message": "Weekly activity"
+    },
+    "ariaDismissBanner": {
+        "message": "閉じる",
+        "description": "Aria-label for the dismiss button on retention/growth banners."
+    },
+    "ariaFiveStars": {
+        "message": "5 out of 5 stars"
+    },
+    "ariaLicenseKey": {
+        "message": "ライセンスキー",
+        "description": "Aria-label for the license key input in the paywall."
+    },
+    "ariaMainNav": {
+        "message": "メインナビゲーション",
+        "description": "Aria-label for the tab bar navigation element."
+    },
+    "ariaReadOnly": {
+        "message": "Read-only mode"
+    },
+    "ariaRefreshCookies": {
+        "message": "cookieを更新",
+        "description": "Tooltip and aria-label for the refresh button in the popup header."
+    },
+    "ariaSearchCookies": {
+        "message": "cookieを検索",
+        "description": "Aria-label for the search input field."
+    },
+    "badgeFree": {
+        "message": "無料",
+        "description": "Subscription badge text for free-tier users."
+    },
+    "badgeLifetime": {
+        "message": "永久",
+        "description": "Subscription badge text for users with a lifetime license."
+    },
+    "badgeManageSub": {
+        "message": "サブスクリプション管理",
+        "description": "Footer link shown to paid users to manage their subscription."
+    },
+    "badgePro": {
+        "message": "Pro",
+        "description": "Subscription badge text for Pro subscribers."
+    },
+    "badgeTrial": {
+        "message": "お試し",
+        "description": "Subscription badge text for users on a free trial."
+    },
+    "badgeUpgrade": {
+        "message": "今すぐアップグレード",
+        "description": "Link text in the trial banner prompting user to upgrade before trial ends."
     },
     "brandTitle": {
         "message": "Cookie Manager",
         "description": "Brand title shown in the popup header next to the Zovo logo."
     },
-    "ttlCookies": {
-        "message": "Cookies",
-        "description": "Tab label for the Cookies tab in the popup navigation bar."
+    "btnAdd": {
+        "message": "追加",
+        "description": "Button label to add/create a new cookie. Shown in the action bar."
     },
-    "ttlProfiles": {
-        "message": "プロファイル",
-        "description": "Tab label for the Profiles tab in the popup navigation bar."
+    "btnAddRule": {
+        "message": "ルールを追加",
+        "description": "Button label on the Rules tab to create a new auto-delete rule."
     },
-    "ttlRules": {
-        "message": "ルール",
-        "description": "Tab label for the Rules tab in the popup navigation bar."
+    "btnCancel": {
+        "message": "キャンセル",
+        "description": "Button label to cancel and close a dialog or form."
     },
-    "ttlHealth": {
-        "message": "ヘルス",
-        "description": "Tab label for the Health tab in the popup navigation bar."
+    "btnCleanTrackers": {
+        "message": "トラッカーを削除",
+        "description": "Button on the Health tab to delete all detected tracking cookies."
     },
-    "ttlEditCookie": {
-        "message": "cookieを編集",
-        "description": "Modal title when editing an existing cookie."
+    "btnClear": {
+        "message": "クリア",
+        "description": "Button label to clear all cookies for the current domain. Shown in the action bar."
     },
-    "ttlAddCookie": {
-        "message": "cookieを追加",
-        "description": "Modal title when creating a new cookie."
+    "btnClose": {
+        "message": "閉じる",
+        "description": "Tooltip and aria-label for close buttons on modals."
     },
-    "ttlJwtToken": {
-        "message": "JWTトークン",
-        "description": "Modal title for the JWT decoder viewer."
-    },
-    "ttlConfirm": {
+    "btnConfirm": {
         "message": "確認",
-        "description": "Default title for confirmation dialogs."
+        "description": "Button label to confirm a destructive action in the confirm dialog."
     },
-    "ttlSaveCookieProfile": {
-        "message": "Cookieプロファイルを保存",
-        "description": "Dialog title when saving current cookies as a profile."
+    "btnCopy": {
+        "message": "コピー",
+        "description": "Tooltip and aria-label for copy-to-clipboard buttons in the JWT viewer."
     },
-    "ttlAddRule": {
-        "message": "自動削除ルールを追加",
-        "description": "Form title when creating a new auto-delete rule."
+    "btnDecodeJwt": {
+        "message": "デコード",
+        "description": "Link button shown next to a JWT-detected cookie value to open the JWT decoder."
     },
-    "ttlEditRule": {
-        "message": "ルールを編集",
-        "description": "Form title when editing an existing auto-delete rule."
+    "btnDelete": {
+        "message": "削除",
+        "description": "Button label to delete a cookie. Shown in the editor modal footer."
     },
-    "ttlCookieHealth": {
-        "message": "Cookieヘルス",
-        "description": "Label shown inside the health score circle on the Health tab."
-    },
-    "ttlTrackingCookiesDetected": {
-        "message": "トラッキングcookieが検出されました",
-        "description": "Section heading on the Health tab when trackers are found."
-    },
-    "ttlRecommendations": {
-        "message": "推奨事項",
-        "description": "Section heading for health recommendations on the Health tab."
+    "btnEdit": {
+        "message": "編集",
+        "description": "Button label on a rule card to edit the auto-delete rule."
     },
     "btnExport": {
         "message": "エクスポート",
@@ -79,13 +264,21 @@
         "message": "インポート",
         "description": "Button label to import cookies from a JSON file. Shown in the action bar."
     },
-    "btnAdd": {
-        "message": "追加",
-        "description": "Button label to add/create a new cookie. Shown in the action bar."
+    "btnLater": {
+        "message": "後で",
+        "description": "Dismiss button label for growth banners and retention prompts."
     },
-    "btnClear": {
-        "message": "クリア",
-        "description": "Button label to clear all cookies for the current domain. Shown in the action bar."
+    "btnLeaveReview": {
+        "message": "レビューを書く",
+        "description": "Button label in the growth banner prompting user to leave a Chrome Web Store review."
+    },
+    "btnLoad": {
+        "message": "読み込み",
+        "description": "Button label on a profile card to restore cookies from that profile."
+    },
+    "btnRefresh": {
+        "message": "cookieを更新",
+        "description": "Tooltip and aria-label for the refresh button in the popup header."
     },
     "btnSave": {
         "message": "保存",
@@ -95,253 +288,959 @@
         "message": "cookieを保存",
         "description": "Button label in the cookie editor modal footer to save the cookie."
     },
-    "btnSaveRule": {
-        "message": "ルールを保存",
-        "description": "Button label in the rule form to save the auto-delete rule."
-    },
-    "btnDelete": {
-        "message": "削除",
-        "description": "Button label to delete a cookie. Shown in the editor modal footer."
-    },
-    "btnCancel": {
-        "message": "キャンセル",
-        "description": "Button label to cancel and close a dialog or form."
-    },
-    "btnConfirm": {
-        "message": "確認",
-        "description": "Button label to confirm a destructive action in the confirm dialog."
-    },
-    "btnClose": {
-        "message": "閉じる",
-        "description": "Tooltip and aria-label for close buttons on modals."
-    },
-    "btnRefresh": {
-        "message": "cookieを更新",
-        "description": "Tooltip and aria-label for the refresh button in the popup header."
-    },
     "btnSaveCurrentCookies": {
         "message": "現在のcookieを保存",
         "description": "Button label on the Profiles tab to save the current domain cookies as a profile."
     },
-    "btnAddRule": {
-        "message": "ルールを追加",
-        "description": "Button label on the Rules tab to create a new auto-delete rule."
-    },
-    "btnLoad": {
-        "message": "読み込み",
-        "description": "Button label on a profile card to restore cookies from that profile."
-    },
-    "btnEdit": {
-        "message": "編集",
-        "description": "Button label on a rule card to edit the auto-delete rule."
-    },
-    "btnCleanTrackers": {
-        "message": "トラッカーを削除",
-        "description": "Button on the Health tab to delete all detected tracking cookies."
-    },
-    "btnDecodeJwt": {
-        "message": "デコード",
-        "description": "Link button shown next to a JWT-detected cookie value to open the JWT decoder."
-    },
-    "btnCopy": {
-        "message": "コピー",
-        "description": "Tooltip and aria-label for copy-to-clipboard buttons in the JWT viewer."
-    },
-    "btnLeaveReview": {
-        "message": "レビューを書く",
-        "description": "Button label in the growth banner prompting user to leave a Chrome Web Store review."
+    "btnSaveRule": {
+        "message": "ルールを保存",
+        "description": "Button label in the rule form to save the auto-delete rule."
     },
     "btnShare": {
         "message": "共有",
         "description": "Button label in the growth banner prompting user to share the extension."
     },
-    "btnLater": {
-        "message": "後で",
-        "description": "Dismiss button label for growth banners and retention prompts."
-    },
     "btnUpgradeNow": {
         "message": "今すぐアップグレード",
         "description": "Link text in the trial banner prompting user to upgrade before trial ends."
     },
-    "lblName": {
-        "message": "名前",
-        "description": "Form label for the cookie name field in the editor modal."
+    "buttonAdd": {
+        "message": "追加",
+        "description": "Button label to add/create a new cookie. Shown in the action bar."
     },
-    "lblValue": {
-        "message": "値",
-        "description": "Form label for the cookie value field in the editor modal."
+    "buttonAddRule": {
+        "message": "自動削除ルールを追加",
+        "description": "Form title when creating a new auto-delete rule."
     },
-    "lblDomain": {
-        "message": "ドメイン",
-        "description": "Form label for the cookie domain field in the editor modal."
+    "buttonCancel": {
+        "message": "キャンセル",
+        "description": "Button label to cancel and close a dialog or form."
     },
-    "lblPath": {
-        "message": "パス",
-        "description": "Form label for the cookie path field in the editor modal."
+    "buttonCleanTrackers": {
+        "message": "トラッカーを削除",
+        "description": "Button on the Health tab to delete all detected tracking cookies."
     },
-    "lblExpiration": {
-        "message": "有効期限",
-        "description": "Form label for the cookie expiration date field in the editor modal."
+    "buttonClear": {
+        "message": "クリア",
+        "description": "Button label to clear all cookies for the current domain. Shown in the action bar."
     },
-    "lblSecure": {
-        "message": "Secure",
-        "description": "Checkbox label for the Secure flag in the cookie editor."
+    "buttonConfirm": {
+        "message": "確認",
+        "description": "Button label to confirm a destructive action in the confirm dialog."
     },
-    "lblHttpOnly": {
+    "buttonDelete": {
+        "message": "削除",
+        "description": "Button label to delete a cookie. Shown in the editor modal footer."
+    },
+    "buttonEdit": {
+        "message": "編集",
+        "description": "Button label on a rule card to edit the auto-delete rule."
+    },
+    "buttonExport": {
+        "message": "エクスポート",
+        "description": "Button label to export cookies as JSON file. Shown in the action bar."
+    },
+    "buttonImport": {
+        "message": "インポート",
+        "description": "Button label to import cookies from a JSON file. Shown in the action bar."
+    },
+    "buttonLater": {
+        "message": "後で",
+        "description": "Dismiss button label for growth banners and retention prompts."
+    },
+    "buttonLoad": {
+        "message": "読み込み",
+        "description": "Button label on a profile card to restore cookies from that profile."
+    },
+    "buttonSave": {
+        "message": "Cookieプロファイルを保存",
+        "description": "Dialog title when saving current cookies as a profile."
+    },
+    "buttonSaveCookie": {
+        "message": "cookieを保存",
+        "description": "Button label in the cookie editor modal footer to save the cookie."
+    },
+    "buttonSaveCurrentCookies": {
+        "message": "保存",
+        "description": "Generic save button label used in dialogs."
+    },
+    "buttonSaveRule": {
+        "message": "ルールを保存",
+        "description": "Button label in the rule form to save the auto-delete rule."
+    },
+    "confirmClearAllMsg": {
+        "message": "このドメインの$COUNT$個のcookieがすべて削除されます。",
+        "description": "Confirm dialog message when clearing all cookies.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "15"
+            }
+        }
+    },
+    "confirmClearAllTitle": {
+        "message": "すべてのcookieをクリアしますか？",
+        "description": "Confirm dialog title when clearing all cookies for a domain."
+    },
+    "confirmDeleteCookieMsg": {
+        "message": "「$NAME$」を削除してもよろしいですか？",
+        "description": "Confirm dialog message when deleting a single cookie.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "session_id"
+            }
+        }
+    },
+    "confirmDeleteCookieTitle": {
+        "message": "cookieを削除しますか？",
+        "description": "Confirm dialog title when deleting a single cookie."
+    },
+    "confirmDeleteProfileMsg": {
+        "message": "「$NAME$」を削除してもよろしいですか？この操作は元に戻せません。",
+        "description": "Confirm dialog message when deleting a profile.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "confirmDeleteProfileTitle": {
+        "message": "プロファイルを削除",
+        "description": "Tooltip for the delete icon button on a profile card."
+    },
+    "confirmDeleteRuleMsg": {
+        "message": "「$DOMAIN$」の自動削除ルールを削除しますか？",
+        "description": "Confirm dialog message when deleting a rule.",
+        "placeholders": {
+            "DOMAIN": {
+                "content": "$1",
+                "example": "*.google.com"
+            }
+        }
+    },
+    "confirmDeleteRuleTitle": {
+        "message": "ルールを削除しますか？",
+        "description": "Confirm dialog title when deleting an auto-delete rule."
+    },
+    "confirmLoadProfileMsg": {
+        "message": "「$NAME$」のすべてのcookieが現在のドメインに復元されます。既存のcookieは先にクリアされません。",
+        "description": "Confirm dialog message when loading a profile.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "confirmLoadProfileTitle": {
+        "message": "プロファイルを読み込みますか？",
+        "description": "Confirm dialog title when loading/restoring a cookie profile."
+    },
+    "confirmOverwriteProfileMsg": {
+        "message": "「$NAME$」という名前のプロファイルが既に存在します。上書きしますか？",
+        "description": "Confirm dialog message when overwriting an existing profile.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "confirmOverwriteProfileTitle": {
+        "message": "プロファイルを上書きしますか？",
+        "description": "Confirm dialog title when saving a profile with a name that already exists."
+    },
+    "ctxClearCookies": {
+        "message": "このサイトのcookieをクリア",
+        "description": "Context menu item to clear all cookies for the current site."
+    },
+    "ctxClearSiteCookies": {
+        "message": "このサイトのcookieをクリア",
+        "description": "Context menu item to clear all cookies for the current site."
+    },
+    "ctxCookieManagerSettings": {
+        "message": "Cookie Managerの設定",
+        "description": "Context menu item to open the Cookie Manager settings/options page."
+    },
+    "ctxExportCookies": {
+        "message": "このサイトのcookieをエクスポート",
+        "description": "Context menu item to export cookies for the current site."
+    },
+    "ctxExportSiteCookies": {
+        "message": "このサイトのcookieをエクスポート",
+        "description": "Context menu item to export cookies for the current site."
+    },
+    "ctxOpenCookieManager": {
+        "message": "Cookie Managerを開く",
+        "description": "Context menu item to open the Cookie Manager popup."
+    },
+    "ctxSettings": {
+        "message": "Cookie Managerの設定",
+        "description": "Context menu item to open the Cookie Manager settings/options page."
+    },
+    "dashboardActionsToday": {
+        "message": "Actions Today"
+    },
+    "dashboardBreakdownEmpty": {
+        "message": "No feature usage data yet. Use Cookie Manager features to see your breakdown."
+    },
+    "dashboardChartEmpty": {
+        "message": "No activity recorded yet. Start managing cookies to see your weekly chart."
+    },
+    "dashboardCtaDesc": {
+        "message": "You are using"
+    },
+    "dashboardCtaTitle": {
+        "message": "Unlock More with Cookie Manager Pro"
+    },
+    "dashboardExportStats": {
+        "message": "Export Stats"
+    },
+    "dashboardFeatureBreakdown": {
+        "message": "Feature Usage Breakdown"
+    },
+    "dashboardFeatureDesc": {
+        "message": "How you use Cookie Manager"
+    },
+    "dashboardFeaturesUsed": {
+        "message": "Features Used"
+    },
+    "dashboardFooterBrand": {
+        "message": "Cookie Manager by"
+    },
+    "dashboardMemberSince": {
+        "message": "Member since --"
+    },
+    "dashboardPageTitle": {
+        "message": "Cookie Manager - Value Dashboard"
+    },
+    "dashboardResetStats": {
+        "message": "Reset Stats"
+    },
+    "dashboardSubtitle": {
+        "message": "Value Dashboard"
+    },
+    "dashboardTimeSaved": {
+        "message": "Time Saved This Week"
+    },
+    "dashboardTotalManaged": {
+        "message": "Total Cookies Managed"
+    },
+    "dashboardUpgradeBtn": {
+        "message": "Upgrade to Pro"
+    },
+    "dashboardValueStatement": {
+        "message": "Start using Cookie Manager to see your personalized value summary."
+    },
+    "dashboardWeeklyActivity": {
+        "message": "Weekly Activity"
+    },
+    "dashboardWeeklyDesc": {
+        "message": "Cookies managed over the last 7 days"
+    },
+    "dlgCleanTrackers": {
+        "message": "トラッキングcookieを削除しますか？",
+        "description": "Confirm dialog title when cleaning tracking cookies on the Health tab."
+    },
+    "dlgCleanTrackersMsg": {
+        "message": "$COUNT$個のトラッキングcookieを削除しますか？この操作は元に戻せません。",
+        "description": "Confirm dialog message when cleaning trackers.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "dlgClearAllCookies": {
+        "message": "すべてのcookieをクリアしますか？",
+        "description": "Confirm dialog title when clearing all cookies for a domain."
+    },
+    "dlgClearAllCookiesMsg": {
+        "message": "このドメインの$COUNT$個のcookieがすべて削除されます。",
+        "description": "Confirm dialog message when clearing all cookies.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "15"
+            }
+        }
+    },
+    "dlgDeleteCookie": {
+        "message": "cookieを削除しますか？",
+        "description": "Confirm dialog title when deleting a single cookie."
+    },
+    "dlgDeleteCookieMsg": {
+        "message": "「$NAME$」を削除してもよろしいですか？",
+        "description": "Confirm dialog message when deleting a single cookie.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "session_id"
+            }
+        }
+    },
+    "dlgDeleteProfile": {
+        "message": "プロファイルを削除しますか？",
+        "description": "Confirm dialog title when deleting a saved cookie profile."
+    },
+    "dlgDeleteProfileMsg": {
+        "message": "「$NAME$」を削除してもよろしいですか？この操作は元に戻せません。",
+        "description": "Confirm dialog message when deleting a profile.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "dlgDeleteRule": {
+        "message": "ルールを削除しますか？",
+        "description": "Confirm dialog title when deleting an auto-delete rule."
+    },
+    "dlgDeleteRuleMsg": {
+        "message": "「$DOMAIN$」の自動削除ルールを削除しますか？",
+        "description": "Confirm dialog message when deleting a rule.",
+        "placeholders": {
+            "DOMAIN": {
+                "content": "$1",
+                "example": "*.google.com"
+            }
+        }
+    },
+    "dlgLoadProfile": {
+        "message": "プロファイルを読み込みますか？",
+        "description": "Confirm dialog title when loading/restoring a cookie profile."
+    },
+    "dlgLoadProfileMsg": {
+        "message": "「$NAME$」のすべてのcookieが現在のドメインに復元されます。既存のcookieは先にクリアされません。",
+        "description": "Confirm dialog message when loading a profile.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "dlgOverwriteProfile": {
+        "message": "プロファイルを上書きしますか？",
+        "description": "Confirm dialog title when saving a profile with a name that already exists."
+    },
+    "dlgOverwriteProfileMsg": {
+        "message": "「$NAME$」という名前のプロファイルが既に存在します。上書きしますか？",
+        "description": "Confirm dialog message when overwriting an existing profile.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "dlgSecureAllCookies": {
+        "message": "すべてのcookieを保護しますか？",
+        "description": "Confirm dialog title when adding the Secure flag to all insecure cookies."
+    },
+    "dlgSecureAllCookiesMsg": {
+        "message": "$COUNT$個のcookieにSecureフラグを設定しますか？HTTPのみのサイトでは一部のcookieが動作しなくなる可能性があります。",
+        "description": "Confirm dialog message when securing all cookies.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "8"
+            }
+        }
+    },
+    "domainChromePage": {
+        "message": "Chromeページ",
+        "description": "Domain display text when the active tab is a chrome:// internal page."
+    },
+    "emptyChromePage": {
+        "message": "このページにはcookieがありません",
+        "description": "Empty state message for chrome:// pages or pages with no cookies."
+    },
+    "emptyNoCookies": {
+        "message": "このサイトにはcookieが設定されていません",
+        "description": "Empty state subtitle when no cookies exist for the current domain."
+    },
+    "emptyNoCookiesFound": {
+        "message": "No cookies found"
+    },
+    "emptyNoSearchMatch": {
+        "message": "検索に一致するcookieがありません",
+        "description": "Empty state subtitle when a search returns zero results."
+    },
+    "emptySubtitle": {
+        "message": "Cookie Manager Proにアップグレードして全機能をご利用ください。",
+        "description": "Paywall modal subtitle text below the title."
+    },
+    "emptyTitle": {
+        "message": "Cookie Manager",
+        "description": "Tooltip shown when hovering over the extension icon in the browser toolbar."
+    },
+    "errCookieNameRequired": {
+        "message": "cookie名は必須です",
+        "description": "Validation error when the cookie name field is empty."
+    },
+    "errDomainPatternRequired": {
+        "message": "ドメインパターンは必須です",
+        "description": "Validation error when the rule domain pattern field is empty."
+    },
+    "errDomainProtected": {
+        "message": "ドメインは保護されています",
+        "description": "Error when attempting to modify cookies on a protected domain."
+    },
+    "errDomainRequired": {
+        "message": "ドメインは必須です",
+        "description": "Validation error when the cookie domain field is empty."
+    },
+    "errEnterLicenseKey": {
+        "message": "ライセンスキーを入力してください。",
+        "description": "Validation error in the paywall when the license key field is empty."
+    },
+    "errFailedClearCookies": {
+        "message": "cookieのクリアに失敗しました",
+        "description": "Error message when clearing domain cookies fails."
+    },
+    "errFailedConnect": {
+        "message": "接続に失敗しました。もう一度お試しください。",
+        "description": "Error in the paywall when the license activation request fails."
+    },
+    "errFailedCopy": {
+        "message": "コピーに失敗しました",
+        "description": "Error message when clipboard copy operation fails."
+    },
+    "errFailedDeleteCookie": {
+        "message": "cookieの削除に失敗しました",
+        "description": "Error message when a cookie delete operation fails."
+    },
+    "errFailedDeleteProfile": {
+        "message": "プロファイルの削除に失敗しました",
+        "description": "Error when deleting a cookie profile fails."
+    },
+    "errFailedDeleteRule": {
+        "message": "ルールの削除に失敗しました",
+        "description": "Error when deleting an auto-delete rule fails."
+    },
+    "errFailedExportCookies": {
+        "message": "cookieのエクスポートに失敗しました",
+        "description": "Error message when exporting cookies fails."
+    },
+    "errFailedLoadProfile": {
+        "message": "プロファイルの読み込みに失敗しました",
+        "description": "Error when loading/restoring a cookie profile fails."
+    },
+    "errFailedParseJson": {
+        "message": "JSONファイルの解析に失敗しました",
+        "description": "Error when the imported file is not valid JSON."
+    },
+    "errFailedSaveCookie": {
+        "message": "cookieの保存に失敗しました",
+        "description": "Error message when a cookie save operation fails."
+    },
+    "errFailedSaveProfile": {
+        "message": "プロファイルの保存に失敗しました",
+        "description": "Error when saving a cookie profile fails."
+    },
+    "errFailedSaveRule": {
+        "message": "ルールの保存に失敗しました",
+        "description": "Error when saving an auto-delete rule fails."
+    },
+    "errFailedSaveSetting": {
+        "message": "設定の保存に失敗しました",
+        "description": "Error when saving a user setting (e.g., read-only toggle) fails."
+    },
+    "errFailedSubmitFeedback": {
+        "message": "フィードバックの送信に失敗しました",
+        "description": "Error when the feedback submission fails."
+    },
+    "errFreePlanRuleLimit": {
+        "message": "無料プランでは1つのルールのみ作成できます。アップグレードしてください。",
+        "description": "Error when a free-tier user tries to create more than 1 auto-delete rule."
+    },
+    "errFreeRuleLimit": {
+        "message": "無料プランでは1つのルールのみ作成できます。アップグレードしてください。",
+        "description": "Error when a free-tier user tries to create more than 1 auto-delete rule."
+    },
+    "errImportFileTooLarge": {
+        "message": "インポートファイルが大きすぎます（最大1 MB）",
+        "description": "Error when the imported JSON file exceeds the 1 MB size limit."
+    },
+    "errImportInvalidFormat": {
+        "message": "無効な形式です。cookieのJSON配列が必要です",
+        "description": "Error when the imported file does not contain a valid JSON array."
+    },
+    "errImportTooManyCookies": {
+        "message": "インポートファイルのcookieが多すぎます（最大500）",
+        "description": "Error when the imported file contains more than 500 cookies."
+    },
+    "errInvalidImportFormat": {
+        "message": "無効な形式です。cookieのJSON配列が必要です",
+        "description": "Error when the imported file does not contain a valid JSON array."
+    },
+    "errInvalidJwt": {
+        "message": "無効なJWTトークンです",
+        "description": "Error message when the cookie value cannot be decoded as a valid JWT."
+    },
+    "errInvalidLicenseKey": {
+        "message": "無効なライセンスキーです。確認してもう一度お試しください。",
+        "description": "Error in the paywall when the entered license key is not valid."
+    },
+    "errLicenseConnectionFailed": {
+        "message": "接続に失敗しました。もう一度お試しください。",
+        "description": "Error in the paywall when the license activation request fails."
+    },
+    "errLicenseKeyRequired": {
+        "message": "ライセンスキーを入力してください。",
+        "description": "Validation error in the paywall when the license key field is empty."
+    },
+    "errLoadingCookies": {
+        "message": "cookieの読み込みエラー",
+        "description": "Error message displayed in the empty state when cookie loading fails."
+    },
+    "errNoCookiesToClear": {
+        "message": "クリアするcookieがありません",
+        "description": "Error when attempting to clear all cookies but none exist."
+    },
+    "errNoCookiesToExport": {
+        "message": "エクスポートするcookieがありません",
+        "description": "Error when attempting to export but there are no cookies."
+    },
+    "errNoCookiesToSave": {
+        "message": "プロファイルに保存するcookieがありません",
+        "description": "Error from the background when there are no cookies to save in a profile."
+    },
+    "errNoDomainAvailable": {
+        "message": "cookieを保存するドメインがありません",
+        "description": "Error when attempting to save a profile but no domain is detected."
+    },
+    "errProfileNameRequired": {
+        "message": "プロファイル名は必須です",
+        "description": "Error from the background when saving a profile without a name."
+    },
+    "errProfileNotFound": {
+        "message": "プロファイル「$NAME$」が見つかりません",
+        "description": "Error when trying to load or delete a profile that does not exist.",
+        "placeholders": {
+            "NAME": {
+                "content": "$1",
+                "example": "Dev Environment"
+            }
+        }
+    },
+    "errReadOnlyMode": {
+        "message": "読み取り専用モードが有効です",
+        "description": "Error message when attempting a write operation while read-only mode is active."
+    },
+    "errRuntimeNotAvailable": {
+        "message": "拡張機能のランタイムが利用できません。",
+        "description": "Error in the paywall when chrome.runtime is not accessible."
+    },
+    "errUpgradeForProfiles": {
+        "message": "Upgrade to Pro for unlimited profiles"
+    },
+    "extActionTitle": {
+        "message": "Cookie Manager",
+        "description": "Tooltip shown when hovering over the extension icon in the browser toolbar."
+    },
+    "extDescription": {
+        "message": "ブラウザのcookieの表示、編集、作成、削除。プロファイルのエクスポート/インポート、自動削除ルール、JWTデコード。",
+        "description": "Extension description for Chrome Web Store listing. Max 132 chars."
+    },
+    "extName": {
+        "message": "Cookie Manager",
+        "description": "Extension name shown in Chrome Web Store and browser toolbar. Max 45 chars."
+    },
+    "featureAdvancedExport": {
+        "message": "高度なエクスポート形式",
+        "description": "Feature name in paywall comparison: Netscape, CSV export formats."
+    },
+    "featureAutoDeleteRules": {
+        "message": "自動削除ルール",
+        "description": "Feature name in paywall comparison: scheduled cookie deletion rules."
+    },
+    "featureBulkOps": {
+        "message": "一括操作",
+        "description": "Feature name in paywall comparison: bulk cookie operations."
+    },
+    "featureCookieProfiles": {
+        "message": "Cookieプロファイル",
+        "description": "Feature name in paywall comparison: saving/loading cookie sets."
+    },
+    "featureEditDeleteCreate": {
+        "message": "Edit, Delete & Create Cookies"
+    },
+    "featureHealthDashboard": {
+        "message": "ヘルスダッシュボード",
+        "description": "Feature name in paywall comparison: cookie health scoring and analysis."
+    },
+    "featureImportCookies": {
+        "message": "Import Cookies"
+    },
+    "featureJwtDecoder": {
+        "message": "JWTデコーダー",
+        "description": "Feature name in paywall comparison: decode and view JWT token cookies."
+    },
+    "featureNoDailyLimits": {
+        "message": "No Daily Limits"
+    },
+    "featureUnlimited": {
+        "message": "Proにアップグレードしてプロファイルを無制限に",
+        "description": "Lock overlay message on the Profiles tab when the free-tier profile limit is reached."
+    },
+    "featureViewSearchCookies": {
+        "message": "View & Search Cookies"
+    },
+    "footerBrand": {
+        "message": "zovo.",
+        "description": "Brand name shown in the footer attribution. Do not translate."
+    },
+    "footerBuiltBy": {
+        "message": "開発元",
+        "description": "Footer text before the brand name 'zovo.' attribution."
+    },
+    "footerEnterLicense": {
+        "message": "Enter License Key"
+    },
+    "footerHelp": {
+        "message": "ヘルプ",
+        "description": "Footer link label for the help/FAQ page."
+    },
+    "footerManageSub": {
+        "message": "サブスクリプション管理",
+        "description": "Footer link shown to paid users to manage their subscription."
+    },
+    "footerPrivacy": {
+        "message": "プライバシー",
+        "description": "Footer link label for the privacy policy page."
+    },
+    "growthLeaveReview": {
+        "message": "レビューを書く",
+        "description": "Button label in the growth banner prompting user to leave a Chrome Web Store review."
+    },
+    "growthReviewPrompt": {
+        "message": "Cookie Managerを気に入りましたか？レビューを書いて他の開発者が見つけやすくなるようご協力ください！",
+        "description": "Growth banner text prompting the user to leave a review on the Chrome Web Store."
+    },
+    "growthShare": {
+        "message": "共有",
+        "description": "Button label in the growth banner prompting user to share the extension."
+    },
+    "healthAnalyzing": {
+        "message": "cookieを分析中...",
+        "description": "Summary text shown on the Health tab while analysis is in progress."
+    },
+    "healthCatHttpOnly": {
         "message": "HttpOnly",
         "description": "Checkbox label for the HttpOnly flag in the cookie editor."
     },
-    "lblSameSite": {
+    "healthCatSameSite": {
         "message": "SameSite",
         "description": "Form label for the SameSite dropdown in the cookie editor."
     },
-    "lblProfileName": {
+    "healthCatSecure": {
+        "message": "Secure",
+        "description": "Checkbox label for the Secure flag in the cookie editor."
+    },
+    "healthCatTrackers": {
+        "message": "トラッカー検出数",
+        "description": "Health category label for the number of tracking cookies detected."
+    },
+    "healthEmptySubtitle": {
+        "message": "ウェブサイトにアクセスしてcookieのヘルススコアを確認してください",
+        "description": "Empty state subtitle on the Health tab when there are no cookies."
+    },
+    "healthEmptyTitle": {
+        "message": "分析するcookieがありません",
+        "description": "Empty state title on the Health tab when there are no cookies."
+    },
+    "healthLabel": {
+        "message": "PRO",
+        "description": "Small label appended to locked features indicating they require a Pro subscription."
+    },
+    "healthRecsTitle": {
+        "message": "推奨事項",
+        "description": "Section heading for health recommendations on the Health tab."
+    },
+    "healthTrackersTitle": {
+        "message": "Tracking Cookies Detected"
+    },
+    "hintSessionCookie": {
+        "message": "cookieを追加",
+        "description": "Modal title when creating a new cookie."
+    },
+    "jwtDecode": {
+        "message": "デコード",
+        "description": "Link button shown next to a JWT-detected cookie value to open the JWT decoder."
+    },
+    "jwtDetected": {
+        "message": "JWT検出",
+        "description": "Badge text shown on the cookie value field when a JWT token is detected."
+    },
+    "jwtHeader": {
+        "message": "ヘッダー",
+        "description": "Section heading for the JWT header section in the JWT decoder modal."
+    },
+    "jwtPayload": {
+        "message": "ペイロード",
+        "description": "Section heading for the JWT payload section in the JWT decoder modal."
+    },
+    "labelCookieNamePattern": {
+        "message": "Cookie名パターン",
+        "description": "Form label for the cookie name pattern input in the auto-delete rule form."
+    },
+    "labelDomain": {
+        "message": "例: *.google.com または facebook.com",
+        "description": "Placeholder text for the domain pattern input in the rule form."
+    },
+    "labelDomainPattern": {
+        "message": "ドメインパターン",
+        "description": "Form label for the domain pattern input in the auto-delete rule form."
+    },
+    "labelExpiration": {
+        "message": "有効期限",
+        "description": "Form label for the cookie expiration date field in the editor modal."
+    },
+    "labelHttpOnly": {
+        "message": "HttpOnly",
+        "description": "Badge label for cookies with the HttpOnly flag set."
+    },
+    "labelName": {
+        "message": "プロファイル名は必須です",
+        "description": "Error from the background when saving a profile without a name."
+    },
+    "labelPath": {
+        "message": "パス",
+        "description": "Form label for the cookie path field in the editor modal."
+    },
+    "labelProfileName": {
         "message": "プロファイル名",
         "description": "Form label for the profile name input when saving a cookie profile."
     },
-    "lblDomainPattern": {
-        "message": "ドメインパターン",
-        "description": "Form label for the domain pattern input in the auto-delete rule form."
+    "labelSameSite": {
+        "message": "Lax",
+        "description": "SameSite dropdown option: Lax policy."
+    },
+    "labelSchedule": {
+        "message": "スケジュール",
+        "description": "Form label for the schedule dropdown in the auto-delete rule form."
+    },
+    "labelSecure": {
+        "message": "Secure",
+        "description": "Badge label for cookies with the Secure flag set."
+    },
+    "labelValue": {
+        "message": "値",
+        "description": "Form label for the cookie value field in the editor modal."
     },
     "lblCookieNamePattern": {
         "message": "Cookie名パターン",
         "description": "Form label for the cookie name pattern input in the auto-delete rule form."
     },
-    "lblSchedule": {
-        "message": "スケジュール",
-        "description": "Form label for the schedule dropdown in the auto-delete rule form."
+    "lblDomain": {
+        "message": "ドメイン",
+        "description": "Form label for the cookie domain field in the editor modal."
     },
-    "lblReadOnlyMode": {
-        "message": "読み取り専用モード",
-        "description": "Title and aria-label for the read-only toggle switch in the action bar."
+    "lblDomainPattern": {
+        "message": "ドメインパターン",
+        "description": "Form label for the domain pattern input in the auto-delete rule form."
+    },
+    "lblExpiration": {
+        "message": "有効期限",
+        "description": "Form label for the cookie expiration date field in the editor modal."
     },
     "lblHelp": {
         "message": "ヘルプ",
         "description": "Footer link label for the help/FAQ page."
     },
-    "lblPrivacy": {
-        "message": "プライバシー",
-        "description": "Footer link label for the privacy policy page."
+    "lblHttpOnly": {
+        "message": "HttpOnly",
+        "description": "Checkbox label for the HttpOnly flag in the cookie editor."
     },
     "lblManageSubscription": {
         "message": "サブスクリプション管理",
         "description": "Footer link shown to paid users to manage their subscription."
     },
-    "plhSearchCookies": {
-        "message": "cookieを検索...",
-        "description": "Placeholder text for the cookie search input field in the popup."
+    "lblName": {
+        "message": "名前",
+        "description": "Form label for the cookie name field in the editor modal."
     },
-    "plhCookieName": {
-        "message": "cookie名",
-        "description": "Placeholder text for the cookie name input in the editor modal."
+    "lblPath": {
+        "message": "パス",
+        "description": "Form label for the cookie path field in the editor modal."
     },
-    "plhCookieValue": {
-        "message": "cookieの値",
-        "description": "Placeholder text for the cookie value textarea in the editor modal."
+    "lblPrivacy": {
+        "message": "プライバシー",
+        "description": "Footer link label for the privacy policy page."
     },
-    "plhDomain": {
-        "message": ".example.com",
-        "description": "Placeholder text for the domain input in the cookie editor modal."
+    "lblProfileName": {
+        "message": "プロファイル名",
+        "description": "Form label for the profile name input when saving a cookie profile."
     },
-    "plhPath": {
-        "message": "/",
-        "description": "Placeholder text for the path input in the cookie editor modal."
+    "lblReadOnlyMode": {
+        "message": "読み取り専用モード",
+        "description": "Title and aria-label for the read-only toggle switch in the action bar."
     },
-    "plhProfileName": {
-        "message": "例: 開発環境",
-        "description": "Placeholder text for the profile name input when saving a profile."
+    "lblSameSite": {
+        "message": "SameSite",
+        "description": "Form label for the SameSite dropdown in the cookie editor."
     },
-    "plhRuleDomain": {
-        "message": "例: *.google.com または facebook.com",
-        "description": "Placeholder text for the domain pattern input in the rule form."
+    "lblSchedule": {
+        "message": "スケジュール",
+        "description": "Form label for the schedule dropdown in the auto-delete rule form."
     },
-    "plhRuleCookiePattern": {
-        "message": "* で全件、または特定の名前",
-        "description": "Placeholder text for the cookie name pattern input in the rule form."
+    "lblSecure": {
+        "message": "Secure",
+        "description": "Checkbox label for the Secure flag in the cookie editor."
     },
-    "plhLicenseKey": {
-        "message": "XXXX-XXXX-XXXX-XXXX",
-        "description": "Placeholder text for the license key input in the paywall modal."
+    "lblValue": {
+        "message": "値",
+        "description": "Form label for the cookie value field in the editor modal."
     },
-    "tipSessionCookie": {
-        "message": "セッションcookieにする場合は空欄のままにしてください",
-        "description": "Hint text below the expiration date field in the cookie editor."
+    "loadingCookies": {
+        "message": "現在のcookieを保存",
+        "description": "Button label on the Profiles tab to save the current domain cookies as a profile."
     },
-    "tipRestoreProfile": {
-        "message": "このプロファイルからcookieを復元",
-        "description": "Tooltip for the Load button on a profile card."
+    "msgAllClearHealthy": {
+        "message": "問題ありません。cookieは健全です。",
+        "description": "Message shown in the recommendations section when no issues are found."
     },
-    "tipDeleteProfile": {
-        "message": "プロファイルを削除",
-        "description": "Tooltip for the delete icon button on a profile card."
-    },
-    "tipDisableRule": {
-        "message": "ルールを無効化",
-        "description": "Tooltip for the toggle switch on a rule card when the rule is enabled."
-    },
-    "tipEnableRule": {
-        "message": "ルールを有効化",
-        "description": "Tooltip for the toggle switch on a rule card when the rule is disabled."
-    },
-    "tipHelpFaq": {
-        "message": "ヘルプとよくある質問",
-        "description": "Tooltip for the Help link in the footer."
-    },
-    "tipPrivacyPolicy": {
-        "message": "プライバシーポリシー",
-        "description": "Tooltip for the Privacy link in the footer."
-    },
-    "msgDomainLoading": {
-        "message": "読み込み中...",
-        "description": "Placeholder text shown for the domain name while the popup initializes."
-    },
-    "msgChromePage": {
-        "message": "Chromeページ",
-        "description": "Domain display text when the active tab is a chrome:// internal page."
-    },
-    "msgLoadingCookies": {
-        "message": "cookieを読み込み中...",
-        "description": "Loading state message shown while cookies are being fetched."
+    "msgAllCookies": {
+        "message": "すべてのcookie",
+        "description": "Badge text on a rule card when the cookie name pattern is set to wildcard (*)."
     },
     "msgAnalyzingCookies": {
         "message": "cookieを分析中...",
         "description": "Summary text shown on the Health tab while analysis is in progress."
     },
-    "msgNoCookiesFound": {
-        "message": "cookieが見つかりません",
-        "description": "Empty state title when no cookies exist for the current domain."
+    "msgChromePage": {
+        "message": "Chromeページ",
+        "description": "Domain display text when the active tab is a chrome:// internal page."
     },
-    "msgNoCookiesSet": {
-        "message": "このサイトにはcookieが設定されていません",
-        "description": "Empty state subtitle when no cookies exist for the current domain."
+    "msgCookieAffectedSingular": {
+        "message": "1個のcookieが対象",
+        "description": "Singular form of affected cookie count on rule cards."
     },
-    "msgNoSearchResults": {
-        "message": "検索に一致するcookieがありません",
-        "description": "Empty state subtitle when a search returns zero results."
+    "msgCookieCount": {
+        "message": "$COUNT$個のcookie",
+        "description": "Cookie count display on profile cards, e.g., '12 cookies'.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "12"
+            }
+        }
     },
-    "msgNoCookiesToAnalyze": {
-        "message": "分析するcookieがありません",
-        "description": "Empty state title on the Health tab when there are no cookies."
+    "msgCookieCountSingular": {
+        "message": "1個のcookie",
+        "description": "Singular form of cookie count display on profile cards."
     },
-    "msgVisitWebsite": {
-        "message": "ウェブサイトにアクセスしてcookieのヘルススコアを確認してください",
-        "description": "Empty state subtitle on the Health tab when there are no cookies."
+    "msgCookieFoundSingular": {
+        "message": "1個のcookieが見つかりました",
+        "description": "Singular screen reader announcement when search returns 1 result."
     },
-    "msgNoSavedProfiles": {
-        "message": "保存済みプロファイルはありません",
-        "description": "Empty state title on the Profiles tab when no profiles exist."
+    "msgCookiesAffected": {
+        "message": "$COUNT$個のcookieが対象",
+        "description": "Count of cookies matching a rule, shown on rule cards.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
     },
-    "msgSaveProfileHint": {
-        "message": "現在のcookieをプロファイルとして保存すると、後で素早く復元できます",
-        "description": "Empty state subtitle on the Profiles tab when no profiles exist."
-    },
-    "msgNoRulesYet": {
-        "message": "ルールはまだありません",
-        "description": "Empty state title on the Rules tab when no auto-delete rules exist."
+    "msgCookiesFoundCount": {
+        "message": "$COUNT$個のcookieが見つかりました",
+        "description": "Screen reader announcement after a search, e.g., '5 cookies found'.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
     },
     "msgCreateRuleHint": {
         "message": "スケジュールに基づいてcookieを自動削除するルールを作成できます",
         "description": "Empty state subtitle on the Rules tab when no rules exist."
+    },
+    "msgDayAgo": {
+        "message": "1日前",
+        "description": "Singular relative time text for exactly one day ago."
+    },
+    "msgDaysAgo": {
+        "message": "$COUNT$日前",
+        "description": "Relative time text for days, e.g., '5 days ago'.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "msgDomainLoading": {
+        "message": "読み込み中...",
+        "description": "Placeholder text shown for the domain name while the popup initializes."
+    },
+    "msgEmptyValue": {
+        "message": "(空)",
+        "description": "Display text when a cookie value is empty string."
+    },
+    "msgFooterBrand": {
+        "message": "zovo.",
+        "description": "Brand name shown in the footer attribution. Do not translate."
+    },
+    "msgFooterBuiltBy": {
+        "message": "開発元",
+        "description": "Footer text before the brand name 'zovo.' attribution."
+    },
+    "msgHealthHttpOnly": {
+        "message": "HttpOnly",
+        "description": "Health category label for the percentage of cookies with the HttpOnly flag."
+    },
+    "msgHealthSameSiteSet": {
+        "message": "SameSite設定済み",
+        "description": "Health category label for the percentage of cookies with SameSite configured."
+    },
+    "msgHealthSecureCookies": {
+        "message": "Secure設定済みcookie",
+        "description": "Health category label for the percentage of cookies with the Secure flag."
+    },
+    "msgHealthSummary": {
+        "message": "$COUNT$個のcookieを分析 - スコア: $SCORE$/100",
+        "description": "Health tab summary line below the grade circle.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "15"
+            },
+            "SCORE": {
+                "content": "$2",
+                "example": "82"
+            }
+        }
+    },
+    "msgHealthTrackersFound": {
+        "message": "トラッカー検出数",
+        "description": "Health category label for the number of tracking cookies detected."
+    },
+    "msgHourAgo": {
+        "message": "1時間前",
+        "description": "Singular relative time text for exactly one hour ago."
+    },
+    "msgHoursAgo": {
+        "message": "$COUNT$時間前",
+        "description": "Relative time text for hours, e.g., '3 hours ago'.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "3"
+            }
+        }
+    },
+    "msgJustNow": {
+        "message": "たった今",
+        "description": "Relative time text for very recent actions (under 1 minute ago)."
     },
     "msgJwtDetected": {
         "message": "JWT検出",
@@ -355,89 +1254,194 @@
         "message": "ペイロード",
         "description": "Section heading for the JWT payload section in the JWT decoder modal."
     },
-    "msgAllCookies": {
-        "message": "すべてのcookie",
-        "description": "Badge text on a rule card when the cookie name pattern is set to wildcard (*)."
+    "msgLoadingCookies": {
+        "message": "cookieを読み込み中...",
+        "description": "Loading state message shown while cookies are being fetched."
     },
-    "msgAllClearHealthy": {
-        "message": "問題ありません。cookieは健全です。",
-        "description": "Message shown in the recommendations section when no issues are found."
+    "msgMinutesAgo": {
+        "message": "$COUNT$分前",
+        "description": "Relative time text for minutes, e.g., '5 min ago'.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
     },
-    "msgWelcomeBack": {
-        "message": "おかえりなさい！Cookie Managerでできることをご確認ください。",
-        "description": "Default retention banner message shown to returning users."
+    "msgNoCookiesFound": {
+        "message": "cookieが見つかりません",
+        "description": "Empty state title when no cookies exist for the current domain."
+    },
+    "msgNoCookiesSet": {
+        "message": "このサイトにはcookieが設定されていません",
+        "description": "Empty state subtitle when no cookies exist for the current domain."
+    },
+    "msgNoCookiesToAnalyze": {
+        "message": "分析するcookieがありません",
+        "description": "Empty state title on the Health tab when there are no cookies."
+    },
+    "msgNoRulesYet": {
+        "message": "ルールはまだありません",
+        "description": "Empty state title on the Rules tab when no auto-delete rules exist."
+    },
+    "msgNoSavedProfiles": {
+        "message": "保存済みプロファイルはありません",
+        "description": "Empty state title on the Profiles tab when no profiles exist."
+    },
+    "msgNoSearchResults": {
+        "message": "検索に一致するcookieがありません",
+        "description": "Empty state subtitle when a search returns zero results."
+    },
+    "msgRecAddHttpOnly": {
+        "message": "HttpOnlyフラグを追加",
+        "description": "Health recommendation title: add HttpOnly flag to exposed cookies."
+    },
+    "msgRecAddHttpOnlyDetail": {
+        "message": "$COUNT$個のcookieがJavaScriptからアクセス可能で、XSSで盗まれる可能性があります。",
+        "description": "Health recommendation detail text for adding HttpOnly flag.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "4"
+            }
+        }
+    },
+    "msgRecAddSecureFlag": {
+        "message": "Secureフラグを追加",
+        "description": "Health recommendation title: add Secure flag to insecure cookies."
+    },
+    "msgRecAddSecureFlagDetail": {
+        "message": "$COUNT$個のcookieにSecureフラグがなく、HTTP接続で脆弱です。",
+        "description": "Health recommendation detail text for adding Secure flag.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "5"
+            }
+        }
+    },
+    "msgRecReduceLifespan": {
+        "message": "cookieの有効期間を短縮",
+        "description": "Health recommendation title: reduce lifespan of long-lived cookies."
+    },
+    "msgRecReduceLifespanDetail": {
+        "message": "$COUNT$個のcookieが1年以上持続しています。短い有効期間はトラッキングへの露出を減らします。",
+        "description": "Health recommendation detail text for reducing cookie lifespan.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "2"
+            }
+        }
+    },
+    "msgRecRemoveTrackers": {
+        "message": "トラッキングcookieを削除",
+        "description": "Health recommendation title: remove tracking cookies."
+    },
+    "msgRecRemoveTrackersDetail": {
+        "message": "$COUNT$個のトラッキングcookieを削除してプライバシースコアを改善しましょう。",
+        "description": "Health recommendation detail text for removing trackers.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "3"
+            }
+        }
+    },
+    "msgRecSetSameSite": {
+        "message": "SameSiteポリシーを設定",
+        "description": "Health recommendation title: set SameSite policy on cookies."
+    },
+    "msgRecSetSameSiteDetail": {
+        "message": "$COUNT$個のcookieにSameSiteポリシーが設定されておらず、CSRFリスクが増大しています。",
+        "description": "Health recommendation detail text for setting SameSite.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "6"
+            }
+        }
     },
     "msgReviewPrompt": {
         "message": "Cookie Managerを気に入りましたか？レビューを書いて他の開発者が見つけやすくなるようご協力ください！",
         "description": "Growth banner text prompting the user to leave a review on the Chrome Web Store."
     },
+    "msgSaveProfileHint": {
+        "message": "現在のcookieをプロファイルとして保存すると、後で素早く復元できます",
+        "description": "Empty state subtitle on the Profiles tab when no profiles exist."
+    },
+    "msgSavedDatePrefix": {
+        "message": "保存済み",
+        "description": "Prefix before relative time on profile cards, e.g., 'Saved 2 hours ago'."
+    },
+    "msgTabSelected": {
+        "message": "$TAB$タブが選択されました",
+        "description": "Screen reader announcement when switching tabs.",
+        "placeholders": {
+            "TAB": {
+                "content": "$1",
+                "example": "Cookies"
+            }
+        }
+    },
     "msgThisPageNoCookies": {
         "message": "このページにはcookieがありません",
         "description": "Empty state message for chrome:// pages or pages with no cookies."
     },
-    "msgFooterBuiltBy": {
-        "message": "開発元",
-        "description": "Footer text before the brand name 'zovo.' attribution."
+    "msgUnknownDate": {
+        "message": "不明な日付",
+        "description": "Fallback text when a profile has no recorded date."
     },
-    "msgFooterBrand": {
-        "message": "zovo.",
-        "description": "Brand name shown in the footer attribution. Do not translate."
+    "msgVisitWebsite": {
+        "message": "ウェブサイトにアクセスしてcookieのヘルススコアを確認してください",
+        "description": "Empty state subtitle on the Health tab when there are no cookies."
     },
-    "msgEmptyValue": {
-        "message": "(空)",
-        "description": "Display text when a cookie value is empty string."
+    "msgWelcomeBack": {
+        "message": "おかえりなさい！Cookie Managerでできることをご確認ください。",
+        "description": "Default retention banner message shown to returning users."
     },
-    "stsFree": {
-        "message": "無料",
-        "description": "Subscription badge text for free-tier users."
-    },
-    "stsPro": {
-        "message": "Pro",
-        "description": "Subscription badge text for Pro subscribers."
-    },
-    "stsTrial": {
-        "message": "お試し",
-        "description": "Subscription badge text for users on a free trial."
-    },
-    "stsLifetime": {
-        "message": "永久",
-        "description": "Subscription badge text for users with a lifetime license."
-    },
-    "stsProLabel": {
-        "message": "PRO",
-        "description": "Small label appended to locked features indicating they require a Pro subscription."
-    },
-    "stsSecure": {
-        "message": "Secure",
-        "description": "Badge label for cookies with the Secure flag set."
-    },
-    "stsHttpOnly": {
-        "message": "HttpOnly",
-        "description": "Badge label for cookies with the HttpOnly flag set."
-    },
-    "stsJwt": {
-        "message": "JWT",
-        "description": "Badge label for cookies detected as JWT tokens."
-    },
-    "stsSession": {
-        "message": "セッション",
-        "description": "Badge label for session cookies (no expiration date)."
+    "ntfClearedCookies": {
+        "message": "$COUNT$個のcookieをクリアしました",
+        "description": "Toast notification after clearing all cookies for a domain.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "15"
+            }
+        }
     },
     "ntfCookieCreated": {
         "message": "cookieを作成しました",
         "description": "Toast notification shown after successfully creating a new cookie."
     },
-    "ntfCookieSaved": {
-        "message": "cookieを保存しました",
-        "description": "Toast notification shown after successfully saving/updating a cookie."
-    },
     "ntfCookieDeleted": {
         "message": "cookieを削除しました",
         "description": "Toast notification shown after successfully deleting a cookie."
     },
-    "ntfCookiesRefreshed": {
-        "message": "cookieを更新しました",
-        "description": "Toast notification shown after refreshing the cookie list."
+    "ntfCookieSaved": {
+        "message": "cookieを保存しました",
+        "description": "Toast notification shown after successfully saving/updating a cookie."
+    },
+    "ntfCookiesCleared": {
+        "message": "cookieをクリアしました",
+        "description": "System notification title shown after clearing cookies via context menu."
+    },
+    "ntfCookiesClearedMsg": {
+        "message": "$DOMAIN$から$COUNT$個のcookieを削除しました",
+        "description": "System notification body after clearing cookies via context menu.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "12"
+            },
+            "DOMAIN": {
+                "content": "$2",
+                "example": "example.com"
+            }
+        }
+    },
+    "ntfCookiesClearedTitle": {
+        "message": "Cookies Cleared"
     },
     "ntfCookiesExportedClipboard": {
         "message": "$COUNT$個のcookieをエクスポートしてクリップボードにコピーしました",
@@ -446,6 +1450,20 @@
             "COUNT": {
                 "content": "$1",
                 "example": "12"
+            }
+        }
+    },
+    "ntfCookiesExportedContextMsg": {
+        "message": "$DOMAIN$の$COUNT$個のcookieをコピーしました。ポップアップを開いてダウンロードしてください。",
+        "description": "System notification body after exporting cookies via context menu.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "8"
+            },
+            "DOMAIN": {
+                "content": "$2",
+                "example": "example.com"
             }
         }
     },
@@ -458,6 +1476,60 @@
                 "example": "12"
             }
         }
+    },
+    "ntfCookiesExportedMsg": {
+        "message": "$DOMAIN$の$COUNT$個のcookieをコピーしました。ポップアップを開いてダウンロードしてください。",
+        "description": "System notification body after exporting cookies via context menu.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "8"
+            },
+            "DOMAIN": {
+                "content": "$2",
+                "example": "example.com"
+            }
+        }
+    },
+    "ntfCookiesExportedTitle": {
+        "message": "cookieをエクスポートしました",
+        "description": "System notification title shown after exporting cookies via context menu."
+    },
+    "ntfCookiesImported": {
+        "message": "$IMPORTED$個のcookieをインポートしました",
+        "description": "Toast notification after importing cookies successfully.",
+        "placeholders": {
+            "IMPORTED": {
+                "content": "$1",
+                "example": "8"
+            }
+        }
+    },
+    "ntfCookiesRefreshed": {
+        "message": "cookieを更新しました",
+        "description": "Toast notification shown after refreshing the cookie list."
+    },
+    "ntfCookiesSecured": {
+        "message": "$COUNT$個のcookieを保護しました",
+        "description": "Toast notification after setting the Secure flag on insecure cookies.",
+        "placeholders": {
+            "COUNT": {
+                "content": "$1",
+                "example": "3"
+            }
+        }
+    },
+    "ntfCopiedToClipboard": {
+        "message": "クリップボードにコピーしました",
+        "description": "Toast notification after successfully copying text to clipboard."
+    },
+    "ntfDebugBundleExported": {
+        "message": "デバッグバンドルをエクスポートしました",
+        "description": "Toast notification after exporting a debug bundle file."
+    },
+    "ntfFeedbackSubmitted": {
+        "message": "フィードバックを送信しました。ありがとうございます！",
+        "description": "Toast notification after successfully submitting user feedback."
     },
     "ntfImportedCookies": {
         "message": "$IMPORTED$個のcookieをインポートしました",
@@ -483,43 +1555,13 @@
             }
         }
     },
-    "ntfClearedCookies": {
-        "message": "$COUNT$個のcookieをクリアしました",
-        "description": "Toast notification after clearing all cookies for a domain.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "15"
-            }
-        }
-    },
-    "ntfReadOnlyEnabled": {
-        "message": "読み取り専用モードが有効になりました",
-        "description": "Toast notification when the read-only toggle is turned on."
-    },
-    "ntfReadOnlyDisabled": {
-        "message": "読み取り専用モードが無効になりました",
-        "description": "Toast notification when the read-only toggle is turned off."
-    },
-    "ntfCopiedToClipboard": {
-        "message": "クリップボードにコピーしました",
-        "description": "Toast notification after successfully copying text to clipboard."
-    },
-    "ntfDebugBundleExported": {
-        "message": "デバッグバンドルをエクスポートしました",
-        "description": "Toast notification after exporting a debug bundle file."
-    },
-    "ntfProfileSaved": {
-        "message": "プロファイル「$NAME$」を$COUNT$個のcookieで保存しました",
-        "description": "Toast notification after successfully saving a cookie profile.",
+    "ntfProfileDeleted": {
+        "message": "プロファイル「$NAME$」を削除しました",
+        "description": "Toast notification after deleting a cookie profile.",
         "placeholders": {
             "NAME": {
                 "content": "$1",
                 "example": "Dev Environment"
-            },
-            "COUNT": {
-                "content": "$2",
-                "example": "12"
             }
         }
     },
@@ -555,31 +1597,43 @@
             }
         }
     },
-    "ntfProfileDeleted": {
-        "message": "プロファイル「$NAME$」を削除しました",
-        "description": "Toast notification after deleting a cookie profile.",
+    "ntfProfileSaved": {
+        "message": "プロファイル「$NAME$」を$COUNT$個のcookieで保存しました",
+        "description": "Toast notification after successfully saving a cookie profile.",
         "placeholders": {
             "NAME": {
                 "content": "$1",
                 "example": "Dev Environment"
+            },
+            "COUNT": {
+                "content": "$2",
+                "example": "12"
             }
         }
+    },
+    "ntfReadOnlyDisabled": {
+        "message": "読み取り専用モードが無効になりました",
+        "description": "Toast notification when the read-only toggle is turned off."
+    },
+    "ntfReadOnlyEnabled": {
+        "message": "読み取り専用モードが有効になりました",
+        "description": "Toast notification when the read-only toggle is turned on."
+    },
+    "ntfReadOnlyNotification": {
+        "message": "読み取り専用モードが有効です。cookieをクリアするには無効にしてください。",
+        "description": "System notification body when user tries to clear via context menu but read-only is on."
     },
     "ntfRuleCreated": {
         "message": "ルールを作成しました",
         "description": "Toast notification after creating a new auto-delete rule."
     },
-    "ntfRuleUpdated": {
-        "message": "ルールを更新しました",
-        "description": "Toast notification after updating an existing auto-delete rule."
-    },
     "ntfRuleDeleted": {
         "message": "ルールを削除しました",
         "description": "Toast notification after deleting an auto-delete rule."
     },
-    "ntfFeedbackSubmitted": {
-        "message": "フィードバックを送信しました。ありがとうございます！",
-        "description": "Toast notification after successfully submitting user feedback."
+    "ntfRuleUpdated": {
+        "message": "ルールを更新しました",
+        "description": "Toast notification after updating an existing auto-delete rule."
     },
     "ntfTrackersRemoved": {
         "message": "$COUNT$個のトラッキングcookieを削除しました",
@@ -591,329 +1645,41 @@
             }
         }
     },
-    "ntfCookiesSecured": {
-        "message": "$COUNT$個のcookieを保護しました",
-        "description": "Toast notification after setting the Secure flag on insecure cookies.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "3"
-            }
-        }
+    "optEvery6Hours": {
+        "message": "6時間ごと",
+        "description": "Schedule option for auto-delete rules: run every 6 hours."
     },
-    "ntfCookiesCleared": {
-        "message": "cookieをクリアしました",
-        "description": "System notification title shown after clearing cookies via context menu."
+    "optEveryDay": {
+        "message": "毎日",
+        "description": "Schedule option for auto-delete rules: run every day."
     },
-    "ntfCookiesClearedMsg": {
-        "message": "$DOMAIN$から$COUNT$個のcookieを削除しました",
-        "description": "System notification body after clearing cookies via context menu.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "12"
-            },
-            "DOMAIN": {
-                "content": "$2",
-                "example": "example.com"
-            }
-        }
-    },
-    "ntfReadOnlyNotification": {
-        "message": "読み取り専用モードが有効です。cookieをクリアするには無効にしてください。",
-        "description": "System notification body when user tries to clear via context menu but read-only is on."
-    },
-    "ntfCookiesExportedTitle": {
-        "message": "cookieをエクスポートしました",
-        "description": "System notification title shown after exporting cookies via context menu."
-    },
-    "ntfCookiesExportedContextMsg": {
-        "message": "$DOMAIN$の$COUNT$個のcookieをコピーしました。ポップアップを開いてダウンロードしてください。",
-        "description": "System notification body after exporting cookies via context menu.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "8"
-            },
-            "DOMAIN": {
-                "content": "$2",
-                "example": "example.com"
-            }
-        }
-    },
-    "errReadOnlyMode": {
-        "message": "読み取り専用モードが有効です",
-        "description": "Error message when attempting a write operation while read-only mode is active."
-    },
-    "errCookieNameRequired": {
-        "message": "cookie名は必須です",
-        "description": "Validation error when the cookie name field is empty."
-    },
-    "errDomainRequired": {
-        "message": "ドメインは必須です",
-        "description": "Validation error when the cookie domain field is empty."
-    },
-    "errDomainPatternRequired": {
-        "message": "ドメインパターンは必須です",
-        "description": "Validation error when the rule domain pattern field is empty."
-    },
-    "errNoCookiesToExport": {
-        "message": "エクスポートするcookieがありません",
-        "description": "Error when attempting to export but there are no cookies."
-    },
-    "errNoCookiesToClear": {
-        "message": "クリアするcookieがありません",
-        "description": "Error when attempting to clear all cookies but none exist."
-    },
-    "errFailedSaveCookie": {
-        "message": "cookieの保存に失敗しました",
-        "description": "Error message when a cookie save operation fails."
-    },
-    "errFailedDeleteCookie": {
-        "message": "cookieの削除に失敗しました",
-        "description": "Error message when a cookie delete operation fails."
-    },
-    "errFailedExportCookies": {
-        "message": "cookieのエクスポートに失敗しました",
-        "description": "Error message when exporting cookies fails."
-    },
-    "errFailedClearCookies": {
-        "message": "cookieのクリアに失敗しました",
-        "description": "Error message when clearing domain cookies fails."
-    },
-    "errFailedCopy": {
-        "message": "コピーに失敗しました",
-        "description": "Error message when clipboard copy operation fails."
-    },
-    "errInvalidJwt": {
-        "message": "無効なJWTトークンです",
-        "description": "Error message when the cookie value cannot be decoded as a valid JWT."
-    },
-    "errImportFileTooLarge": {
-        "message": "インポートファイルが大きすぎます（最大1 MB）",
-        "description": "Error when the imported JSON file exceeds the 1 MB size limit."
-    },
-    "errImportInvalidFormat": {
-        "message": "無効な形式です。cookieのJSON配列が必要です",
-        "description": "Error when the imported file does not contain a valid JSON array."
-    },
-    "errImportTooManyCookies": {
-        "message": "インポートファイルのcookieが多すぎます（最大500）",
-        "description": "Error when the imported file contains more than 500 cookies."
-    },
-    "errFailedParseJson": {
-        "message": "JSONファイルの解析に失敗しました",
-        "description": "Error when the imported file is not valid JSON."
-    },
-    "errFailedSaveSetting": {
-        "message": "設定の保存に失敗しました",
-        "description": "Error when saving a user setting (e.g., read-only toggle) fails."
-    },
-    "errLoadingCookies": {
-        "message": "cookieの読み込みエラー",
-        "description": "Error message displayed in the empty state when cookie loading fails."
-    },
-    "errNoDomainAvailable": {
-        "message": "cookieを保存するドメインがありません",
-        "description": "Error when attempting to save a profile but no domain is detected."
-    },
-    "errFailedSaveProfile": {
-        "message": "プロファイルの保存に失敗しました",
-        "description": "Error when saving a cookie profile fails."
-    },
-    "errFailedLoadProfile": {
-        "message": "プロファイルの読み込みに失敗しました",
-        "description": "Error when loading/restoring a cookie profile fails."
-    },
-    "errFailedDeleteProfile": {
-        "message": "プロファイルの削除に失敗しました",
-        "description": "Error when deleting a cookie profile fails."
-    },
-    "errFailedSaveRule": {
-        "message": "ルールの保存に失敗しました",
-        "description": "Error when saving an auto-delete rule fails."
-    },
-    "errFailedDeleteRule": {
-        "message": "ルールの削除に失敗しました",
-        "description": "Error when deleting an auto-delete rule fails."
-    },
-    "errFailedSubmitFeedback": {
-        "message": "フィードバックの送信に失敗しました",
-        "description": "Error when the feedback submission fails."
-    },
-    "errDomainProtected": {
-        "message": "ドメインは保護されています",
-        "description": "Error when attempting to modify cookies on a protected domain."
-    },
-    "errFreePlanRuleLimit": {
-        "message": "無料プランでは1つのルールのみ作成できます。アップグレードしてください。",
-        "description": "Error when a free-tier user tries to create more than 1 auto-delete rule."
-    },
-    "errProfileNameRequired": {
-        "message": "プロファイル名は必須です",
-        "description": "Error from the background when saving a profile without a name."
-    },
-    "errNoCookiesToSave": {
-        "message": "プロファイルに保存するcookieがありません",
-        "description": "Error from the background when there are no cookies to save in a profile."
-    },
-    "errProfileNotFound": {
-        "message": "プロファイル「$NAME$」が見つかりません",
-        "description": "Error when trying to load or delete a profile that does not exist.",
-        "placeholders": {
-            "NAME": {
-                "content": "$1",
-                "example": "Dev Environment"
-            }
-        }
-    },
-    "errLicenseKeyRequired": {
-        "message": "ライセンスキーを入力してください。",
-        "description": "Validation error in the paywall when the license key field is empty."
-    },
-    "errLicenseConnectionFailed": {
-        "message": "接続に失敗しました。もう一度お試しください。",
-        "description": "Error in the paywall when the license activation request fails."
-    },
-    "errInvalidLicenseKey": {
-        "message": "無効なライセンスキーです。確認してもう一度お試しください。",
-        "description": "Error in the paywall when the entered license key is not valid."
-    },
-    "errRuntimeNotAvailable": {
-        "message": "拡張機能のランタイムが利用できません。",
-        "description": "Error in the paywall when chrome.runtime is not accessible."
-    },
-    "dlgDeleteCookie": {
-        "message": "cookieを削除しますか？",
-        "description": "Confirm dialog title when deleting a single cookie."
-    },
-    "dlgDeleteCookieMsg": {
-        "message": "「$NAME$」を削除してもよろしいですか？",
-        "description": "Confirm dialog message when deleting a single cookie.",
-        "placeholders": {
-            "NAME": {
-                "content": "$1",
-                "example": "session_id"
-            }
-        }
-    },
-    "dlgClearAllCookies": {
-        "message": "すべてのcookieをクリアしますか？",
-        "description": "Confirm dialog title when clearing all cookies for a domain."
-    },
-    "dlgClearAllCookiesMsg": {
-        "message": "このドメインの$COUNT$個のcookieがすべて削除されます。",
-        "description": "Confirm dialog message when clearing all cookies.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "15"
-            }
-        }
-    },
-    "dlgOverwriteProfile": {
-        "message": "プロファイルを上書きしますか？",
-        "description": "Confirm dialog title when saving a profile with a name that already exists."
-    },
-    "dlgOverwriteProfileMsg": {
-        "message": "「$NAME$」という名前のプロファイルが既に存在します。上書きしますか？",
-        "description": "Confirm dialog message when overwriting an existing profile.",
-        "placeholders": {
-            "NAME": {
-                "content": "$1",
-                "example": "Dev Environment"
-            }
-        }
-    },
-    "dlgLoadProfile": {
-        "message": "プロファイルを読み込みますか？",
-        "description": "Confirm dialog title when loading/restoring a cookie profile."
-    },
-    "dlgLoadProfileMsg": {
-        "message": "「$NAME$」のすべてのcookieが現在のドメインに復元されます。既存のcookieは先にクリアされません。",
-        "description": "Confirm dialog message when loading a profile.",
-        "placeholders": {
-            "NAME": {
-                "content": "$1",
-                "example": "Dev Environment"
-            }
-        }
-    },
-    "dlgDeleteProfile": {
-        "message": "プロファイルを削除しますか？",
-        "description": "Confirm dialog title when deleting a saved cookie profile."
-    },
-    "dlgDeleteProfileMsg": {
-        "message": "「$NAME$」を削除してもよろしいですか？この操作は元に戻せません。",
-        "description": "Confirm dialog message when deleting a profile.",
-        "placeholders": {
-            "NAME": {
-                "content": "$1",
-                "example": "Dev Environment"
-            }
-        }
-    },
-    "dlgDeleteRule": {
-        "message": "ルールを削除しますか？",
-        "description": "Confirm dialog title when deleting an auto-delete rule."
-    },
-    "dlgDeleteRuleMsg": {
-        "message": "「$DOMAIN$」の自動削除ルールを削除しますか？",
-        "description": "Confirm dialog message when deleting a rule.",
-        "placeholders": {
-            "DOMAIN": {
-                "content": "$1",
-                "example": "*.google.com"
-            }
-        }
-    },
-    "dlgCleanTrackers": {
-        "message": "トラッキングcookieを削除しますか？",
-        "description": "Confirm dialog title when cleaning tracking cookies on the Health tab."
-    },
-    "dlgCleanTrackersMsg": {
-        "message": "$COUNT$個のトラッキングcookieを削除しますか？この操作は元に戻せません。",
-        "description": "Confirm dialog message when cleaning trackers.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "5"
-            }
-        }
-    },
-    "dlgSecureAllCookies": {
-        "message": "すべてのcookieを保護しますか？",
-        "description": "Confirm dialog title when adding the Secure flag to all insecure cookies."
-    },
-    "dlgSecureAllCookiesMsg": {
-        "message": "$COUNT$個のcookieにSecureフラグを設定しますか？HTTPのみのサイトでは一部のcookieが動作しなくなる可能性があります。",
-        "description": "Confirm dialog message when securing all cookies.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "8"
-            }
-        }
-    },
-    "ctxClearSiteCookies": {
-        "message": "このサイトのcookieをクリア",
-        "description": "Context menu item to clear all cookies for the current site."
-    },
-    "ctxExportSiteCookies": {
-        "message": "このサイトのcookieをエクスポート",
-        "description": "Context menu item to export cookies for the current site."
-    },
-    "ctxOpenCookieManager": {
-        "message": "Cookie Managerを開く",
-        "description": "Context menu item to open the Cookie Manager popup."
-    },
-    "ctxCookieManagerSettings": {
-        "message": "Cookie Managerの設定",
-        "description": "Context menu item to open the Cookie Manager settings/options page."
-    },
-    "optScheduleEveryHour": {
+    "optEveryHour": {
         "message": "毎時",
         "description": "Schedule option for auto-delete rules: run every hour."
+    },
+    "optLax": {
+        "message": "Lax",
+        "description": "SameSite dropdown option: Lax policy."
+    },
+    "optNone": {
+        "message": "None",
+        "description": "SameSite dropdown option: None (no restriction) policy."
+    },
+    "optOnBrowserClose": {
+        "message": "ブラウザ終了時",
+        "description": "Schedule option for auto-delete rules: run when the browser closes."
+    },
+    "optSameSiteLax": {
+        "message": "Lax",
+        "description": "SameSite dropdown option: Lax policy."
+    },
+    "optSameSiteNone": {
+        "message": "None",
+        "description": "SameSite dropdown option: None (no restriction) policy."
+    },
+    "optSameSiteStrict": {
+        "message": "Strict",
+        "description": "SameSite dropdown option: Strict policy."
     },
     "optScheduleEvery6Hours": {
         "message": "6時間ごと",
@@ -923,135 +1689,17 @@
         "message": "毎日",
         "description": "Schedule option for auto-delete rules: run every day."
     },
+    "optScheduleEveryHour": {
+        "message": "毎時",
+        "description": "Schedule option for auto-delete rules: run every hour."
+    },
     "optScheduleOnBrowserClose": {
         "message": "ブラウザ終了時",
         "description": "Schedule option for auto-delete rules: run when the browser closes."
     },
-    "optSameSiteLax": {
-        "message": "Lax",
-        "description": "SameSite dropdown option: Lax policy."
-    },
-    "optSameSiteStrict": {
+    "optStrict": {
         "message": "Strict",
         "description": "SameSite dropdown option: Strict policy."
-    },
-    "optSameSiteNone": {
-        "message": "None",
-        "description": "SameSite dropdown option: None (no restriction) policy."
-    },
-    "payUpgradeTitle": {
-        "message": "$FEATURE$のロック解除",
-        "description": "Paywall modal title. Shows which feature triggered the upgrade prompt.",
-        "placeholders": {
-            "FEATURE": {
-                "content": "$1",
-                "example": "Cookie Profiles"
-            }
-        }
-    },
-    "payUpgradeSubtitle": {
-        "message": "Cookie Manager Proにアップグレードして全機能をご利用ください。",
-        "description": "Paywall modal subtitle text below the title."
-    },
-    "payFeatureHeader": {
-        "message": "機能",
-        "description": "Column header in the paywall feature comparison table."
-    },
-    "payFreeHeader": {
-        "message": "無料",
-        "description": "Column header for the free tier in the paywall comparison table."
-    },
-    "payProHeader": {
-        "message": "Pro",
-        "description": "Column header for the Pro tier in the paywall comparison table."
-    },
-    "payFeatureBasicCookies": {
-        "message": "基本的なCookie管理",
-        "description": "Feature name in paywall comparison: basic cookie CRUD operations."
-    },
-    "payFeatureCookieProfiles": {
-        "message": "Cookieプロファイル",
-        "description": "Feature name in paywall comparison: saving/loading cookie sets."
-    },
-    "payFeatureAutoDeleteRules": {
-        "message": "自動削除ルール",
-        "description": "Feature name in paywall comparison: scheduled cookie deletion rules."
-    },
-    "payFeatureAdvancedExport": {
-        "message": "高度なエクスポート形式",
-        "description": "Feature name in paywall comparison: Netscape, CSV export formats."
-    },
-    "payFeatureHealthDashboard": {
-        "message": "ヘルスダッシュボード",
-        "description": "Feature name in paywall comparison: cookie health scoring and analysis."
-    },
-    "payFeatureJwtDecoder": {
-        "message": "JWTデコーダー",
-        "description": "Feature name in paywall comparison: decode and view JWT token cookies."
-    },
-    "payFeatureBulkOps": {
-        "message": "一括操作",
-        "description": "Feature name in paywall comparison: bulk cookie operations."
-    },
-    "payUnlimited": {
-        "message": "無制限",
-        "description": "Feature limit text for Pro tier in paywall comparison table."
-    },
-    "payMonthly": {
-        "message": "月額",
-        "description": "Pricing tier name for monthly subscription in the paywall."
-    },
-    "payMonthlyPrice": {
-        "message": "$3.99/月",
-        "description": "Monthly subscription price displayed in the paywall."
-    },
-    "payMonthlyNote": {
-        "message": "毎月請求",
-        "description": "Note below the monthly price in the paywall."
-    },
-    "payAnnual": {
-        "message": "年額",
-        "description": "Pricing tier name for annual subscription in the paywall."
-    },
-    "payAnnualPrice": {
-        "message": "$29.99/年",
-        "description": "Annual subscription price displayed in the paywall."
-    },
-    "payAnnualNote": {
-        "message": "$2.50/月（年払い）",
-        "description": "Note below the annual price showing monthly equivalent."
-    },
-    "payBestValue": {
-        "message": "お得",
-        "description": "Badge shown on the annual pricing tier to indicate best value."
-    },
-    "paySavePercent": {
-        "message": "37%割引",
-        "description": "Savings badge shown on the annual pricing tier."
-    },
-    "payCtaAnnual": {
-        "message": "Pro年額プランを取得 - $29.99/年",
-        "description": "Primary CTA button text for annual subscription in the paywall."
-    },
-    "payCtaMonthly": {
-        "message": "月額プランを開始 - $3.99/月",
-        "description": "Secondary CTA button text for monthly subscription in the paywall."
-    },
-    "payTrustSecure": {
-        "message": "安全な決済",
-        "description": "Trust signal text in the paywall footer."
-    },
-    "payTrustMoneyBack": {
-        "message": "7日間返金保証",
-        "description": "Trust signal text in the paywall footer."
-    },
-    "payTrustCancelAnytime": {
-        "message": "いつでもキャンセル可能",
-        "description": "Trust signal text in the paywall footer."
-    },
-    "payLicenseToggle": {
-        "message": "ライセンスキーをお持ちですか？",
-        "description": "Toggle button text to show the license key input form in the paywall."
     },
     "payActivateLicense": {
         "message": "ライセンスを有効化",
@@ -1061,13 +1709,93 @@
         "message": "有効化中...",
         "description": "Button text shown while the license activation is in progress."
     },
-    "payUpgradeProUnlimited": {
-        "message": "Proにアップグレードしてプロファイルを無制限に",
-        "description": "Lock overlay message on the Profiles tab when the free-tier profile limit is reached."
+    "payAnnual": {
+        "message": "年額",
+        "description": "Pricing tier name for annual subscription in the paywall."
+    },
+    "payAnnualNote": {
+        "message": "$$2.50/月（年払い）",
+        "description": "Note below the annual price showing monthly equivalent."
+    },
+    "payAnnualPrice": {
+        "message": "$$29.99/年",
+        "description": "Annual subscription price displayed in the paywall."
+    },
+    "payBestValue": {
+        "message": "お得",
+        "description": "Badge shown on the annual pricing tier to indicate best value."
+    },
+    "payCtaAnnual": {
+        "message": "Pro年額プランを取得 — $$29.99/年",
+        "description": "Primary CTA button text for annual subscription in the paywall."
+    },
+    "payCtaMonthly": {
+        "message": "月額プランを開始 — $$3.99/月",
+        "description": "Secondary CTA button text for monthly subscription in the paywall."
+    },
+    "payFeatureAdvancedExport": {
+        "message": "高度なエクスポート形式",
+        "description": "Feature name in paywall comparison: Netscape, CSV export formats."
+    },
+    "payFeatureAutoDeleteRules": {
+        "message": "自動削除ルール",
+        "description": "Feature name in paywall comparison: scheduled cookie deletion rules."
+    },
+    "payFeatureBasicCookies": {
+        "message": "基本的なCookie管理",
+        "description": "Feature name in paywall comparison: basic cookie CRUD operations."
+    },
+    "payFeatureBulkOps": {
+        "message": "一括操作",
+        "description": "Feature name in paywall comparison: bulk cookie operations."
+    },
+    "payFeatureCookieProfiles": {
+        "message": "Cookieプロファイル",
+        "description": "Feature name in paywall comparison: saving/loading cookie sets."
+    },
+    "payFeatureHeader": {
+        "message": "機能",
+        "description": "Column header in the paywall feature comparison table."
+    },
+    "payFeatureHealthDashboard": {
+        "message": "ヘルスダッシュボード",
+        "description": "Feature name in paywall comparison: cookie health scoring and analysis."
+    },
+    "payFeatureJwtDecoder": {
+        "message": "JWTデコーダー",
+        "description": "Feature name in paywall comparison: decode and view JWT token cookies."
+    },
+    "payFreeHeader": {
+        "message": "無料",
+        "description": "Column header for the free tier in the paywall comparison table."
+    },
+    "payLicenseToggle": {
+        "message": "ライセンスキーをお持ちですか？",
+        "description": "Toggle button text to show the license key input form in the paywall."
+    },
+    "payMonthly": {
+        "message": "月額",
+        "description": "Pricing tier name for monthly subscription in the paywall."
+    },
+    "payMonthlyNote": {
+        "message": "毎月請求",
+        "description": "Note below the monthly price in the paywall."
+    },
+    "payMonthlyPrice": {
+        "message": "$$3.99/月",
+        "description": "Monthly subscription price displayed in the paywall."
+    },
+    "payProHeader": {
+        "message": "Pro",
+        "description": "Column header for the Pro tier in the paywall comparison table."
     },
     "payRulesFreeLimitReached": {
         "message": "無料プランの上限に達しました（1ルール）。アップグレードして無制限に。",
         "description": "Lock overlay message on the Rules tab when the free-tier rule limit is reached."
+    },
+    "paySavePercent": {
+        "message": "37%割引",
+        "description": "Savings badge shown on the annual pricing tier."
     },
     "payTrialBanner": {
         "message": "Proお試し: 残り$DAYS$日",
@@ -1079,7 +1807,163 @@
             }
         }
     },
-    "msgCookieCount": {
+    "payTrustCancelAnytime": {
+        "message": "いつでもキャンセル可能",
+        "description": "Trust signal text in the paywall footer."
+    },
+    "payTrustMoneyBack": {
+        "message": "7日間返金保証",
+        "description": "Trust signal text in the paywall footer."
+    },
+    "payTrustSecure": {
+        "message": "安全な決済",
+        "description": "Trust signal text in the paywall footer."
+    },
+    "payUnlimited": {
+        "message": "無制限",
+        "description": "Feature limit text for Pro tier in paywall comparison table."
+    },
+    "payUpgradeProUnlimited": {
+        "message": "Proにアップグレードしてプロファイルを無制限に",
+        "description": "Lock overlay message on the Profiles tab when the free-tier profile limit is reached."
+    },
+    "payUpgradeSubtitle": {
+        "message": "Cookie Manager Proにアップグレードして全機能をご利用ください。",
+        "description": "Paywall modal subtitle text below the title."
+    },
+    "payUpgradeTitle": {
+        "message": "$FEATURE$のロック解除",
+        "description": "Paywall modal title. Shows which feature triggered the upgrade prompt.",
+        "placeholders": {
+            "FEATURE": {
+                "content": "$1",
+                "example": "Cookie Profiles"
+            }
+        }
+    },
+    "paywallActivateLicense": {
+        "message": "ライセンスキーをお持ちですか？",
+        "description": "Toggle button text to show the license key input form in the paywall."
+    },
+    "paywallActivating": {
+        "message": "有効化中...",
+        "description": "Button text shown while the license activation is in progress."
+    },
+    "paywallAnnual": {
+        "message": "年額",
+        "description": "Annual tier name displayed in the paywall."
+    },
+    "paywallBestValue": {
+        "message": "Best Value"
+    },
+    "paywallBilledAnnually": {
+        "message": "$$2.50/月（年払い）",
+        "description": "Note below the annual price showing monthly equivalent."
+    },
+    "paywallBilledMonthly": {
+        "message": "毎月請求",
+        "description": "Note below the monthly price in the paywall."
+    },
+    "paywallColFeature": {
+        "message": "機能",
+        "description": "Column header in the paywall feature comparison table."
+    },
+    "paywallColFree": {
+        "message": "無料",
+        "description": "Column header for the free tier in the paywall comparison table."
+    },
+    "paywallColPro": {
+        "message": "Pro",
+        "description": "Column header for the Pro tier in the paywall comparison table."
+    },
+    "paywallCtaAnnual": {
+        "message": "Pro年額プランを取得 — $$29.99/年",
+        "description": "Primary CTA button text for annual subscription in the paywall."
+    },
+    "paywallCtaMonthly": {
+        "message": "月額プランを開始 — $$3.99/月",
+        "description": "Secondary CTA button text for monthly subscription in the paywall."
+    },
+    "paywallHaveLicenseKey": {
+        "message": "Already have a license key?"
+    },
+    "paywallMonthly": {
+        "message": "月額",
+        "description": "Monthly tier name displayed in the paywall."
+    },
+    "paywallSave37": {
+        "message": "37%割引",
+        "description": "Savings badge shown on the annual pricing tier."
+    },
+    "paywallSubtitle": {
+        "message": "Upgrade to Cookie Manager Pro for the full toolkit."
+    },
+    "paywallTrustCancel": {
+        "message": "いつでもキャンセル可能",
+        "description": "Trust signal text in the paywall footer."
+    },
+    "paywallTrustMoneyBack": {
+        "message": "7日間返金保証",
+        "description": "Trust signal text in the paywall footer."
+    },
+    "paywallTrustSecure": {
+        "message": "Secure checkout"
+    },
+    "paywallUnlockTitle": {
+        "message": "$FEATURE$のロック解除",
+        "description": "Paywall modal title. Shows which feature triggered the upgrade prompt.",
+        "placeholders": {
+            "FEATURE": {
+                "content": "$1",
+                "example": "Cookie Profiles"
+            }
+        }
+    },
+    "plhCookieName": {
+        "message": "cookie名",
+        "description": "Placeholder text for the cookie name input in the editor modal."
+    },
+    "plhCookieNamePattern": {
+        "message": "名前",
+        "description": "Form label for the cookie name field in the editor modal."
+    },
+    "plhCookieValue": {
+        "message": "cookieの値",
+        "description": "Placeholder text for the cookie value textarea in the editor modal."
+    },
+    "plhDomain": {
+        "message": ".example.com",
+        "description": "Placeholder text for the domain input in the cookie editor modal."
+    },
+    "plhDomainPattern": {
+        "message": "ドメイン",
+        "description": "Form label for the cookie domain field in the editor modal."
+    },
+    "plhLicenseKey": {
+        "message": "XXXX-XXXX-XXXX-XXXX",
+        "description": "Placeholder text for the license key input in the paywall modal."
+    },
+    "plhPath": {
+        "message": "/",
+        "description": "Placeholder text for the path input in the cookie editor modal."
+    },
+    "plhProfileName": {
+        "message": "例: 開発環境",
+        "description": "Placeholder text for the profile name input when saving a profile."
+    },
+    "plhRuleCookiePattern": {
+        "message": "* で全件、または特定の名前",
+        "description": "Placeholder text for the cookie name pattern input in the rule form."
+    },
+    "plhRuleDomain": {
+        "message": "例: *.google.com または facebook.com",
+        "description": "Placeholder text for the domain pattern input in the rule form."
+    },
+    "plhSearchCookies": {
+        "message": "cookieを検索...",
+        "description": "Placeholder text for the cookie search input field in the popup."
+    },
+    "profileCookieCount": {
         "message": "$COUNT$個のcookie",
         "description": "Cookie count display on profile cards, e.g., '12 cookies'.",
         "placeholders": {
@@ -1089,11 +1973,41 @@
             }
         }
     },
-    "msgCookieCountSingular": {
-        "message": "1個のcookie",
-        "description": "Singular form of cookie count display on profile cards."
+    "profileJustNow": {
+        "message": "たった今",
+        "description": "Relative time text for very recent actions (under 1 minute ago)."
     },
-    "msgCookiesAffected": {
+    "profileNamePrompt": {
+        "message": "Profile name:"
+    },
+    "profileSavedPrefix": {
+        "message": "保存済み",
+        "description": "Prefix before relative time on profile cards, e.g., 'Saved 2 hours ago'."
+    },
+    "profileUnknownDate": {
+        "message": "不明な日付",
+        "description": "Fallback text when a profile has no recorded date."
+    },
+    "profilesEmptySubtitle": {
+        "message": "スケジュールに基づいてcookieを自動削除するルールを作成できます",
+        "description": "Empty state subtitle on the Rules tab when no rules exist."
+    },
+    "profilesEmptyTitle": {
+        "message": "保存済みプロファイルはありません",
+        "description": "Empty state title on the Profiles tab when no profiles exist."
+    },
+    "profilesUpgradeMsg": {
+        "message": "Upgrade to Pro for unlimited profiles"
+    },
+    "retentionWelcomeBack": {
+        "message": "おかえりなさい！Cookie Managerでできることをご確認ください。",
+        "description": "Default retention banner message shown to returning users."
+    },
+    "ruleAllCookies": {
+        "message": "すべてのcookie",
+        "description": "Badge text on a rule card when the cookie name pattern is set to wildcard (*)."
+    },
+    "ruleCookiesAffected": {
         "message": "$COUNT$個のcookieが対象",
         "description": "Count of cookies matching a rule, shown on rule cards.",
         "placeholders": {
@@ -1103,300 +2017,362 @@
             }
         }
     },
-    "msgCookieAffectedSingular": {
-        "message": "1個のcookieが対象",
-        "description": "Singular form of affected cookie count on rule cards."
+    "rulesEmptySubtitle": {
+        "message": "スケジュールに基づいてcookieを自動削除するルールを作成できます",
+        "description": "Empty state subtitle on the Rules tab when no rules exist."
     },
-    "msgSavedDatePrefix": {
-        "message": "保存済み",
-        "description": "Prefix before relative time on profile cards, e.g., 'Saved 2 hours ago'."
+    "rulesEmptyTitle": {
+        "message": "ルールはまだありません",
+        "description": "Empty state title on the Rules tab when no auto-delete rules exist."
     },
-    "msgJustNow": {
-        "message": "たった今",
-        "description": "Relative time text for very recent actions (under 1 minute ago)."
+    "rulesUpgradeMsg": {
+        "message": "無料プランの上限に達しました（1ルール）。アップグレードして無制限に。",
+        "description": "Lock overlay message on the Rules tab when the free-tier rule limit is reached."
     },
-    "msgMinutesAgo": {
-        "message": "$COUNT$分前",
-        "description": "Relative time text for minutes, e.g., '5 min ago'.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "5"
-            }
-        }
+    "scheduleEvery6Hours": {
+        "message": "6時間ごと",
+        "description": "Schedule option for auto-delete rules: run every 6 hours."
     },
-    "msgHoursAgo": {
-        "message": "$COUNT$時間前",
-        "description": "Relative time text for hours, e.g., '3 hours ago'.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "3"
-            }
-        }
+    "scheduleEveryDay": {
+        "message": "毎日",
+        "description": "Schedule option for auto-delete rules: run every day."
     },
-    "msgHourAgo": {
-        "message": "1時間前",
-        "description": "Singular relative time text for exactly one hour ago."
+    "scheduleEveryHour": {
+        "message": "毎時",
+        "description": "Schedule option for auto-delete rules: run every hour."
     },
-    "msgDaysAgo": {
-        "message": "$COUNT$日前",
-        "description": "Relative time text for days, e.g., '5 days ago'.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "5"
-            }
-        }
+    "scheduleOnBrowserClose": {
+        "message": "ブラウザ終了時",
+        "description": "Schedule option for auto-delete rules: run when the browser closes."
     },
-    "msgDayAgo": {
-        "message": "1日前",
-        "description": "Singular relative time text for exactly one day ago."
+    "stsFree": {
+        "message": "無料",
+        "description": "Subscription badge text for free-tier users."
     },
-    "msgUnknownDate": {
-        "message": "不明な日付",
-        "description": "Fallback text when a profile has no recorded date."
-    },
-    "msgCookiesFoundCount": {
-        "message": "$COUNT$個のcookieが見つかりました",
-        "description": "Screen reader announcement after a search, e.g., '5 cookies found'.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "5"
-            }
-        }
-    },
-    "msgCookieFoundSingular": {
-        "message": "1個のcookieが見つかりました",
-        "description": "Singular screen reader announcement when search returns 1 result."
-    },
-    "msgTabSelected": {
-        "message": "$TAB$タブが選択されました",
-        "description": "Screen reader announcement when switching tabs.",
-        "placeholders": {
-            "TAB": {
-                "content": "$1",
-                "example": "Cookies"
-            }
-        }
-    },
-    "msgHealthSummary": {
-        "message": "$COUNT$個のcookieを分析 - スコア: $SCORE$/100",
-        "description": "Health tab summary line below the grade circle.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "15"
-            },
-            "SCORE": {
-                "content": "$2",
-                "example": "82"
-            }
-        }
-    },
-    "msgHealthSecureCookies": {
-        "message": "Secure設定済みcookie",
-        "description": "Health category label for the percentage of cookies with the Secure flag."
-    },
-    "msgHealthHttpOnly": {
+    "stsHttpOnly": {
         "message": "HttpOnly",
-        "description": "Health category label for the percentage of cookies with the HttpOnly flag."
+        "description": "Badge label for cookies with the HttpOnly flag set."
     },
-    "msgHealthSameSiteSet": {
-        "message": "SameSite設定済み",
-        "description": "Health category label for the percentage of cookies with SameSite configured."
+    "stsJwt": {
+        "message": "JWT",
+        "description": "Badge label for cookies detected as JWT tokens."
     },
-    "msgHealthTrackersFound": {
-        "message": "トラッカー検出数",
-        "description": "Health category label for the number of tracking cookies detected."
+    "stsLifetime": {
+        "message": "永久",
+        "description": "Subscription badge text for users with a lifetime license."
     },
-    "msgRecRemoveTrackers": {
-        "message": "トラッキングcookieを削除",
-        "description": "Health recommendation title: remove tracking cookies."
+    "stsPro": {
+        "message": "Pro",
+        "description": "Subscription badge text for Pro subscribers."
     },
-    "msgRecRemoveTrackersDetail": {
-        "message": "$COUNT$個のトラッキングcookieを削除してプライバシースコアを改善しましょう。",
-        "description": "Health recommendation detail text for removing trackers.",
+    "stsProLabel": {
+        "message": "PRO",
+        "description": "Small label appended to locked features indicating they require a Pro subscription."
+    },
+    "stsSecure": {
+        "message": "Secure",
+        "description": "Badge label for cookies with the Secure flag set."
+    },
+    "stsSession": {
+        "message": "セッション",
+        "description": "Badge label for session cookies (no expiration date)."
+    },
+    "stsTrial": {
+        "message": "お試し",
+        "description": "Subscription badge text for users on a free trial."
+    },
+    "tabCookies": {
+        "message": "トラッキングcookieが検出されました",
+        "description": "Section heading on the Health tab when trackers are found."
+    },
+    "tabHealth": {
+        "message": "ヘルス",
+        "description": "Tab label for the Health tab in the popup navigation bar."
+    },
+    "tabProfiles": {
+        "message": "プロファイル",
+        "description": "Tab label for the Profiles tab in the popup navigation bar."
+    },
+    "tabRules": {
+        "message": "ルール",
+        "description": "Tab label for the Rules tab in the popup navigation bar."
+    },
+    "tipAddCookie": {
+        "message": "Use the"
+    },
+    "tipDeleteProfile": {
+        "message": "プロファイルを削除",
+        "description": "Tooltip for the delete icon button on a profile card."
+    },
+    "tipDisableRule": {
+        "message": "ルールを無効化",
+        "description": "Tooltip for the toggle switch on a rule card when the rule is enabled."
+    },
+    "tipEnableRule": {
+        "message": "ルールを有効化",
+        "description": "Tooltip for the toggle switch on a rule card when the rule is disabled."
+    },
+    "tipHelpFaq": {
+        "message": "ヘルプとよくある質問",
+        "description": "Tooltip for the Help link in the footer."
+    },
+    "tipNavigateWebsite": {
+        "message": "Navigate to a website to view its cookies"
+    },
+    "tipPrivacyPolicy": {
+        "message": "プライバシーポリシー",
+        "description": "Tooltip for the Privacy link in the footer."
+    },
+    "tipRestoreProfile": {
+        "message": "このプロファイルからcookieを復元",
+        "description": "Tooltip for the Load button on a profile card."
+    },
+    "tipSearchCookies": {
+        "message": "Press"
+    },
+    "tipSessionCookie": {
+        "message": "セッションcookieにする場合は空欄のままにしてください",
+        "description": "Hint text below the expiration date field in the cookie editor."
+    },
+    "titleAddCookie": {
+        "message": "cookieを追加",
+        "description": "Modal title when creating a new cookie."
+    },
+    "titleAddRule": {
+        "message": "ルールを追加",
+        "description": "Button label on the Rules tab to create a new auto-delete rule."
+    },
+    "titleConfirm": {
+        "message": "確認",
+        "description": "Default title for confirmation dialogs."
+    },
+    "titleEditCookie": {
+        "message": "cookieを編集",
+        "description": "Modal title when editing an existing cookie."
+    },
+    "titleEditRule": {
+        "message": "ルールを編集",
+        "description": "Form title when editing an existing auto-delete rule."
+    },
+    "titleJwtToken": {
+        "message": "JWTトークン",
+        "description": "Modal title for the JWT decoder viewer."
+    },
+    "titleSaveProfile": {
+        "message": "現在のcookieをプロファイルとして保存すると、後で素早く復元できます",
+        "description": "Empty state subtitle on the Profiles tab when no profiles exist."
+    },
+    "trialBannerText": {
+        "message": "Proお試し: 残り$DAYS$日",
+        "description": "Trial banner text shown at the top of the popup during an active trial.",
         "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "3"
-            }
-        }
-    },
-    "msgRecAddSecureFlag": {
-        "message": "Secureフラグを追加",
-        "description": "Health recommendation title: add Secure flag to insecure cookies."
-    },
-    "msgRecAddSecureFlagDetail": {
-        "message": "$COUNT$個のcookieにSecureフラグがなく、HTTP接続で脆弱です。",
-        "description": "Health recommendation detail text for adding Secure flag.",
-        "placeholders": {
-            "COUNT": {
+            "DAYS": {
                 "content": "$1",
                 "example": "5"
             }
         }
     },
-    "msgRecAddHttpOnly": {
-        "message": "HttpOnlyフラグを追加",
-        "description": "Health recommendation title: add HttpOnly flag to exposed cookies."
+    "trialUpgradeLink": {
+        "message": "Upgrade now"
     },
-    "msgRecAddHttpOnlyDetail": {
-        "message": "$COUNT$個のcookieがJavaScriptからアクセス可能で、XSSで盗まれる可能性があります。",
-        "description": "Health recommendation detail text for adding HttpOnly flag.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "4"
-            }
-        }
+    "ttlAddCookie": {
+        "message": "cookieを追加",
+        "description": "Modal title when creating a new cookie."
     },
-    "msgRecSetSameSite": {
-        "message": "SameSiteポリシーを設定",
-        "description": "Health recommendation title: set SameSite policy on cookies."
+    "ttlAddRule": {
+        "message": "自動削除ルールを追加",
+        "description": "Form title when creating a new auto-delete rule."
     },
-    "msgRecSetSameSiteDetail": {
-        "message": "$COUNT$個のcookieにSameSiteポリシーが設定されておらず、CSRFリスクが増大しています。",
-        "description": "Health recommendation detail text for setting SameSite.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "6"
-            }
-        }
-    },
-    "msgRecReduceLifespan": {
-        "message": "cookieの有効期間を短縮",
-        "description": "Health recommendation title: reduce lifespan of long-lived cookies."
-    },
-    "msgRecReduceLifespanDetail": {
-        "message": "$COUNT$個のcookieが1年以上持続しています。短い有効期間はトラッキングへの露出を減らします。",
-        "description": "Health recommendation detail text for reducing cookie lifespan.",
-        "placeholders": {
-            "COUNT": {
-                "content": "$1",
-                "example": "2"
-            }
-        }
-    },
-    "a11yEditCookie": {
-        "message": "cookie $NAME$ を編集",
-        "description": "Aria-label for cookie list items, announces the cookie name for screen readers.",
-        "placeholders": {
-            "NAME": {
-                "content": "$1",
-                "example": "session_id"
-            }
-        }
-    },
-    "a11yLoadProfile": {
-        "message": "プロファイル $NAME$ を読み込み、$COUNT$個のcookie",
-        "description": "Aria-label for profile cards, announces profile name and cookie count.",
-        "placeholders": {
-            "NAME": {
-                "content": "$1",
-                "example": "Dev Environment"
-            },
-            "COUNT": {
-                "content": "$2",
-                "example": "12"
-            }
-        }
-    },
-    "a11yEditRule": {
-        "message": "$DOMAIN$ のルールを編集",
-        "description": "Aria-label for the edit button on a rule card.",
-        "placeholders": {
-            "DOMAIN": {
-                "content": "$1",
-                "example": "*.google.com"
-            }
-        }
-    },
-    "a11yDeleteRule": {
-        "message": "$DOMAIN$ のルールを削除",
-        "description": "Aria-label for the delete button on a rule card.",
-        "placeholders": {
-            "DOMAIN": {
-                "content": "$1",
-                "example": "*.google.com"
-            }
-        }
-    },
-    "a11yToggleRule": {
-        "message": "$DOMAIN$ のルールを$ACTION$",
-        "description": "Aria-label for the enable/disable toggle on a rule card.",
-        "placeholders": {
-            "ACTION": {
-                "content": "$1",
-                "example": "Disable"
-            },
-            "DOMAIN": {
-                "content": "$2",
-                "example": "*.google.com"
-            }
-        }
-    },
-    "a11ySearchCookies": {
-        "message": "cookieを検索",
-        "description": "Aria-label for the search input field."
-    },
-    "a11yCloseDialog": {
-        "message": "ダイアログを閉じる",
-        "description": "Aria-label for modal close buttons."
-    },
-    "a11yDismiss": {
+    "ttlClose": {
         "message": "閉じる",
-        "description": "Aria-label for the dismiss button on retention/growth banners."
+        "description": "Tooltip and aria-label for close buttons on modals."
     },
-    "a11yMainNavigation": {
-        "message": "メインナビゲーション",
-        "description": "Aria-label for the tab bar navigation element."
+    "ttlConfirm": {
+        "message": "確認",
+        "description": "Default title for confirmation dialogs."
     },
-    "a11yCopyHeader": {
-        "message": "ヘッダーをコピー",
-        "description": "Aria-label for the copy button in the JWT header section."
+    "ttlCookieHealth": {
+        "message": "Cookieヘルス",
+        "description": "Label shown inside the health score circle on the Health tab."
     },
-    "a11yCopyPayload": {
-        "message": "ペイロードをコピー",
-        "description": "Aria-label for the copy button in the JWT payload section."
+    "ttlCookies": {
+        "message": "Cookies",
+        "description": "Tab label for the Cookies tab in the popup navigation bar."
     },
-    "a11yLicenseKey": {
-        "message": "ライセンスキー",
-        "description": "Aria-label for the license key input in the paywall."
+    "ttlCopy": {
+        "message": "コピー",
+        "description": "Tooltip and aria-label for copy-to-clipboard buttons in the JWT viewer."
     },
-    "a11yCloseUpgradeDialog": {
-        "message": "アップグレードダイアログを閉じる",
-        "description": "Aria-label for the close button on the paywall modal."
+    "ttlEditCookie": {
+        "message": "cookieを編集",
+        "description": "Modal title when editing an existing cookie."
     },
-    "a11yIncluded": {
-        "message": "含まれています",
-        "description": "Aria-label for checkmark icons in the paywall feature comparison table."
+    "ttlEditRule": {
+        "message": "ルールを編集",
+        "description": "Form title when editing an existing auto-delete rule."
     },
-    "a11yNotIncluded": {
-        "message": "含まれていません",
-        "description": "Aria-label for dash/cross icons in the paywall feature comparison table."
+    "ttlHealth": {
+        "message": "ヘルス",
+        "description": "Tab label for the Health tab in the popup navigation bar."
     },
-    "a11yDeleteProfile": {
-        "message": "プロファイル $NAME$ を削除",
-        "description": "Aria-label for the delete button on a profile card.",
-        "placeholders": {
-            "NAME": {
-                "content": "$1",
-                "example": "Dev Environment"
-            }
-        }
+    "ttlHelpFaq": {
+        "message": "ヘルプとよくある質問",
+        "description": "Tooltip for the Help link in the footer."
     },
-    "a11yLoadProfileBtn": {
-        "message": "プロファイル $NAME$ を読み込み",
-        "description": "Aria-label for the load button on a profile card.",
-        "placeholders": {
-            "NAME": {
-                "content": "$1",
-                "example": "Dev Environment"
-            }
-        }
+    "ttlJwtToken": {
+        "message": "JWTトークン",
+        "description": "Modal title for the JWT decoder viewer."
+    },
+    "ttlPrivacyPolicy": {
+        "message": "プライバシーポリシー",
+        "description": "Tooltip for the Privacy link in the footer."
+    },
+    "ttlProfiles": {
+        "message": "プロファイル",
+        "description": "Tab label for the Profiles tab in the popup navigation bar."
+    },
+    "ttlReadOnly": {
+        "message": "読み取り専用モード",
+        "description": "Title and aria-label for the read-only toggle switch in the action bar."
+    },
+    "ttlRecommendations": {
+        "message": "推奨事項",
+        "description": "Section heading for health recommendations on the Health tab."
+    },
+    "ttlRefreshCookies": {
+        "message": "Cookies",
+        "description": "Tab label for the Cookies tab in the popup navigation bar."
+    },
+    "ttlRules": {
+        "message": "ルール",
+        "description": "Tab label for the Rules tab in the popup navigation bar."
+    },
+    "ttlSaveCookieProfile": {
+        "message": "Cookieプロファイルを保存",
+        "description": "Dialog title when saving current cookies as a profile."
+    },
+    "ttlTrackingCookiesDetected": {
+        "message": "トラッキングcookieが検出されました",
+        "description": "Section heading on the Health tab when trackers are found."
+    },
+    "upgradeActivateLicense": {
+        "message": "ライセンスを有効化",
+        "description": "Button text to submit the license key for activation."
+    },
+    "upgradeBackToExt": {
+        "message": "Back to Cookie Manager"
+    },
+    "upgradeBestValue": {
+        "message": "お得",
+        "description": "Badge shown on the annual pricing tier to indicate best value."
+    },
+    "upgradeBilledAnnually": {
+        "message": "Billed $$47.88/yr"
+    },
+    "upgradeBilledMonthly": {
+        "message": "Billed monthly"
+    },
+    "upgradeChoosePlan": {
+        "message": "Choose Your Plan"
+    },
+    "upgradeColFeature": {
+        "message": "Feature"
+    },
+    "upgradeColFree": {
+        "message": "Free"
+    },
+    "upgradeColPro": {
+        "message": "Pro"
+    },
+    "upgradeComparisonTitle": {
+        "message": "Free vs Pro Comparison"
+    },
+    "upgradeFooterCopyright": {
+        "message": "Cookie Manager by"
+    },
+    "upgradeGetAnnual": {
+        "message": "Get Annual"
+    },
+    "upgradeGetMonthly": {
+        "message": "Get Monthly"
+    },
+    "upgradeHeroSubtitle": {
+        "message": "Remove all limits and access every professional feature with a Pro upgrade."
+    },
+    "upgradeHeroTitle": {
+        "message": "Unlock the Full Power of Cookie Manager"
+    },
+    "upgradeLimitReached": {
+        "message": "You've reached your daily limit."
+    },
+    "upgradePageTitle": {
+        "message": "Upgrade to Cookie Manager Pro"
+    },
+    "upgradePeriodMonth": {
+        "message": "/mo"
+    },
+    "upgradePerkAllPro": {
+        "message": "All Pro features"
+    },
+    "upgradePerkBestPrice": {
+        "message": "Best price per month"
+    },
+    "upgradePerkCancel": {
+        "message": "Cancel anytime"
+    },
+    "upgradePerkUnlimited": {
+        "message": "無制限",
+        "description": "Feature limit text for Pro tier in paywall comparison table."
+    },
+    "upgradePlanAnnual": {
+        "message": "年額",
+        "description": "Pricing tier name for annual subscription in the paywall."
+    },
+    "upgradePlanMonthly": {
+        "message": "月額",
+        "description": "Pricing tier name for monthly subscription in the paywall."
+    },
+    "upgradeRestoreDesc": {
+        "message": "Enter your license key to restore your Pro subscription."
+    },
+    "upgradeRestorePurchase": {
+        "message": "Restore Purchase"
+    },
+    "upgradeRestoreTitle": {
+        "message": "Restore Purchase"
+    },
+    "upgradeSave20": {
+        "message": "Save 20%"
+    },
+    "upgradeTestimonial1": {
+        "message": "\"Cookie Manager Pro saves me hours every week. The bulk operations and export formats are exactly what I needed.\""
+    },
+    "upgradeTestimonial2": {
+        "message": "\"The health dashboard alone is worth the upgrade. I can finally see which cookies are problematic at a glance.\""
+    },
+    "upgradeTestimonial3": {
+        "message": "\"Unlimited profiles and auto-delete rules make testing across environments effortless. Highly recommend!\""
+    },
+    "upgradeTestimonialAuthor1": {
+        "message": "- Alex R., Web Developer"
+    },
+    "upgradeTestimonialAuthor2": {
+        "message": "- Maria S., QA Engineer"
+    },
+    "upgradeTestimonialAuthor3": {
+        "message": "- James T., DevOps Lead"
+    },
+    "upgradeTrustCancel": {
+        "message": "Cancel anytime"
+    },
+    "upgradeTrustGuarantee": {
+        "message": "7-day money-back guarantee"
+    },
+    "upgradeTrustSecure": {
+        "message": "安全な決済",
+        "description": "Trust signal text in the paywall footer."
+    },
+    "upgradeTrustedTitle": {
+        "message": "Trusted by Cookie Professionals"
     }
 }

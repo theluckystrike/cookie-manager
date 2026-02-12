@@ -564,9 +564,29 @@ var HealthManager = (function () {
             );
         }
 
-        Promise.all(promises).then(function () {
+        Promise.all(promises).then(function (results) {
+            // Count how many deletions actually succeeded vs returned errors
+            var failed = 0;
+            var firstError = null;
+            for (var r = 0; r < results.length; r++) {
+                var res = results[r];
+                if (res && typeof res === 'object' && res.error) {
+                    failed++;
+                    if (!firstError) firstError = res.error;
+                }
+            }
+            var succeeded = trackers.length - failed;
+
             if (typeof showToast === 'function') {
-                showToast('Removed ' + trackers.length + ' tracking cookie' + (trackers.length !== 1 ? 's' : ''), 'success');
+                if (failed === trackers.length) {
+                    // All failed
+                    showToast(firstError || 'Failed to remove tracking cookies', 'error');
+                } else if (failed > 0) {
+                    // Partial success
+                    showToast('Removed ' + succeeded + ' of ' + trackers.length + ' tracking cookies (' + failed + ' failed)', 'success');
+                } else {
+                    showToast('Removed ' + trackers.length + ' tracking cookie' + (trackers.length !== 1 ? 's' : ''), 'success');
+                }
             }
             // Reload and re-analyze
             refreshHealth();
@@ -623,9 +643,28 @@ var HealthManager = (function () {
             );
         }
 
-        Promise.all(promises).then(function () {
+        Promise.all(promises).then(function (results) {
+            // Count how many operations actually succeeded vs returned errors
+            var failed = 0;
+            var firstError = null;
+            for (var r = 0; r < results.length; r++) {
+                var res = results[r];
+                if (res && typeof res === 'object' && res.error) {
+                    failed++;
+                    if (!firstError) firstError = res.error;
+                }
+            }
+            var succeeded = insecure.length - failed;
+
             if (typeof showToast === 'function') {
-                showToast('Secured ' + insecure.length + ' cookie' + (insecure.length !== 1 ? 's' : ''), 'success');
+                if (failed === insecure.length) {
+                    // All failed
+                    showToast(firstError || 'Failed to secure cookies', 'error');
+                } else if (failed > 0) {
+                    showToast('Secured ' + succeeded + ' of ' + insecure.length + ' cookies (' + failed + ' failed)', 'success');
+                } else {
+                    showToast('Secured ' + insecure.length + ' cookie' + (insecure.length !== 1 ? 's' : ''), 'success');
+                }
             }
             refreshHealth();
             if (typeof loadCookies === 'function') {

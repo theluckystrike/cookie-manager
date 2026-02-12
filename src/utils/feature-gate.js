@@ -88,6 +88,9 @@
                 var data = {};
                 data[STORAGE_KEY] = usageMap;
                 chrome.storage.local.set(data, function () {
+                    if (chrome.runtime.lastError) {
+                        console.warn('[FeatureGate] storage.set error:', chrome.runtime.lastError.message);
+                    }
                     resolve();
                 });
             } else {

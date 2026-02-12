@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>Cookie Manager — Hero Shot</title>
+  <link rel="stylesheet" href="promo-shared.css">
+  <style>
+    .hero-layout {
+      display: flex;
+      align-items: center;
+      gap: 56px;
+      margin-top: -8px;
+    }
+    .hero-text {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      max-width: 480px;
+    }
+    .hero-browser {
+      flex-shrink: 0;
+    }
+    .hero-feature-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .hero-pill {
+      background: #FFFFFF;
+      border: 1px solid #EDE9FE;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #7C3AED;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .hero-pill svg {
+      width: 14px;
+      height: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <div class="hero-layout">
+
+      <!-- Left: Text content -->
+      <div class="hero-text">
+        <h1 class="headline">Your Cookies,<br><span class="accent">Under Control</span></h1>
+        <p class="subtext">View, edit, and manage cookies for any website in one click</p>
+        <div class="hero-feature-pills">
+          <span class="hero-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Edit Cookies
+          </span>
+          <span class="hero-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export &amp; Import
+          </span>
+          <span class="hero-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Security Audit
+          </span>
+          <span class="hero-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Auto-Delete Rules
+          </span>
+          <span class="hero-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Cookie Profiles
+          </span>
+          <span class="hero-pill">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+            JWT Decoder
+          </span>
+        </div>
+      </div>
+
+      <!-- Right: Browser frame with popup -->
+      <div class="hero-browser">
+        <div class="browser-frame" style="width: 440px;">
+          <div class="browser-toolbar">
+            <div class="browser-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="browser-address-bar">
+              <span class="lock-icon">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM12 17c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg>
+              </span>
+              github.com/dashboard
+            </div>
+            <div class="browser-extension-badge"><span>z</span></div>
+          </div>
+          <div class="browser-content" style="padding: 12px; background: #F1F5F9;">
+            <div class="popup-preview">
+
+              <!-- Popup Header -->
+              <div class="popup-header">
+                <div class="popup-logo">z</div>
+                <span class="popup-title">Cookie Manager</span>
+                <span class="popup-domain">github.com</span>
+              </div>
+
+              <!-- Search -->
+              <div class="popup-search">
+                <div class="popup-search-input">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                  Search cookies...
+                </div>
+                <span class="popup-search-badge">24</span>
+              </div>
+
+              <!-- Tab Bar -->
+              <div class="popup-tabs">
+                <div class="popup-tab active">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: -1px;"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"/><path d="M8 14v.5"/><path d="M16 10v.5"/><path d="M12 16v.5"/></svg>
+                  Cookies
+                </div>
+                <div class="popup-tab">Profiles</div>
+                <div class="popup-tab">Rules</div>
+                <div class="popup-tab">Health</div>
+              </div>
+
+              <!-- Cookie List -->
+              <div class="popup-cookie-list">
+                <!-- _ga -->
+                <div class="popup-cookie-item">
+                  <div class="cookie-icon analytics">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+                  </div>
+                  <div class="cookie-info">
+                    <div class="cookie-name">_ga</div>
+                    <div class="cookie-meta">.github.com &middot; GA2.1.1847...503</div>
+                  </div>
+                  <div class="cookie-expiry">2y</div>
+                </div>
+                <!-- session_id -->
+                <div class="popup-cookie-item">
+                  <div class="cookie-icon session">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  </div>
+                  <div class="cookie-info">
+                    <div class="cookie-name">session_id</div>
+                    <div class="cookie-meta">github.com &middot; eyJhbGci...kpXVCJ9</div>
+                  </div>
+                  <div class="cookie-expiry">Session</div>
+                </div>
+                <!-- __cf_bm -->
+                <div class="popup-cookie-item">
+                  <div class="cookie-icon cloudflare">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  </div>
+                  <div class="cookie-info">
+                    <div class="cookie-name">__cf_bm</div>
+                    <div class="cookie-meta">.github.com &middot; hN3kZ9...mQ7x</div>
+                  </div>
+                  <div class="cookie-expiry">30m</div>
+                </div>
+                <!-- csrf_token -->
+                <div class="popup-cookie-item">
+                  <div class="cookie-icon security">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  </div>
+                  <div class="cookie-info">
+                    <div class="cookie-name">csrf_token</div>
+                    <div class="cookie-meta">github.com &middot; a8f2e1c...9d4b</div>
+                  </div>
+                  <div class="cookie-expiry">1h</div>
+                </div>
+              </div>
+
+              <!-- Action Bar -->
+              <div class="popup-actions">
+                <div class="popup-action-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                  <span class="btn-label">Add</span>
+                </div>
+                <div class="popup-action-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  <span class="btn-label">Export</span>
+                </div>
+                <div class="popup-action-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  <span class="btn-label">Import</span>
+                </div>
+                <div class="popup-action-btn">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                  <span class="btn-label">Clear</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Watermark -->
+    <div class="watermark">
+      <span class="logo-mark">z</span> Cookie Manager by Zovo
+    </div>
+
+  </div>
+</body>
+</html>

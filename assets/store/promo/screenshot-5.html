@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>Cookie Manager — Use Cases</title>
+  <link rel="stylesheet" href="promo-shared.css">
+  <style>
+    .usecase-grid {
+      margin-top: 16px;
+    }
+    .usecase-card {
+      position: relative;
+      padding: 36px 30px 32px;
+    }
+    .usecase-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #7C3AED, #6D28D9);
+      border-radius: 16px 16px 0 0;
+    }
+    .usecase-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+    }
+    .usecase-icon svg {
+      width: 30px;
+      height: 30px;
+    }
+    .usecase-title {
+      font-size: 20px;
+    }
+    .usecase-desc {
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .usecase-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      margin-top: 4px;
+    }
+    .usecase-tag {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: #F5F3FF;
+      color: #7C3AED;
+    }
+
+    /* Bottom features row */
+    .bottom-features {
+      display: flex;
+      gap: 24px;
+      margin-top: 8px;
+    }
+    .bottom-feature {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #FFFFFF;
+      border: 1px solid #EDE9FE;
+      border-radius: 10px;
+      padding: 12px 20px;
+    }
+    .bottom-feature-icon {
+      width: 32px;
+      height: 32px;
+      background: #7C3AED;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .bottom-feature-icon svg {
+      width: 16px;
+      height: 16px;
+      color: #FFFFFF;
+    }
+    .bottom-feature-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1E293B;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <h1 class="headline">Built for <span class="accent">Developers</span> and <span class="accent">Power Users</span></h1>
+    <p class="subtext" style="margin-bottom: 4px;">No signup required. Install and start managing cookies in seconds.</p>
+
+    <div class="usecase-grid">
+
+      <!-- Web Developers -->
+      <div class="usecase-card">
+        <div class="usecase-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+          </svg>
+        </div>
+        <div class="usecase-title">Web Developers</div>
+        <div class="usecase-desc">Debug cookie issues, test auth flows, and switch between staging environments with saved profiles</div>
+        <div class="usecase-tags">
+          <span class="usecase-tag">Auth Debugging</span>
+          <span class="usecase-tag">Environment Switching</span>
+          <span class="usecase-tag">JWT Inspection</span>
+        </div>
+      </div>
+
+      <!-- QA Engineers -->
+      <div class="usecase-card">
+        <div class="usecase-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"/>
+            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+        </div>
+        <div class="usecase-title">QA Engineers</div>
+        <div class="usecase-desc">Verify cookie behavior across test cases, validate expiry rules, and confirm security flags are set correctly</div>
+        <div class="usecase-tags">
+          <span class="usecase-tag">Cookie Validation</span>
+          <span class="usecase-tag">Expiry Testing</span>
+          <span class="usecase-tag">Security Audit</span>
+        </div>
+      </div>
+
+      <!-- Privacy-Conscious Users -->
+      <div class="usecase-card">
+        <div class="usecase-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="usecase-title">Privacy-Conscious Users</div>
+        <div class="usecase-desc">Monitor tracking cookies, auto-delete analytics data, and keep your browser clean with scheduled cleanup rules</div>
+        <div class="usecase-tags">
+          <span class="usecase-tag">Tracker Blocking</span>
+          <span class="usecase-tag">Auto-Cleanup</span>
+          <span class="usecase-tag">Privacy Score</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom feature highlights -->
+    <div class="bottom-features">
+      <div class="bottom-feature">
+        <div class="bottom-feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <span class="bottom-feature-text">6 Languages</span>
+      </div>
+      <div class="bottom-feature">
+        <div class="bottom-feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </div>
+        <span class="bottom-feature-text">Dark Mode</span>
+      </div>
+      <div class="bottom-feature">
+        <div class="bottom-feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        </div>
+        <span class="bottom-feature-text">JSON &amp; Netscape Export</span>
+      </div>
+      <div class="bottom-feature">
+        <div class="bottom-feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <span class="bottom-feature-text">100% Privacy Safe</span>
+      </div>
+    </div>
+
+    <!-- Watermark -->
+    <div class="watermark">
+      <span class="logo-mark">z</span> Cookie Manager by Zovo
+    </div>
+
+  </div>
+</body>
+</html>

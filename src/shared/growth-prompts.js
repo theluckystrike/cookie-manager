@@ -21,12 +21,18 @@
     };
 
     function storageGet(keys) {
-        try { return chrome.storage.local.get(keys); }
+        try {
+            return chrome.storage.local.get(keys).catch(function () { return {}; });
+        }
         catch (e) { console.error(TAG, 'get failed', e); return Promise.resolve({}); }
     }
 
     function storageSet(data) {
-        try { return chrome.storage.local.set(data); }
+        try {
+            return chrome.storage.local.set(data).catch(function (err) {
+                console.error(TAG, 'set failed', err);
+            });
+        }
         catch (e) { console.error(TAG, 'set failed', e); return Promise.resolve(); }
     }
 

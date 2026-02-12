@@ -104,7 +104,6 @@
         I18nLoader.init();
     }
 
-    // Expose globally
+    // Expose globally (only in window context; I18nLoader uses document APIs)
     if (typeof window !== 'undefined') window.I18nLoader = I18nLoader;
-    if (typeof self !== 'undefined') self.I18nLoader = I18nLoader;
 })();

@@ -140,10 +140,6 @@ const elements = {
 
     // Actions
     refreshBtn: $('refreshBtn'),
-    exportBtn: $('exportBtn'),
-    addCookieBtn: $('addCookieBtn'),
-    clearAllBtn: $('clearAllBtn'),
-    readOnlyToggle: $('readOnlyToggle'),
 
     // Editor Modal
     editorModal: $('editorModal'),
@@ -211,13 +207,9 @@ function switchTab(tabName) {
         panel.hidden = !isActive;
     });
 
-    // Show/hide search bar and action bar (only visible on Cookies tab)
+    // Show/hide search bar (only visible on Cookies tab)
     if (elements.searchBar) {
         elements.searchBar.style.display = tabName === 'cookies' ? '' : 'none';
-    }
-    const actionBar = document.querySelector('.action-bar');
-    if (actionBar) {
-        actionBar.style.display = tabName === 'cookies' ? '' : 'none';
     }
 
     // Initialize tab managers on first visit
@@ -290,7 +282,6 @@ async function init() {
         // Load settings
         const settingsResponse = await chrome.runtime.sendMessage({ action: 'GET_SETTINGS' });
         settings = settingsResponse || { readOnlyMode: false };
-        elements.readOnlyToggle.checked = settings.readOnlyMode;
 
         // Get current tab
         const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -305,10 +296,6 @@ async function init() {
         if (!tab?.url || tab.url.startsWith('chrome://') || tab.url.startsWith('chrome-extension://')) {
             elements.currentDomain.textContent = chrome.i18n.getMessage('domainChromePage') || 'Chrome page';
             showEmptyState(chrome.i18n.getMessage('emptyChromePage') || 'This page has no cookies');
-            // Disable action buttons on unsupported pages
-            elements.exportBtn.disabled = true;
-            elements.addCookieBtn.disabled = true;
-            elements.clearAllBtn.disabled = true;
             return;
         }
 
@@ -351,7 +338,6 @@ async function init() {
             ArchPatterns.EventBus.on('settings:changed', function(newSettings) {
                 if (newSettings && typeof newSettings.readOnlyMode !== 'undefined') {
                     settings.readOnlyMode = newSettings.readOnlyMode;
-                    elements.readOnlyToggle.checked = newSettings.readOnlyMode;
                 }
             });
         }
@@ -397,6 +383,7 @@ async function loadCookies() {
 }
 
 function renderCookies(cookies) {
+    if (!elements.searchInput || !elements.cookieList || !elements.emptyState || !elements.cookieCount) return;
     const searchTerm = elements.searchInput.value.toLowerCase().trim();
 
     let filtered = cookies;
@@ -494,18 +481,25 @@ function createCookieItemHTML(cookie) {
 
 function showEmptyState(message) {
     if (!message) message = chrome.i18n.getMessage('emptyNoCookiesFound') || 'No cookies found';
-    elements.loadingState.hidden = true;
-    elements.cookieList.hidden = true;
-    elements.emptyState.hidden = false;
+    if (elements.loadingState) elements.loadingState.hidden = true;
+    if (elements.cookieList) elements.cookieList.hidden = true;
+    if (elements.emptyState) elements.emptyState.hidden = false;
 
     const subtitle = elements.emptyState.querySelector('.empty-subtitle');
     if (subtitle) subtitle.textContent = message;
+
+    // Show tips only when there are genuinely no cookies (not search filtering)
+    const tips = document.getElementById('emptyTips');
+    if (tips) {
+        const isSearchFiltering = elements.searchInput && elements.searchInput.value.trim().length > 0;
+        tips.hidden = isSearchFiltering;
+    }
 }
 
 function showLoading() {
-    elements.cookieList.hidden = true;
-    elements.emptyState.hidden = true;
-    elements.loadingState.hidden = false;
+    if (elements.cookieList) elements.cookieList.hidden = true;
+    if (elements.emptyState) elements.emptyState.hidden = true;
+    if (elements.loadingState) elements.loadingState.hidden = false;
 }
 
 // ============================================================================
@@ -540,12 +534,21 @@ function openEditor(cookie = null) {
 
     } else {
         // Clear form for new cookie
-        const domain = new URL(currentTab.url).hostname;
+        let domain = '';
+        let isSecure = false;
+        try {
+            if (currentTab && currentTab.url) {
+                domain = new URL(currentTab.url).hostname;
+                isSecure = currentTab.url.startsWith('https');
+            }
+        } catch (e) {
+            // Malformed URL - use empty defaults
+        }
         elements.cookieName.value = '';
         elements.cookieValue.value = '';
         elements.cookieDomain.value = domain;
         elements.cookiePath.value = '/';
-        elements.cookieSecure.checked = currentTab.url.startsWith('https');
+        elements.cookieSecure.checked = isSecure;
         elements.cookieHttpOnly.checked = false;
         elements.cookieSameSite.value = 'lax';
         elements.cookieExpiry.value = '';
@@ -570,7 +573,7 @@ function closeEditor() {
         _editorFocusTrap = null;
     }
 
-    elements.editorModal.hidden = true;
+    if (elements.editorModal) elements.editorModal.hidden = true;
     selectedCookie = null;
     isNewCookie = false;
 }
@@ -628,10 +631,16 @@ async function saveCookie() {
                     : selectedCookie.domain;
                 const oldUrl = `http${selectedCookie.secure ? 's' : ''}://${oldDomain}${selectedCookie.path}`;
 
-                await chrome.runtime.sendMessage({
+                const delResult = await chrome.runtime.sendMessage({
                     action: 'DELETE_COOKIE',
                     payload: { url: oldUrl, name: selectedCookie.name }
                 });
+
+                // If delete failed due to read-only or protected domain, stop early
+                if (delResult && typeof delResult === 'object' && delResult.error) {
+                    showToast(delResult.error, 'error');
+                    return;
+                }
             }
         }
 
@@ -679,10 +688,16 @@ async function deleteCookie() {
             const url = `http${selectedCookie.secure ? 's' : ''}://${domain}${selectedCookie.path}`;
 
             try {
-                await chrome.runtime.sendMessage({
+                const deleteResult = await chrome.runtime.sendMessage({
                     action: 'DELETE_COOKIE',
                     payload: { url, name: selectedCookie.name }
                 });
+
+                // Handle error responses (read-only mode, protected domain)
+                if (deleteResult && typeof deleteResult === 'object' && deleteResult.error) {
+                    showToast(deleteResult.error, 'error');
+                    return;
+                }
 
                 showToast(chrome.i18n.getMessage('ntfCookieDeleted') || 'Cookie deleted', 'success');
                 closeEditor();
@@ -736,7 +751,7 @@ function closeJwtModal() {
         _jwtFocusTrap = null;
     }
 
-    elements.jwtModal.hidden = true;
+    if (elements.jwtModal) elements.jwtModal.hidden = true;
 }
 
 // ============================================================================
@@ -754,6 +769,17 @@ async function exportCookies() {
             action: 'EXPORT_COOKIES',
             payload: { url: currentTab.url, format: 'json' }
         });
+
+        // Handle error responses from service worker
+        if (json && typeof json === 'object' && json.error) {
+            showToast(json.error, 'error');
+            return;
+        }
+
+        if (typeof json !== 'string') {
+            showToast(chrome.i18n.getMessage('errFailedExportCookies') || 'Failed to export cookies', 'error');
+            return;
+        }
 
         // Download as JSON file
         const domain = new URL(currentTab.url).hostname;
@@ -784,117 +810,8 @@ async function exportCookies() {
     }
 }
 
-async function importCookies() {
-    if (settings.readOnlyMode) {
-        showToast(chrome.i18n.getMessage('errReadOnlyMode') || 'Read-only mode is enabled', 'error');
-        return;
-    }
-    const fileInput = document.getElementById('importFileInput');
-    if (!fileInput) return;
-    fileInput.value = '';
-    fileInput.click();
-}
-
-function handleImportFile(event) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    // Security: limit import file size to 1 MB to prevent DoS (MD 18)
-    if (file.size > 1048576) {
-        showToast(chrome.i18n.getMessage('errImportFileTooLarge') || 'Import file too large (max 1 MB)', 'error');
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = async function(e) {
-        try {
-            const cookies = JSON.parse(e.target.result);
-            if (!Array.isArray(cookies)) {
-                showToast(chrome.i18n.getMessage('errInvalidImportFormat') || 'Invalid format: expected a JSON array of cookies', 'error');
-                return;
-            }
-
-            // Security: limit number of cookies to prevent abuse (MD 18)
-            if (cookies.length > 500) {
-                showToast(chrome.i18n.getMessage('errImportTooManyCookies') || 'Too many cookies in import file (max 500)', 'error');
-                return;
-            }
-
-            let imported = 0;
-            let failed = 0;
-            for (const cookie of cookies) {
-                try {
-                    // Security: validate each cookie object has required string fields
-                    if (!cookie || typeof cookie !== 'object' ||
-                        typeof cookie.name !== 'string' || !cookie.name.trim() ||
-                        typeof cookie.domain !== 'string' || !cookie.domain.trim()) {
-                        failed++;
-                        continue;
-                    }
-
-                    const details = {
-                        url: (cookie.secure ? 'https://' : 'http://') + (cookie.domain || '').replace(/^\./, '') + (cookie.path || '/'),
-                        name: cookie.name,
-                        value: typeof cookie.value === 'string' ? cookie.value : '',
-                        path: cookie.path || '/',
-                        secure: !!cookie.secure,
-                        httpOnly: !!cookie.httpOnly,
-                        sameSite: cookie.sameSite || 'lax'
-                    };
-                    if (typeof cookie.expirationDate === 'number') {
-                        details.expirationDate = cookie.expirationDate;
-                    }
-                    await chrome.runtime.sendMessage({ action: 'SET_COOKIE', payload: details });
-                    imported++;
-                } catch {
-                    failed++;
-                }
-            }
-            showToast(chrome.i18n.getMessage('ntfCookiesImported', [String(imported)]) || ('Imported ' + imported + ' cookies') + (failed > 0 ? (', ' + failed + ' failed') : ''), imported > 0 ? 'success' : 'error');
-            loadCookies();
-        } catch (err) {
-            showToast(chrome.i18n.getMessage('errFailedParseJson') || 'Failed to parse JSON file', 'error');
-        }
-    };
-    reader.readAsText(file);
-}
-
-async function clearAllCookies() {
-    if (settings.readOnlyMode) {
-        showToast(chrome.i18n.getMessage('errReadOnlyMode') || 'Read-only mode is enabled', 'error');
-        return;
-    }
-
-    if (currentCookies.length === 0) {
-        showToast(chrome.i18n.getMessage('errNoCookiesToClear') || 'No cookies to clear', 'error');
-        return;
-    }
-
-    showConfirm(
-        chrome.i18n.getMessage('confirmClearAllTitle') || 'Clear All Cookies?',
-        chrome.i18n.getMessage('confirmClearAllMsg', [String(currentCookies.length)]) || 'This will remove all ' + currentCookies.length + ' cookies for this domain.',
-        async () => {
-            try {
-                const domain = new URL(currentTab.url).hostname;
-                const count = await chrome.runtime.sendMessage({
-                    action: 'CLEAR_DOMAIN',
-                    payload: { domain }
-                });
-
-                showToast(chrome.i18n.getMessage('ntfCookiesCleared', [String(count)]) || 'Cleared ' + count + ' cookies', 'success');
-                if (typeof MilestoneTracker !== 'undefined') {
-                    MilestoneTracker.record('clear').catch(() => {});
-                }
-                recordRetentionUsage('clear');
-                await loadCookies();
-
-            } catch (error) {
-                console.error('[Popup] Clear all error:', error);
-                showToast(chrome.i18n.getMessage('errFailedClearCookies') || 'Failed to clear cookies', 'error');
-            }
-        }
-    );
-}
+// Import, handleImportFile, and clearAllCookies functions were removed
+// along with the action bar (Export/Import/Add/Clear buttons).
 
 // ============================================================================
 // Confirm Dialog
@@ -903,6 +820,8 @@ async function clearAllCookies() {
 let confirmCallback = null;
 
 function showConfirm(title, message, onConfirm) {
+    if (!elements.confirmModal || !elements.confirmTitle || !elements.confirmMessage || !elements.confirmCancel || !elements.confirmOk) return;
+
     elements.confirmTitle.textContent = title;
     elements.confirmMessage.textContent = message;
     confirmCallback = onConfirm;
@@ -925,7 +844,7 @@ function closeConfirm() {
         _confirmFocusTrap = null;
     }
 
-    elements.confirmModal.hidden = true;
+    if (elements.confirmModal) elements.confirmModal.hidden = true;
     confirmCallback = null;
 }
 
@@ -939,6 +858,8 @@ function showToast(message, type = 'success') {
     if (toastTimeout) {
         clearTimeout(toastTimeout);
     }
+
+    if (!elements.toast || !elements.toastMessage || !elements.toastIcon) return;
 
     elements.toastMessage.textContent = message;
     elements.toast.className = `toast toast-${type}`;
@@ -969,7 +890,7 @@ function showToast(message, type = 'success') {
     }
 
     toastTimeout = setTimeout(() => {
-        elements.toast.hidden = true;
+        if (elements.toast) elements.toast.hidden = true;
     }, 2500);
 }
 
@@ -1054,26 +975,6 @@ function setupEventListeners() {
         elements.refreshBtn.disabled = false;
     });
 
-    // Actions
-    elements.exportBtn.addEventListener('click', exportCookies);
-    const importBtn = document.getElementById('importBtn');
-    if (importBtn) importBtn.addEventListener('click', importCookies);
-    const importFileInput = document.getElementById('importFileInput');
-    if (importFileInput) importFileInput.addEventListener('change', handleImportFile);
-    elements.addCookieBtn.addEventListener('click', () => openEditor(null));
-    elements.clearAllBtn.addEventListener('click', clearAllCookies);
-
-    // Read-only toggle
-    elements.readOnlyToggle.addEventListener('change', async (e) => {
-        settings.readOnlyMode = e.target.checked;
-        try {
-            await chrome.storage.local.set({ readOnlyMode: e.target.checked });
-            showToast(e.target.checked ? (chrome.i18n.getMessage('ntfReadOnlyEnabled') || 'Read-only mode enabled') : (chrome.i18n.getMessage('ntfReadOnlyDisabled') || 'Read-only mode disabled'), 'success');
-        } catch {
-            showToast(chrome.i18n.getMessage('errFailedSaveSetting') || 'Failed to save setting', 'error');
-        }
-    });
-
     // Editor modal
     elements.closeModal.addEventListener('click', closeEditor);
     elements.saveCookieBtn.addEventListener('click', saveCookie);
@@ -1083,6 +984,20 @@ function setupEventListeners() {
     // JWT detection on value change
     elements.cookieValue.addEventListener('input', () => {
         elements.jwtBadge.hidden = !JWT.isJWT(elements.cookieValue.value);
+    });
+
+    // SameSite=None requires Secure flag - visual hint
+    elements.cookieSameSite.addEventListener('change', function() {
+        var secureCheckbox = elements.cookieSecure;
+        var secureLabel = secureCheckbox ? secureCheckbox.closest('.checkbox') : null;
+        if (elements.cookieSameSite.value === 'no_restriction') {
+            if (secureLabel) secureLabel.classList.add('checkbox-highlighted');
+            if (!secureCheckbox.checked) {
+                secureCheckbox.checked = true;
+            }
+        } else {
+            if (secureLabel) secureLabel.classList.remove('checkbox-highlighted');
+        }
     });
 
     // JWT modal
@@ -1123,11 +1038,11 @@ function setupEventListeners() {
 
         // Escape to close modals
         if (e.key === 'Escape') {
-            if (!elements.confirmModal.hidden) {
+            if (elements.confirmModal && !elements.confirmModal.hidden) {
                 closeConfirm();
-            } else if (!elements.jwtModal.hidden) {
+            } else if (elements.jwtModal && !elements.jwtModal.hidden) {
                 closeJwtModal();
-            } else if (!elements.editorModal.hidden) {
+            } else if (elements.editorModal && !elements.editorModal.hidden) {
                 closeEditor();
             }
             return;
@@ -1189,8 +1104,7 @@ function setupEventListeners() {
         }, 'Close modal');
 
         A11yManager.KeyboardShortcuts.registerShortcut('mod+shift+a', function() {
-            var addBtn = document.getElementById('addCookieBtn');
-            if (addBtn) { addBtn.click(); }
+            openEditor(null);
         }, 'Add cookie');
     }
 
@@ -1209,7 +1123,6 @@ function setupEventListeners() {
     // Subscription badge click handler (Phase 08)
     var subBadge = document.getElementById('subscriptionBadge');
     if (subBadge) {
-        subBadge.style.cursor = 'pointer';
         subBadge.addEventListener('click', function() {
             if (subBadge.classList.contains('badge-free') || subBadge.classList.contains('badge-trial')) {
                 if (typeof Paywall !== 'undefined' && Paywall.show) {
@@ -1412,7 +1325,7 @@ function updateBadge(status) {
     if (!badge) return;
 
     // Remove all badge variant classes
-    badge.classList.remove('badge-free', 'badge-pro', 'badge-trial', 'badge-lifetime');
+    badge.classList.remove('badge-free', 'badge-pro', 'badge-trial', 'badge-lifetime', 'badge-upgrade');
 
     var tier = (status && status.tier) ? status.tier : 'free';
     var isTrialing = status && status.isTrialing;
@@ -1503,21 +1416,14 @@ function updateProFeatureIndicators(status) {
             // User is on free tier, add locks
             el.classList.add('feature-locked');
 
-            // Add PRO label if not already present
-            if (!el.querySelector('.pro-label')) {
-                var proLabel = document.createElement('span');
-                proLabel.className = 'pro-label';
-                proLabel.textContent = 'PRO';
-                el.appendChild(proLabel);
-            }
-
             // Add click handler to show paywall
             if (!el._paywallListenerAttached) {
                 el.addEventListener('click', function(e) {
                     if (el.classList.contains('feature-locked')) {
                         e.preventDefault();
                         e.stopPropagation();
-                        var featureName = el.getAttribute('data-feature') || 'feature';
+                        var featureId = el.getAttribute('data-feature') || 'feature';
+                        var featureName = (typeof FeatureGate !== 'undefined' && FeatureGate.formatFeatureName) ? FeatureGate.formatFeatureName(featureId) : featureId;
                         if (typeof Paywall !== 'undefined' && Paywall.show) {
                             Paywall.show(featureName);
                         }
@@ -1593,10 +1499,9 @@ async function initSubscriptionUI() {
         enterLicenseEl.hidden = !showLicenseLink;
     }
 
-    // Make subscription badge clickable based on tier
+    // Update subscription badge tooltip based on tier
     var badgeEl = document.getElementById('subscriptionBadge');
     if (badgeEl) {
-        badgeEl.style.cursor = 'pointer';
         badgeEl.title = (status.tier === 'pro' || status.tier === 'lifetime')
             ? (chrome.i18n.getMessage('badgeManageSub') || 'Manage subscription')
             : (chrome.i18n.getMessage('badgeUpgrade') || 'Upgrade to Pro');

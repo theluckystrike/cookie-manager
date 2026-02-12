@@ -22,12 +22,18 @@
     // -- Storage helpers ------------------------------------------------------
 
     function storageGet(keys) {
-        try { return chrome.storage.local.get(keys); }
+        try {
+            return chrome.storage.local.get(keys).catch(function () { return {}; });
+        }
         catch (e) { return Promise.resolve({}); }
     }
 
     function storageSet(data) {
-        try { return chrome.storage.local.set(data); }
+        try {
+            return chrome.storage.local.set(data).catch(function (err) {
+                console.warn('[EngagementScore] storage.set error:', err);
+            });
+        }
         catch (e) { return Promise.resolve(); }
     }
 
