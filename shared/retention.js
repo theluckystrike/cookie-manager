@@ -23,7 +23,7 @@ const RETENTION_PROMPTS = [
         title: 'Want more tools like this?',
         message: 'Zovo members get early access to all extensions.',
         cta: 'Learn about Zovo',
-        ctaUrl: `https://zovo.one?ref=${EXTENSION_ID}&source=retention`,
+        ctaUrl: `https://www.zovo.one?ref=${EXTENSION_ID}&source=retention`,
         dismissable: true,
         priority: 2
     },

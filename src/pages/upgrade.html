@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="upgradePageTitle">Upgrade to Cookie Manager Pro</title>
+    <link rel="stylesheet" href="upgrade.css">
+</head>
+
+<body>
+    <div id="upgradeApp">
+
+        <!-- Limit Banner (shown when arriving from ?feature=X&reason=Y) -->
+        <div class="limit-banner" id="limitBanner" hidden>
+            <div class="limit-banner-inner">
+                <svg class="limit-banner-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <span id="limitBannerText" data-i18n="upgradeLimitReached">You've reached your daily limit.</span>
+                <button class="limit-banner-close" id="limitBannerClose" type="button" data-i18n-aria="ariaDismissBanner" aria-label="Dismiss banner">
+                    &#10005;
+                </button>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <header class="upgrade-header">
+            <div class="upgrade-header-inner">
+                <div class="header-brand">
+                    <img class="header-logo" src="../../assets/icons/icon-48.png" alt="Cookie Manager" width="36" height="36">
+                    <div class="header-brand-text">
+                        <h1 class="header-title" data-i18n="extName">Cookie Manager</h1>
+                        <span class="header-pro-badge" data-i18n="badgePro">PRO</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="upgrade-hero">
+            <h2 class="hero-title" data-i18n="upgradeHeroTitle">Unlock the Full Power of Cookie Manager</h2>
+            <p class="hero-subtitle" data-i18n="upgradeHeroSubtitle">Remove all limits and access every professional feature with a Pro upgrade.</p>
+        </section>
+
+        <!-- Feature Comparison -->
+        <section class="upgrade-section">
+            <h3 class="section-title" data-i18n="upgradeComparisonTitle">Free vs Pro Comparison</h3>
+            <div class="comparison-table-wrapper">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th class="feature-col" data-i18n="upgradeColFeature">Feature</th>
+                            <th class="plan-col plan-free" data-i18n="upgradeColFree">Free</th>
+                            <th class="plan-col plan-pro" data-i18n="upgradeColPro">Pro</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comparisonTableBody">
+                        <!-- Populated by upgrade.js -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Pricing Cards -->
+        <section class="upgrade-section">
+            <h3 class="section-title" data-i18n="upgradeChoosePlan">Choose Your Plan</h3>
+            <div class="pricing-cards">
+                <!-- Monthly -->
+                <div class="pricing-card" id="cardMonthly">
+                    <div class="pricing-card-header">
+                        <span class="pricing-plan-name" data-i18n="upgradePlanMonthly">Monthly</span>
+                    </div>
+                    <div class="pricing-card-body">
+                        <div class="pricing-amount">
+                            <span class="pricing-currency">$</span>
+                            <span class="pricing-value">4.99</span>
+                            <span class="pricing-period" data-i18n="upgradePeriodMonth">/mo</span>
+                        </div>
+                        <p class="pricing-detail" data-i18n="upgradeBilledMonthly">Billed monthly</p>
+                        <ul class="pricing-perks">
+                            <li data-i18n="upgradePerkAllPro">All Pro features</li>
+                            <li data-i18n="upgradePerkUnlimited">Unlimited usage</li>
+                            <li data-i18n="upgradePerkCancel">Cancel anytime</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card-footer">
+                        <button class="pricing-cta" data-plan="monthly" type="button" data-i18n="upgradeGetMonthly">Get Monthly</button>
+                    </div>
+                </div>
+
+                <!-- Annual (Best Value) -->
+                <div class="pricing-card pricing-card-featured" id="cardAnnual">
+                    <div class="pricing-badge" data-i18n="upgradeBestValue">Best Value</div>
+                    <div class="pricing-card-header">
+                        <span class="pricing-plan-name" data-i18n="upgradePlanAnnual">Annual</span>
+                    </div>
+                    <div class="pricing-card-body">
+                        <div class="pricing-amount">
+                            <span class="pricing-currency">$</span>
+                            <span class="pricing-value">3.99</span>
+                            <span class="pricing-period" data-i18n="upgradePeriodMonth">/mo</span>
+                        </div>
+                        <p class="pricing-detail" data-i18n="upgradeBilledAnnually">Billed $47.88/yr</p>
+                        <div class="pricing-savings" data-i18n="upgradeSave20">Save 20%</div>
+                        <ul class="pricing-perks">
+                            <li data-i18n="upgradePerkAllPro">All Pro features</li>
+                            <li data-i18n="upgradePerkUnlimited">Unlimited usage</li>
+                            <li data-i18n="upgradePerkCancel">Cancel anytime</li>
+                            <li data-i18n="upgradePerkBestPrice">Best price per month</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card-footer">
+                        <button class="pricing-cta pricing-cta-featured" data-plan="annual" type="button" data-i18n="upgradeGetAnnual">Get Annual</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Proof -->
+        <section class="upgrade-section social-proof-section">
+            <h3 class="section-title" data-i18n="upgradeTrustedTitle">Trusted by Cookie Professionals</h3>
+            <div class="social-proof-grid">
+                <div class="social-proof-card">
+                    <div class="social-proof-stars" data-i18n-aria="ariaFiveStars" aria-label="5 out of 5 stars">
+                        &#9733;&#9733;&#9733;&#9733;&#9733;
+                    </div>
+                    <p class="social-proof-quote" data-i18n="upgradeTestimonial1">"Cookie Manager Pro saves me hours every week. The bulk operations and export formats are exactly what I needed."</p>
+                    <span class="social-proof-author" data-i18n="upgradeTestimonialAuthor1">- Alex R., Web Developer</span>
+                </div>
+                <div class="social-proof-card">
+                    <div class="social-proof-stars" data-i18n-aria="ariaFiveStars" aria-label="5 out of 5 stars">
+                        &#9733;&#9733;&#9733;&#9733;&#9733;
+                    </div>
+                    <p class="social-proof-quote" data-i18n="upgradeTestimonial2">"The health dashboard alone is worth the upgrade. I can finally see which cookies are problematic at a glance."</p>
+                    <span class="social-proof-author" data-i18n="upgradeTestimonialAuthor2">- Maria S., QA Engineer</span>
+                </div>
+                <div class="social-proof-card">
+                    <div class="social-proof-stars" data-i18n-aria="ariaFiveStars" aria-label="5 out of 5 stars">
+                        &#9733;&#9733;&#9733;&#9733;&#9733;
+                    </div>
+                    <p class="social-proof-quote" data-i18n="upgradeTestimonial3">"Unlimited profiles and auto-delete rules make testing across environments effortless. Highly recommend!"</p>
+                    <span class="social-proof-author" data-i18n="upgradeTestimonialAuthor3">- James T., DevOps Lead</span>
+                </div>
+            </div>
+            <div class="trust-signals">
+                <div class="trust-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    <span data-i18n="upgradeTrustSecure">Secure checkout</span>
+                </div>
+                <div class="trust-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <span data-i18n="upgradeTrustGuarantee">7-day money-back guarantee</span>
+                </div>
+                <div class="trust-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span data-i18n="upgradeTrustCancel">Cancel anytime</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="upgrade-footer">
+            <div class="upgrade-footer-inner">
+                <button class="footer-link" id="restorePurchase" type="button" data-i18n="upgradeRestorePurchase">Restore Purchase</button>
+                <span class="footer-divider" aria-hidden="true">|</span>
+                <button class="footer-link" id="backToExtension" type="button" data-i18n="upgradeBackToExt">Back to Cookie Manager</button>
+            </div>
+            <p class="footer-copyright" data-i18n="upgradeFooterCopyright">Cookie Manager by <a href="https://www.zovo.one" target="_blank" rel="noopener">zovo.</a></p>
+        </footer>
+
+        <!-- Restore Purchase Modal -->
+        <div class="restore-overlay" id="restoreOverlay" hidden>
+            <div class="restore-dialog" role="dialog" aria-modal="true" aria-labelledby="restoreTitle">
+                <h3 id="restoreTitle" data-i18n="upgradeRestoreTitle">Restore Purchase</h3>
+                <p data-i18n="upgradeRestoreDesc">Enter your license key to restore your Pro subscription.</p>
+                <input class="restore-input" id="restoreLicenseInput" type="text" placeholder="XXXX-XXXX-XXXX-XXXX" data-i18n-placeholder="plhLicenseKey" autocomplete="off" spellcheck="false" data-i18n-aria="ariaLicenseKey" aria-label="License key">
+                <div class="restore-error" id="restoreError" role="alert"></div>
+                <div class="restore-actions">
+                    <button class="btn btn-secondary" id="restoreCancel" type="button" data-i18n="buttonCancel">Cancel</button>
+                    <button class="btn btn-primary" id="restoreSubmit" type="button" data-i18n="upgradeActivateLicense">Activate License</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../utils/i18n-loader.js"></script>
+    <script src="../utils/i18n-helpers.js"></script>
+    <script src="../features/feature-registry.js"></script>
+    <script src="upgrade.js"></script>
+</body>
+
+</html>

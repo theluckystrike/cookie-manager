@@ -9,14 +9,14 @@
 // ============================================================================
 
 const SCHEDULE_OPTIONS = [
-    { label: 'Every hour',       minutes: 60 },
-    { label: 'Every 6 hours',    minutes: 360 },
-    { label: 'Every day',        minutes: 1440 },
-    { label: 'On browser close', minutes: 0 }
+    { label: chrome.i18n.getMessage('scheduleEveryHour') || 'Every hour',       minutes: 60 },
+    { label: chrome.i18n.getMessage('scheduleEvery6Hours') || 'Every 6 hours',    minutes: 360 },
+    { label: chrome.i18n.getMessage('scheduleEveryDay') || 'Every day',        minutes: 1440 },
+    { label: chrome.i18n.getMessage('scheduleOnBrowserClose') || 'On browser close', minutes: 0 }
 ];
 
 function scheduleLabel(intervalMinutes) {
-    if (intervalMinutes === 0) return 'On browser close';
+    if (intervalMinutes === 0) return chrome.i18n.getMessage('scheduleOnBrowserClose') || 'On browser close';
     var match = SCHEDULE_OPTIONS.find(function(o) { return o.minutes === intervalMinutes; });
     if (match) return match.label;
     if (intervalMinutes < 60) return intervalMinutes + 'm';
@@ -95,11 +95,11 @@ var RulesManager = (function() {
                 _toast(response.error, 'error');
                 return false;
             }
-            _toast(_editingRuleId ? 'Rule updated' : 'Rule created', 'success');
+            _toast(_editingRuleId ? (chrome.i18n.getMessage('ntfRuleUpdated') || 'Rule updated') : (chrome.i18n.getMessage('ntfRuleCreated') || 'Rule created'), 'success');
             return true;
         } catch (e) {
             console.error('[Rules] Failed to save rule:', e);
-            _toast('Failed to save rule', 'error');
+            _toast(chrome.i18n.getMessage('errFailedSaveRule') || 'Failed to save rule', 'error');
             return false;
         }
     }
@@ -111,11 +111,11 @@ var RulesManager = (function() {
                 _toast(response.error, 'error');
                 return false;
             }
-            _toast('Rule deleted', 'success');
+            _toast(chrome.i18n.getMessage('ntfRuleDeleted') || 'Rule deleted', 'success');
             return true;
         } catch (e) {
             console.error('[Rules] Failed to delete rule:', e);
-            _toast('Failed to delete rule', 'error');
+            _toast(chrome.i18n.getMessage('errFailedDeleteRule') || 'Failed to delete rule', 'error');
             return false;
         }
     }
@@ -175,10 +175,12 @@ var RulesManager = (function() {
         if (_els.addBtn) _els.addBtn.hidden = true;
     }
 
-    function _render() {
+    async function _render() {
         if (!_els.list) return;
 
-        var atLimit = _rules.length >= RULES_FREE_LIMIT;
+        // Pro users bypass the free-tier limit
+        var isPro = typeof LicenseManager !== 'undefined' && typeof LicenseManager.isPro === 'function' && await LicenseManager.isPro();
+        var atLimit = !isPro && _rules.length >= RULES_FREE_LIMIT;
 
         // Show/hide add button vs limit banner
         if (_els.addBtn) _els.addBtn.hidden = atLimit;
@@ -204,7 +206,7 @@ var RulesManager = (function() {
             _getCookieCount(rule.domain).then(function(count) {
                 var countEl = _els.list.querySelector('[data-rule-count="' + rule.id + '"]');
                 if (countEl) {
-                    countEl.textContent = count + ' cookie' + (count !== 1 ? 's' : '') + ' affected';
+                    countEl.textContent = chrome.i18n.getMessage('ruleCookiesAffected', [String(count)]) || count + ' cookie' + (count !== 1 ? 's' : '') + ' affected';
                 }
             });
         });
@@ -248,7 +250,7 @@ var RulesManager = (function() {
 
         var patternBadge = document.createElement('span');
         patternBadge.className = 'badge rule-badge-pattern';
-        patternBadge.textContent = rule.pattern === '*' ? 'All cookies' : rule.pattern;
+        patternBadge.textContent = rule.pattern === '*' ? (chrome.i18n.getMessage('ruleAllCookies') || 'All cookies') : rule.pattern;
 
         var scheduleBadge = document.createElement('span');
         scheduleBadge.className = 'badge rule-badge-schedule';
@@ -269,7 +271,7 @@ var RulesManager = (function() {
 
         var editBtn = document.createElement('button');
         editBtn.className = 'btn btn-secondary btn-sm';
-        editBtn.textContent = 'Edit';
+        editBtn.textContent = chrome.i18n.getMessage('buttonEdit') || 'Edit';
         editBtn.setAttribute('aria-label', 'Edit rule for ' + rule.domain);
         editBtn.addEventListener('click', function() {
             _openForm(rule);
@@ -277,7 +279,7 @@ var RulesManager = (function() {
 
         var deleteBtn = document.createElement('button');
         deleteBtn.className = 'btn btn-danger-outline btn-sm';
-        deleteBtn.textContent = 'Delete';
+        deleteBtn.textContent = chrome.i18n.getMessage('buttonDelete') || 'Delete';
         deleteBtn.setAttribute('aria-label', 'Delete rule for ' + rule.domain);
         deleteBtn.addEventListener('click', function() {
             _confirmDeleteRule(rule);
@@ -298,8 +300,8 @@ var RulesManager = (function() {
     function _confirmDeleteRule(rule) {
         if (typeof showConfirm === 'function') {
             showConfirm(
-                'Delete Rule?',
-                'Delete the auto-delete rule for "' + rule.domain + '"?',
+                chrome.i18n.getMessage('confirmDeleteRuleTitle') || 'Delete Rule?',
+                chrome.i18n.getMessage('confirmDeleteRuleMsg', [rule.domain]) || 'Delete the auto-delete rule for "' + rule.domain + '"?',
                 async function() {
                     var ok = await _deleteRule(rule.id);
                     if (ok) await _loadRules();
@@ -307,7 +309,7 @@ var RulesManager = (function() {
             );
         } else {
             // Fallback: native confirm
-            if (confirm('Delete the auto-delete rule for "' + rule.domain + '"?')) {
+            if (confirm(chrome.i18n.getMessage('confirmDeleteRuleMsg', [rule.domain]) || 'Delete the auto-delete rule for "' + rule.domain + '"?')) {
                 _deleteRule(rule.id).then(function(ok) {
                     if (ok) _loadRules();
                 });
@@ -323,7 +325,7 @@ var RulesManager = (function() {
         _editingRuleId = rule ? rule.id : null;
 
         if (_els.formTitle) {
-            _els.formTitle.textContent = rule ? 'Edit Rule' : 'Add Rule';
+            _els.formTitle.textContent = rule ? (chrome.i18n.getMessage('titleEditRule') || 'Edit Rule') : (chrome.i18n.getMessage('titleAddRule') || 'Add Rule');
         }
 
         _els.domainInput.value   = rule ? rule.domain : '';
@@ -363,7 +365,7 @@ var RulesManager = (function() {
         var enabled = rule ? rule.enabled : true;
 
         if (!domain) {
-            _toast('Domain pattern is required', 'error');
+            _toast(chrome.i18n.getMessage('errDomainPatternRequired') || 'Domain pattern is required', 'error');
             _els.domainInput.focus();
             return;
         }
@@ -371,7 +373,7 @@ var RulesManager = (function() {
         // Enforce free-tier limit when creating new (pro users bypass)
         var isPro = typeof LicenseManager !== 'undefined' && typeof LicenseManager.isPro === 'function' && await LicenseManager.isPro();
         if (!isPro && !_editingRuleId && _rules.length >= RULES_FREE_LIMIT) {
-            _toast('Free plan allows 1 rule. Upgrade for more.', 'error');
+            _toast(chrome.i18n.getMessage('errFreeRuleLimit') || 'Free plan allows 1 rule. Upgrade for more.', 'error');
             return;
         }
 

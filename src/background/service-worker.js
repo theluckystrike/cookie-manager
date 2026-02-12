@@ -48,6 +48,10 @@ try { importScripts('src/shared/legal-compliance.js'); } catch(e) { console.warn
 // Architecture Patterns (MD 24)
 try { importScripts('src/shared/architecture-patterns.js'); } catch(e) { console.warn('architecture-patterns.js not loaded:', e.message); }
 
+// Feature Gating (Phase 05)
+try { importScripts('src/features/feature-registry.js'); } catch(e) { console.warn('feature-registry.js not loaded:', e.message); }
+try { importScripts('src/features/usage-tracker.js'); } catch(e) { console.warn('usage-tracker.js not loaded:', e.message); }
+
 // Utility modules
 try { importScripts('src/utils/cookies.js'); } catch(e) { console.warn('utils/cookies.js not loaded:', e.message); }
 try { importScripts('src/utils/jwt.js'); } catch(e) { console.warn('utils/jwt.js not loaded:', e.message); }
@@ -1230,6 +1234,75 @@ async function handleMessage(message) {
                 return { error: 'Cannot open popup from background context' };
             }
 
+            // ==============================================================
+            // Feature Gating (Phase 05)
+            // ==============================================================
+
+            case 'CHECK_FEATURE_GATE': {
+                // Uses FeatureManager and UsageTracker globals from imported scripts
+                try {
+                    if (typeof FeatureManager !== 'undefined') {
+                        if (!FeatureManager._initialized) await FeatureManager.init();
+                    }
+                    if (typeof UsageTracker !== 'undefined') {
+                        if (!UsageTracker._initialized) await UsageTracker.init();
+                    }
+                    if (typeof FeatureManager !== 'undefined') {
+                        var access = FeatureManager.checkFeature(payload.featureId);
+                        if (!access.allowed) {
+                            return { success: true, data: { allowed: false, reason: access.reason } };
+                        }
+                        var featureTier = FeatureManager.getCurrentTier();
+                        if (typeof UsageTracker !== 'undefined') {
+                            var limit = await UsageTracker.checkLimit(payload.featureId, featureTier);
+                            return { success: true, data: limit };
+                        }
+                        return { success: true, data: { allowed: true } };
+                    }
+                    return { success: true, data: { allowed: true } };
+                } catch (e) {
+                    return { success: false, error: e.message };
+                }
+            }
+
+            case 'RECORD_FEATURE_USAGE': {
+                try {
+                    if (typeof FeatureManager !== 'undefined') {
+                        if (!FeatureManager._initialized) await FeatureManager.init();
+                    }
+                    if (typeof UsageTracker !== 'undefined') {
+                        if (!UsageTracker._initialized) await UsageTracker.init();
+                        var recordTier = (typeof FeatureManager !== 'undefined') ? FeatureManager.getCurrentTier() : 'free';
+                        var result = await UsageTracker.recordUsage(payload.featureId, recordTier);
+                        // Also record daily history for dashboard
+                        await recordDailyHistory();
+                        return { success: true, data: result };
+                    }
+                    return { success: true, data: { recorded: false } };
+                } catch (e) {
+                    return { success: false, error: e.message };
+                }
+            }
+
+            case 'OPEN_UPGRADE_PAGE': {
+                var upgradeUrl = chrome.runtime.getURL('src/pages/upgrade.html');
+                chrome.tabs.create({ url: upgradeUrl });
+                return { success: true };
+            }
+
+            case 'GET_FEATURE_USAGE': {
+                try {
+                    if (typeof UsageTracker !== 'undefined') {
+                        if (!UsageTracker._initialized) await UsageTracker.init();
+                        var usage = UsageTracker.getAllUsage();
+                        return { success: true, data: usage };
+                    }
+                    return { success: true, data: {} };
+                } catch (e) {
+                    return { success: false, error: e.message };
+                }
+            }
+
             default:
                 return { error: 'Unknown action' };
         }
@@ -1237,6 +1310,22 @@ async function handleMessage(message) {
         console.error('[ServiceWorker] Message handler error:', error);
         return { error: error.message };
     }
+}
+
+// ============================================================================
+// Feature Gating Helpers (Phase 05)
+// ============================================================================
+
+async function recordDailyHistory() {
+    var today = new Date().toISOString().split('T')[0];
+    var result = await chrome.storage.local.get('dailyHistory');
+    var history = result.dailyHistory || {};
+    history[today] = (history[today] || 0) + 1;
+    var keys = Object.keys(history).sort();
+    if (keys.length > 30) {
+        keys.slice(0, keys.length - 30).forEach(function(k) { delete history[k]; });
+    }
+    await chrome.storage.local.set({ dailyHistory: history });
 }
 
 // ============================================================================
@@ -1251,7 +1340,7 @@ function setupContextMenu() {
 
         chrome.contextMenus.create({
             id: 'clear-site-cookies',
-            title: 'Clear cookies for this site',
+            title: chrome.i18n.getMessage('ctxClearCookies') || 'Clear cookies for this site',
             contexts: ['page']
         }, () => {
             // Suppress duplicate ID error if it occurs
@@ -1260,7 +1349,7 @@ function setupContextMenu() {
 
         chrome.contextMenus.create({
             id: 'export-site-cookies',
-            title: 'Export cookies for this site',
+            title: chrome.i18n.getMessage('ctxExportCookies') || 'Export cookies for this site',
             contexts: ['page']
         }, () => void chrome.runtime.lastError);
 
@@ -1272,13 +1361,13 @@ function setupContextMenu() {
 
         chrome.contextMenus.create({
             id: 'open-cookie-manager',
-            title: 'Open Cookie Manager',
+            title: chrome.i18n.getMessage('ctxOpenCookieManager') || 'Open Cookie Manager',
             contexts: ['page']
         }, () => void chrome.runtime.lastError);
 
         chrome.contextMenus.create({
             id: 'open-settings',
-            title: 'Cookie Manager Settings',
+            title: chrome.i18n.getMessage('ctxSettings') || 'Cookie Manager Settings',
             contexts: ['page']
         }, () => void chrome.runtime.lastError);
     });
@@ -1297,8 +1386,8 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
                 chrome.notifications.create({
                     type: 'basic',
                     iconUrl: 'assets/icons/icon-128.png',
-                    title: 'Cookie Manager',
-                    message: 'Read-only mode is enabled. Disable it to clear cookies.'
+                    title: chrome.i18n.getMessage('extName') || 'Cookie Manager',
+                    message: chrome.i18n.getMessage('ntfReadOnlyEnabled') || 'Read-only mode is enabled. Disable it to clear cookies.'
                 });
                 return;
             }
@@ -1308,8 +1397,8 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             chrome.notifications.create({
                 type: 'basic',
                 iconUrl: 'assets/icons/icon-128.png',
-                title: 'Cookies Cleared',
-                message: `Removed ${count} cookie${count !== 1 ? 's' : ''} from ${domain}`
+                title: chrome.i18n.getMessage('ntfCookiesClearedTitle') || 'Cookies Cleared',
+                message: chrome.i18n.getMessage('ntfCookiesClearedMsg', [String(count), domain]) || 'Removed ' + count + ' cookie' + (count !== 1 ? 's' : '') + ' from ' + domain
             });
             break;
         }
@@ -1322,8 +1411,8 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
                 chrome.notifications.create({
                     type: 'basic',
                     iconUrl: 'assets/icons/icon-128.png',
-                    title: 'Cookies Exported',
-                    message: `${cookies.length} cookie${cookies.length !== 1 ? 's' : ''} from ${domain} copied. Open popup to download.`
+                    title: chrome.i18n.getMessage('ntfCookiesExportedTitle') || 'Cookies Exported',
+                    message: chrome.i18n.getMessage('ntfCookiesExportedMsg', [String(cookies.length), domain]) || cookies.length + ' cookie' + (cookies.length !== 1 ? 's' : '') + ' from ' + domain + ' copied. Open popup to download.'
                 });
                 // Store temporarily for popup to pick up
                 await chrome.storage.local.set({ _pendingExport: { domain, json, timestamp: Date.now() } });
@@ -1364,7 +1453,7 @@ chrome.notifications.onClicked.addListener((notificationId) => {
     if (notificationId === 'trial-reminder' || notificationId === 'trial-expired') {
         var upgradeUrl = (typeof TrialManager !== 'undefined' && TrialManager.CONFIG)
             ? TrialManager.CONFIG.upgradeUrl
-            : 'https://zovo.one/cookie-manager/upgrade';
+            : 'https://www.zovo.one/cookie-manager/upgrade';
 
         chrome.tabs.create({ url: upgradeUrl });
         chrome.notifications.clear(notificationId);
@@ -1394,6 +1483,9 @@ chrome.runtime.onInstalled.addListener(async (details) => {
             debugLog('info', 'License', 'Created licenseRefresh alarm (every 30 min)');
         }
     });
+
+    // Record install date for feature gating (Phase 05)
+    chrome.storage.local.set({ installDate: new Date().toISOString() });
 
     if (details.reason === 'install') {
         // Initialize default settings
@@ -1565,6 +1657,9 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
             let totalDeleted = 0;
 
             for (const rule of enabledRules) {
+                // Skip "on browser close" rules (intervalMinutes === 0) -- they are not timer-based
+                if (rule.intervalMinutes === 0) continue;
+
                 // Check if enough time has passed since last run for this rule
                 const lastRun = rule.lastRun || 0;
                 if (now - lastRun < rule.intervalMinutes * 60000) continue;
@@ -1665,4 +1760,4 @@ debugLog('info', 'Architecture', 'Architecture patterns initialized (MD 24)');
 // Initial setup
 setupContextMenu();
 
-debugLog('info', 'Init', 'Cookie Manager initialized - Part of Zovo (https://zovo.one)');
+debugLog('info', 'Init', 'Cookie Manager initialized - Part of Zovo (https://www.zovo.one)');

@@ -238,6 +238,187 @@
     }
 
     // =========================================================================
+    // License Management
+    // =========================================================================
+
+    function loadLicenseStatus() {
+        chrome.runtime.sendMessage({ action: 'GET_LICENSE_STATUS' }, function(response) {
+            if (chrome.runtime.lastError) return;
+            // Handle both wrapped {success, data} and direct response formats
+            var data = (response && response.data) ? response.data : response;
+            if (data) {
+                updateLicenseDisplay(data);
+            }
+        });
+
+        chrome.runtime.sendMessage({ action: 'GET_TRIAL_STATUS' }, function(response) {
+            if (chrome.runtime.lastError) return;
+            // Handle both wrapped {success, data} and direct response formats
+            var data = (response && response.data) ? response.data : response;
+            if (data) {
+                updateTrialDisplay(data);
+            }
+        });
+    }
+
+    function updateLicenseDisplay(data) {
+        var badge = document.getElementById('licenseTierBadge');
+        var expiry = document.getElementById('licenseExpiry');
+        var deactivateGroup = document.getElementById('deactivateGroup');
+        var upgradeCtaGroup = document.getElementById('upgradeCtaGroup');
+
+        if (!badge) return;
+
+        var tier = data.tier || data.plan || 'free';
+        if (data.isPro && tier === 'free') {
+            tier = 'pro';
+        }
+        var tierLabel = tier.charAt(0).toUpperCase() + tier.slice(1);
+
+        badge.textContent = tierLabel;
+        badge.className = 'license-tier-badge';
+        if (tier === 'pro') {
+            badge.classList.add('license-tier-pro');
+        } else if (tier === 'lifetime') {
+            badge.classList.add('license-tier-lifetime');
+        } else if (tier === 'trial') {
+            badge.classList.add('license-tier-trial');
+        }
+
+        if (expiry) {
+            if (data.expiresAt && tier !== 'lifetime') {
+                var expiryDate = new Date(data.expiresAt);
+                expiry.textContent = 'Expires ' + expiryDate.toLocaleDateString();
+            } else if (tier === 'lifetime') {
+                expiry.textContent = 'Never expires';
+            } else {
+                expiry.textContent = '';
+            }
+        }
+
+        // Show deactivate button for paid tiers
+        if (deactivateGroup) {
+            deactivateGroup.hidden = !(tier === 'pro' || tier === 'lifetime');
+        }
+
+        // Hide upgrade CTA for paid tiers
+        if (upgradeCtaGroup) {
+            upgradeCtaGroup.hidden = (tier === 'pro' || tier === 'lifetime');
+        }
+    }
+
+    function updateTrialDisplay(data) {
+        var trialGroup = document.getElementById('trialStatusGroup');
+        var trialText = document.getElementById('trialStatusText');
+
+        if (!trialGroup || !trialText) return;
+
+        // Handle multiple possible field names from the service worker
+        var isActive = data.active || data.trialActive || data.isActive || data.isTrialing;
+
+        if (isActive) {
+            trialGroup.hidden = false;
+            var daysLeft = data.daysRemaining || data.trialDaysLeft || data.daysLeft || 0;
+            trialText.textContent = daysLeft + ' day' + (daysLeft !== 1 ? 's' : '') + ' remaining in your trial.';
+        } else {
+            trialGroup.hidden = true;
+        }
+    }
+
+    function activateLicense() {
+        var input = document.getElementById('licenseKeyInput');
+        var errorEl = document.getElementById('licenseError');
+        var successEl = document.getElementById('licenseSuccess');
+        var activateBtn = document.getElementById('activateLicenseBtn');
+
+        if (!input) return;
+
+        var key = input.value.trim();
+        if (!key) {
+            showLicenseMessage(errorEl, 'Please enter a license key.');
+            hideLicenseMessage(successEl);
+            return;
+        }
+
+        // Disable button during request
+        if (activateBtn) {
+            activateBtn.disabled = true;
+            activateBtn.textContent = 'Activating...';
+        }
+
+        hideLicenseMessage(errorEl);
+        hideLicenseMessage(successEl);
+
+        chrome.runtime.sendMessage({ action: 'ACTIVATE_LICENSE', payload: { licenseKey: key } }, function(response) {
+            if (activateBtn) {
+                activateBtn.disabled = false;
+                activateBtn.textContent = 'Activate';
+            }
+
+            if (chrome.runtime.lastError) {
+                showLicenseMessage(errorEl, 'Failed to communicate with the extension.');
+                return;
+            }
+
+            if (response && response.success && response.data && response.data.valid) {
+                showLicenseMessage(successEl, 'License activated successfully!');
+                hideLicenseMessage(errorEl);
+                input.value = '';
+                updateLicenseDisplay(response.data);
+                loadLicenseStatus();
+            } else if (response && response.success && response.data && !response.data.valid) {
+                // Service worker succeeded but license key was invalid
+                showLicenseMessage(errorEl, 'Invalid license key. Please check and try again.');
+                hideLicenseMessage(successEl);
+            } else {
+                var errMsg = (response && response.error) || 'Failed to activate license. Please check your key and try again.';
+                showLicenseMessage(errorEl, errMsg);
+                hideLicenseMessage(successEl);
+            }
+        });
+    }
+
+    function deactivateLicense() {
+        var errorEl = document.getElementById('licenseError');
+        var successEl = document.getElementById('licenseSuccess');
+
+        showConfirm(
+            'Deactivate License?',
+            'This will remove your license from this device. You can reactivate it later.',
+            function() {
+                chrome.runtime.sendMessage({ action: 'DEACTIVATE_LICENSE' }, function(response) {
+                    if (chrome.runtime.lastError) {
+                        showLicenseMessage(errorEl, 'Failed to communicate with the extension.');
+                        return;
+                    }
+
+                    if (response && response.success) {
+                        showLicenseMessage(successEl, 'License deactivated.');
+                        hideLicenseMessage(errorEl);
+                        loadLicenseStatus();
+                    } else {
+                        var errMsg = (response && response.error) || 'Failed to deactivate license.';
+                        showLicenseMessage(errorEl, errMsg);
+                        hideLicenseMessage(successEl);
+                    }
+                });
+            }
+        );
+    }
+
+    function showLicenseMessage(el, message) {
+        if (!el) return;
+        el.textContent = message;
+        el.hidden = false;
+    }
+
+    function hideLicenseMessage(el) {
+        if (!el) return;
+        el.textContent = '';
+        el.hidden = true;
+    }
+
+    // =========================================================================
     // Init
     // =========================================================================
 
@@ -289,5 +470,25 @@
 
         var resetBtn = document.getElementById('resetDefaults');
         if (resetBtn) resetBtn.addEventListener('click', resetDefaults);
+
+        // License management
+        loadLicenseStatus();
+
+        var activateLicenseBtn = document.getElementById('activateLicenseBtn');
+        if (activateLicenseBtn) activateLicenseBtn.addEventListener('click', activateLicense);
+
+        var deactivateLicenseBtn = document.getElementById('deactivateLicenseBtn');
+        if (deactivateLicenseBtn) deactivateLicenseBtn.addEventListener('click', deactivateLicense);
+
+        // Allow Enter key to activate license
+        var licenseKeyInput = document.getElementById('licenseKeyInput');
+        if (licenseKeyInput) {
+            licenseKeyInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    activateLicense();
+                }
+            });
+        }
     });
 })();

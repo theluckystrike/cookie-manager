@@ -65,7 +65,7 @@ const PopupErrorHandler = {
         a.click();
         URL.revokeObjectURL(url);
 
-        showToast('Debug bundle exported', 'success');
+        showToast(chrome.i18n.getMessage('ntfDebugBundleExported') || 'Debug bundle exported', 'success');
     },
 
     sanitize(obj) {
@@ -238,7 +238,7 @@ function switchTab(tabName) {
     // Announce tab change to screen readers
     if (typeof A11yManager !== 'undefined' && A11yManager.LiveRegion.announce) {
         const tabLabel = tabName.charAt(0).toUpperCase() + tabName.slice(1);
-        A11yManager.LiveRegion.announce(tabLabel + ' tab selected');
+        A11yManager.LiveRegion.announce(chrome.i18n.getMessage('a11yTabSelected', [tabLabel]) || tabLabel + ' tab selected');
     }
 }
 
@@ -255,6 +255,23 @@ async function restoreActiveTab() {
 }
 
 // ============================================================================
+// Feature Gate Initialization (Phase 05)
+// ============================================================================
+
+async function initFeatureGating() {
+    try {
+        if (typeof FeatureManager !== 'undefined') {
+            await FeatureManager.init();
+        }
+        if (typeof UsageTracker !== 'undefined') {
+            await UsageTracker.init();
+        }
+    } catch (e) {
+        console.warn('[Popup] Feature gating init failed:', e);
+    }
+}
+
+// ============================================================================
 // Initialization
 // ============================================================================
 
@@ -266,6 +283,9 @@ async function init() {
         if (typeof A11yManager !== 'undefined' && A11yManager.LiveRegion.initLiveRegion) {
             A11yManager.LiveRegion.initLiveRegion();
         }
+
+        // Feature gating (Phase 05)
+        await initFeatureGating();
 
         // Load settings
         const settingsResponse = await chrome.runtime.sendMessage({ action: 'GET_SETTINGS' });
@@ -283,8 +303,8 @@ async function init() {
         await restoreActiveTab();
 
         if (!tab?.url || tab.url.startsWith('chrome://') || tab.url.startsWith('chrome-extension://')) {
-            elements.currentDomain.textContent = 'Chrome page';
-            showEmptyState('This page has no cookies');
+            elements.currentDomain.textContent = chrome.i18n.getMessage('domainChromePage') || 'Chrome page';
+            showEmptyState(chrome.i18n.getMessage('emptyChromePage') || 'This page has no cookies');
             // Disable action buttons on unsupported pages
             elements.exportBtn.disabled = true;
             elements.addCookieBtn.disabled = true;
@@ -345,7 +365,7 @@ async function init() {
 
     } catch (error) {
         console.error('[Popup] Init error:', error);
-        showEmptyState('Error loading cookies');
+        showEmptyState(chrome.i18n.getMessage('errLoadingCookies') || 'Error loading cookies');
     }
 }
 
@@ -372,7 +392,7 @@ async function loadCookies() {
     } catch (error) {
         console.error('[Popup] Load cookies error:', error);
         currentCookies = [];
-        showEmptyState('Error loading cookies');
+        showEmptyState(chrome.i18n.getMessage('errLoadingCookies') || 'Error loading cookies');
     }
 }
 
@@ -396,14 +416,14 @@ function renderCookies(cookies) {
 
     // Announce search result count to screen readers (MD 21)
     if (searchTerm && typeof A11yManager !== 'undefined' && A11yManager.LiveRegion.announce) {
-        A11yManager.LiveRegion.announce(filtered.length + ' cookie' + (filtered.length !== 1 ? 's' : '') + ' found');
+        A11yManager.LiveRegion.announce(chrome.i18n.getMessage('a11yCookiesFound', [String(filtered.length)]) || filtered.length + ' cookie' + (filtered.length !== 1 ? 's' : '') + ' found');
     }
 
     if (filtered.length === 0) {
         if (searchTerm) {
-            showEmptyState('No cookies match your search');
+            showEmptyState(chrome.i18n.getMessage('emptyNoSearchMatch') || 'No cookies match your search');
         } else {
-            showEmptyState('This site has no cookies set');
+            showEmptyState(chrome.i18n.getMessage('emptyNoCookies') || 'This site has no cookies set');
         }
         return;
     }
@@ -472,7 +492,8 @@ function createCookieItemHTML(cookie) {
   `;
 }
 
-function showEmptyState(message = 'No cookies found') {
+function showEmptyState(message) {
+    if (!message) message = chrome.i18n.getMessage('emptyNoCookiesFound') || 'No cookies found';
     elements.loadingState.hidden = true;
     elements.cookieList.hidden = true;
     elements.emptyState.hidden = false;
@@ -495,7 +516,7 @@ function openEditor(cookie = null) {
     selectedCookie = cookie;
     isNewCookie = !cookie;
 
-    elements.editorTitle.textContent = cookie ? 'Edit Cookie' : 'Add Cookie';
+    elements.editorTitle.textContent = cookie ? (chrome.i18n.getMessage('titleEditCookie') || 'Edit Cookie') : (chrome.i18n.getMessage('titleAddCookie') || 'Add Cookie');
     elements.deleteCookieBtn.style.display = cookie ? 'flex' : 'none';
 
     if (cookie) {
@@ -557,7 +578,7 @@ function closeEditor() {
 async function saveCookie() {
     if (_savingCookie) return; // Prevent double-click
     if (settings.readOnlyMode) {
-        showToast('Read-only mode is enabled', 'error');
+        showToast(chrome.i18n.getMessage('errReadOnlyMode') || 'Read-only mode is enabled', 'error');
         return;
     }
 
@@ -567,13 +588,13 @@ async function saveCookie() {
     const path = elements.cookiePath.value.trim() || '/';
 
     if (!name) {
-        showToast('Cookie name is required', 'error');
+        showToast(chrome.i18n.getMessage('errCookieNameRequired') || 'Cookie name is required', 'error');
         elements.cookieName.focus();
         return;
     }
 
     if (!domain) {
-        showToast('Domain is required', 'error');
+        showToast(chrome.i18n.getMessage('errDomainRequired') || 'Domain is required', 'error');
         elements.cookieDomain.focus();
         return;
     }
@@ -624,7 +645,7 @@ async function saveCookie() {
             return;
         }
 
-        showToast(isNewCookie ? 'Cookie created' : 'Cookie saved', 'success');
+        showToast(isNewCookie ? (chrome.i18n.getMessage('ntfCookieCreated') || 'Cookie created') : (chrome.i18n.getMessage('ntfCookieSaved') || 'Cookie saved'), 'success');
         if (typeof MilestoneTracker !== 'undefined') {
             MilestoneTracker.record('edit').catch(() => {});
         }
@@ -634,7 +655,7 @@ async function saveCookie() {
 
     } catch (error) {
         console.error('[Popup] Save cookie error:', error);
-        showToast('Failed to save cookie', 'error');
+        showToast(chrome.i18n.getMessage('errFailedSaveCookie') || 'Failed to save cookie', 'error');
     } finally {
         _savingCookie = false;
     }
@@ -644,13 +665,13 @@ async function deleteCookie() {
     if (!selectedCookie) return;
 
     if (settings.readOnlyMode) {
-        showToast('Read-only mode is enabled', 'error');
+        showToast(chrome.i18n.getMessage('errReadOnlyMode') || 'Read-only mode is enabled', 'error');
         return;
     }
 
     showConfirm(
-        'Delete Cookie?',
-        `Are you sure you want to delete "${selectedCookie.name}"?`,
+        chrome.i18n.getMessage('confirmDeleteCookieTitle') || 'Delete Cookie?',
+        chrome.i18n.getMessage('confirmDeleteCookieMsg', [selectedCookie.name]) || 'Are you sure you want to delete "' + selectedCookie.name + '"?',
         async () => {
             const domain = selectedCookie.domain.startsWith('.')
                 ? selectedCookie.domain.slice(1)
@@ -663,13 +684,13 @@ async function deleteCookie() {
                     payload: { url, name: selectedCookie.name }
                 });
 
-                showToast('Cookie deleted', 'success');
+                showToast(chrome.i18n.getMessage('ntfCookieDeleted') || 'Cookie deleted', 'success');
                 closeEditor();
                 await loadCookies();
 
             } catch (error) {
                 console.error('[Popup] Delete cookie error:', error);
-                showToast('Failed to delete cookie', 'error');
+                showToast(chrome.i18n.getMessage('errFailedDeleteCookie') || 'Failed to delete cookie', 'error');
             }
         }
     );
@@ -682,7 +703,7 @@ async function deleteCookie() {
 function showJwtDecoder() {
     const decoded = JWT.decode(elements.cookieValue.value);
     if (!decoded) {
-        showToast('Invalid JWT token', 'error');
+        showToast(chrome.i18n.getMessage('errInvalidJwt') || 'Invalid JWT token', 'error');
         return;
     }
 
@@ -724,7 +745,7 @@ function closeJwtModal() {
 
 async function exportCookies() {
     if (currentCookies.length === 0) {
-        showToast('No cookies to export', 'error');
+        showToast(chrome.i18n.getMessage('errNoCookiesToExport') || 'No cookies to export', 'error');
         return;
     }
 
@@ -747,9 +768,9 @@ async function exportCookies() {
         // Also copy to clipboard as convenience
         try {
             await navigator.clipboard.writeText(json);
-            showToast(`${currentCookies.length} cookies exported and copied to clipboard`, 'success');
+            showToast(chrome.i18n.getMessage('ntfCookiesExportedClipboard', [String(currentCookies.length)]) || currentCookies.length + ' cookies exported and copied to clipboard', 'success');
         } catch {
-            showToast(`${currentCookies.length} cookies exported as JSON file`, 'success');
+            showToast(chrome.i18n.getMessage('ntfCookiesExportedFile', [String(currentCookies.length)]) || currentCookies.length + ' cookies exported as JSON file', 'success');
         }
 
         if (typeof MilestoneTracker !== 'undefined') {
@@ -759,13 +780,13 @@ async function exportCookies() {
 
     } catch (error) {
         console.error('[Popup] Export error:', error);
-        showToast('Failed to export cookies', 'error');
+        showToast(chrome.i18n.getMessage('errFailedExportCookies') || 'Failed to export cookies', 'error');
     }
 }
 
 async function importCookies() {
     if (settings.readOnlyMode) {
-        showToast('Read-only mode is enabled', 'error');
+        showToast(chrome.i18n.getMessage('errReadOnlyMode') || 'Read-only mode is enabled', 'error');
         return;
     }
     const fileInput = document.getElementById('importFileInput');
@@ -780,7 +801,7 @@ function handleImportFile(event) {
 
     // Security: limit import file size to 1 MB to prevent DoS (MD 18)
     if (file.size > 1048576) {
-        showToast('Import file too large (max 1 MB)', 'error');
+        showToast(chrome.i18n.getMessage('errImportFileTooLarge') || 'Import file too large (max 1 MB)', 'error');
         return;
     }
 
@@ -789,13 +810,13 @@ function handleImportFile(event) {
         try {
             const cookies = JSON.parse(e.target.result);
             if (!Array.isArray(cookies)) {
-                showToast('Invalid format: expected a JSON array of cookies', 'error');
+                showToast(chrome.i18n.getMessage('errInvalidImportFormat') || 'Invalid format: expected a JSON array of cookies', 'error');
                 return;
             }
 
             // Security: limit number of cookies to prevent abuse (MD 18)
             if (cookies.length > 500) {
-                showToast('Too many cookies in import file (max 500)', 'error');
+                showToast(chrome.i18n.getMessage('errImportTooManyCookies') || 'Too many cookies in import file (max 500)', 'error');
                 return;
             }
 
@@ -829,10 +850,10 @@ function handleImportFile(event) {
                     failed++;
                 }
             }
-            showToast(`Imported ${imported} cookies` + (failed > 0 ? `, ${failed} failed` : ''), imported > 0 ? 'success' : 'error');
+            showToast(chrome.i18n.getMessage('ntfCookiesImported', [String(imported)]) || ('Imported ' + imported + ' cookies') + (failed > 0 ? (', ' + failed + ' failed') : ''), imported > 0 ? 'success' : 'error');
             loadCookies();
         } catch (err) {
-            showToast('Failed to parse JSON file', 'error');
+            showToast(chrome.i18n.getMessage('errFailedParseJson') || 'Failed to parse JSON file', 'error');
         }
     };
     reader.readAsText(file);
@@ -840,18 +861,18 @@ function handleImportFile(event) {
 
 async function clearAllCookies() {
     if (settings.readOnlyMode) {
-        showToast('Read-only mode is enabled', 'error');
+        showToast(chrome.i18n.getMessage('errReadOnlyMode') || 'Read-only mode is enabled', 'error');
         return;
     }
 
     if (currentCookies.length === 0) {
-        showToast('No cookies to clear', 'error');
+        showToast(chrome.i18n.getMessage('errNoCookiesToClear') || 'No cookies to clear', 'error');
         return;
     }
 
     showConfirm(
-        'Clear All Cookies?',
-        `This will remove all ${currentCookies.length} cookies for this domain.`,
+        chrome.i18n.getMessage('confirmClearAllTitle') || 'Clear All Cookies?',
+        chrome.i18n.getMessage('confirmClearAllMsg', [String(currentCookies.length)]) || 'This will remove all ' + currentCookies.length + ' cookies for this domain.',
         async () => {
             try {
                 const domain = new URL(currentTab.url).hostname;
@@ -860,7 +881,7 @@ async function clearAllCookies() {
                     payload: { domain }
                 });
 
-                showToast(`Cleared ${count} cookies`, 'success');
+                showToast(chrome.i18n.getMessage('ntfCookiesCleared', [String(count)]) || 'Cleared ' + count + ' cookies', 'success');
                 if (typeof MilestoneTracker !== 'undefined') {
                     MilestoneTracker.record('clear').catch(() => {});
                 }
@@ -869,7 +890,7 @@ async function clearAllCookies() {
 
             } catch (error) {
                 console.error('[Popup] Clear all error:', error);
-                showToast('Failed to clear cookies', 'error');
+                showToast(chrome.i18n.getMessage('errFailedClearCookies') || 'Failed to clear cookies', 'error');
             }
         }
     );
@@ -971,9 +992,9 @@ function formatDateTimeLocal(date) {
 async function copyToClipboard(text) {
     try {
         await navigator.clipboard.writeText(text);
-        showToast('Copied to clipboard', 'success');
+        showToast(chrome.i18n.getMessage('ntfCopiedToClipboard') || 'Copied to clipboard', 'success');
     } catch {
-        showToast('Failed to copy', 'error');
+        showToast(chrome.i18n.getMessage('errFailedCopy') || 'Failed to copy', 'error');
     }
 }
 
@@ -1029,7 +1050,7 @@ function setupEventListeners() {
         elements.refreshBtn.disabled = true;
         showLoading();
         await loadCookies();
-        showToast('Cookies refreshed', 'success');
+        showToast(chrome.i18n.getMessage('ntfCookiesRefreshed') || 'Cookies refreshed', 'success');
         elements.refreshBtn.disabled = false;
     });
 
@@ -1047,9 +1068,9 @@ function setupEventListeners() {
         settings.readOnlyMode = e.target.checked;
         try {
             await chrome.storage.local.set({ readOnlyMode: e.target.checked });
-            showToast(e.target.checked ? 'Read-only mode enabled' : 'Read-only mode disabled', 'success');
+            showToast(e.target.checked ? (chrome.i18n.getMessage('ntfReadOnlyEnabled') || 'Read-only mode enabled') : (chrome.i18n.getMessage('ntfReadOnlyDisabled') || 'Read-only mode disabled'), 'success');
         } catch {
-            showToast('Failed to save setting', 'error');
+            showToast(chrome.i18n.getMessage('errFailedSaveSetting') || 'Failed to save setting', 'error');
         }
     });
 
@@ -1172,6 +1193,33 @@ function setupEventListeners() {
             if (addBtn) { addBtn.click(); }
         }, 'Add cookie');
     }
+
+    // "Enter License Key" link click handler (Phase 08)
+    var enterLicenseLink = document.getElementById('enterLicenseKey');
+    if (enterLicenseLink) {
+        enterLicenseLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            // Show the paywall which has a license key entry section
+            if (typeof Paywall !== 'undefined' && Paywall.show) {
+                Paywall.show('Pro Features');
+            }
+        });
+    }
+
+    // Subscription badge click handler (Phase 08)
+    var subBadge = document.getElementById('subscriptionBadge');
+    if (subBadge) {
+        subBadge.style.cursor = 'pointer';
+        subBadge.addEventListener('click', function() {
+            if (subBadge.classList.contains('badge-free') || subBadge.classList.contains('badge-trial')) {
+                if (typeof Paywall !== 'undefined' && Paywall.show) {
+                    Paywall.show('Pro Features');
+                }
+            } else {
+                chrome.tabs.create({ url: 'https://api.zovo.dev/manage' });
+            }
+        });
+    }
 }
 
 function isInputFocused() {
@@ -1190,8 +1238,8 @@ async function checkGrowthPrompts(newMilestones) {
     const shouldReview = await GrowthPrompts.shouldShowReviewPrompt();
     if (shouldReview) {
         showGrowthBanner(
-            'Enjoying Cookie Manager? A quick review helps other developers find us!',
-            'Leave Review',
+            chrome.i18n.getMessage('growthReviewPrompt') || 'Enjoying Cookie Manager? A quick review helps other developers find us!',
+            chrome.i18n.getMessage('growthLeaveReview') || 'Leave Review',
             () => {
                 window.open(GrowthPrompts.getReviewUrl(), '_blank');
                 GrowthPrompts.recordReviewResponse('reviewed');
@@ -1210,7 +1258,7 @@ async function checkGrowthPrompts(newMilestones) {
         if (shouldShow) {
             showGrowthBanner(
                 config.message,
-                'Share',
+                chrome.i18n.getMessage('growthShare') || 'Share',
                 () => {
                     const url = GrowthPrompts.getShareUrl('twitter');
                     if (url) window.open(url, '_blank');
@@ -1246,7 +1294,7 @@ function showGrowthBanner(message, actionLabel, onAction, onDismiss) {
 
     const dismissBtn = document.createElement('button');
     dismissBtn.className = 'btn-link btn-sm';
-    dismissBtn.textContent = 'Later';
+    dismissBtn.textContent = chrome.i18n.getMessage('buttonLater') || 'Later';
     dismissBtn.addEventListener('click', () => { onDismiss(); banner.remove(); });
 
     actions.appendChild(actionBtn);
@@ -1289,7 +1337,7 @@ function showRetentionBanner(trigger) {
     banner.id = 'retentionBanner';
     banner.className = 'retention-banner';
 
-    var messageText = (trigger && trigger.message) ? trigger.message : 'Welcome back! Check out what Cookie Manager can do.';
+    var messageText = (trigger && trigger.message) ? trigger.message : (chrome.i18n.getMessage('retentionWelcomeBack') || 'Welcome back! Check out what Cookie Manager can do.');
 
     // Security: use DOM API instead of innerHTML (MD 18)
     var content = document.createElement('div');
@@ -1339,14 +1387,14 @@ async function submitFeedback(type, message) {
             payload: { type: type, message: message, metadata: { source: 'popup' } }
         });
         if (response && response.success) {
-            showToast('Feedback submitted. Thank you!', 'success');
+            showToast(chrome.i18n.getMessage('ntfFeedbackSubmitted') || 'Feedback submitted. Thank you!', 'success');
         } else {
             showToast(response?.error || 'Failed to submit feedback', 'error');
         }
         return response;
     } catch (error) {
         console.error('[Popup] Feedback error:', error);
-        showToast('Failed to submit feedback', 'error');
+        showToast(chrome.i18n.getMessage('errFailedSubmitFeedback') || 'Failed to submit feedback', 'error');
         return null;
     }
 }
@@ -1370,16 +1418,16 @@ function updateBadge(status) {
     var isTrialing = status && status.isTrialing;
 
     if (tier === 'lifetime') {
-        badge.textContent = 'Lifetime';
+        badge.textContent = chrome.i18n.getMessage('badgeLifetime') || 'Lifetime';
         badge.classList.add('badge-lifetime');
     } else if (tier === 'pro') {
-        badge.textContent = 'Pro';
+        badge.textContent = chrome.i18n.getMessage('badgePro') || 'Pro';
         badge.classList.add('badge-pro');
     } else if (isTrialing) {
-        badge.textContent = 'Trial';
+        badge.textContent = chrome.i18n.getMessage('badgeTrial') || 'Trial';
         badge.classList.add('badge-trial');
     } else {
-        badge.textContent = 'Free';
+        badge.textContent = chrome.i18n.getMessage('badgeFree') || 'Free';
         badge.classList.add('badge-free');
     }
 }
@@ -1536,6 +1584,23 @@ async function initSubscriptionUI() {
     updateTrialBanner(status);
     updateManageLink(status);
     updateProFeatureIndicators(status);
+
+    // Show/hide "Enter License Key" link
+    var enterLicenseEl = document.getElementById('enterLicenseKey');
+    if (enterLicenseEl) {
+        // Show only when free and NOT trialing
+        var showLicenseLink = (status.tier === 'free' && !status.isTrialing);
+        enterLicenseEl.hidden = !showLicenseLink;
+    }
+
+    // Make subscription badge clickable based on tier
+    var badgeEl = document.getElementById('subscriptionBadge');
+    if (badgeEl) {
+        badgeEl.style.cursor = 'pointer';
+        badgeEl.title = (status.tier === 'pro' || status.tier === 'lifetime')
+            ? (chrome.i18n.getMessage('badgeManageSub') || 'Manage subscription')
+            : (chrome.i18n.getMessage('badgeUpgrade') || 'Upgrade to Pro');
+    }
 
     console.debug('[Popup] Subscription UI initialized:', status.tier, status.isTrialing ? '(trial)' : '');
 }

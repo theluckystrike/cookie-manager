@@ -29,8 +29,8 @@
         CLEAR_DOMAIN:         { p: { domain: { t: S, r: R } } },
         EXPORT_COOKIES:       { p: { url: { t: S, r: R }, format: { t: S, r: R } } },
         GET_SETTINGS:         { p: null },
-        REPORT_ERROR:         { p: { type: { t: S, r: R }, message: { t: S, r: R }, stack: { t: S, r: OPT },
-                                     source: { t: S, r: OPT }, context: { t: O, r: OPT }, timestamp: { t: N, r: OPT } } },
+        REPORT_ERROR:         { p: { type: { t: S, r: OPT }, message: { t: S, r: OPT }, stack: { t: S, r: OPT },
+                                     source: { t: S, r: OPT }, context: { t: S, r: OPT }, timestamp: { t: N, r: OPT } } },
         REPORT_ERRORS_BATCH:  { p: { errors: { t: A, r: R } } },
         GET_ERROR_LOGS:       { p: null },
         CLEAR_ERROR_LOGS:     { p: null },
@@ -89,7 +89,20 @@
                                          intervalMinutes: { t: N, r: OPT }, enabled: { t: B, r: OPT } } },
         DELETE_AUTO_DELETE_RULE:  { p: { id: { t: S, r: R } } },
         // Misc
-        OPEN_FEEDBACK:           { p: null }
+        OPEN_FEEDBACK:           { p: null },
+        // Payment & Licensing (MD 08)
+        CHECK_LICENSE:           { p: { forceRefresh: { t: B, r: OPT } } },
+        ACTIVATE_LICENSE:        { p: { licenseKey: { t: S, r: R } } },
+        DEACTIVATE_LICENSE:      { p: null },
+        GET_LICENSE_STATUS:      { p: null },
+        // Trial Management (MD 08)
+        GET_TRIAL_STATUS:        { p: null },
+        CHECK_TRIAL_AND_LICENSE: { p: null },
+        // Feature Gating (Phase 05)
+        CHECK_FEATURE_GATE:      { p: { featureId: { t: S, r: R } } },
+        RECORD_FEATURE_USAGE:    { p: { featureId: { t: S, r: R } } },
+        OPEN_UPGRADE_PAGE:       { p: null },
+        GET_FEATURE_USAGE:       { p: null }
     };
 
     // Build allowed-actions lookup from schema keys

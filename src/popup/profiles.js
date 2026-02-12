@@ -93,12 +93,12 @@ const ProfilesManager = {
         // Check free tier limit (pro users bypass)
         var isPro = typeof LicenseManager !== 'undefined' && typeof LicenseManager.isPro === 'function' && await LicenseManager.isPro();
         if (!isPro && this._profiles.length >= this.FREE_TIER_MAX) {
-            this._showToast('Upgrade to Pro for unlimited profiles', 'error');
+            this._showToast(chrome.i18n.getMessage('errUpgradeForProfiles') || 'Upgrade to Pro for unlimited profiles', 'error');
             return;
         }
 
         if (!this._currentDomain || !this._currentTabUrl) {
-            this._showToast('No domain available to save cookies from', 'error');
+            this._showToast(chrome.i18n.getMessage('errNoDomainAvailable') || 'No domain available to save cookies from', 'error');
             return;
         }
 
@@ -109,8 +109,8 @@ const ProfilesManager = {
         // Check for duplicate name
         if (this._profiles.some(p => p.name === name)) {
             this._showConfirm(
-                'Overwrite Profile?',
-                `A profile named "${name}" already exists. Overwrite it?`,
+                chrome.i18n.getMessage('confirmOverwriteProfileTitle') || 'Overwrite Profile?',
+                chrome.i18n.getMessage('confirmOverwriteProfileMsg', [name]) || 'A profile named "' + name + '" already exists. Overwrite it?',
                 async () => {
                     await this._doSave(name);
                 }
@@ -132,21 +132,21 @@ const ProfilesManager = {
             });
 
             if (response && response.success) {
-                this._showToast(`Profile "${name}" saved with ${response.cookieCount} cookies`, 'success');
+                this._showToast(chrome.i18n.getMessage('ntfProfileSaved', [name, String(response.cookieCount)]) || 'Profile "' + name + '" saved with ' + response.cookieCount + ' cookies', 'success');
                 await this.loadProfiles();
             } else {
-                this._showToast(response?.error || 'Failed to save profile', 'error');
+                this._showToast(response?.error || (chrome.i18n.getMessage('errFailedSaveProfile') || 'Failed to save profile'), 'error');
             }
         } catch (e) {
             console.error('[Profiles] Save error:', e);
-            this._showToast('Failed to save profile', 'error');
+            this._showToast(chrome.i18n.getMessage('errFailedSaveProfile') || 'Failed to save profile', 'error');
         }
     },
 
     async loadProfile(profileName) {
         this._showConfirm(
-            'Load Profile?',
-            `This will restore all cookies from "${profileName}" to the current domain. Existing cookies will not be cleared first.`,
+            chrome.i18n.getMessage('confirmLoadProfileTitle') || 'Load Profile?',
+            chrome.i18n.getMessage('confirmLoadProfileMsg', [profileName]) || 'This will restore all cookies from "' + profileName + '" to the current domain. Existing cookies will not be cleared first.',
             async () => {
                 try {
                     const response = await chrome.runtime.sendMessage({
@@ -155,9 +155,9 @@ const ProfilesManager = {
                     });
 
                     if (response && response.success) {
-                        let msg = `Restored ${response.restored} of ${response.total} cookies`;
+                        let msg = chrome.i18n.getMessage('ntfProfileRestored', [String(response.restored), String(response.total)]) || 'Restored ' + response.restored + ' of ' + response.total + ' cookies';
                         if (response.failed > 0) {
-                            msg += ` (${response.failed} failed)`;
+                            msg += ' (' + response.failed + ' failed)';
                         }
                         this._showToast(msg, response.failed > 0 ? 'error' : 'success');
 
@@ -166,11 +166,11 @@ const ProfilesManager = {
                             loadCookies();
                         }
                     } else {
-                        this._showToast(response?.error || 'Failed to load profile', 'error');
+                        this._showToast(response?.error || (chrome.i18n.getMessage('errFailedLoadProfile') || 'Failed to load profile'), 'error');
                     }
                 } catch (e) {
                     console.error('[Profiles] Load error:', e);
-                    this._showToast('Failed to load profile', 'error');
+                    this._showToast(chrome.i18n.getMessage('errFailedLoadProfile') || 'Failed to load profile', 'error');
                 }
             }
         );
@@ -178,8 +178,8 @@ const ProfilesManager = {
 
     async deleteProfile(profileName) {
         this._showConfirm(
-            'Delete Profile?',
-            `Are you sure you want to delete "${profileName}"? This cannot be undone.`,
+            chrome.i18n.getMessage('confirmDeleteProfileTitle') || 'Delete Profile?',
+            chrome.i18n.getMessage('confirmDeleteProfileMsg', [profileName]) || 'Are you sure you want to delete "' + profileName + '"? This cannot be undone.',
             async () => {
                 try {
                     const response = await chrome.runtime.sendMessage({
@@ -188,14 +188,14 @@ const ProfilesManager = {
                     });
 
                     if (response && response.success) {
-                        this._showToast(`Profile "${profileName}" deleted`, 'success');
+                        this._showToast(chrome.i18n.getMessage('ntfProfileDeleted', [profileName]) || 'Profile "' + profileName + '" deleted', 'success');
                         await this.loadProfiles();
                     } else {
-                        this._showToast(response?.error || 'Failed to delete profile', 'error');
+                        this._showToast(response?.error || (chrome.i18n.getMessage('errFailedDeleteProfile') || 'Failed to delete profile'), 'error');
                     }
                 } catch (e) {
                     console.error('[Profiles] Delete error:', e);
-                    this._showToast('Failed to delete profile', 'error');
+                    this._showToast(chrome.i18n.getMessage('errFailedDeleteProfile') || 'Failed to delete profile', 'error');
                 }
             }
         );
@@ -214,7 +214,7 @@ const ProfilesManager = {
 
             if (!overlay || !input) {
                 // Fallback: use a basic approach
-                const name = prompt('Profile name:');
+                const name = prompt(chrome.i18n.getMessage('profileNamePrompt') || 'Profile name:');
                 resolve(name ? name.trim() : null);
                 return;
             }
@@ -277,7 +277,7 @@ const ProfilesManager = {
     // Rendering
     // ========================================================================
 
-    _render() {
+    async _render() {
         const listEl = document.getElementById('profilesList');
         const emptyEl = document.getElementById('profilesEmpty');
         const saveBtn = document.getElementById('profilesSaveBtn');
@@ -285,8 +285,9 @@ const ProfilesManager = {
 
         if (!listEl || !emptyEl) return;
 
-        // Update save button / lock state
-        const atLimit = this._profiles.length >= this.FREE_TIER_MAX;
+        // Update save button / lock state (pro users bypass limit)
+        var isPro = typeof LicenseManager !== 'undefined' && typeof LicenseManager.isPro === 'function' && await LicenseManager.isPro();
+        const atLimit = !isPro && this._profiles.length >= this.FREE_TIER_MAX;
         if (saveBtn) {
             if (atLimit) {
                 saveBtn.classList.add('profiles-save-btn-locked');
@@ -343,14 +344,14 @@ const ProfilesManager = {
 
         const countBadge = document.createElement('span');
         countBadge.className = 'profile-cookie-count';
-        countBadge.textContent = profile.cookieCount + ' cookie' + (profile.cookieCount !== 1 ? 's' : '');
+        countBadge.textContent = chrome.i18n.getMessage('profileCookieCount', [String(profile.cookieCount)]) || profile.cookieCount + ' cookie' + (profile.cookieCount !== 1 ? 's' : '');
 
         nameRow.appendChild(nameEl);
         nameRow.appendChild(countBadge);
 
         const meta = document.createElement('div');
         meta.className = 'profile-meta';
-        meta.textContent = 'Saved ' + this._formatDate(profile.updatedAt || profile.createdAt);
+        meta.textContent = (chrome.i18n.getMessage('profileSavedPrefix') || 'Saved ') + this._formatDate(profile.updatedAt || profile.createdAt);
 
         info.appendChild(nameRow);
         info.appendChild(meta);
@@ -361,7 +362,7 @@ const ProfilesManager = {
 
         const loadBtn = document.createElement('button');
         loadBtn.className = 'btn btn-primary profile-load-btn';
-        loadBtn.textContent = 'Load';
+        loadBtn.textContent = chrome.i18n.getMessage('buttonLoad') || 'Load';
         loadBtn.title = 'Restore cookies from this profile';
         loadBtn.setAttribute('aria-label', 'Load profile ' + profile.name);
         loadBtn.addEventListener('click', (e) => {
@@ -438,7 +439,7 @@ const ProfilesManager = {
     },
 
     _formatDate(timestamp) {
-        if (!timestamp) return 'unknown date';
+        if (!timestamp) return chrome.i18n.getMessage('profileUnknownDate') || 'unknown date';
 
         const now = Date.now();
         const diff = now - timestamp;
@@ -460,6 +461,6 @@ const ProfilesManager = {
         if (minutes > 0) {
             return minutes + ' min' + (minutes !== 1 ? 's' : '') + ' ago';
         }
-        return 'just now';
+        return chrome.i18n.getMessage('profileJustNow') || 'just now';
     }
 };

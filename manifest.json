@@ -1,11 +1,11 @@
 {
     "manifest_version": 3,
-    "name": "__MSG_extensionName__",
+    "name": "__MSG_extName__",
     "version": "1.0.0",
-    "description": "__MSG_extensionDescription__",
+    "description": "__MSG_extDescription__",
     "default_locale": "en",
     "author": "Michael Ip",
-    "homepage_url": "https://zovo.one",
+    "homepage_url": "https://www.zovo.one",
     "icons": {
         "16": "assets/icons/icon-16.png",
         "32": "assets/icons/icon-32.png",
@@ -19,11 +19,10 @@
             "32": "assets/icons/icon-32.png",
             "48": "assets/icons/icon-48.png"
         },
-        "default_title": "__MSG_actionTitle__"
+        "default_title": "__MSG_extActionTitle__"
     },
     "permissions": [
         "cookies",
-        "activeTab",
         "storage",
         "contextMenus",
         "notifications",
@@ -41,5 +40,11 @@
     },
     "content_security_policy": {
         "extension_pages": "script-src 'self'; object-src 'none'"
-    }
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["src/features/limits-config.json"],
+            "matches": ["<all_urls>"]
+        }
+    ]
 }

@@ -14,41 +14,32 @@
         defaultTier: 'free'
     };
 
-    // Feature map per tier
+    // Feature map per tier (IDs must match FeatureGate FEATURE_TIERS keys)
+    var FREE_FEATURES = [
+        'cookie_view',
+        'cookie_edit',
+        'cookie_delete',
+        'cookie_create',
+        'basic_export',
+        'cookie_profiles',
+        'auto_delete_rules',
+        'jwt_decoder',
+        'search_cookies'
+    ];
+
+    var PRO_FEATURES = FREE_FEATURES.concat([
+        'advanced_export',
+        'unlimited_profiles',
+        'unlimited_rules',
+        'health_dashboard',
+        'bulk_operations',
+        'import_cookies'
+    ]);
+
     var TIER_FEATURES = {
-        free: [
-            'viewCookies',
-            'editCookies',
-            'deleteCookies',
-            'searchCookies',
-            'exportSingle'
-        ],
-        pro: [
-            'viewCookies',
-            'editCookies',
-            'deleteCookies',
-            'searchCookies',
-            'exportSingle',
-            'exportBulk',
-            'importCookies',
-            'cookieProfiles',
-            'syncAcrossDevices',
-            'protectedCookies',
-            'cookieAlerts'
-        ],
-        lifetime: [
-            'viewCookies',
-            'editCookies',
-            'deleteCookies',
-            'searchCookies',
-            'exportSingle',
-            'exportBulk',
-            'importCookies',
-            'cookieProfiles',
-            'syncAcrossDevices',
-            'protectedCookies',
-            'cookieAlerts'
-        ]
+        free: FREE_FEATURES,
+        pro: PRO_FEATURES,
+        lifetime: PRO_FEATURES
     };
 
     /**

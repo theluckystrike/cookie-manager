@@ -74,6 +74,13 @@
                         </svg>
                         <span>About</span>
                     </a>
+                    <a href="#license" class="nav-item" data-section="license">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        <span>License</span>
+                    </a>
                 </nav>
 
                 <!-- Settings Panels -->
@@ -268,7 +275,7 @@
                             </div>
 
                             <div class="about-links">
-                                <a href="https://zovo.one" target="_blank" rel="noopener" class="about-link">
+                                <a href="https://www.zovo.one" target="_blank" rel="noopener" class="about-link">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                         <circle cx="12" cy="12" r="10"></circle>
                                         <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -310,8 +317,64 @@
 
                             <div class="about-footer">
                                 <span>Built by</span>
-                                <a href="https://zovo.one" target="_blank" rel="noopener" class="about-brand-link">zovo.</a>
+                                <a href="https://www.zovo.one" target="_blank" rel="noopener" class="about-brand-link">zovo.</a>
                             </div>
+                        </div>
+                    </section>
+
+                    <!-- License & Subscription -->
+                    <section class="options-section" id="section-license" aria-labelledby="heading-license" hidden>
+                        <h2 class="section-heading" id="heading-license">License & Subscription</h2>
+                        <p class="section-description">Manage your Cookie Manager Pro license.</p>
+
+                        <div class="settings-card">
+                            <!-- Current Status -->
+                            <div class="setting-row">
+                                <div class="setting-info">
+                                    <label>Current Plan</label>
+                                    <span class="setting-description">Your active subscription tier.</span>
+                                </div>
+                                <div class="license-status" id="licenseStatusDisplay">
+                                    <span class="license-tier-badge" id="licenseTierBadge">Free</span>
+                                    <span class="license-expiry" id="licenseExpiry"></span>
+                                </div>
+                            </div>
+
+                            <!-- Trial Status -->
+                            <div class="setting-row" id="trialStatusGroup" hidden>
+                                <div class="setting-info">
+                                    <label>Trial Status</label>
+                                    <span class="setting-description trial-status-text" id="trialStatusText"></span>
+                                </div>
+                            </div>
+
+                            <!-- License Key Entry -->
+                            <div class="setting-row">
+                                <div class="setting-info">
+                                    <label for="licenseKeyInput">License Key</label>
+                                    <span class="setting-description">Enter the license key from your purchase confirmation email.</span>
+                                </div>
+                                <div class="license-input-group">
+                                    <input type="text" class="license-key-input" id="licenseKeyInput" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false">
+                                    <button class="btn btn-primary" id="activateLicenseBtn">Activate</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Messages -->
+                        <div class="license-error" id="licenseError" hidden></div>
+                        <div class="license-success" id="licenseSuccess" hidden></div>
+
+                        <!-- Deactivate -->
+                        <div class="license-deactivate-row" id="deactivateGroup" hidden>
+                            <button class="btn btn-outline-danger" id="deactivateLicenseBtn">Deactivate License</button>
+                        </div>
+
+                        <!-- Upgrade CTA (for free users) -->
+                        <div class="upgrade-cta-card" id="upgradeCtaGroup">
+                            <h3>Upgrade to Pro</h3>
+                            <p>Unlock advanced exports, unlimited profiles, bulk operations, and more.</p>
+                            <a href="https://www.zovo.one/cookie-manager/checkout?plan=annual" target="_blank" class="btn btn-primary">Get Pro — $29.99/year</a>
                         </div>
                     </section>
 

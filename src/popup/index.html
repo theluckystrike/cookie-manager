@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=400">
-    <title>Cookie Manager</title>
+    <title data-i18n="extName">Cookie Manager</title>
     <link rel="stylesheet" href="popup.css">
     <link rel="stylesheet" href="../components/paywall.css">
 </head>
@@ -20,12 +20,12 @@
                 <div class="brand-divider"></div>
                 <div class="brand-text">
                     <h1 class="brand-title" data-i18n="brandTitle">Cookie Manager</h1>
-                    <span class="brand-domain" id="currentDomain" data-i18n="domainLoading">Loading...</span>
-                    <span class="subscription-badge" id="subscriptionBadge">Free</span>
+                    <a href="https://www.zovo.one" target="_blank" rel="noopener" class="brand-domain brand-url">www.zovo.one</a>
+                    <span class="subscription-badge" id="subscriptionBadge" data-i18n="badgeFree">Free</span>
                 </div>
             </div>
             <div class="header-actions">
-                <button class="icon-btn" id="refreshBtn" title="Refresh cookies" aria-label="Refresh cookies">
+                <button class="icon-btn" id="refreshBtn" data-i18n-title="ttlRefreshCookies" title="Refresh cookies" data-i18n-aria="ariaRefreshCookies" aria-label="Refresh cookies">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
@@ -42,18 +42,19 @@
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.35-4.35"></path>
             </svg>
-            <input type="text" id="searchInput" placeholder="Search cookies..." data-i18n-placeholder="searchPlaceholder" autocomplete="off" spellcheck="false" aria-label="Search cookies">
+            <input type="text" id="searchInput" placeholder="Search cookies..." data-i18n-placeholder="plhSearchCookies" autocomplete="off" spellcheck="false" data-i18n-aria="ariaSearchCookies" aria-label="Search cookies">
+            <span class="current-domain-badge" id="currentDomain"></span>
             <span class="cookie-count" id="cookieCount" aria-live="polite">0</span>
         </div>
 
         <!-- Trial Banner -->
         <div class="trial-banner" id="trialBanner" hidden>
-            <span class="trial-banner-text">Pro trial: <strong id="trialDaysLeft">7</strong> days remaining</span>
-            <a href="#" class="trial-banner-link" id="trialUpgradeLink">Upgrade now</a>
+            <span class="trial-banner-text" data-i18n="trialBannerText">Pro trial: <strong id="trialDaysLeft">7</strong> days remaining</span>
+            <a href="#" class="trial-banner-link" id="trialUpgradeLink" data-i18n="trialUpgradeLink">Upgrade now</a>
         </div>
 
         <!-- Tab Bar -->
-        <nav class="tab-bar" role="tablist" aria-label="Main navigation">
+        <nav class="tab-bar" role="tablist" data-i18n-aria="ariaMainNav" aria-label="Main navigation">
             <button class="tab-btn active" id="tabBtnCookies" role="tab" aria-selected="true" aria-controls="tabCookies" data-tab="cookies" tabindex="0">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="12" cy="12" r="10"></circle>
@@ -62,27 +63,27 @@
                     <circle cx="9" cy="14" r="1" fill="currentColor"></circle>
                     <circle cx="14" cy="15" r="1" fill="currentColor"></circle>
                 </svg>
-                <span>Cookies</span>
+                <span data-i18n="tabCookies">Cookies</span>
             </button>
             <button class="tab-btn" id="tabBtnProfiles" role="tab" aria-selected="false" aria-controls="tabProfiles" data-tab="profiles" tabindex="-1">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle>
                 </svg>
-                <span>Profiles</span>
+                <span data-i18n="tabProfiles">Profiles</span>
             </button>
             <button class="tab-btn" id="tabBtnRules" role="tab" aria-selected="false" aria-controls="tabRules" data-tab="rules" tabindex="-1">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
-                <span>Rules</span>
+                <span data-i18n="tabRules">Rules</span>
             </button>
-            <button class="tab-btn" id="tabBtnHealth" role="tab" aria-selected="false" aria-controls="tabHealth" data-tab="health" tabindex="-1">
+            <button class="tab-btn" id="tabBtnHealth" role="tab" aria-selected="false" aria-controls="tabHealth" data-tab="health" tabindex="-1" data-feature="health_dashboard">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                 </svg>
-                <span>Health</span>
+                <span data-i18n="tabHealth">Health</span>
             </button>
         </nav>
 
@@ -90,7 +91,7 @@
         <div class="tab-content active" id="tabCookies" role="tabpanel" aria-labelledby="tabBtnCookies" tabindex="0">
             <!-- Action Bar -->
             <div class="action-bar">
-                <button class="btn btn-secondary" id="exportBtn">
+                <button class="btn btn-secondary" id="exportBtn" data-feature="advanced_export">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -99,14 +100,14 @@
                     </svg>
                     <span data-i18n="buttonExport">Export</span>
                 </button>
-                <button class="btn btn-secondary" id="importBtn">
+                <button class="btn btn-secondary" id="importBtn" data-feature="import_cookies">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="17 8 12 3 7 8"></polyline>
                         <line x1="12" y1="3" x2="12" y2="15"></line>
                     </svg>
-                    <span>Import</span>
+                    <span data-i18n="buttonImport">Import</span>
                 </button>
                 <input type="file" id="importFileInput" accept=".json" hidden>
                 <button class="btn btn-secondary" id="addCookieBtn">
@@ -117,7 +118,7 @@
                     </svg>
                     <span data-i18n="buttonAdd">Add</span>
                 </button>
-                <button class="btn btn-danger" id="clearAllBtn">
+                <button class="btn btn-danger" id="clearAllBtn" data-feature="bulk_operations">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="3 6 5 6 21 6"></polyline>
@@ -125,8 +126,8 @@
                     </svg>
                     <span data-i18n="buttonClear">Clear</span>
                 </button>
-                <label class="toggle" title="Read-only mode">
-                    <input type="checkbox" id="readOnlyToggle" aria-label="Read-only mode">
+                <label class="toggle" data-i18n-title="ttlReadOnly" title="Read-only mode">
+                    <input type="checkbox" id="readOnlyToggle" data-i18n-aria="ariaReadOnly" aria-label="Read-only mode">
                     <span class="toggle-slider"></span>
                     <svg class="lock-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -175,7 +176,7 @@
                         <polyline points="17 21 17 13 7 13 7 21"></polyline>
                         <polyline points="7 3 7 8 15 8"></polyline>
                     </svg>
-                    <span>Save Current Cookies</span>
+                    <span data-i18n="buttonSaveCurrentCookies">Save Current Cookies</span>
                 </button>
                 <!-- Lock overlay shown when at free tier limit -->
                 <div class="profiles-lock-overlay" id="profilesLockOverlay" hidden>
@@ -184,7 +185,7 @@
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                     </svg>
-                    <span>Upgrade to Pro for unlimited profiles</span>
+                    <span data-i18n="profilesUpgradeMsg">Upgrade to Pro for unlimited profiles</span>
                 </div>
             </div>
 
@@ -203,21 +204,21 @@
                         <polyline points="7 3 7 8 15 8"></polyline>
                     </svg>
                 </div>
-                <p class="empty-title">No saved profiles</p>
-                <span class="empty-subtitle">Save your current cookies as a profile to quickly restore them later</span>
+                <p class="empty-title" data-i18n="profilesEmptyTitle">No saved profiles</p>
+                <span class="empty-subtitle" data-i18n="profilesEmptySubtitle">Save your current cookies as a profile to quickly restore them later</span>
             </div>
 
             <!-- Profile Name Prompt Overlay -->
             <div class="profile-name-overlay" id="profileNameOverlay" hidden>
                 <div class="profile-name-dialog">
-                    <h3>Save Cookie Profile</h3>
+                    <h3 data-i18n="titleSaveProfile">Save Cookie Profile</h3>
                     <div class="form-group">
-                        <label for="profileNameInput">Profile Name</label>
-                        <input type="text" id="profileNameInput" placeholder="e.g. Dev Environment" autocomplete="off" maxlength="128">
+                        <label for="profileNameInput" data-i18n="labelProfileName">Profile Name</label>
+                        <input type="text" id="profileNameInput" placeholder="e.g. Dev Environment" data-i18n-placeholder="plhProfileName" autocomplete="off" maxlength="128">
                     </div>
                     <div class="profile-name-actions">
-                        <button class="btn btn-secondary" id="profileNameCancel">Cancel</button>
-                        <button class="btn btn-primary" id="profileNameSave">Save</button>
+                        <button class="btn btn-secondary" id="profileNameCancel" data-i18n="buttonCancel">Cancel</button>
+                        <button class="btn btn-primary" id="profileNameSave" data-i18n="buttonSave">Save</button>
                     </div>
                 </div>
             </div>
@@ -231,14 +232,14 @@
                         <line x1="12" y1="5" x2="12" y2="19"></line>
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    Add Rule
+                    <span data-i18n="buttonAddRule">Add Rule</span>
                 </button>
                 <div class="rules-lock-overlay" id="rulesLockOverlay" hidden>
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                         <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                     </svg>
-                    <span>Free limit reached (1 rule). Upgrade for unlimited.</span>
+                    <span data-i18n="rulesUpgradeMsg">Free limit reached (1 rule). Upgrade for unlimited.</span>
                 </div>
             </div>
             <div class="rules-list" id="rulesList"></div>
@@ -249,33 +250,33 @@
                         <polyline points="12 6 12 12 16 14"></polyline>
                     </svg>
                 </div>
-                <p class="empty-title">No rules yet</p>
-                <span class="empty-subtitle">Create a rule to automatically delete cookies on a schedule</span>
+                <p class="empty-title" data-i18n="rulesEmptyTitle">No rules yet</p>
+                <span class="empty-subtitle" data-i18n="rulesEmptySubtitle">Create a rule to automatically delete cookies on a schedule</span>
             </div>
             <!-- Add/Edit Rule Form -->
             <div class="rule-form-overlay" id="ruleFormOverlay" hidden>
                 <div class="rule-form-dialog">
-                    <h3 id="ruleFormTitle">Add Auto-Delete Rule</h3>
+                    <h3 id="ruleFormTitle" data-i18n="titleAddRule">Add Auto-Delete Rule</h3>
                     <div class="form-group">
-                        <label for="ruleDomain">Domain Pattern</label>
-                        <input type="text" id="ruleDomain" placeholder="e.g. *.google.com or facebook.com" autocomplete="off">
+                        <label for="ruleDomain" data-i18n="labelDomainPattern">Domain Pattern</label>
+                        <input type="text" id="ruleDomain" placeholder="e.g. *.google.com or facebook.com" data-i18n-placeholder="plhDomainPattern" autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <label for="ruleCookiePattern">Cookie Name Pattern</label>
-                        <input type="text" id="ruleCookiePattern" placeholder="* for all, or specific name" value="*" autocomplete="off">
+                        <label for="ruleCookiePattern" data-i18n="labelCookieNamePattern">Cookie Name Pattern</label>
+                        <input type="text" id="ruleCookiePattern" placeholder="* for all, or specific name" data-i18n-placeholder="plhCookieNamePattern" value="*" autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <label for="ruleSchedule">Schedule</label>
+                        <label for="ruleSchedule" data-i18n="labelSchedule">Schedule</label>
                         <select id="ruleSchedule">
-                            <option value="60">Every hour</option>
-                            <option value="360">Every 6 hours</option>
-                            <option value="1440">Every day</option>
-                            <option value="0">On browser close</option>
+                            <option value="60" data-i18n="optEveryHour">Every hour</option>
+                            <option value="360" data-i18n="optEvery6Hours">Every 6 hours</option>
+                            <option value="1440" data-i18n="optEveryDay">Every day</option>
+                            <option value="0" data-i18n="optOnBrowserClose">On browser close</option>
                         </select>
                     </div>
                     <div class="rule-form-actions">
-                        <button class="btn btn-secondary" id="ruleFormCancel">Cancel</button>
-                        <button class="btn btn-primary" id="ruleFormSave">Save Rule</button>
+                        <button class="btn btn-secondary" id="ruleFormCancel" data-i18n="buttonCancel">Cancel</button>
+                        <button class="btn btn-primary" id="ruleFormSave" data-i18n="buttonSaveRule">Save Rule</button>
                     </div>
                 </div>
             </div>
@@ -290,34 +291,34 @@
                         <circle cx="60" cy="60" r="52" class="health-ring-fill" id="healthRingFill"></circle>
                     </svg>
                     <div class="health-grade" id="healthGrade">--</div>
-                    <div class="health-label">Cookie Health</div>
+                    <div class="health-label" data-i18n="healthLabel">Cookie Health</div>
                 </div>
-                <p class="health-summary" id="healthSummary">Analyzing cookies...</p>
+                <p class="health-summary" id="healthSummary" data-i18n="healthAnalyzing">Analyzing cookies...</p>
             </div>
             <div class="health-categories" id="healthCategories">
                 <div class="health-cat" data-cat="secure">
-                    <div class="health-cat-header"><span class="health-cat-label">Secure Cookies</span><span class="health-cat-value" id="catSecure">--</span></div>
+                    <div class="health-cat-header"><span class="health-cat-label" data-i18n="healthCatSecure">Secure Cookies</span><span class="health-cat-value" id="catSecure">--</span></div>
                     <div class="health-cat-bar"><div class="health-cat-fill" id="catSecureFill"></div></div>
                 </div>
                 <div class="health-cat" data-cat="httponly">
-                    <div class="health-cat-header"><span class="health-cat-label">HttpOnly</span><span class="health-cat-value" id="catHttpOnly">--</span></div>
+                    <div class="health-cat-header"><span class="health-cat-label" data-i18n="healthCatHttpOnly">HttpOnly</span><span class="health-cat-value" id="catHttpOnly">--</span></div>
                     <div class="health-cat-bar"><div class="health-cat-fill" id="catHttpOnlyFill"></div></div>
                 </div>
                 <div class="health-cat" data-cat="samesite">
-                    <div class="health-cat-header"><span class="health-cat-label">SameSite Set</span><span class="health-cat-value" id="catSameSite">--</span></div>
+                    <div class="health-cat-header"><span class="health-cat-label" data-i18n="healthCatSameSite">SameSite Set</span><span class="health-cat-value" id="catSameSite">--</span></div>
                     <div class="health-cat-bar"><div class="health-cat-fill" id="catSameSiteFill"></div></div>
                 </div>
                 <div class="health-cat" data-cat="trackers">
-                    <div class="health-cat-header"><span class="health-cat-label">Trackers Found</span><span class="health-cat-value" id="catTrackers">--</span></div>
+                    <div class="health-cat-header"><span class="health-cat-label" data-i18n="healthCatTrackers">Trackers Found</span><span class="health-cat-value" id="catTrackers">--</span></div>
                     <div class="health-cat-bar"><div class="health-cat-fill health-cat-fill-warn" id="catTrackersFill"></div></div>
                 </div>
             </div>
             <div class="health-trackers" id="healthTrackers" hidden>
-                <h3 class="health-section-title">Tracking Cookies Detected</h3>
+                <h3 class="health-section-title" data-i18n="healthTrackersTitle">Tracking Cookies Detected</h3>
                 <div class="health-tracker-list" id="healthTrackerList"></div>
             </div>
             <div class="health-recommendations" id="healthRecommendations" hidden>
-                <h3 class="health-section-title">Recommendations</h3>
+                <h3 class="health-section-title" data-i18n="healthRecsTitle">Recommendations</h3>
                 <div class="health-rec-list" id="healthRecList"></div>
             </div>
             <div class="health-actions" id="healthActions" hidden>
@@ -326,7 +327,7 @@
                         <polyline points="3 6 5 6 21 6"></polyline>
                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                     </svg>
-                    Clean Trackers
+                    <span data-i18n="buttonCleanTrackers">Clean Trackers</span>
                 </button>
             </div>
             <div class="health-empty" id="healthEmpty" hidden>
@@ -335,8 +336,8 @@
                         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
                     </svg>
                 </div>
-                <p class="empty-title">No cookies to analyze</p>
-                <span class="empty-subtitle">Visit a website to see its cookie health score</span>
+                <p class="empty-title" data-i18n="healthEmptyTitle">No cookies to analyze</p>
+                <span class="empty-subtitle" data-i18n="healthEmptySubtitle">Visit a website to see its cookie health score</span>
             </div>
         </div>
 
@@ -346,7 +347,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h2 id="editorTitle" data-i18n="titleEditCookie">Edit Cookie</h2>
-                    <button class="icon-btn modal-close" id="closeModal" title="Close" aria-label="Close dialog">
+                    <button class="icon-btn modal-close" id="closeModal" data-i18n-title="ttlClose" title="Close" data-i18n-aria="ariaCloseDialog" aria-label="Close dialog">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -357,24 +358,24 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="cookieName" data-i18n="labelName">Name</label>
-                        <input type="text" id="cookieName" placeholder="Cookie name" data-i18n-placeholder="placeholderCookieName" autocomplete="off" aria-required="true">
+                        <input type="text" id="cookieName" placeholder="Cookie name" data-i18n-placeholder="plhCookieName" autocomplete="off" aria-required="true">
                     </div>
                     <div class="form-group">
                         <label for="cookieValue" data-i18n="labelValue">Value</label>
-                        <textarea id="cookieValue" rows="3" placeholder="Cookie value" data-i18n-placeholder="placeholderCookieValue"></textarea>
+                        <textarea id="cookieValue" rows="3" placeholder="Cookie value" data-i18n-placeholder="plhCookieValue"></textarea>
                         <div class="jwt-badge" id="jwtBadge" hidden>
-                            <span>🔐 JWT Detected</span>
-                            <button class="btn-link" id="decodeJwt">Decode →</button>
+                            <span data-i18n="jwtDetected">JWT Detected</span>
+                            <button class="btn-link" id="decodeJwt" data-i18n="jwtDecode">Decode</button>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
                             <label for="cookieDomain" data-i18n="labelDomain">Domain</label>
-                            <input type="text" id="cookieDomain" placeholder=".example.com" data-i18n-placeholder="placeholderDomain">
+                            <input type="text" id="cookieDomain" placeholder=".example.com" data-i18n-placeholder="plhDomain">
                         </div>
                         <div class="form-group">
                             <label for="cookiePath" data-i18n="labelPath">Path</label>
-                            <input type="text" id="cookiePath" placeholder="/" data-i18n-placeholder="placeholderPath" value="/">
+                            <input type="text" id="cookiePath" placeholder="/" data-i18n-placeholder="plhPath" value="/">
                         </div>
                     </div>
                     <div class="form-group">
@@ -397,9 +398,9 @@
                     <div class="form-group">
                         <label for="cookieSameSite" data-i18n="labelSameSite">SameSite</label>
                         <select id="cookieSameSite">
-                            <option value="lax">Lax</option>
-                            <option value="strict">Strict</option>
-                            <option value="no_restriction">None</option>
+                            <option value="lax" data-i18n="optLax">Lax</option>
+                            <option value="strict" data-i18n="optStrict">Strict</option>
+                            <option value="no_restriction" data-i18n="optNone">None</option>
                         </select>
                     </div>
                 </div>
@@ -413,7 +414,7 @@
                         </svg>
                         <span data-i18n="buttonDelete">Delete</span>
                     </button>
-                    <button class="btn btn-primary" id="saveCookieBtn" data-i18n="buttonSave">Save Cookie</button>
+                    <button class="btn btn-primary" id="saveCookieBtn" data-i18n="buttonSaveCookie">Save Cookie</button>
                 </div>
             </div>
         </div>
@@ -423,8 +424,8 @@
             <div class="modal-backdrop"></div>
             <div class="modal-content modal-lg">
                 <div class="modal-header">
-                    <h2 id="jwtModalTitle" data-i18n="titleJwtToken">🔐 JWT Token</h2>
-                    <button class="icon-btn modal-close" id="closeJwtModal" title="Close" aria-label="Close dialog">
+                    <h2 id="jwtModalTitle" data-i18n="titleJwtToken">JWT Token</h2>
+                    <button class="icon-btn modal-close" id="closeJwtModal" data-i18n-title="ttlClose" title="Close" data-i18n-aria="ariaCloseDialog" aria-label="Close dialog">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -436,7 +437,7 @@
                     <div class="jwt-section">
                         <div class="jwt-section-header">
                             <h3 data-i18n="jwtHeader">Header</h3>
-                            <button class="btn-copy" id="copyHeader" title="Copy" aria-label="Copy header">
+                            <button class="btn-copy" id="copyHeader" data-i18n-title="ttlCopy" title="Copy" data-i18n-aria="ariaCopyHeader" aria-label="Copy header">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2" aria-hidden="true">
                                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -449,7 +450,7 @@
                     <div class="jwt-section">
                         <div class="jwt-section-header">
                             <h3 data-i18n="jwtPayload">Payload</h3>
-                            <button class="btn-copy" id="copyPayload" title="Copy" aria-label="Copy payload">
+                            <button class="btn-copy" id="copyPayload" data-i18n-title="ttlCopy" title="Copy" data-i18n-aria="ariaCopyPayload" aria-label="Copy payload">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2" aria-hidden="true">
                                     <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
@@ -489,24 +490,25 @@
 
         <!-- Zovo Branded Footer -->
         <footer class="footer" role="contentinfo">
-            <a href="#" id="helpLink" class="footer-link footer-help" title="Help &amp; FAQ">
+            <a href="#" id="helpLink" class="footer-link footer-help" data-i18n-title="ttlHelpFaq" title="Help &amp; FAQ">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="12" cy="12" r="10"></circle>
                     <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                     <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
-                <span>Help</span>
+                <span data-i18n="footerHelp">Help</span>
             </a>
-            <a href="../legal/privacy-policy.html" target="_blank" rel="noopener" class="footer-link footer-legal" title="Privacy Policy">
+            <a href="../legal/privacy-policy.html" target="_blank" rel="noopener" class="footer-link footer-legal" data-i18n-title="ttlPrivacyPolicy" title="Privacy Policy">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                 </svg>
-                <span>Privacy</span>
+                <span data-i18n="footerPrivacy">Privacy</span>
             </a>
-            <a href="#" class="manage-sub-link" id="manageSubLink" hidden>Manage Subscription</a>
+            <a href="#" class="manage-sub-link" id="manageSubLink" data-i18n="footerManageSub" hidden>Manage Subscription</a>
+            <a href="#" class="enter-license-link" id="enterLicenseKey" data-i18n="footerEnterLicense" hidden>Enter License Key</a>
             <span class="footer-version" id="versionDisplay"></span>
-            <a href="https://zovo.one" target="_blank" rel="noopener" class="footer-link">
+            <a href="https://www.zovo.one" target="_blank" rel="noopener" class="footer-link">
                 <span class="footer-text" data-i18n="footerBuiltBy">Built by</span>
                 <span class="footer-brand" data-i18n="footerBrand">zovo.</span>
             </a>
@@ -516,7 +518,9 @@
         <div class="visually-hidden a11y-live-region" id="a11yAnnouncer" role="status" aria-live="polite" aria-atomic="true"></div>
     </div>
 
+    <script src="../utils/i18n-loader.js"></script>
     <script src="../shared/i18n.js"></script>
+    <script src="../utils/i18n-helpers.js"></script>
     <script src="../shared/message-types.js"></script>
     <script src="../shared/dom-utils.js"></script>
     <script src="../shared/accessibility.js"></script>
@@ -530,6 +534,8 @@
     <script src="../utils/trial-manager.js"></script>
     <script src="../utils/feature-gate.js"></script>
     <script src="../components/paywall.js"></script>
+    <script src="../features/feature-registry.js"></script>
+    <script src="../features/usage-tracker.js"></script>
     <script src="profiles.js"></script>
     <script src="rules.js"></script>
     <script src="health.js"></script>

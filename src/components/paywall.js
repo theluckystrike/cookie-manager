@@ -11,18 +11,21 @@
     // ========================================================================
 
     var PAYMENT_URLS = {
-        monthly: 'https://zovo.dev/cookie-manager/checkout?plan=monthly',
-        annual: 'https://zovo.dev/cookie-manager/checkout?plan=annual'
+        monthly: 'https://www.zovo.one/cookie-manager/checkout?plan=monthly',
+        annual: 'https://www.zovo.one/cookie-manager/checkout?plan=annual'
     };
 
     var FEATURES = [
-        { name: 'Basic Cookie Management',  free: 'check', pro: 'check' },
-        { name: 'Cookie Profiles',          free: '2',     pro: 'Unlimited' },
-        { name: 'Auto-Delete Rules',        free: '1',     pro: 'Unlimited' },
-        { name: 'Advanced Export Formats',   free: 'cross', pro: 'check' },
-        { name: 'Health Dashboard',          free: 'cross', pro: 'check' },
-        { name: 'JWT Decoder',              free: 'cross', pro: 'check' },
-        { name: 'Bulk Operations',           free: 'cross', pro: 'check' }
+        { name: chrome.i18n.getMessage('featureViewSearchCookies') || 'View & Search Cookies',       free: 'check', pro: 'check' },
+        { name: chrome.i18n.getMessage('featureEditDeleteCreate') || 'Edit, Delete & Create Cookies', free: 'check', pro: 'check' },
+        { name: chrome.i18n.getMessage('featureCookieProfiles') || 'Cookie Profiles',                free: '2',     pro: chrome.i18n.getMessage('featureUnlimited') || 'Unlimited' },
+        { name: chrome.i18n.getMessage('featureAutoDeleteRules') || 'Auto-Delete Rules',              free: '1',     pro: chrome.i18n.getMessage('featureUnlimited') || 'Unlimited' },
+        { name: chrome.i18n.getMessage('featureJwtDecoder') || 'JWT Decoder',                        free: 'check', pro: 'check' },
+        { name: chrome.i18n.getMessage('featureAdvancedExport') || 'Advanced Export (CSV, Netscape)', free: 'cross', pro: 'check' },
+        { name: chrome.i18n.getMessage('featureImportCookies') || 'Import Cookies',                  free: 'cross', pro: 'check' },
+        { name: chrome.i18n.getMessage('featureHealthDashboard') || 'Health Dashboard',               free: 'cross', pro: 'check' },
+        { name: chrome.i18n.getMessage('featureBulkOps') || 'Bulk Operations',                       free: 'cross', pro: 'check' },
+        { name: chrome.i18n.getMessage('featureNoDailyLimits') || 'No Daily Limits',                 free: 'cross', pro: 'check' }
     ];
 
     var IMPRESSION_CAP = 100;
@@ -109,8 +112,8 @@
                         '</svg>' +
                         '<span>PRO</span>' +
                     '</div>' +
-                    '<h2 class="paywall-title" id="paywall-title">Unlock ' + safeFeature + '</h2>' +
-                    '<p class="paywall-subtitle">Upgrade to Cookie Manager Pro for the full toolkit.</p>' +
+                    '<h2 class="paywall-title" id="paywall-title">' + (chrome.i18n.getMessage('paywallUnlockTitle', [safeFeature]) || ('Unlock ' + safeFeature)) + '</h2>' +
+                    '<p class="paywall-subtitle">' + (chrome.i18n.getMessage('paywallSubtitle') || 'Upgrade to Cookie Manager Pro for the full toolkit.') + '</p>' +
                 '</div>' +
 
                 /* Feature comparison */
@@ -118,9 +121,9 @@
                     '<table>' +
                         '<thead>' +
                             '<tr>' +
-                                '<th>Feature</th>' +
-                                '<th>Free</th>' +
-                                '<th>Pro</th>' +
+                                '<th>' + (chrome.i18n.getMessage('paywallColFeature') || 'Feature') + '</th>' +
+                                '<th>' + (chrome.i18n.getMessage('paywallColFree') || 'Free') + '</th>' +
+                                '<th>' + (chrome.i18n.getMessage('paywallColPro') || 'Pro') + '</th>' +
                             '</tr>' +
                         '</thead>' +
                         '<tbody id="paywall-feature-tbody">' +
@@ -133,27 +136,27 @@
                 '<div class="paywall-tiers">' +
                     /* Monthly */
                     '<div class="paywall-tier">' +
-                        '<div class="paywall-tier-name">Monthly</div>' +
+                        '<div class="paywall-tier-name">' + (chrome.i18n.getMessage('paywallMonthly') || 'Monthly') + '</div>' +
                         '<div class="paywall-tier-price">$3.99<span>/mo</span></div>' +
-                        '<div class="paywall-tier-note">Billed monthly</div>' +
+                        '<div class="paywall-tier-note">' + (chrome.i18n.getMessage('paywallBilledMonthly') || 'Billed monthly') + '</div>' +
                     '</div>' +
                     /* Annual (popular) */
                     '<div class="paywall-tier paywall-tier-popular">' +
-                        '<div class="paywall-popular-badge">Best Value</div>' +
-                        '<div class="paywall-tier-name">Annual</div>' +
+                        '<div class="paywall-popular-badge">' + (chrome.i18n.getMessage('paywallBestValue') || 'Best Value') + '</div>' +
+                        '<div class="paywall-tier-name">' + (chrome.i18n.getMessage('paywallAnnual') || 'Annual') + '</div>' +
                         '<div class="paywall-tier-price">$29.99<span>/yr</span></div>' +
-                        '<div class="paywall-tier-note">$2.50/mo billed annually</div>' +
-                        '<div class="paywall-savings">Save 37%</div>' +
+                        '<div class="paywall-tier-note">' + (chrome.i18n.getMessage('paywallBilledAnnually') || '$2.50/mo billed annually') + '</div>' +
+                        '<div class="paywall-savings">' + (chrome.i18n.getMessage('paywallSave37') || 'Save 37%') + '</div>' +
                     '</div>' +
                 '</div>' +
 
                 /* CTA buttons */
                 '<div class="paywall-cta-section">' +
                     '<button class="paywall-cta paywall-cta-primary" data-action="annual">' +
-                        'Get Pro Annual &mdash; $29.99/yr' +
+                        (chrome.i18n.getMessage('paywallCtaAnnual') || 'Get Pro Annual &mdash; $29.99/yr') +
                     '</button>' +
                     '<button class="paywall-cta paywall-cta-secondary" data-action="monthly">' +
-                        'Start Monthly &mdash; $3.99/mo' +
+                        (chrome.i18n.getMessage('paywallCtaMonthly') || 'Start Monthly &mdash; $3.99/mo') +
                     '</button>' +
                 '</div>' +
 
@@ -164,32 +167,32 @@
                             '<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>' +
                             '<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>' +
                         '</svg>' +
-                        '<span>Secure checkout</span>' +
+                        '<span>' + (chrome.i18n.getMessage('paywallTrustSecure') || 'Secure checkout') + '</span>' +
                     '</div>' +
                     '<div class="paywall-trust-item">' +
                         '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
                             '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>' +
                         '</svg>' +
-                        '<span>7-day money-back</span>' +
+                        '<span>' + (chrome.i18n.getMessage('paywallTrustMoneyBack') || '7-day money-back') + '</span>' +
                     '</div>' +
                     '<div class="paywall-trust-item">' +
                         '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
                             '<circle cx="12" cy="12" r="10"></circle>' +
                             '<polyline points="12 6 12 12 16 14"></polyline>' +
                         '</svg>' +
-                        '<span>Cancel anytime</span>' +
+                        '<span>' + (chrome.i18n.getMessage('paywallTrustCancel') || 'Cancel anytime') + '</span>' +
                     '</div>' +
                 '</div>' +
 
                 /* License key entry */
                 '<div class="paywall-license-entry">' +
                     '<button class="paywall-license-toggle" data-action="license-toggle" type="button">' +
-                        'Already have a license key?' +
+                        (chrome.i18n.getMessage('paywallHaveLicenseKey') || 'Already have a license key?') +
                     '</button>' +
                     '<div class="paywall-license-form" id="paywall-license-form">' +
                         '<input class="paywall-license-input" id="paywall-license-input" type="text" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off" spellcheck="false" aria-label="License key">' +
                         '<button class="paywall-license-submit" data-action="license-submit" type="button">' +
-                            'Activate License' +
+                            (chrome.i18n.getMessage('paywallActivateLicense') || 'Activate License') +
                         '</button>' +
                         '<div class="paywall-license-error" id="paywall-license-error" role="alert"></div>' +
                     '</div>' +
@@ -312,13 +315,13 @@
 
         var key = input.value.trim();
         if (!key) {
-            showLicenseError(errorEl, 'Please enter a license key.');
+            showLicenseError(errorEl, chrome.i18n.getMessage('errEnterLicenseKey') || 'Please enter a license key.');
             return;
         }
 
         // Disable button while processing
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Activating...';
+        submitBtn.textContent = chrome.i18n.getMessage('paywallActivating') || 'Activating...';
         hideLicenseError(errorEl);
 
         // Send message to background
@@ -327,10 +330,10 @@
                 { action: 'ACTIVATE_LICENSE', payload: { licenseKey: key } },
                 function (response) {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Activate License';
+                    submitBtn.textContent = chrome.i18n.getMessage('paywallActivateLicense') || 'Activate License';
 
                     if (chrome.runtime.lastError) {
-                        showLicenseError(errorEl, 'Failed to connect. Please try again.');
+                        showLicenseError(errorEl, chrome.i18n.getMessage('errFailedConnect') || 'Failed to connect. Please try again.');
                         return;
                     }
 
@@ -342,7 +345,7 @@
                             window.location.reload();
                         }
                     } else {
-                        var msg = (response && response.error) ? response.error : 'Invalid license key. Please check and try again.';
+                        var msg = (response && response.error) ? response.error : (chrome.i18n.getMessage('errInvalidLicenseKey') || 'Invalid license key. Please check and try again.');
                         showLicenseError(errorEl, msg);
                     }
                 }
@@ -350,7 +353,7 @@
         } else {
             submitBtn.disabled = false;
             submitBtn.textContent = 'Activate License';
-            showLicenseError(errorEl, 'Extension runtime not available.');
+            showLicenseError(errorEl, chrome.i18n.getMessage('errRuntimeNotAvailable') || 'Extension runtime not available.');
         }
     }
 

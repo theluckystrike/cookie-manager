@@ -11,7 +11,7 @@
         storageKey: 'trialData',
         alarmName: 'trialDailyCheck',
         alarmPeriodMinutes: 1440, // 24 hours
-        upgradeUrl: 'https://zovo.one/cookie-manager/upgrade'
+        upgradeUrl: 'https://www.zovo.one/cookie-manager/upgrade'
     };
 
     /**

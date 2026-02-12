@@ -1,0 +1,70 @@
+Cookie Manager — Gerez, editez et exportez vos cookies avec elegance
+
+Prenez le controle total de vos cookies de navigateur avec un outil elegant, efficace et entierement gratuit. Cookie Manager vous offre une experience utilisateur raffinee pour gerer vos cookies sans effort.
+
+LE PROBLEME
+Les outils de developpement du navigateur rendent la gestion des cookies penible. Defiler, cliquer, copier... cela prend beaucoup trop de temps.
+
+LA SOLUTION
+Cookie Manager vous donne un acces en un clic a tous vos cookies. Visualisez, editez, exportez et organisez avec une interface moderne et soignee, concue pour une experience fluide.
+
+FONCTIONNALITES PRINCIPALES
+- Visualisez et recherchez tous les cookies par domaine
+- Editez les valeurs des cookies, les dates d'expiration et les attributs
+- Creez de nouveaux cookies avec des parametres personnalises
+- Supprimez des cookies individuellement ou en masse
+- Exportez les cookies en JSON, Netscape ou CSV
+- Importez des cookies depuis des fichiers
+- Sauvegardez et restaurez des profils de cookies
+- Regles de suppression automatique programmees
+- Decodeur de jetons JWT integre
+- Tableau de bord de sante des cookies
+- Version Pro avec des fonctionnalites illimitees
+
+TOUT CELA GRATUITEMENT
+Les fonctionnalites principales de Cookie Manager sont 100% gratuites. Aucun compte requis, aucun frais cache. Nous croyons que des outils de qualite doivent etre accessibles a tous.
+
+POURQUOI CHOISIR COOKIE MANAGER
+- Interface elegante et intuitive — prise en main immediate
+- Nettement plus rapide que les outils de developpement du navigateur
+- Decodage JWT integre pour les developpeurs
+- Export dans plusieurs formats (JSON, Netscape, CSV)
+- Profils de cookies pour basculer rapidement entre les configurations
+- Regles automatiques qui travaillent pour vous
+- Tableau de bord de sante pour garder vos cookies organises
+- Experience utilisateur soignee jusque dans les moindres details
+- Developpe par Zovo — la confiance de la communaute des developpeurs
+
+PARFAIT POUR
+- Les developpeurs web testant des flux d'authentification
+- Les testeurs QA gerant des sessions
+- Les utilisateurs soucieux de leur vie privee auditant les cookies
+- Toute personne gerant plusieurs comptes
+- Les equipes devant partager des configurations de cookies
+
+COMMENT COMMENCER
+1. Installez l'extension depuis le Chrome Web Store
+2. Cliquez sur l'icone Cookie Manager dans la barre d'outils
+3. Consultez instantanement tous les cookies du site actuel
+4. Editez, supprimez, exportez ou importez selon vos besoins
+
+VOTRE VIE PRIVEE AVANT TOUT
+- Toutes les donnees sont stockees localement sur VOTRE appareil
+- Aucun analytique externe ni suivi
+- Aucun compte requis pour les fonctionnalites gratuites
+- Nous ne voyons jamais vos donnees de cookies
+- Zero requetes reseau inutiles
+- Vos donnees vous appartiennent — et uniquement a vous
+
+VERSION PRO
+Debloquez des fonctionnalites avancees avec Cookie Manager Pro : profils illimites, regles automatiques avancees, support prioritaire et bien plus. La version gratuite est complete pour la plupart des utilisateurs, mais Pro amene votre productivite au niveau superieur.
+
+Telechargez Cookie Manager maintenant et prenez le controle de vos cookies avec elegance et efficacite.
+
+Si vous appreciez Cookie Manager, laissez-nous un avis 5 etoiles. Votre retour nous aide a ameliorer l'extension et a la rendre accessible a davantage d'utilisateurs.
+
+Support : https://api.zovo.dev/support
+
+---
+Fait partie de la suite d'outils developpeurs Zovo
+https://www.zovo.one

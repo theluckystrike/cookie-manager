@@ -132,7 +132,7 @@
         // --- Pro-only features ---
         if (tier === 'pro') {
             getLicenseStatus().then(function (license) {
-                if (license && license.tier === 'pro') {
+                if (license && (license.tier === 'pro' || license.tier === 'lifetime')) {
                     if (typeof callback === 'function') callback();
                 } else {
                     _handleBlocked(featureId, options);
@@ -160,7 +160,7 @@
                 } else {
                     // At or over the free limit - check if user has pro license
                     getLicenseStatus().then(function (license) {
-                        if (license && license.tier === 'pro') {
+                        if (license && (license.tier === 'pro' || license.tier === 'lifetime')) {
                             // Pro user - no limit
                             if (typeof callback === 'function') callback();
                         } else {
@@ -214,7 +214,7 @@
 
         if (tier === 'pro') {
             return getLicenseStatus().then(function (license) {
-                return !!(license && license.tier === 'pro');
+                return !!(license && (license.tier === 'pro' || license.tier === 'lifetime'));
             });
         }
 
@@ -228,7 +228,7 @@
                 }
                 // At limit - still available if user is pro
                 return getLicenseStatus().then(function (license) {
-                    return !!(license && license.tier === 'pro');
+                    return !!(license && (license.tier === 'pro' || license.tier === 'lifetime'));
                 });
             });
         }
@@ -308,9 +308,11 @@
      * Retrieve the current license / tier status.
      *
      * Strategy:
-     *  1. Send GET_LICENSE_STATUS message to the service worker.
-     *  2. If messaging fails (e.g. service worker not available),
-     *     fall back to reading chrome.storage.local directly.
+     *  1. Send CHECK_TRIAL_AND_LICENSE message to the service worker.
+     *     This returns { success, data: { effectivelyPro, trial, license } }
+     *     and considers an active trial as pro-equivalent.
+     *  2. If that fails, fall back to GET_LICENSE_STATUS message.
+     *  3. If messaging fails entirely, fall back to chrome.storage.local.
      *
      * @returns {Promise<Object>} - { tier: 'free'|'pro', expiresAt: number|null }
      */
@@ -323,8 +325,41 @@
             }
 
             try {
+                // First try CHECK_TRIAL_AND_LICENSE which includes trial awareness
+                chrome.runtime.sendMessage({ action: 'CHECK_TRIAL_AND_LICENSE' }, function (response) {
+                    if (chrome.runtime.lastError || !response || !response.success) {
+                        // Fall back to GET_LICENSE_STATUS
+                        _getLicenseStatusOnly().then(resolve);
+                        return;
+                    }
+
+                    var data = response.data;
+                    var isPro = !!(data && (data.effectivelyPro || (data.trial && data.trial.trialActive)));
+                    var tier = isPro ? 'pro' : ((data && data.license && data.license.tier) || 'free');
+                    var expiresAt = (data && data.license && data.license.expiresAt) || null;
+
+                    resolve({ tier: tier, expiresAt: expiresAt, trial: data.trial || null });
+                });
+            } catch (e) {
+                _fallbackLicenseCheck().then(resolve);
+            }
+        });
+    }
+
+    /**
+     * Send GET_LICENSE_STATUS message to the service worker.
+     * Used as a fallback when CHECK_TRIAL_AND_LICENSE is not available.
+     * @returns {Promise<Object>}
+     */
+    function _getLicenseStatusOnly() {
+        return new Promise(function (resolve) {
+            if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.sendMessage) {
+                _fallbackLicenseCheck().then(resolve);
+                return;
+            }
+
+            try {
                 chrome.runtime.sendMessage({ action: 'GET_LICENSE_STATUS' }, function (response) {
-                    // Handle messaging errors (e.g. no listener on the other side)
                     if (chrome.runtime.lastError || !response) {
                         _fallbackLicenseCheck().then(resolve);
                         return;

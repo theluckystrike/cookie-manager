@@ -1,0 +1,61 @@
+{
+    "version": 1,
+    "features": {
+        "cookie_view": {
+            "free": { "limit": -1, "period": "unlimited" },
+            "pro":  { "limit": -1, "period": "unlimited" }
+        },
+        "cookie_edit": {
+            "free": { "limit": 25, "period": "daily" },
+            "pro":  { "limit": -1, "period": "unlimited" }
+        },
+        "cookie_delete": {
+            "free": { "limit": 50, "period": "daily" },
+            "pro":  { "limit": -1, "period": "unlimited" }
+        },
+        "cookie_create": {
+            "free": { "limit": 10, "period": "daily" },
+            "pro":  { "limit": -1, "period": "unlimited" }
+        },
+        "basic_export": {
+            "free": { "limit": 5, "period": "daily" },
+            "pro":  { "limit": -1, "period": "unlimited" }
+        },
+        "cookie_profiles": {
+            "free": { "limit": 2, "period": "total" },
+            "pro":  { "limit": -1, "period": "unlimited" }
+        },
+        "auto_delete_rules": {
+            "free": { "limit": 1, "period": "total" },
+            "pro":  { "limit": -1, "period": "unlimited" }
+        },
+        "jwt_decoder": {
+            "free": { "limit": -1, "period": "unlimited" },
+            "pro":  { "limit": -1, "period": "unlimited" }
+        },
+        "advanced_export": {
+            "free": { "limit": 0, "period": "daily" },
+            "pro":  { "limit": -1, "period": "unlimited" }
+        },
+        "unlimited_profiles": {
+            "free": { "limit": 0, "period": "daily" },
+            "pro":  { "limit": -1, "period": "unlimited" }
+        },
+        "unlimited_rules": {
+            "free": { "limit": 0, "period": "daily" },
+            "pro":  { "limit": -1, "period": "unlimited" }
+        },
+        "health_dashboard": {
+            "free": { "limit": 0, "period": "daily" },
+            "pro":  { "limit": -1, "period": "unlimited" }
+        },
+        "bulk_operations": {
+            "free": { "limit": 0, "period": "daily" },
+            "pro":  { "limit": -1, "period": "unlimited" }
+        },
+        "import_cookies": {
+            "free": { "limit": 0, "period": "daily" },
+            "pro":  { "limit": -1, "period": "unlimited" }
+        }
+    }
+}

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="dashboardPageTitle">Cookie Manager - Value Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <div id="dashboard-app">
+
+        <!-- Header -->
+        <header class="dashboard-header" role="banner">
+            <div class="header-left">
+                <img src="../../assets/icons/icon-48.png" alt="Cookie Manager" class="header-logo" width="36" height="36">
+                <div class="header-text">
+                    <h1 class="header-title" data-i18n="extName">Cookie Manager</h1>
+                    <span class="header-subtitle" data-i18n="dashboardSubtitle">Value Dashboard</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="tier-badge" id="tierBadge" data-i18n="badgeFree">FREE</span>
+                <span class="member-since" id="memberSince" data-i18n="dashboardMemberSince">Member since --</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard-main" role="main">
+
+            <!-- Value Summary Cards -->
+            <section class="value-cards" data-i18n-aria="ariaDashboardValueSummary" aria-label="Value summary">
+                <div class="value-card" id="cardTimeSaved">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-value" id="timeSavedValue">--</span>
+                        <span class="card-label" data-i18n="dashboardTimeSaved">Time Saved This Week</span>
+                    </div>
+                </div>
+
+                <div class="value-card" id="cardActionsToday">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-value" id="actionsTodayValue">0</span>
+                        <span class="card-label" data-i18n="dashboardActionsToday">Actions Today</span>
+                    </div>
+                </div>
+
+                <div class="value-card" id="cardTotalActions">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-value" id="totalActionsValue">0</span>
+                        <span class="card-label" data-i18n="dashboardTotalManaged">Total Cookies Managed</span>
+                    </div>
+                </div>
+
+                <div class="value-card" id="cardFeaturesUsed">
+                    <div class="card-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-value" id="featuresUsedValue">0</span>
+                        <span class="card-label" data-i18n="dashboardFeaturesUsed">Features Used</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Weekly Activity Chart -->
+            <section class="dashboard-section" data-i18n-aria="ariaDashboardWeeklyActivity" aria-label="Weekly activity">
+                <h2 class="section-title" data-i18n="dashboardWeeklyActivity">Weekly Activity</h2>
+                <p class="section-description" data-i18n="dashboardWeeklyDesc">Cookies managed over the last 7 days</p>
+                <div class="chart-container" id="weeklyChart">
+                    <div class="chart-bars" id="chartBars">
+                        <!-- Bars are rendered by dashboard.js -->
+                    </div>
+                    <div class="chart-labels" id="chartLabels">
+                        <!-- Day labels rendered by dashboard.js -->
+                    </div>
+                    <div class="chart-empty" id="chartEmpty" hidden>
+                        <p data-i18n="dashboardChartEmpty">No activity recorded yet. Start managing cookies to see your weekly chart.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Feature Usage Breakdown -->
+            <section class="dashboard-section" data-i18n-aria="ariaDashboardFeatureBreakdown" aria-label="Feature usage breakdown">
+                <h2 class="section-title" data-i18n="dashboardFeatureBreakdown">Feature Usage Breakdown</h2>
+                <p class="section-description" data-i18n="dashboardFeatureDesc">How you use Cookie Manager</p>
+                <div class="feature-breakdown" id="featureBreakdown">
+                    <!-- Feature rows rendered by dashboard.js -->
+                    <div class="breakdown-empty" id="breakdownEmpty" hidden>
+                        <p data-i18n="dashboardBreakdownEmpty">No feature usage data yet. Use Cookie Manager features to see your breakdown.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Motivational Value Statement -->
+            <section class="value-statement" id="valueStatement" data-i18n-aria="ariaDashboardValueStatement" aria-label="Value statement">
+                <div class="statement-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                        <path d="M2 17l10 5 10-5"></path>
+                        <path d="M2 12l10 5 10-5"></path>
+                    </svg>
+                </div>
+                <p class="statement-text" id="statementText" data-i18n="dashboardValueStatement">
+                    Start using Cookie Manager to see your personalized value summary.
+                </p>
+            </section>
+
+            <!-- Upgrade CTA (free users only) -->
+            <section class="upgrade-cta" id="upgradeCTA" hidden data-i18n-aria="ariaDashboardUpgrade" aria-label="Upgrade to Pro">
+                <div class="cta-content">
+                    <h2 class="cta-title" data-i18n="dashboardCtaTitle">Unlock More with Cookie Manager Pro</h2>
+                    <p class="cta-description" id="ctaDescription" data-i18n="dashboardCtaDesc">
+                        You are using <strong id="ctaFreePercent">--</strong> of available features.
+                        Upgrade to Pro to unlock the full power of Cookie Manager.
+                    </p>
+                    <ul class="cta-features" id="ctaFeaturesList">
+                        <!-- Pro features listed by dashboard.js -->
+                    </ul>
+                    <button class="btn btn-cta" id="ctaUpgradeBtn" type="button" data-i18n="dashboardUpgradeBtn">Upgrade to Pro</button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer" role="contentinfo">
+            <div class="footer-actions">
+                <button class="footer-link" id="resetStatsBtn" type="button" data-i18n="dashboardResetStats">Reset Stats</button>
+                <span class="footer-divider" aria-hidden="true">|</span>
+                <button class="footer-link" id="exportStatsBtn" type="button" data-i18n="dashboardExportStats">Export Stats</button>
+            </div>
+            <div class="footer-brand">
+                <span data-i18n="dashboardFooterBrand">Cookie Manager by </span>
+                <a href="https://www.zovo.one" target="_blank" rel="noopener" class="footer-brand-link">zovo.one</a>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="../utils/i18n-loader.js"></script>
+    <script src="../utils/i18n-helpers.js"></script>
+    <script src="../features/feature-registry.js"></script>
+    <script src="../features/usage-tracker.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>

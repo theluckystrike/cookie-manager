@@ -8,9 +8,9 @@ const ZOVO_CATALOG = [
         id: 'tab-suspender-pro',
         name: 'Tab Suspender Pro',
         tagline: 'Save memory, suspend inactive tabs',
-        icon: 'https://zovo.one/icons/tab-suspender.png',
+        icon: 'https://www.zovo.one/icons/tab-suspender.png',
         storeUrl: 'https://chrome.google.com/webstore/detail/tab-suspender-pro',
-        zovoUrl: 'https://zovo.one/extensions/tab-suspender-pro',
+        zovoUrl: 'https://www.zovo.one/extensions/tab-suspender-pro',
         category: 'productivity',
         featured: true
     },
@@ -18,9 +18,9 @@ const ZOVO_CATALOG = [
         id: 'clipboard-history-pro',
         name: 'Clipboard History Pro',
         tagline: 'Never lose copied text again',
-        icon: 'https://zovo.one/icons/clipboard.png',
+        icon: 'https://www.zovo.one/icons/clipboard.png',
         storeUrl: 'https://chrome.google.com/webstore/detail/clipboard-history-pro',
-        zovoUrl: 'https://zovo.one/extensions/clipboard-history-pro',
+        zovoUrl: 'https://www.zovo.one/extensions/clipboard-history-pro',
         category: 'productivity',
         featured: true
     },
@@ -28,9 +28,9 @@ const ZOVO_CATALOG = [
         id: 'cookie-manager',
         name: 'Cookie Manager',
         tagline: 'View, edit, export cookies',
-        icon: 'https://zovo.one/icons/cookie-manager.png',
+        icon: 'https://www.zovo.one/icons/cookie-manager.png',
         storeUrl: 'https://chrome.google.com/webstore/detail/cookie-manager',
-        zovoUrl: 'https://zovo.one/extensions/cookie-manager',
+        zovoUrl: 'https://www.zovo.one/extensions/cookie-manager',
         category: 'developer',
         featured: true
     },
@@ -38,9 +38,9 @@ const ZOVO_CATALOG = [
         id: 'json-formatter-pro',
         name: 'JSON Formatter Pro',
         tagline: 'Format and validate JSON',
-        icon: 'https://zovo.one/icons/json-formatter.png',
+        icon: 'https://www.zovo.one/icons/json-formatter.png',
         storeUrl: 'https://chrome.google.com/webstore/detail/json-formatter-pro',
-        zovoUrl: 'https://zovo.one/extensions/json-formatter-pro',
+        zovoUrl: 'https://www.zovo.one/extensions/json-formatter-pro',
         category: 'developer',
         featured: true
     },
@@ -48,9 +48,9 @@ const ZOVO_CATALOG = [
         id: 'form-filler-pro',
         name: 'Form Filler Pro',
         tagline: 'Auto-fill forms with custom profiles',
-        icon: 'https://zovo.one/icons/form-filler.png',
+        icon: 'https://www.zovo.one/icons/form-filler.png',
         storeUrl: 'https://chrome.google.com/webstore/detail/form-filler-pro',
-        zovoUrl: 'https://zovo.one/extensions/form-filler-pro',
+        zovoUrl: 'https://www.zovo.one/extensions/form-filler-pro',
         category: 'productivity',
         featured: true
     },
@@ -58,9 +58,9 @@ const ZOVO_CATALOG = [
         id: 'api-testing-lite',
         name: 'API Testing Lite',
         tagline: 'Lightweight REST API testing',
-        icon: 'https://zovo.one/icons/api-testing.png',
+        icon: 'https://www.zovo.one/icons/api-testing.png',
         storeUrl: 'https://chrome.google.com/webstore/detail/api-testing-lite',
-        zovoUrl: 'https://zovo.one/extensions/api-testing-lite',
+        zovoUrl: 'https://www.zovo.one/extensions/api-testing-lite',
         category: 'developer',
         featured: true
     }
@@ -94,7 +94,7 @@ function getExtension(extensionId) {
  * Generate referral URL
  */
 function getReferralUrl(extensionId, source = 'cross_promo') {
-    return `https://zovo.one?ref=${extensionId}&source=${source}`;
+    return `https://www.zovo.one?ref=${extensionId}&source=${source}`;
 }
 
 // Export for use

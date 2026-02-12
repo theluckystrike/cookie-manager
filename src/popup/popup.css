@@ -1,6 +1,6 @@
 /* ==========================================================================
    Cookie Manager - Popup Styles
-   Brand: Zovo (https://zovo.one/brand)
+   Brand: Zovo (https://www.zovo.one/brand)
    ========================================================================== */
 
 /* ---------- CSS Variables (Zovo Brand Kit) ---------- */
@@ -176,6 +176,29 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.brand-url {
+    text-decoration: none;
+    color: var(--text-secondary);
+    transition: color 0.15s ease;
+}
+
+.brand-url:hover {
+    color: var(--primary);
+}
+
+.current-domain-badge {
+    font-size: 11px;
+    color: var(--text-secondary);
+    background: var(--bg-secondary, #F3F4F6);
+    padding: 1px 6px;
+    border-radius: 4px;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .header-actions {
@@ -2412,4 +2435,81 @@ a:focus-visible {
     .feature-locked::after {
         background: linear-gradient(135deg, #8B5CF6, #7C3AED);
     }
+}
+
+/* ============================================================================
+   Feature Gating Styles (Phase 05)
+   ============================================================================ */
+
+.tier-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.tier-free {
+    background: var(--bg-secondary, #F3F4F6);
+    color: var(--text-secondary, #6B7280);
+    border: 1px solid var(--border-color, #E5E7EB);
+}
+.tier-pro {
+    background: #F59E0B;
+    color: #fff;
+}
+.feature-locked:hover {
+    opacity: 0.85;
+}
+.lock-icon {
+    font-size: 12px;
+    margin-right: 4px;
+}
+.usage-counter {
+    display: block;
+    font-size: 11px;
+    color: var(--text-secondary, #6B7280);
+    margin-top: 2px;
+}
+.usage-counter.usage-low {
+    color: var(--warning, #F59E0B);
+}
+.usage-counter.usage-depleted {
+    color: var(--danger, #EF4444);
+    font-weight: 600;
+}
+.upgrade-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, #EEF2FF, #FEF3C7);
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-top: 12px;
+    font-size: 13px;
+}
+.upgrade-banner span {
+    color: var(--text-secondary, #6B7280);
+}
+.upgrade-link {
+    color: var(--primary, #7C3AED);
+    font-weight: 600;
+    text-decoration: none;
+}
+.upgrade-link:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Enter License Key Link (Phase 08) ---------- */
+.enter-license-link {
+    font-size: 11px;
+    color: var(--primary, #7C3AED);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.15s;
+}
+.enter-license-link:hover {
+    text-decoration: underline;
+    color: var(--primary-hover, #6D28D9);
 }

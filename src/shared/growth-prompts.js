@@ -11,7 +11,7 @@
     var REVIEW_KEY = '_reviewPromptState';
     var DISMISSED_KEY = '_sharePromptsDismissed';
     var CWS_BASE = 'https://chrome.google.com/webstore/detail/cookie-manager';
-    var SHARE_URL = 'https://zovo.one/cookie-manager';
+    var SHARE_URL = 'https://www.zovo.one/cookie-manager';
 
     var PROMPT_CONFIGS = {
         POWER_EDITOR:  { minEdits: 25, type: 'review',  message: "You're a power user! Mind leaving a review?" },

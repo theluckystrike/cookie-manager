@@ -134,7 +134,7 @@ class TierManager {
     }
 
     getUpgradeUrl() {
-        return 'https://zovo.one/pro?ref=cookie-manager';
+        return 'https://www.zovo.one/pro?ref=cookie-manager';
     }
 
     getPricing() {

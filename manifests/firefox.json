@@ -5,7 +5,7 @@
   "description": "__MSG_extensionDescription__",
   "default_locale": "en",
   "author": "Michael Ip",
-  "homepage_url": "https://zovo.one",
+  "homepage_url": "https://www.zovo.one",
   "browser_specific_settings": {
     "gecko": {
       "id": "cookie-manager@zovo.one",

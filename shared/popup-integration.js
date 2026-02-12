@@ -83,7 +83,7 @@ class ZovoPopupIntegration {
             actionBtn.addEventListener('click', async () => {
                 const action = actionBtn.dataset.action;
                 if (action === 'copy_share_link') {
-                    const shareUrl = `https://zovo.one/extensions/${this.extensionId}?ref=share`;
+                    const shareUrl = `https://www.zovo.one/extensions/${this.extensionId}?ref=share`;
                     await navigator.clipboard.writeText(shareUrl);
                     actionBtn.textContent = 'Copied!';
                     setTimeout(() => {
@@ -101,7 +101,7 @@ class ZovoPopupIntegration {
         const footer = document.createElement('footer');
         footer.className = 'zovo-footer';
         footer.innerHTML = `
-            <a href="https://zovo.one?ref=${this.extensionId}&source=footer" target="_blank" class="zovo-footer-link">
+            <a href="https://www.zovo.one?ref=${this.extensionId}&source=footer" target="_blank" class="zovo-footer-link">
                 <span>Part of</span>
                 <strong class="zovo-footer-brand">Zovo</strong>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -130,7 +130,7 @@ class ZovoPopupIntegration {
                     <div class="zovo-more-membership-badge">★ PRO MEMBER</div>
                     <h4>Get all Zovo extensions</h4>
                     <p>$4.99/mo or $199 lifetime</p>
-                    <a href="https://zovo.one?ref=${this.extensionId}&source=more_panel" 
+                    <a href="https://www.zovo.one?ref=${this.extensionId}&source=more_panel" 
                        target="_blank" 
                        class="zovo-btn zovo-btn-primary zovo-btn-sm zovo-btn-block" style="background: white; color: #7C3AED;">
                         Join Zovo
