@@ -90,8 +90,9 @@ const ProfilesManager = {
     // ========================================================================
 
     async saveCurrentCookies() {
-        // Check free tier limit
-        if (this._profiles.length >= this.FREE_TIER_MAX) {
+        // Check free tier limit (pro users bypass)
+        var isPro = typeof LicenseManager !== 'undefined' && typeof LicenseManager.isPro === 'function' && await LicenseManager.isPro();
+        if (!isPro && this._profiles.length >= this.FREE_TIER_MAX) {
             this._showToast('Upgrade to Pro for unlimited profiles', 'error');
             return;
         }

@@ -329,7 +329,8 @@
                         _fallbackLicenseCheck().then(resolve);
                         return;
                     }
-                    resolve(response);
+                    // Unwrap { success, data } envelope from service worker
+                    resolve((response && response.data) ? response.data : response);
                 });
             } catch (e) {
                 _fallbackLicenseCheck().then(resolve);
@@ -344,12 +345,12 @@
     function _fallbackLicenseCheck() {
         return new Promise(function (resolve) {
             if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
-                chrome.storage.local.get({ licenseStatus: null }, function (result) {
-                    if (chrome.runtime.lastError || !result.licenseStatus) {
+                chrome.storage.local.get({ licenseData: null }, function (result) {
+                    if (chrome.runtime.lastError || !result.licenseData) {
                         resolve({ tier: 'free', expiresAt: null });
                         return;
                     }
-                    var status = result.licenseStatus;
+                    var status = result.licenseData;
                     // Validate expiry
                     if (status.tier === 'pro' && status.expiresAt && status.expiresAt < Date.now()) {
                         resolve({ tier: 'free', expiresAt: null });

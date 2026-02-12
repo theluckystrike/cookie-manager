@@ -1312,7 +1312,6 @@ function showRetentionBanner(trigger) {
     }
 
     // Dismiss handler
-    var dismissBtn = banner.querySelector('.retention-dismiss');
     if (dismissBtn) {
         dismissBtn.addEventListener('click', function() {
             banner.remove();
@@ -1427,12 +1426,8 @@ function updateManageLink(status) {
         if (!link._subListenerAttached) {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
-                if (typeof Paywall !== 'undefined' && Paywall.showManage) {
-                    Paywall.showManage();
-                } else {
-                    // Fallback: open subscription management via background
-                    chrome.runtime.sendMessage({ action: 'OPEN_MANAGE_SUBSCRIPTION' }).catch(function() {});
-                }
+                // Open subscription management page
+                chrome.tabs.create({ url: 'https://api.zovo.dev/manage' });
             });
             link._subListenerAttached = true;
         }
@@ -1492,14 +1487,16 @@ async function initSubscriptionUI() {
 
     // Fetch license status from background
     try {
-        licenseStatus = await chrome.runtime.sendMessage({ action: 'GET_LICENSE_STATUS' });
+        var licenseResponse = await chrome.runtime.sendMessage({ action: 'GET_LICENSE_STATUS' });
+        licenseStatus = (licenseResponse && licenseResponse.data) ? licenseResponse.data : licenseResponse;
     } catch (e) {
         console.debug('[Popup] Could not fetch license status:', e.message);
     }
 
     // Fetch trial status from background
     try {
-        trialStatus = await chrome.runtime.sendMessage({ action: 'GET_TRIAL_STATUS' });
+        var trialResponse = await chrome.runtime.sendMessage({ action: 'GET_TRIAL_STATUS' });
+        trialStatus = (trialResponse && trialResponse.data) ? trialResponse.data : trialResponse;
     } catch (e) {
         console.debug('[Popup] Could not fetch trial status:', e.message);
     }
@@ -1513,22 +1510,19 @@ async function initSubscriptionUI() {
 
     if (licenseStatus) {
         status.tier = licenseStatus.tier || licenseStatus.plan || 'free';
-        if (licenseStatus.isTrialing) {
-            status.isTrialing = true;
-        }
-        if (typeof licenseStatus.trialDaysLeft === 'number') {
-            status.trialDaysLeft = licenseStatus.trialDaysLeft;
+        if (licenseStatus.isPro && status.tier === 'free') {
+            status.tier = 'pro';
         }
     }
 
     if (trialStatus) {
-        if (trialStatus.isActive || trialStatus.isTrialing) {
+        if (trialStatus.trialActive || trialStatus.isActive || trialStatus.isTrialing) {
             status.isTrialing = true;
         }
-        if (typeof trialStatus.daysLeft === 'number') {
-            status.trialDaysLeft = trialStatus.daysLeft;
-        } else if (typeof trialStatus.trialDaysLeft === 'number') {
+        if (typeof trialStatus.trialDaysLeft === 'number') {
             status.trialDaysLeft = trialStatus.trialDaysLeft;
+        } else if (typeof trialStatus.daysLeft === 'number') {
+            status.trialDaysLeft = trialStatus.daysLeft;
         }
     }
 
@@ -1558,7 +1552,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Store popup load time
         chrome.storage.local.get({ popupLoadTimes: [] }).then((result) => {
             const times = result.popupLoadTimes;
-            times.push({ time: loadTime, timestamp: Date.now() });
+            times.push({ durationMs: loadTime, timestamp: Date.now() });
             if (times.length > 20) times.shift();
             chrome.storage.local.set({ popupLoadTimes: times }).catch(() => {});
         }).catch(() => {});

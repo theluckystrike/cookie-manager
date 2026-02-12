@@ -368,8 +368,9 @@ var RulesManager = (function() {
             return;
         }
 
-        // Enforce free-tier limit when creating new
-        if (!_editingRuleId && _rules.length >= RULES_FREE_LIMIT) {
+        // Enforce free-tier limit when creating new (pro users bypass)
+        var isPro = typeof LicenseManager !== 'undefined' && typeof LicenseManager.isPro === 'function' && await LicenseManager.isPro();
+        if (!isPro && !_editingRuleId && _rules.length >= RULES_FREE_LIMIT) {
             _toast('Free plan allows 1 rule. Upgrade for more.', 'error');
             return;
         }

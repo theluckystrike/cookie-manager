@@ -334,8 +334,8 @@
                         return;
                     }
 
-                    if (response && response.success) {
-                        // License activated
+                    if (response && response.success && response.data && response.data.valid) {
+                        // License activated and verified valid
                         dismiss(overlay);
                         // Reload page to reflect new state
                         if (typeof window !== 'undefined' && window.location) {
