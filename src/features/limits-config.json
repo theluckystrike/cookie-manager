@@ -30,7 +30,7 @@
             "pro":  { "limit": -1, "period": "unlimited" }
         },
         "jwt_decoder": {
-            "free": { "limit": -1, "period": "unlimited" },
+            "free": { "limit": 0, "period": "unlimited" },
             "pro":  { "limit": -1, "period": "unlimited" }
         },
         "advanced_export": {

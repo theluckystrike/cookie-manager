@@ -23,7 +23,6 @@
         'basic_export',
         'cookie_profiles',
         'auto_delete_rules',
-        'jwt_decoder',
         'search_cookies'
     ];
 
@@ -32,6 +31,7 @@
         'unlimited_profiles',
         'unlimited_rules',
         'health_dashboard',
+        'jwt_decoder',
         'bulk_operations',
         'import_cookies'
     ]);

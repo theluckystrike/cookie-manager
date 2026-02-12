@@ -125,7 +125,7 @@
             id:          'jwt_decoder',
             name:        'JWT Decoder',
             description: 'Decode JWT cookie values',
-            tier:        TIERS.FREE,
+            tier:        TIERS.PRO,
             category:    CATEGORIES.ANALYSIS,
             limit:       null,
             icon:        'icon-jwt'

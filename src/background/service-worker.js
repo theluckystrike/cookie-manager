@@ -1625,6 +1625,24 @@ chrome.runtime.onStartup.addListener(async () => {
     } catch (e) {
         debugLog('warn', 'AutoDelete', 'Failed to restore auto-delete alarm on startup', e.message);
     }
+
+    // Restore trialDailyCheck alarm if trial is still active (guards against alarm loss on browser update)
+    if (typeof TrialManager !== 'undefined') {
+        try {
+            var trialData = await TrialManager.getTrialData();
+            if (trialData && !trialData.expired && !trialData.convertedToPaid && Date.now() < trialData.expiresAtMs) {
+                chrome.alarms.get(TrialManager.CONFIG.alarmName, function (existing) {
+                    void chrome.runtime.lastError;
+                    if (!existing) {
+                        chrome.alarms.create(TrialManager.CONFIG.alarmName, { periodInMinutes: TrialManager.CONFIG.alarmPeriodMinutes });
+                        debugLog('info', 'Trial', 'Restored trialDailyCheck alarm on startup');
+                    }
+                });
+            }
+        } catch (e) {
+            debugLog('warn', 'Trial', 'Failed to restore trial alarm on startup', e.message);
+        }
+    }
 });
 
 // ============================================================================

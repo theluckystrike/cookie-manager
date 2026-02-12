@@ -90,11 +90,28 @@ const ProfilesManager = {
     // ========================================================================
 
     async saveCurrentCookies() {
-        // Check free tier limit (pro users bypass)
-        var isPro = typeof LicenseManager !== 'undefined' && typeof LicenseManager.isPro === 'function' && await LicenseManager.isPro();
-        if (!isPro && this._profiles.length >= this.FREE_TIER_MAX) {
-            this._showToast(chrome.i18n.getMessage('errUpgradeForProfiles') || 'Upgrade to Pro for unlimited profiles', 'error');
-            return;
+        var self = this;
+
+        // Use FeatureGate if available (handles license + trial + free limits)
+        if (typeof FeatureGate !== 'undefined' && typeof FeatureGate.gateFeature === 'function') {
+            // For profiles, check if we're at the free limit by using isAvailable
+            var available = await FeatureGate.isAvailable('cookie_profiles');
+            if (!available) {
+                // At limit and not pro/trial -- show paywall
+                if (typeof Paywall !== 'undefined' && typeof Paywall.show === 'function') {
+                    Paywall.show(FeatureGate.formatFeatureName('cookie_profiles'));
+                } else {
+                    self._showToast(chrome.i18n.getMessage('errUpgradeForProfiles') || 'Upgrade to Pro for unlimited profiles', 'error');
+                }
+                return;
+            }
+        } else {
+            // Fallback: manual check if FeatureGate not loaded
+            var isPro = typeof LicenseManager !== 'undefined' && typeof LicenseManager.isPro === 'function' && await LicenseManager.isPro();
+            if (!isPro && this._profiles.length >= this.FREE_TIER_MAX) {
+                this._showToast(chrome.i18n.getMessage('errUpgradeForProfiles') || 'Upgrade to Pro for unlimited profiles', 'error');
+                return;
+            }
         }
 
         if (!this._currentDomain || !this._currentTabUrl) {
@@ -112,7 +129,7 @@ const ProfilesManager = {
                 chrome.i18n.getMessage('confirmOverwriteProfileTitle') || 'Overwrite Profile?',
                 chrome.i18n.getMessage('confirmOverwriteProfileMsg', [name]) || 'A profile named "' + name + '" already exists. Overwrite it?',
                 async () => {
-                    await this._doSave(name);
+                    await self._doSave(name);
                 }
             );
             return;
@@ -285,9 +302,15 @@ const ProfilesManager = {
 
         if (!listEl || !emptyEl) return;
 
-        // Update save button / lock state (pro users bypass limit)
-        var isPro = typeof LicenseManager !== 'undefined' && typeof LicenseManager.isPro === 'function' && await LicenseManager.isPro();
-        const atLimit = !isPro && this._profiles.length >= this.FREE_TIER_MAX;
+        // Update save button / lock state using FeatureGate (license + trial aware)
+        var atLimit;
+        if (typeof FeatureGate !== 'undefined' && typeof FeatureGate.isAvailable === 'function') {
+            var available = await FeatureGate.isAvailable('cookie_profiles');
+            atLimit = !available;
+        } else {
+            var isPro = typeof LicenseManager !== 'undefined' && typeof LicenseManager.isPro === 'function' && await LicenseManager.isPro();
+            atLimit = !isPro && this._profiles.length >= this.FREE_TIER_MAX;
+        }
         if (saveBtn) {
             if (atLimit) {
                 saveBtn.classList.add('profiles-save-btn-locked');

@@ -488,9 +488,12 @@
 
     /**
      * Dismiss the paywall modal with animation.
-     * @param {HTMLElement} overlay
+     * @param {HTMLElement} [overlay] - The overlay element; auto-detected if omitted
      */
     function dismiss(overlay) {
+        if (!overlay) {
+            overlay = document.querySelector('.paywall-overlay');
+        }
         if (!overlay) return;
 
         // Remove escape key listener

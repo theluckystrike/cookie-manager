@@ -178,9 +178,15 @@ var RulesManager = (function() {
     async function _render() {
         if (!_els.list) return;
 
-        // Pro users bypass the free-tier limit
-        var isPro = typeof LicenseManager !== 'undefined' && typeof LicenseManager.isPro === 'function' && await LicenseManager.isPro();
-        var atLimit = !isPro && _rules.length >= RULES_FREE_LIMIT;
+        // Use FeatureGate to check limit (license + trial aware)
+        var atLimit;
+        if (typeof FeatureGate !== 'undefined' && typeof FeatureGate.isAvailable === 'function') {
+            var available = await FeatureGate.isAvailable('auto_delete_rules');
+            atLimit = !available;
+        } else {
+            var isPro = typeof LicenseManager !== 'undefined' && typeof LicenseManager.isPro === 'function' && await LicenseManager.isPro();
+            atLimit = !isPro && _rules.length >= RULES_FREE_LIMIT;
+        }
 
         // Show/hide add button vs limit banner
         if (_els.addBtn) _els.addBtn.hidden = atLimit;
@@ -370,11 +376,23 @@ var RulesManager = (function() {
             return;
         }
 
-        // Enforce free-tier limit when creating new (pro users bypass)
-        var isPro = typeof LicenseManager !== 'undefined' && typeof LicenseManager.isPro === 'function' && await LicenseManager.isPro();
-        if (!isPro && !_editingRuleId && _rules.length >= RULES_FREE_LIMIT) {
-            _toast(chrome.i18n.getMessage('errFreeRuleLimit') || 'Free plan allows 1 rule. Upgrade for more.', 'error');
-            return;
+        // Enforce free-tier limit when creating new (uses FeatureGate for license + trial awareness)
+        if (!_editingRuleId) {
+            var canCreate;
+            if (typeof FeatureGate !== 'undefined' && typeof FeatureGate.isAvailable === 'function') {
+                canCreate = await FeatureGate.isAvailable('auto_delete_rules');
+            } else {
+                var isPro = typeof LicenseManager !== 'undefined' && typeof LicenseManager.isPro === 'function' && await LicenseManager.isPro();
+                canCreate = isPro || _rules.length < RULES_FREE_LIMIT;
+            }
+            if (!canCreate) {
+                if (typeof Paywall !== 'undefined' && typeof Paywall.show === 'function') {
+                    Paywall.show(typeof FeatureGate !== 'undefined' && FeatureGate.formatFeatureName ? FeatureGate.formatFeatureName('auto_delete_rules') : 'Auto Delete Rules');
+                } else {
+                    _toast(chrome.i18n.getMessage('errFreeRuleLimit') || 'Free plan allows 1 rule. Upgrade for more.', 'error');
+                }
+                return;
+            }
         }
 
         var ruleData = {

@@ -27,7 +27,7 @@
         'auto_delete_rules':  'free',
         'unlimited_rules':    'pro',
         'health_dashboard':   'pro',
-        'jwt_decoder':        'free',
+        'jwt_decoder':        'pro',
         'bulk_operations':    'pro',
         'import_cookies':     'pro'
     };
@@ -368,7 +368,33 @@
                         return;
                     }
                     // Unwrap { success, data } envelope from service worker
-                    resolve((response && response.data) ? response.data : response);
+                    var data = (response && response.data) ? response.data : response;
+                    var isPaidPro = data && (data.isPro || data.tier === 'pro' || data.tier === 'lifetime');
+
+                    if (isPaidPro) {
+                        resolve(data);
+                        return;
+                    }
+
+                    // License says free -- also check trial status so trial users
+                    // are correctly treated as "effectively pro"
+                    try {
+                        chrome.runtime.sendMessage({ action: 'GET_TRIAL_STATUS' }, function (trialResponse) {
+                            if (chrome.runtime.lastError) {
+                                resolve(data || { tier: 'free', expiresAt: null });
+                                return;
+                            }
+                            var trialData = (trialResponse && trialResponse.data) ? trialResponse.data : trialResponse;
+                            var trialActive = trialData && (trialData.trialActive || trialData.isActive);
+                            if (trialActive) {
+                                resolve({ tier: 'pro', expiresAt: (data && data.expiresAt) || null, trial: trialData });
+                            } else {
+                                resolve(data || { tier: 'free', expiresAt: null });
+                            }
+                        });
+                    } catch (trialErr) {
+                        resolve(data || { tier: 'free', expiresAt: null });
+                    }
                 });
             } catch (e) {
                 _fallbackLicenseCheck().then(resolve);
@@ -383,18 +409,33 @@
     function _fallbackLicenseCheck() {
         return new Promise(function (resolve) {
             if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
-                chrome.storage.local.get({ licenseData: null }, function (result) {
-                    if (chrome.runtime.lastError || !result.licenseData) {
+                chrome.storage.local.get({ licenseData: null, trialData: null }, function (result) {
+                    if (chrome.runtime.lastError) {
                         resolve({ tier: 'free', expiresAt: null });
                         return;
                     }
                     var status = result.licenseData;
-                    // Validate expiry
-                    if (status.tier === 'pro' && status.expiresAt && status.expiresAt < Date.now()) {
-                        resolve({ tier: 'free', expiresAt: null });
-                        return;
+                    // Check paid license first
+                    if (status) {
+                        // Validate expiry
+                        if (status.tier === 'pro' && status.expiresAt && status.expiresAt < Date.now()) {
+                            // Expired -- fall through to trial check
+                        } else if (status.tier === 'pro' || status.tier === 'lifetime') {
+                            resolve(status);
+                            return;
+                        }
                     }
-                    resolve(status);
+                    // Check trial status from storage
+                    var trial = result.trialData;
+                    if (trial && (trial.trialActive || trial.isActive)) {
+                        // Verify trial hasn't expired
+                        var trialEnd = trial.trialEndDate || trial.endDate;
+                        if (trialEnd && new Date(trialEnd).getTime() > Date.now()) {
+                            resolve({ tier: 'pro', expiresAt: null, trial: trial });
+                            return;
+                        }
+                    }
+                    resolve({ tier: 'free', expiresAt: null });
                 });
             } else {
                 resolve({ tier: 'free', expiresAt: null });

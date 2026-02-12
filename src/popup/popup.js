@@ -220,8 +220,25 @@ function switchTab(tabName) {
         RulesManager.init();
     }
     if (tabName === 'health' && typeof HealthManager !== 'undefined') {
-        HealthManager.init();
-        HealthManager.onShow();
+        // Gate health dashboard behind pro/trial check
+        if (typeof FeatureGate !== 'undefined' && typeof FeatureGate.gateFeature === 'function') {
+            FeatureGate.gateFeature('health_dashboard', function () {
+                HealthManager.init();
+                HealthManager.onShow();
+            }, {
+                onBlocked: function () {
+                    // Show paywall when free user tries to access health tab
+                    if (typeof Paywall !== 'undefined' && typeof Paywall.show === 'function') {
+                        Paywall.show(FeatureGate.formatFeatureName('health_dashboard'));
+                    }
+                    // Switch back to cookies tab
+                    switchTab('cookies');
+                }
+            });
+        } else {
+            HealthManager.init();
+            HealthManager.onShow();
+        }
     }
 
     // Persist active tab
@@ -237,7 +254,16 @@ function switchTab(tabName) {
 async function restoreActiveTab() {
     try {
         const result = await chrome.storage.local.get({ activePopupTab: 'cookies' });
-        const savedTab = result.activePopupTab;
+        var savedTab = result.activePopupTab;
+
+        // If saved tab is a gated feature, verify access before restoring
+        if (savedTab === 'health' && typeof FeatureGate !== 'undefined' && typeof FeatureGate.isAvailable === 'function') {
+            var available = await FeatureGate.isAvailable('health_dashboard');
+            if (!available) {
+                savedTab = 'cookies'; // Fall back to cookies tab for free users
+            }
+        }
+
         if (TAB_IDS.includes(savedTab)) {
             switchTab(savedTab);
         }
@@ -716,6 +742,17 @@ async function deleteCookie() {
 // ============================================================================
 
 function showJwtDecoder() {
+    // Gate JWT decoder behind pro/trial check
+    if (typeof FeatureGate !== 'undefined' && typeof FeatureGate.gateFeature === 'function') {
+        FeatureGate.gateFeature('jwt_decoder', function () {
+            _doShowJwtDecoder();
+        });
+        return;
+    }
+    _doShowJwtDecoder();
+}
+
+function _doShowJwtDecoder() {
     const decoded = JWT.decode(elements.cookieValue.value);
     if (!decoded) {
         showToast(chrome.i18n.getMessage('errInvalidJwt') || 'Invalid JWT token', 'error');
