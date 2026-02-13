@@ -845,7 +845,7 @@
         "description": "Tooltip shown when hovering over the extension icon in the browser toolbar."
     },
     "extDescription": {
-        "message": "シンプルで使いやすいCookie管理。Cookieの表示、編集、エクスポート、保護。",
+        "message": "Chrome用モダンCookieエディタ。プロファイル、自動削除、JWTデコード機能でCookieの表示・編集・エクスポート・管理が可能。",
         "description": "Extension description for Chrome Web Store listing. Max 132 chars."
     },
     "extName": {

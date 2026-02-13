@@ -4,8 +4,8 @@ CHROME WEB STORE LISTING
 Title:
 Cookie Manager Pro
 
-Short Description:
-Simple, clean cookie management. View, edit, export, and protect cookies.
+Short Description (132 char max):
+The modern cookie editor for Chrome. View, edit, export, and manage cookies with profiles, auto-delete, and JWT decoding.
 
 Category:
 Developer Tools
@@ -17,108 +17,174 @@ cookies, developer tools, privacy, cookie editor, cookie manager
 DETAILED DESCRIPTION
 ====================
 
-Take full control of your browser cookies with Cookie Manager Pro, a developer tool that works entirely offline and never collects your data.
+Cookie Manager Pro is a fast, private cookie editor for Chrome. View, edit, create, delete, and export cookies on any website with a clean interface built for developers, QA engineers, and anyone who needs reliable cookie management in their browser.
 
-Cookie Manager Pro gives you everything you need to inspect, edit, create, export, and organize cookies across every website you visit. Whether you debug authentication flows, test staging environments, or clean up tracking cookies, Cookie Manager Pro handles it faster than DevTools alone.
-
-
-CORE FEATURES (FREE)
-
-View every cookie on any site in a clean, organized popup. See names, values, domains, paths, expiry dates, and security flags at a glance.
-
-Edit any cookie field directly. Change the name, value, domain, path, expiration, SameSite attribute, Secure flag, or HttpOnly flag with a single click.
-
-Delete cookies one at a time or clear them all in bulk. Remove exactly what you want without digging through browser settings.
-
-Create new cookies from scratch. Set every attribute manually and add cookies to any domain instantly.
-
-Export cookies in JSON format. Save your cookie data for documentation, debugging, or sharing with teammates.
-
-Search and filter cookies by name, domain, or value. Find the exact cookie you need in seconds, even on sites with hundreds of cookies.
-
-Save up to 2 Cookie Profiles for free. Capture a full set of cookies for a specific environment and restore them later with one click. Switch between logged-in accounts, test different user roles, or reset to a known state without logging in again.
-
-Set up 1 Auto-Delete Rule for free. Schedule automatic cookie cleanup by domain or pattern. Keep your browser clean without remembering to do it yourself.
-
-Decode JWT tokens built right into the extension. Paste or select any JSON Web Token and instantly see the decoded header, payload, and signature. No need to open a separate website or tool.
-
-Dark mode follows your system preference automatically.
-
-Available in 6 languages: English, Spanish, French, German, Japanese, and Portuguese (Brazil).
+If you used EditThisCookie before it was removed from the Chrome Web Store, Cookie Manager Pro is the modern replacement. It covers everything EditThisCookie did and adds cookie profiles, automatic deletion rules, JWT token decoding, a cookie health dashboard, and export in multiple formats. If you are looking for an EditThisCookie alternative that is actively maintained and works with Manifest V3, this is it.
 
 
-PRO FEATURES
+VIEW AND SEARCH COOKIES
 
-Upgrade to Pro and unlock the full toolkit:
-
-Unlimited Cookie Profiles. Save as many environment snapshots as you need. Manage dozens of projects, clients, or test configurations without limits.
-
-Unlimited Auto-Delete Rules. Create cleanup rules for every domain and pattern that matters. Automate your cookie hygiene across your entire browsing session.
-
-Import cookies from a file. Load cookies from JSON or Netscape format to restore sessions, share environments with your team, or migrate data between browsers.
-
-Export cookies in Netscape format. Generate files compatible with curl, wget, and other command-line tools that accept Netscape cookie files.
-
-Cookie Health Dashboard. Get a security score, privacy analysis, and performance metrics for every site you visit. Receive actionable recommendations to reduce tracking exposure and improve cookie hygiene.
-
-Bulk operations on multiple cookies. Select several cookies at once and delete, export, or modify them together. Save time when managing large cookie sets.
+Open the popup on any site and see every cookie listed with its name, value, domain, path, expiration date, size, and security flags. The list is searchable — type a name, domain, or value fragment and the results filter instantly. Sorting by name, domain, or expiry helps you find what you need even on sites that set dozens of cookies. Each cookie displays its Secure flag, HttpOnly flag, SameSite attribute, and whether it is a session cookie or persistent cookie, so you can audit cookie security without opening DevTools.
 
 
-WHAT MAKES COOKIE MANAGER PRO DIFFERENT
+EDIT COOKIES
 
-Most cookie extensions let you view and delete cookies. Cookie Manager Pro goes further.
+Click any cookie to open the editor. Change the name, value, domain, path, expiration, SameSite attribute, Secure flag, or HttpOnly flag. The editor validates your input before saving, so you won't accidentally create a malformed cookie. Editing cookies is essential when debugging authentication, testing session expiration, adjusting domain scope, or verifying that your application handles cookie attributes correctly. Cookie Manager Pro makes the edit-save-verify cycle fast.
 
-Built-in JWT decoder means you never leave the extension to inspect tokens. Cookie Profiles let you switch environments instantly instead of logging in and out. The Health Dashboard gives you a security audit no other cookie extension offers. Auto-Delete Rules keep your browser clean on autopilot.
-
-The free tier is generous. You get full editing, exporting, searching, JWT decoding, 2 profiles, and 1 auto-delete rule at no cost. Pro unlocks unlimited profiles, unlimited rules, import, Netscape export, bulk operations, and the Health Dashboard.
-
-Everything runs locally in your browser. No servers, no accounts, no data collection, no tracking. Your cookies never leave your machine.
+Free users can edit up to 25 cookies per day. Pro users have no limit.
 
 
-PERFECT FOR
+CREATE COOKIES
 
-Web Developers
-Debug authentication, inspect session cookies, decode JWTs, and switch between staging and production environments in seconds. Stop wasting time in DevTools or rewriting curl commands by hand.
+Add a new cookie to any domain directly from the popup. Set every attribute from scratch: name, value, domain, path, expiration date, SameSite, Secure, and HttpOnly. This is useful when you need to simulate a logged-in state, test how your application reacts to specific cookie values, or inject session tokens during development. No need to open the browser console or write JavaScript — just fill in the fields and save.
 
-QA Engineers
-Save cookie profiles for different test accounts and restore them with one click. Verify cookie attributes, test SameSite behavior, and validate security flags without writing scripts.
-
-Privacy-Conscious Users
-See exactly which cookies every site sets. Delete tracking cookies in bulk, schedule automatic cleanup, and review the Health Dashboard to understand your exposure. No data leaves your browser.
+Free users can create up to 10 cookies per day. Pro users have no limit.
 
 
-PERMISSIONS EXPLAINED
+DELETE AND CLEAR COOKIES
 
-Cookie Manager Pro requests only the permissions it needs to function. Here is what each one does and why:
+Remove a single cookie with one click, or clear all cookies for the current domain. When you need to test a fresh session, clear your authentication state, or remove tracking cookies from a specific site, Cookie Manager Pro handles it without navigating through browser settings or clearing your entire browsing history. You stay in control of exactly which cookies get removed.
 
-Cookies Permission: Allows the extension to read, create, edit, and delete cookies in your browser. This is the core functionality of the extension. Without it, Cookie Manager Pro cannot access any cookie data.
-
-Storage Permission: Saves your Cookie Profiles, Auto-Delete Rules, and extension settings locally in your browser. Nothing is sent to any server. All data stays on your device.
-
-Context Menus Permission: Adds a right-click menu option for quick cookie actions. Right-click on any page to access Cookie Manager Pro shortcuts without opening the popup.
-
-Notifications Permission: Displays a brief notification when an Auto-Delete Rule runs. This lets you know cookies were cleaned up automatically so you are never surprised by a missing session.
-
-Alarms Permission: Schedules Auto-Delete Rules to run at the intervals you set. The extension uses browser alarms to trigger cleanup on time, even when the popup is closed.
-
-All URLs Host Permission: Gives Cookie Manager Pro access to cookies on every domain. Cookies are domain-specific, so the extension needs this broad permission to manage cookies across all the sites you visit. Without it, Cookie Manager Pro could only see cookies for a single domain.
+Free users can delete up to 50 cookies per day. Pro users have no limit.
 
 
-PRIVACY AND DATA PRACTICES
+EXPORT COOKIES
 
-Cookie Manager Pro collects zero user data. No analytics, no telemetry, no crash reporting, no usage tracking.
+Copy all cookies for the current site as formatted JSON with one click. The export is ready to paste into documentation, bug reports, test scripts, API tools like Postman, or share with teammates who need to replicate your session. JSON export is available on the free tier, limited to 5 exports per day.
 
-All cookie data, profiles, rules, and settings stay in your local browser storage. Nothing is transmitted to any external server. The extension works entirely offline after installation.
+Pro users can also export in Netscape cookie format and CSV. Netscape format is compatible with curl, wget, HTTPie, and other command-line tools that accept standard cookie files. CSV export is useful for spreadsheets, data analysis, and reporting. Pro users have unlimited exports in all formats.
 
-Cookie Manager Pro does not inject scripts into web pages. It does not modify page content. It does not communicate with any remote endpoint.
 
-Your data belongs to you. Period.
+IMPORT COOKIES
+
+Pro users can import cookies from JSON or Netscape files. Load a cookie set to restore a session, share environments across a team, replicate a bug report from a colleague, or migrate cookie data between browsers. Import handles both formats and validates each cookie before writing it to your browser.
+
+
+COOKIE PROFILES
+
+Save a complete snapshot of all cookies for a site and restore them later with one click. Cookie profiles let you switch between logged-in accounts, toggle between staging and production sessions, test different user roles, or reset to a known authentication state without going through a login flow every time.
+
+Free users can save up to 2 profiles. Pro users can save unlimited profiles across as many sites and environments as they need. If you manage multiple projects, clients, or test configurations, profiles save significant time every day.
+
+
+AUTO-DELETE RULES
+
+Set up rules to automatically delete cookies on a schedule. Choose which domains or patterns to target and how often cleanup should run. Auto-delete rules keep your browser clean without requiring you to remember to clear cookies manually. They run in the background even when the popup is closed, using Chrome's built-in alarm system.
+
+Free users can create 1 auto-delete rule. Pro users can create unlimited rules covering every domain and pattern that matters.
+
+
+JWT TOKEN DECODER
+
+Cookie Manager Pro includes a built-in JWT decoder. When a cookie contains a JSON Web Token, the extension detects it automatically and shows you the decoded header and payload alongside the raw value. You can see the token's algorithm, issuer, subject, audience, issued-at time, expiration time, and any custom claims without leaving the extension or copying the token to a separate website.
+
+This is particularly useful when debugging OAuth flows, inspecting session tokens, verifying token expiration, or checking that your backend is setting the correct claims. The JWT decoder works with any standard JWT stored in a cookie.
+
+
+COOKIE HEALTH DASHBOARD
+
+The Health Dashboard gives you a security and privacy audit for every site you visit. It calculates a score based on the cookies present and flags issues like missing Secure flags on sensitive cookies, overly broad domain scope, long expiration times on tracking cookies, cookies without the HttpOnly flag that could be vulnerable to XSS, and SameSite attributes that may not protect against CSRF.
+
+The dashboard provides specific, actionable recommendations so you know exactly what to fix. This is a Pro-only feature.
+
+
+BULK OPERATIONS
+
+Select multiple cookies at once and delete, export, or modify them as a group. Bulk operations save significant time when you are managing large cookie sets, cleaning up after testing, or exporting a specific subset of cookies. This is a Pro-only feature.
+
+
+KEYBOARD SHORTCUTS
+
+Cookie Manager Pro is designed for keyboard-driven workflows. Press / to jump to the search field. Press Escape to close any open modal or editor. Use Ctrl+E (Cmd+E on Mac) to export all cookies. Use Ctrl+N (Cmd+N on Mac) to create a new cookie. These shortcuts make repeated tasks faster, especially when you are cycling between editing, testing, and verifying.
+
+
+DARK MODE
+
+The extension follows your operating system theme preference automatically. If your system is set to dark mode, Cookie Manager Pro switches to a dark color scheme. If your system uses light mode, the extension uses a light color scheme. There is no manual toggle to manage — it just matches your environment.
+
+
+LANGUAGES
+
+Cookie Manager Pro is available in 6 languages: English, Spanish, French, German, Japanese, and Portuguese (Brazil). The interface, labels, error messages, and descriptions all translate based on your Chrome language setting.
+
+
+FREE VS PRO
+
+The free tier gives you full access to view, edit, create, delete, search, filter, and export cookies in JSON format. You also get 2 cookie profiles, 1 auto-delete rule, the JWT decoder, dark mode, keyboard shortcuts, and all 6 languages. Daily usage limits apply to editing, creating, deleting, and exporting.
+
+Pro removes all daily limits and unlocks cookie import, Netscape and CSV export, unlimited profiles, unlimited auto-delete rules, the Health Dashboard, and bulk operations. You can upgrade to Pro with a monthly subscription at $4.99 per month, or pay once for lifetime access at $99 with all future updates included. Both options include a 7-day money-back guarantee.
+
+
+WHO IS COOKIE MANAGER PRO FOR
+
+Web developers use Cookie Manager Pro to debug authentication flows, inspect session cookies, decode JWT tokens, test cookie attributes, and switch between staging and production environments without logging in and out repeatedly. It replaces the workflow of opening DevTools, navigating to the Application tab, and manually editing cookies one field at a time.
+
+QA engineers use it to save cookie profiles for different test accounts and restore them instantly. Instead of going through login flows for every test run, they capture the session state as a profile and reload it with one click. The ability to verify Secure flags, HttpOnly flags, SameSite attributes, and expiration dates makes it easy to confirm that cookies meet security requirements.
+
+Security researchers use it to analyze which cookies a site sets, check for tracking cookies, audit cookie security attributes, and review the Health Dashboard for vulnerabilities. The Netscape export format makes it easy to use captured cookies with command-line tools for further testing.
+
+Privacy-conscious users use it to see exactly which cookies every website stores, delete tracking cookies in bulk, set up automatic deletion rules, and maintain a cleaner browsing environment. Cookie Manager Pro runs entirely locally and never transmits any data.
+
+
+PERMISSIONS
+
+Cookie Manager Pro requests the minimum permissions needed to function. Here is what each one does:
+
+Cookies — Required to read, create, edit, and delete cookies in your browser. This is the core functionality.
+
+Storage — Saves your cookie profiles, auto-delete rules, and preferences locally on your device. Nothing is sent to any server.
+
+Context Menus — Adds a right-click option for quick cookie actions so you can access common functions without opening the popup.
+
+Notifications — Shows a brief notification when an auto-delete rule runs, so you know cookies were cleaned up.
+
+Alarms — Schedules auto-delete rules to run at the intervals you set, even when the popup is closed.
+
+Host Permissions (All URLs) — Gives Cookie Manager Pro access to cookies on every domain. Cookies are domain-specific, so broad host permission is required to manage cookies across all sites you visit. Without it, the extension could only read cookies for a single domain.
+
+
+PRIVACY
+
+Cookie Manager Pro collects zero user data. There is no analytics, no telemetry, no crash reporting, and no usage tracking of any kind. The extension does not make network requests. It does not inject scripts into web pages. It does not modify page content. All cookie data, profiles, rules, and settings stay in your local browser storage and are never transmitted anywhere. The extension works entirely offline after installation. Your data stays on your machine.
+
+
+OPEN SOURCE
+
+Cookie Manager Pro is open source. You can review the complete source code, file issues, and suggest improvements on GitHub.
+
+GitHub: https://github.com/theluckystrike/cookie-manager
+
+
+CHANGELOG
+
+Version 1.1.0
+- Renamed to Cookie Manager Pro
+- Pricing aligned: $4.99/month or $99 lifetime access
+- Improved store listing and descriptions in all 6 languages
+- Fixed pricing display in paywall and upgrade page
+- Improved error handling across all message flows
+- Added trial-aware feature gating for profiles, auto-delete rules, and health dashboard
+- Fixed JWT decoder tier classification
+- Removed invalid manifest fields for Manifest V3 compliance
+- Security hardening: replaced innerHTML with safe DOM APIs where user data is involved
+- Service worker lifecycle improvements for MV3 background reliability
+
+Version 1.0.0
+- Initial release
+- View, edit, create, delete, and export cookies
+- Cookie profiles and auto-delete rules
+- JWT token decoder
+- Cookie health dashboard
+- Dark mode and 6 languages
+- Keyboard shortcuts
+- Free tier with daily limits, Pro tier for unlimited access
 
 
 SUPPORT
 
-Website: https://www.zovo.one
-Email: support@zovo.one
-Developer: Michael Ip
+Cookie Manager Pro is built and maintained by Zovo. If you find a bug, have a feature request, or need help, reach out and expect a response within 24 hours.
 
-If you find a bug or have a feature request, reach out at support@zovo.one and expect a response within 24 hours.
+Website: https://www.zovo.one
+Support: support@zovo.one
+
+Cookie Manager Pro by Zovo — https://www.zovo.one

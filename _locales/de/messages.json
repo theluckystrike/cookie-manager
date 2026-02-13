@@ -845,7 +845,7 @@
         "description": "Tooltip shown when hovering over the extension icon in the browser toolbar."
     },
     "extDescription": {
-        "message": "Einfache, übersichtliche Cookie-Verwaltung. Cookies anzeigen, bearbeiten, exportieren und schützen.",
+        "message": "Der moderne Cookie-Editor für Chrome. Cookies anzeigen, bearbeiten, exportieren und verwalten mit Profilen, Auto-Löschung und JWT-Dekodierung.",
         "description": "Extension description for Chrome Web Store listing. Max 132 chars."
     },
     "extName": {
