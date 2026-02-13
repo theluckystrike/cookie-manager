@@ -1710,28 +1710,32 @@
         "description": "Button text shown while the license activation is in progress."
     },
     "payAnnual": {
-        "message": "年額",
-        "description": "Pricing tier name for annual subscription in the paywall."
+        "message": "永久",
+        "description": "Pricing tier name for lifetime purchase in the paywall."
     },
     "payAnnualNote": {
-        "message": "$$2.50/月（年払い）",
-        "description": "Note below the annual price showing monthly equivalent."
+        "message": "一度のお支払いで永久にご利用",
+        "description": "Note below the lifetime price."
     },
     "payAnnualPrice": {
-        "message": "$$29.99/年",
-        "description": "Annual subscription price displayed in the paywall."
+        "message": "$$99",
+        "description": "Lifetime purchase price displayed in the paywall."
     },
     "payBestValue": {
         "message": "お得",
-        "description": "Badge shown on the annual pricing tier to indicate best value."
+        "description": "Badge shown on the lifetime pricing tier to indicate best value."
     },
     "payCtaAnnual": {
-        "message": "Pro年額プランを取得 — $$29.99/年",
-        "description": "Primary CTA button text for annual subscription in the paywall."
+        "message": "永久アクセスを取得 — $$99",
+        "description": "Primary CTA button text for lifetime purchase in the paywall."
     },
     "payCtaMonthly": {
-        "message": "月額プランを開始 — $$3.99/月",
+        "message": "月額プランを開始 — $$4.99/月",
         "description": "Secondary CTA button text for monthly subscription in the paywall."
+    },
+    "payLifetimePrice": {
+        "message": "$$99 一回限り",
+        "description": "Lifetime purchase price displayed in the paywall."
     },
     "payFeatureAdvancedExport": {
         "message": "高度なエクスポート形式",
@@ -1782,7 +1786,7 @@
         "description": "Note below the monthly price in the paywall."
     },
     "payMonthlyPrice": {
-        "message": "$$3.99/月",
+        "message": "$$4.99/月",
         "description": "Monthly subscription price displayed in the paywall."
     },
     "payProHeader": {
@@ -1794,8 +1798,8 @@
         "description": "Lock overlay message on the Rules tab when the free-tier rule limit is reached."
     },
     "paySavePercent": {
-        "message": "37%割引",
-        "description": "Savings badge shown on the annual pricing tier."
+        "message": "お得",
+        "description": "Badge shown on the lifetime pricing tier."
     },
     "payTrialBanner": {
         "message": "Proお試し: 残り$DAYS$日",
@@ -1850,15 +1854,19 @@
         "description": "Button text shown while the license activation is in progress."
     },
     "paywallAnnual": {
-        "message": "年額",
-        "description": "Annual tier name displayed in the paywall."
+        "message": "永久",
+        "description": "Lifetime tier name displayed in the paywall."
     },
     "paywallBestValue": {
         "message": "Best Value"
     },
     "paywallBilledAnnually": {
-        "message": "$$2.50/月（年払い）",
-        "description": "Note below the annual price showing monthly equivalent."
+        "message": "一度のお支払いで永久にご利用",
+        "description": "Note below the lifetime price."
+    },
+    "paywallBilledOnce": {
+        "message": "一度のお支払いで永久にご利用",
+        "description": "Note below the lifetime price."
     },
     "paywallBilledMonthly": {
         "message": "毎月請求",
@@ -1877,23 +1885,31 @@
         "description": "Column header for the Pro tier in the paywall comparison table."
     },
     "paywallCtaAnnual": {
-        "message": "Pro年額プランを取得 — $$29.99/年",
-        "description": "Primary CTA button text for annual subscription in the paywall."
+        "message": "永久アクセスを取得 — $$99",
+        "description": "Primary CTA button text for lifetime purchase in the paywall."
+    },
+    "paywallCtaLifetime": {
+        "message": "永久アクセスを取得 — $$99",
+        "description": "Primary CTA button text for lifetime purchase in the paywall."
     },
     "paywallCtaMonthly": {
-        "message": "月額プランを開始 — $$3.99/月",
+        "message": "月額プランを開始 — $$4.99/月",
         "description": "Secondary CTA button text for monthly subscription in the paywall."
     },
     "paywallHaveLicenseKey": {
         "message": "Already have a license key?"
+    },
+    "paywallLifetime": {
+        "message": "永久",
+        "description": "Lifetime tier name displayed in the paywall."
     },
     "paywallMonthly": {
         "message": "月額",
         "description": "Monthly tier name displayed in the paywall."
     },
     "paywallSave37": {
-        "message": "37%割引",
-        "description": "Savings badge shown on the annual pricing tier."
+        "message": "お得",
+        "description": "Badge shown on the lifetime pricing tier."
     },
     "paywallSubtitle": {
         "message": "Upgrade to Cookie Manager Pro for the full toolkit."
@@ -2264,13 +2280,17 @@
     },
     "upgradeBestValue": {
         "message": "お得",
-        "description": "Badge shown on the annual pricing tier to indicate best value."
+        "description": "Badge shown on the lifetime pricing tier to indicate best value."
     },
     "upgradeBilledAnnually": {
-        "message": "Billed $$47.88/yr"
+        "message": "一度のお支払いで永久にご利用"
     },
     "upgradeBilledMonthly": {
         "message": "Billed monthly"
+    },
+    "upgradeBilledOnce": {
+        "message": "一度のお支払いで永久にご利用",
+        "description": "Note below the lifetime price on upgrade page."
     },
     "upgradeChoosePlan": {
         "message": "Choose Your Plan"
@@ -2291,7 +2311,11 @@
         "message": "Cookie Manager by"
     },
     "upgradeGetAnnual": {
-        "message": "Get Annual"
+        "message": "永久アクセスを取得 — $$99"
+    },
+    "upgradeGetLifetime": {
+        "message": "永久アクセスを取得 — $$99",
+        "description": "CTA button text for lifetime purchase on upgrade page."
     },
     "upgradeGetMonthly": {
         "message": "Get Monthly"
@@ -2311,6 +2335,10 @@
     "upgradePeriodMonth": {
         "message": "/mo"
     },
+    "upgradePeriodOnce": {
+        "message": " 一回",
+        "description": "Period label for lifetime one-time purchase."
+    },
     "upgradePerkAllPro": {
         "message": "All Pro features"
     },
@@ -2320,13 +2348,25 @@
     "upgradePerkCancel": {
         "message": "Cancel anytime"
     },
+    "upgradePerkForever": {
+        "message": "永久にご利用 — 更新不要",
+        "description": "Perk text for lifetime purchase on upgrade page."
+    },
+    "upgradePerkFutureUpdates": {
+        "message": "今後のすべてのアップデートを含む",
+        "description": "Perk text for lifetime purchase on upgrade page."
+    },
     "upgradePerkUnlimited": {
         "message": "無制限",
         "description": "Feature limit text for Pro tier in paywall comparison table."
     },
     "upgradePlanAnnual": {
-        "message": "年額",
-        "description": "Pricing tier name for annual subscription in the paywall."
+        "message": "永久",
+        "description": "Pricing tier name for lifetime purchase in the paywall."
+    },
+    "upgradePlanLifetime": {
+        "message": "永久",
+        "description": "Pricing tier name for lifetime purchase in the paywall."
     },
     "upgradePlanMonthly": {
         "message": "月額",
@@ -2342,7 +2382,7 @@
         "message": "Restore Purchase"
     },
     "upgradeSave20": {
-        "message": "Save 20%"
+        "message": "お得"
     },
     "upgradeTestimonial1": {
         "message": "\"Cookie Manager Pro saves me hours every week. The bulk operations and export formats are exactly what I needed.\""

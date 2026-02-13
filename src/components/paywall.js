@@ -12,7 +12,7 @@
 
     var PAYMENT_URLS = {
         monthly: 'https://www.zovo.one/cookie-manager/checkout?plan=monthly',
-        annual: 'https://www.zovo.one/cookie-manager/checkout?plan=annual'
+        lifetime: 'https://www.zovo.one/cookie-manager/checkout?plan=lifetime'
     };
 
     var FEATURES = [
@@ -137,26 +137,25 @@
                     /* Monthly */
                     '<div class="paywall-tier">' +
                         '<div class="paywall-tier-name">' + (chrome.i18n.getMessage('paywallMonthly') || 'Monthly') + '</div>' +
-                        '<div class="paywall-tier-price">$3.99<span>/mo</span></div>' +
+                        '<div class="paywall-tier-price">$4.99<span>/mo</span></div>' +
                         '<div class="paywall-tier-note">' + (chrome.i18n.getMessage('paywallBilledMonthly') || 'Billed monthly') + '</div>' +
                     '</div>' +
-                    /* Annual (popular) */
+                    /* Lifetime (best value) */
                     '<div class="paywall-tier paywall-tier-popular">' +
                         '<div class="paywall-popular-badge">' + (chrome.i18n.getMessage('paywallBestValue') || 'Best Value') + '</div>' +
-                        '<div class="paywall-tier-name">' + (chrome.i18n.getMessage('paywallAnnual') || 'Annual') + '</div>' +
-                        '<div class="paywall-tier-price">$29.99<span>/yr</span></div>' +
-                        '<div class="paywall-tier-note">' + (chrome.i18n.getMessage('paywallBilledAnnually') || '$2.50/mo billed annually') + '</div>' +
-                        '<div class="paywall-savings">' + (chrome.i18n.getMessage('paywallSave37') || 'Save 37%') + '</div>' +
+                        '<div class="paywall-tier-name">' + (chrome.i18n.getMessage('paywallLifetime') || 'Lifetime') + '</div>' +
+                        '<div class="paywall-tier-price">$99<span> once</span></div>' +
+                        '<div class="paywall-tier-note">' + (chrome.i18n.getMessage('paywallBilledOnce') || 'Pay once, yours forever') + '</div>' +
                     '</div>' +
                 '</div>' +
 
                 /* CTA buttons */
                 '<div class="paywall-cta-section">' +
-                    '<button class="paywall-cta paywall-cta-primary" data-action="annual">' +
-                        (chrome.i18n.getMessage('paywallCtaAnnual') || 'Get Pro Annual &mdash; $29.99/yr') +
+                    '<button class="paywall-cta paywall-cta-primary" data-action="lifetime">' +
+                        (chrome.i18n.getMessage('paywallCtaLifetime') || 'Get Lifetime Access &mdash; $99') +
                     '</button>' +
                     '<button class="paywall-cta paywall-cta-secondary" data-action="monthly">' +
-                        (chrome.i18n.getMessage('paywallCtaMonthly') || 'Start Monthly &mdash; $3.99/mo') +
+                        (chrome.i18n.getMessage('paywallCtaMonthly') || 'Start Monthly &mdash; $4.99/mo') +
                     '</button>' +
                 '</div>' +
 
@@ -246,8 +245,8 @@
                     openCheckout(PAYMENT_URLS.monthly, featureName);
                     break;
 
-                case 'annual':
-                    openCheckout(PAYMENT_URLS.annual, featureName);
+                case 'lifetime':
+                    openCheckout(PAYMENT_URLS.lifetime, featureName);
                     break;
 
                 case 'license-toggle':

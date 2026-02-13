@@ -1710,27 +1710,27 @@
         "description": "Button text shown while the license activation is in progress."
     },
     "payAnnual": {
-        "message": "Jährlich",
-        "description": "Pricing tier name for annual subscription in the paywall."
+        "message": "Lebenslang",
+        "description": "Pricing tier name for lifetime purchase in the paywall."
     },
     "payAnnualNote": {
-        "message": "$$2,50/Monat bei jährlicher Abrechnung",
-        "description": "Note below the annual price showing monthly equivalent."
+        "message": "Einmal zahlen, für immer nutzen",
+        "description": "Note below the lifetime price."
     },
     "payAnnualPrice": {
-        "message": "$$29,99/Jahr",
-        "description": "Annual subscription price displayed in the paywall."
+        "message": "$$99 einmalig",
+        "description": "Lifetime purchase price displayed in the paywall."
     },
     "payBestValue": {
         "message": "Bester Wert",
-        "description": "Badge shown on the annual pricing tier to indicate best value."
+        "description": "Badge shown on the lifetime pricing tier to indicate best value."
     },
     "payCtaAnnual": {
-        "message": "Pro Jahresabo — $$29,99/Jahr",
-        "description": "Primary CTA button text for annual subscription in the paywall."
+        "message": "Lebenslang-Zugang — $$99",
+        "description": "Primary CTA button text for lifetime purchase in the paywall."
     },
     "payCtaMonthly": {
-        "message": "Monatsabo starten — $$3,99/Monat",
+        "message": "Monatsabo starten — $$4,99/Monat",
         "description": "Secondary CTA button text for monthly subscription in the paywall."
     },
     "payFeatureAdvancedExport": {
@@ -1773,6 +1773,10 @@
         "message": "Haben Sie bereits einen Lizenzschlüssel?",
         "description": "Toggle button text to show the license key input form in the paywall."
     },
+    "payLifetimePrice": {
+        "message": "$$99 einmalig",
+        "description": "Lifetime purchase price displayed in the paywall."
+    },
     "payMonthly": {
         "message": "Monatlich",
         "description": "Pricing tier name for monthly subscription in the paywall."
@@ -1782,7 +1786,7 @@
         "description": "Note below the monthly price in the paywall."
     },
     "payMonthlyPrice": {
-        "message": "$$3,99/Monat",
+        "message": "$$4,99/Monat",
         "description": "Monthly subscription price displayed in the paywall."
     },
     "payProHeader": {
@@ -1794,8 +1798,8 @@
         "description": "Lock overlay message on the Rules tab when the free-tier rule limit is reached."
     },
     "paySavePercent": {
-        "message": "37% sparen",
-        "description": "Savings badge shown on the annual pricing tier."
+        "message": "Bester Wert",
+        "description": "Badge shown on the lifetime pricing tier."
     },
     "payTrialBanner": {
         "message": "Pro-Testversion: $DAYS$ Tage verbleibend",
@@ -1850,19 +1854,23 @@
         "description": "Button text shown while the license activation is in progress."
     },
     "paywallAnnual": {
-        "message": "Jährlich",
-        "description": "Annual tier name displayed in the paywall."
+        "message": "Lebenslang",
+        "description": "Lifetime tier name displayed in the paywall."
     },
     "paywallBestValue": {
-        "message": "Best Value"
+        "message": "Bester Wert"
     },
     "paywallBilledAnnually": {
-        "message": "$$2,50/Monat bei jährlicher Abrechnung",
-        "description": "Note below the annual price showing monthly equivalent."
+        "message": "Einmal zahlen, für immer nutzen",
+        "description": "Note below the lifetime price."
     },
     "paywallBilledMonthly": {
         "message": "Monatlich abgerechnet",
         "description": "Note below the monthly price in the paywall."
+    },
+    "paywallBilledOnce": {
+        "message": "Einmal zahlen, für immer nutzen",
+        "description": "Note below the lifetime price indicating one-time payment."
     },
     "paywallColFeature": {
         "message": "Funktion",
@@ -1877,23 +1885,31 @@
         "description": "Column header for the Pro tier in the paywall comparison table."
     },
     "paywallCtaAnnual": {
-        "message": "Pro Jahresabo — $$29,99/Jahr",
-        "description": "Primary CTA button text for annual subscription in the paywall."
+        "message": "Lebenslang-Zugang — $$99",
+        "description": "Primary CTA button text for lifetime purchase in the paywall."
+    },
+    "paywallCtaLifetime": {
+        "message": "Lebenslang-Zugang — $$99",
+        "description": "CTA button text for lifetime purchase in the paywall."
     },
     "paywallCtaMonthly": {
-        "message": "Monatsabo starten — $$3,99/Monat",
+        "message": "Monatsabo starten — $$4,99/Monat",
         "description": "Secondary CTA button text for monthly subscription in the paywall."
     },
     "paywallHaveLicenseKey": {
         "message": "Already have a license key?"
+    },
+    "paywallLifetime": {
+        "message": "Lebenslang",
+        "description": "Lifetime tier name displayed in the paywall."
     },
     "paywallMonthly": {
         "message": "Monatlich",
         "description": "Monthly tier name displayed in the paywall."
     },
     "paywallSave37": {
-        "message": "37% sparen",
-        "description": "Savings badge shown on the annual pricing tier."
+        "message": "Bester Wert",
+        "description": "Badge shown on the lifetime pricing tier."
     },
     "paywallSubtitle": {
         "message": "Upgrade to Cookie Manager Pro for the full toolkit."
@@ -2264,13 +2280,16 @@
     },
     "upgradeBestValue": {
         "message": "Bester Wert",
-        "description": "Badge shown on the annual pricing tier to indicate best value."
+        "description": "Badge shown on the lifetime pricing tier to indicate best value."
     },
     "upgradeBilledAnnually": {
-        "message": "Billed $$47.88/yr"
+        "message": "Einmal zahlen, für immer nutzen"
     },
     "upgradeBilledMonthly": {
         "message": "Billed monthly"
+    },
+    "upgradeBilledOnce": {
+        "message": "Einmal zahlen, für immer nutzen"
     },
     "upgradeChoosePlan": {
         "message": "Choose Your Plan"
@@ -2291,7 +2310,10 @@
         "message": "Cookie Manager by"
     },
     "upgradeGetAnnual": {
-        "message": "Get Annual"
+        "message": "Lebenslang-Zugang — $$99"
+    },
+    "upgradeGetLifetime": {
+        "message": "Lebenslang-Zugang — $$99"
     },
     "upgradeGetMonthly": {
         "message": "Get Monthly"
@@ -2311,22 +2333,34 @@
     "upgradePeriodMonth": {
         "message": "/mo"
     },
+    "upgradePeriodOnce": {
+        "message": " einmalig"
+    },
     "upgradePerkAllPro": {
         "message": "All Pro features"
     },
     "upgradePerkBestPrice": {
-        "message": "Best price per month"
+        "message": "Für immer — keine Verlängerung"
     },
     "upgradePerkCancel": {
         "message": "Cancel anytime"
+    },
+    "upgradePerkForever": {
+        "message": "Für immer — keine Verlängerung"
+    },
+    "upgradePerkFutureUpdates": {
+        "message": "Alle zukünftigen Updates inklusive"
     },
     "upgradePerkUnlimited": {
         "message": "Unbegrenzt",
         "description": "Feature limit text for Pro tier in paywall comparison table."
     },
     "upgradePlanAnnual": {
-        "message": "Jährlich",
-        "description": "Pricing tier name for annual subscription in the paywall."
+        "message": "Lebenslang",
+        "description": "Pricing tier name for lifetime purchase in the paywall."
+    },
+    "upgradePlanLifetime": {
+        "message": "Lebenslang"
     },
     "upgradePlanMonthly": {
         "message": "Monatlich",
@@ -2342,7 +2376,7 @@
         "message": "Restore Purchase"
     },
     "upgradeSave20": {
-        "message": "Save 20%"
+        "message": "Bester Wert"
     },
     "upgradeTestimonial1": {
         "message": "\"Cookie Manager Pro saves me hours every week. The bulk operations and export formats are exactly what I needed.\""

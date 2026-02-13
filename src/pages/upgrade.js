@@ -15,7 +15,7 @@
 
     var CHECKOUT_URLS = {
         monthly: CHECKOUT_BASE + '?plan=monthly',
-        annual: CHECKOUT_BASE + '?plan=annual'
+        lifetime: CHECKOUT_BASE + '?plan=lifetime'
     };
 
     /**

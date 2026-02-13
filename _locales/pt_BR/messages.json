@@ -1710,28 +1710,32 @@
         "description": "Button text shown while the license activation is in progress."
     },
     "payAnnual": {
-        "message": "Anual",
-        "description": "Pricing tier name for annual subscription in the paywall."
+        "message": "Vitalício",
+        "description": "Pricing tier name for lifetime purchase in the paywall."
     },
     "payAnnualNote": {
-        "message": "$$2.50/mês cobrado anualmente",
-        "description": "Note below the annual price showing monthly equivalent."
+        "message": "Pague uma vez, seu para sempre",
+        "description": "Note below the lifetime price."
     },
     "payAnnualPrice": {
-        "message": "$$29.99/ano",
-        "description": "Annual subscription price displayed in the paywall."
+        "message": "$$99",
+        "description": "Lifetime purchase price displayed in the paywall."
     },
     "payBestValue": {
         "message": "Melhor valor",
-        "description": "Badge shown on the annual pricing tier to indicate best value."
+        "description": "Badge shown on the lifetime pricing tier to indicate best value."
     },
     "payCtaAnnual": {
-        "message": "Assinar Pro Anual — $$29.99/ano",
-        "description": "Primary CTA button text for annual subscription in the paywall."
+        "message": "Acesso vitalício — $$99",
+        "description": "Primary CTA button text for lifetime purchase in the paywall."
     },
     "payCtaMonthly": {
-        "message": "Iniciar Mensal — $$3.99/mês",
+        "message": "Iniciar Mensal — $$4.99/mês",
         "description": "Secondary CTA button text for monthly subscription in the paywall."
+    },
+    "payLifetimePrice": {
+        "message": "$$99 uma vez",
+        "description": "Lifetime purchase price displayed in the paywall."
     },
     "payFeatureAdvancedExport": {
         "message": "Formatos de exportação avançados",
@@ -1782,7 +1786,7 @@
         "description": "Note below the monthly price in the paywall."
     },
     "payMonthlyPrice": {
-        "message": "$$3.99/mês",
+        "message": "$$4.99/mês",
         "description": "Monthly subscription price displayed in the paywall."
     },
     "payProHeader": {
@@ -1794,8 +1798,8 @@
         "description": "Lock overlay message on the Rules tab when the free-tier rule limit is reached."
     },
     "paySavePercent": {
-        "message": "Economize 37%",
-        "description": "Savings badge shown on the annual pricing tier."
+        "message": "Melhor valor",
+        "description": "Badge shown on the lifetime pricing tier."
     },
     "payTrialBanner": {
         "message": "Teste Pro: $DAYS$ dias restantes",
@@ -1850,15 +1854,19 @@
         "description": "Button text shown while the license activation is in progress."
     },
     "paywallAnnual": {
-        "message": "Anual",
-        "description": "Annual tier name displayed in the paywall."
+        "message": "Vitalício",
+        "description": "Lifetime tier name displayed in the paywall."
     },
     "paywallBestValue": {
         "message": "Best Value"
     },
     "paywallBilledAnnually": {
-        "message": "$$2.50/mês cobrado anualmente",
-        "description": "Note below the annual price showing monthly equivalent."
+        "message": "Pague uma vez, seu para sempre",
+        "description": "Note below the lifetime price."
+    },
+    "paywallBilledOnce": {
+        "message": "Pague uma vez, seu para sempre",
+        "description": "Note below the lifetime price."
     },
     "paywallBilledMonthly": {
         "message": "Cobrado mensalmente",
@@ -1877,23 +1885,31 @@
         "description": "Column header for the Pro tier in the paywall comparison table."
     },
     "paywallCtaAnnual": {
-        "message": "Assinar Pro Anual — $$29.99/ano",
-        "description": "Primary CTA button text for annual subscription in the paywall."
+        "message": "Acesso vitalício — $$99",
+        "description": "Primary CTA button text for lifetime purchase in the paywall."
+    },
+    "paywallCtaLifetime": {
+        "message": "Acesso vitalício — $$99",
+        "description": "Primary CTA button text for lifetime purchase in the paywall."
     },
     "paywallCtaMonthly": {
-        "message": "Iniciar Mensal — $$3.99/mês",
+        "message": "Iniciar Mensal — $$4.99/mês",
         "description": "Secondary CTA button text for monthly subscription in the paywall."
     },
     "paywallHaveLicenseKey": {
         "message": "Already have a license key?"
+    },
+    "paywallLifetime": {
+        "message": "Vitalício",
+        "description": "Lifetime tier name displayed in the paywall."
     },
     "paywallMonthly": {
         "message": "Mensal",
         "description": "Monthly tier name displayed in the paywall."
     },
     "paywallSave37": {
-        "message": "Economize 37%",
-        "description": "Savings badge shown on the annual pricing tier."
+        "message": "Melhor valor",
+        "description": "Badge shown on the lifetime pricing tier."
     },
     "paywallSubtitle": {
         "message": "Upgrade to Cookie Manager Pro for the full toolkit."
@@ -2264,13 +2280,17 @@
     },
     "upgradeBestValue": {
         "message": "Melhor valor",
-        "description": "Badge shown on the annual pricing tier to indicate best value."
+        "description": "Badge shown on the lifetime pricing tier to indicate best value."
     },
     "upgradeBilledAnnually": {
-        "message": "Billed $$47.88/yr"
+        "message": "Pague uma vez, seu para sempre"
     },
     "upgradeBilledMonthly": {
         "message": "Billed monthly"
+    },
+    "upgradeBilledOnce": {
+        "message": "Pague uma vez, seu para sempre",
+        "description": "Note below the lifetime price on upgrade page."
     },
     "upgradeChoosePlan": {
         "message": "Choose Your Plan"
@@ -2291,7 +2311,11 @@
         "message": "Cookie Manager by"
     },
     "upgradeGetAnnual": {
-        "message": "Get Annual"
+        "message": "Acesso vitalício — $$99"
+    },
+    "upgradeGetLifetime": {
+        "message": "Acesso vitalício — $$99",
+        "description": "CTA button text for lifetime purchase on upgrade page."
     },
     "upgradeGetMonthly": {
         "message": "Get Monthly"
@@ -2311,6 +2335,10 @@
     "upgradePeriodMonth": {
         "message": "/mo"
     },
+    "upgradePeriodOnce": {
+        "message": " uma vez",
+        "description": "Period label for lifetime one-time purchase."
+    },
     "upgradePerkAllPro": {
         "message": "All Pro features"
     },
@@ -2320,13 +2348,25 @@
     "upgradePerkCancel": {
         "message": "Cancel anytime"
     },
+    "upgradePerkForever": {
+        "message": "Seu para sempre — sem renovações",
+        "description": "Perk text for lifetime purchase on upgrade page."
+    },
+    "upgradePerkFutureUpdates": {
+        "message": "Todas as atualizações futuras incluídas",
+        "description": "Perk text for lifetime purchase on upgrade page."
+    },
     "upgradePerkUnlimited": {
         "message": "Ilimitado",
         "description": "Feature limit text for Pro tier in paywall comparison table."
     },
     "upgradePlanAnnual": {
-        "message": "Anual",
-        "description": "Pricing tier name for annual subscription in the paywall."
+        "message": "Vitalício",
+        "description": "Pricing tier name for lifetime purchase in the paywall."
+    },
+    "upgradePlanLifetime": {
+        "message": "Vitalício",
+        "description": "Pricing tier name for lifetime purchase in the paywall."
     },
     "upgradePlanMonthly": {
         "message": "Mensal",
@@ -2342,7 +2382,7 @@
         "message": "Restore Purchase"
     },
     "upgradeSave20": {
-        "message": "Save 20%"
+        "message": "Melhor valor"
     },
     "upgradeTestimonial1": {
         "message": "\"Cookie Manager Pro saves me hours every week. The bulk operations and export formats are exactly what I needed.\""
