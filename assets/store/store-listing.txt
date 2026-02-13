@@ -2,10 +2,10 @@ CHROME WEB STORE LISTING
 ========================
 
 Title:
-Cookie Manager - Edit, Export & Profiles
+Cookie Manager Pro
 
 Short Description:
-View, edit, export, and manage cookies with profiles, auto-delete rules, JWT decoding, and a health dashboard. Works offline.
+Simple, clean cookie management. View, edit, export, and protect cookies.
 
 Category:
 Developer Tools
@@ -17,9 +17,9 @@ cookies, developer tools, privacy, cookie editor, cookie manager
 DETAILED DESCRIPTION
 ====================
 
-Take full control of your browser cookies with Cookie Manager, a developer tool that works entirely offline and never collects your data.
+Take full control of your browser cookies with Cookie Manager Pro, a developer tool that works entirely offline and never collects your data.
 
-Cookie Manager gives you everything you need to inspect, edit, create, export, and organize cookies across every website you visit. Whether you debug authentication flows, test staging environments, or clean up tracking cookies, Cookie Manager handles it faster than DevTools alone.
+Cookie Manager Pro gives you everything you need to inspect, edit, create, export, and organize cookies across every website you visit. Whether you debug authentication flows, test staging environments, or clean up tracking cookies, Cookie Manager Pro handles it faster than DevTools alone.
 
 
 CORE FEATURES (FREE)
@@ -64,9 +64,9 @@ Cookie Health Dashboard. Get a security score, privacy analysis, and performance
 Bulk operations on multiple cookies. Select several cookies at once and delete, export, or modify them together. Save time when managing large cookie sets.
 
 
-WHAT MAKES COOKIE MANAGER DIFFERENT
+WHAT MAKES COOKIE MANAGER PRO DIFFERENT
 
-Most cookie extensions let you view and delete cookies. Cookie Manager goes further.
+Most cookie extensions let you view and delete cookies. Cookie Manager Pro goes further.
 
 Built-in JWT decoder means you never leave the extension to inspect tokens. Cookie Profiles let you switch environments instantly instead of logging in and out. The Health Dashboard gives you a security audit no other cookie extension offers. Auto-Delete Rules keep your browser clean on autopilot.
 
@@ -89,28 +89,28 @@ See exactly which cookies every site sets. Delete tracking cookies in bulk, sche
 
 PERMISSIONS EXPLAINED
 
-Cookie Manager requests only the permissions it needs to function. Here is what each one does and why:
+Cookie Manager Pro requests only the permissions it needs to function. Here is what each one does and why:
 
-Cookies Permission: Allows the extension to read, create, edit, and delete cookies in your browser. This is the core functionality of the extension. Without it, Cookie Manager cannot access any cookie data.
+Cookies Permission: Allows the extension to read, create, edit, and delete cookies in your browser. This is the core functionality of the extension. Without it, Cookie Manager Pro cannot access any cookie data.
 
 Storage Permission: Saves your Cookie Profiles, Auto-Delete Rules, and extension settings locally in your browser. Nothing is sent to any server. All data stays on your device.
 
-Context Menus Permission: Adds a right-click menu option for quick cookie actions. Right-click on any page to access Cookie Manager shortcuts without opening the popup.
+Context Menus Permission: Adds a right-click menu option for quick cookie actions. Right-click on any page to access Cookie Manager Pro shortcuts without opening the popup.
 
 Notifications Permission: Displays a brief notification when an Auto-Delete Rule runs. This lets you know cookies were cleaned up automatically so you are never surprised by a missing session.
 
 Alarms Permission: Schedules Auto-Delete Rules to run at the intervals you set. The extension uses browser alarms to trigger cleanup on time, even when the popup is closed.
 
-All URLs Host Permission: Gives Cookie Manager access to cookies on every domain. Cookies are domain-specific, so the extension needs this broad permission to manage cookies across all the sites you visit. Without it, Cookie Manager could only see cookies for a single domain.
+All URLs Host Permission: Gives Cookie Manager Pro access to cookies on every domain. Cookies are domain-specific, so the extension needs this broad permission to manage cookies across all the sites you visit. Without it, Cookie Manager Pro could only see cookies for a single domain.
 
 
 PRIVACY AND DATA PRACTICES
 
-Cookie Manager collects zero user data. No analytics, no telemetry, no crash reporting, no usage tracking.
+Cookie Manager Pro collects zero user data. No analytics, no telemetry, no crash reporting, no usage tracking.
 
 All cookie data, profiles, rules, and settings stay in your local browser storage. Nothing is transmitted to any external server. The extension works entirely offline after installation.
 
-Cookie Manager does not inject scripts into web pages. It does not modify page content. It does not communicate with any remote endpoint.
+Cookie Manager Pro does not inject scripts into web pages. It does not modify page content. It does not communicate with any remote endpoint.
 
 Your data belongs to you. Period.
 

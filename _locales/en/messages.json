@@ -213,7 +213,7 @@
         "description": "Badge text shown for free-tier users as a subtle upgrade call-to-action."
     },
     "brandTitle": {
-        "message": "Cookie Manager",
+        "message": "Cookie Manager Pro",
         "description": "Brand title shown in the popup header next to the Zovo logo."
     },
     "btnAdd": {
@@ -845,15 +845,15 @@
         "message": "Upgrade to Pro for unlimited profiles"
     },
     "extActionTitle": {
-        "message": "Cookie Manager",
+        "message": "Cookie Manager Pro",
         "description": "Tooltip shown when hovering over the extension icon in the browser toolbar."
     },
     "extDescription": {
-        "message": "View, edit, create, and delete browser cookies. Export/import profiles, auto-delete rules, and JWT decoding.",
+        "message": "Simple, clean cookie management. View, edit, export, and protect cookies.",
         "description": "Extension description for Chrome Web Store listing. Max 132 chars."
     },
     "extName": {
-        "message": "Cookie Manager",
+        "message": "Cookie Manager Pro",
         "description": "Extension name shown in Chrome Web Store and browser toolbar. Max 45 chars."
     },
     "featureAdvancedExport": {
